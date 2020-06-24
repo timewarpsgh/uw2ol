@@ -1,0 +1,456 @@
+import random
+import time
+from threading import Timer
+
+
+SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON = 1
+
+# contains portable data for a player (transmitted from DB to server to client)
+# and setters(also protocls sent to and from server)
+# must only pass one argument called params(a list)
+class Role:
+
+    # set at client, when client first gets role from server(when got packet 'your_role_data')
+    g_all_players = None
+
+    # set at server, when server first got connection from a client
+    g_conn_pool = None
+
+    # set at server, when server first got name of player
+    g_name_to_socket_pool = None
+
+    def __init__(self, x, y, name, gold=2000):
+        self.x = x
+        self.y = y
+        self.name = name
+        self.map = 'port'
+        self.battle_timer = 0
+        self.max_days_at_sea = 0
+        self.days_spent_at_sea = 0
+        self.speak_msg = ''
+        self.gold = gold
+        self.target_name = ''
+        self.ships = []
+        self.mates = []
+        self.discoveries = {}
+
+        # set at client, when client first gets role from server(when got packet 'your_role_data')
+        self.in_client = False
+
+    def _get_other_role_by_name(self, name):
+
+        # in client
+        if self.in_client:
+            dict = Role.g_all_players
+            print(dict, name)
+            p = dict[name]
+            return p.role
+
+        # in server
+        else:
+            socket = Role.g_name_to_socket_pool[name]
+            conn = Role.g_conn_pool[socket]
+            return conn.role
+
+    # anywhere
+    def change_map(self, params):
+        map_name = params[0]
+        self.map = map_name
+
+        # if to sea
+        if map_name == 'sea':
+
+            # reset days at sea
+            self.max_days_at_sea = self._count_max_days_at_sea()
+            self.days_spent_at_sea = 0
+
+            # sea days check timer
+            timer = Timer(1, self._check_days_at_sea_timer)
+            timer.start()
+
+        # if to port
+        elif map_name == 'port':
+            pass
+
+    def _check_days_at_sea_timer(self):
+        while True:
+            time.sleep(3)
+            self.days_spent_at_sea += 1
+
+            if self.days_spent_at_sea > self.max_days_at_sea:
+                self.map = 'port'
+                print('your fleet starved to death!')
+                break
+
+            if self.map == 'port':
+                break
+
+    def _count_max_days_at_sea(self):
+
+        total_crew = 0
+        total_water = 0
+        total_food = 0
+
+        for ship in self.ships:
+            total_crew += ship.crew
+            total_water += ship.supplies['Water']
+            total_food += ship.supplies['Food']
+
+        total_supply = min(total_food, total_water)
+        max_days_at_sea = int(total_supply / (total_crew * SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON))
+
+        print("max days at sea:", max_days_at_sea)
+        return max_days_at_sea
+
+    def speak(self, params):
+        msg = params[0]
+        self.speak_msg = msg
+
+        # clear msg after 1s
+        timer = Timer(1, self._speak_clear_msg)
+        timer.start()
+
+    def _speak_clear_msg(self):
+        self.speak_msg = ''
+
+    def set_target(self, params):
+        target_name = params[0]
+        self.target_name = target_name
+        print("target_name:", self.target_name)
+
+    # in port
+    def move(self, params):
+        direction = params[0]
+
+        if direction == 'up':
+            self.y -= 5
+        elif direction == 'down':
+            self.y += 5
+        elif direction == 'left':
+            self.x -= 5
+        elif direction == 'right':
+            self.x += 5
+
+        print("now x:", self.x)
+        print("new y:", self.y)
+
+    # at sea
+    def discover(self, params):
+        discovery_id = random.randint(0, 10)
+        if discovery_id in self.discoveries:
+            print(self.name, "have seen this")
+        else:
+            self.discoveries[discovery_id] = 1
+            print(self.name, "found new stuff. now discoveris:", self.discoveries)
+
+    def enter_battle_with(self, params):
+
+        # enemy
+        enemy_name = params[0]
+        enemy_role = self._get_other_role_by_name(enemy_name)
+        enemy_role.map = 'battle'
+        enemy_role.target_name = self.name
+        enemy_role.battle_timer = 0
+
+        # me
+        self.map = 'battle'
+        self.battle_timer = 50
+        self.target_name = enemy_name
+
+        # timer
+        timer = Timer(1, self._change_battle_timer, args=[enemy_role])
+        timer.start()
+
+    def _change_battle_timer(self, enemy_role):
+
+        # while in battle
+        while self.map == 'battle':
+
+            # self
+            if self.battle_timer > 0:
+                self.battle_timer -= 1
+                if self.battle_timer == 0:
+                    enemy_role.battle_timer = 50
+
+            # enemy
+            if enemy_role.battle_timer > 0:
+                enemy_role.battle_timer -= 1
+                if enemy_role.battle_timer == 0:
+                    self.battle_timer = 50
+
+            # sleep 1s
+            time.sleep(1)
+
+    def _exit_battle(self):
+        self.map = 'sea'
+        target_role = self._get_other_role_by_name(self.target_name)
+        target_role.map = 'sea'
+
+    # in battle
+    def move_ship(self, params):
+        which_ship = params[0]
+        direction = params[1]
+
+        self.ships[which_ship].move(direction)
+        ship = self.ships[which_ship]
+        print(self.name, "'s ship", which_ship, "moved to ", ship.x, ship.y)
+
+    def shoot_ship(self, params):
+
+        # get ids
+        my_ship_id = params[0]
+        target_ship_id = params[1]
+
+        # get ships
+        my_ship = self.ships[my_ship_id]
+        enemy_ships = self._get_other_role_by_name(self.target_name).ships
+        target_ship = enemy_ships[target_ship_id]
+
+        # shoot
+        dead = my_ship.shoot(target_ship)
+        if dead:
+            del enemy_ships[target_ship_id]
+
+            # if flag ship dead
+            if target_ship_id == 0:
+                self.ships.extend(enemy_ships)
+                enemy_ships.clear()
+                self._exit_battle()
+
+    def all_ships_operate(self, params):
+
+        # if timer > 1
+        if self.battle_timer > 1:
+
+            # get my and enemy ships
+            enemy_ships = self._get_other_role_by_name(self.target_name).ships
+            my_ships = self.ships
+
+            # each of my ship picks a random target ship to attack
+            for i in range(len(my_ships)):
+                timer = Timer(i*2 + 1, self._pick_random_ship_to_shoot, args=[i, enemy_ships])
+                timer.start()
+
+            # clear timer
+            timer = Timer(len(my_ships) * 2 + 1, self._clear_timer)
+            timer.start()
+
+    def _clear_timer(self):
+        self.battle_timer = 1
+
+    def _pick_random_ship_to_shoot(self, i, enemy_ships):
+        if self.map == 'battle':
+            rand_seed_num = enemy_ships[0].now_hp + len(enemy_ships)
+            random.seed(rand_seed_num)
+            random_target_ship_id = random.choice(range(len(enemy_ships)))
+            self.shoot_ship([i, random_target_ship_id])
+
+
+    # ship yard
+    def buy_ship(self, params):
+        name = params[0]
+        type = params[1]
+
+        ship = Ship(name, type)
+        self.ships.append(ship)
+
+        print('now ships:', len(self.ships))
+
+    def sell_ship(self, params):
+        num = params[0]
+
+        del self.ships[num]
+        print('now ships:', len(self.ships))
+
+    def repair_all(self, params):
+        for ship in self.ships:
+            ship.now_hp = ship.max_hp
+
+    # bar
+    def hire_crew(self, params):
+        count = params[0]
+        to_which_ship = params[1]
+        print("to_which_ship:", to_which_ship)
+        print(self.ships)
+        self.ships[to_which_ship].add_crew(count)
+        print(self.name, "ship", to_which_ship, "now has crew:", self.ships[to_which_ship].crew)
+
+    def fire_crew(self, params):
+        count = params[0]
+        from_which_ship = params[1]
+        self.ships[from_which_ship].cut_crew(count)
+        print("ship", from_which_ship, "now has crew:", self.ships[from_which_ship].crew)
+
+    def hire_mate(self, params):
+        name = params[0]
+        nation = params[1]
+
+        mate = Mate(name, nation)
+        self.mates.append(mate)
+
+        print('now mates:', len(self.mates))
+
+    def fire_mate(self, params):
+        num = params[0]
+
+        del self.mates[num]
+        print('now mates:', len(self.mates))
+
+    # market
+    def buy_cargo(self, params):
+        cargo_name = params[0]
+        count = params[1]
+        to_which_ship = params[2]
+
+        can_add = self.ships[to_which_ship].add_cargo(cargo_name, count)
+        if can_add:
+            unit_price = 5
+            self.gold -= count * unit_price
+
+        print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
+        print(self.name, "gold:", self.gold)
+
+    def sell_cargo(self, params):
+        cargo_name = params[0]
+        count = params[1]
+        from_which_ship = params[2]
+
+        can_cut = self.ships[from_which_ship].cut_cargo(cargo_name, count)
+        if can_cut:
+            unit_price = 10
+            self.gold += count * unit_price
+
+        print(self.name, "ship", from_which_ship, "cargoes", self.ships[from_which_ship].cargoes)
+        print(self.name, "gold:", self.gold)
+
+    # port
+    def load_supply(self, params):
+        supply_name = params[0]
+        count = params[1]
+        to_which_ship = params[2]
+
+        self.ships[to_which_ship].load_supply(supply_name, count)
+        print(self.name, "ship", to_which_ship, "supplies", self.ships[to_which_ship].supplies[supply_name])
+
+    def unload_supply(self, params):
+        supply_name = params[0]
+        count = params[1]
+        from_which_ship = params[2]
+
+        self.ships[from_which_ship].unload_supply(supply_name, count)
+        print(self.name, "ship", from_which_ship, "supplies", 'unloaded')
+
+
+class Ship:
+    shooting_img = ''
+
+    def __init__(self, name, type):
+        self.name = name
+        self.type = type
+        self.x = 10
+        self.y = 10
+        self.state = ''
+        self.now_hp = 10
+        self.damage_got = ''
+        self.max_hp = 10
+        self.crew = 5
+        self.cargoes = {}
+        self.supplies = {
+            'Food':20,
+            'Water':20,
+        }
+
+    def move(self, direction):
+        if direction == 'up':
+            self.y -= 5
+        elif direction == 'down':
+            self.y += 5
+        elif direction == 'left':
+            self.x -= 5
+        elif direction == 'right':
+            self.x += 5
+
+    def shoot(self, ship):
+        self.state = 'shooting'
+        ship.state = 'shot'
+        timer = Timer(1, self._clear_state, args=[ship])
+        timer.start()
+
+        ship.now_hp -= 3
+        ship.damage_got = '3'
+        return ship.now_hp <= 0
+
+    def _clear_state(self, ship):
+        self.state = ''
+        ship.state = ''
+
+    def add_crew(self, count):
+        self.crew += count
+
+    def cut_crew(self, count):
+        self.crew -= count
+
+    def add_cargo(self, cargo_name, count):
+        if cargo_name in self.cargoes:
+            self.cargoes[cargo_name] += count
+        else:
+            self.cargoes[cargo_name] = count
+
+        return True
+
+    def cut_cargo(self, cargo_name, count):
+        if cargo_name in self.cargoes:
+            self.cargoes[cargo_name] -= count
+
+            if self.cargoes[cargo_name] <= 0:
+                del self.cargoes[cargo_name]
+
+            return True
+        else:
+            return False
+
+    def load_supply(self, supply_name, count):
+        if supply_name in self.supplies:
+            self.supplies[supply_name] += count
+        else:
+            self.supplies[supply_name] = count
+
+        return True
+
+    def unload_supply(self, supply_name, count):
+        if supply_name in self.supplies:
+            self.supplies[supply_name] -= count
+            return True
+        else:
+            return False
+
+
+class Mate:
+    def __init__(self, name, nation):
+        self.name = name
+        self.nation = nation
+
+
+class Cargo:
+    def __init__(self, name, count):
+        self.name = name
+        self.count = count
+
+
+# contains role and other visual client side stuff (only exists in client)
+class Player:
+    ship_in_battle_img = None
+
+    def __init__(self, role):
+        self.role = role
+        self.role_img = None
+        self.name_img = None
+        self.speak_img = None
+        self.logged_in = False
+
+
+if __name__ == '__main__':
+    role = Role(5, 5, 'test_name')
+    for i in range(10):
+        print(i)
+        role.discover([0])

@@ -12,7 +12,7 @@ HEADER_SIZE = 4
 
 def get_input():
     got_input = input()
-    return bytes(got_input.encode('utf-8'))
+    return got_input
 
 def get_user_input():
     d = threads.deferToThread(get_input)
@@ -27,21 +27,32 @@ class Echo(Protocol):
         self.dataBuffer = bytes()
 
         print('connected')
-        a = {1:1, 2:2}
-
-
-        self.send('test', a)
+        # a = ''
+        # for i in range(10000):
+        #     a += str(i)
+        #
+        #
+        # self.send('test', a)
 
 
         # self.transport.write(a)
         # self.transport.write(b'hello')
-        # d = get_user_input()
-        # d.addCallback(self.send_and_get_next_input)
+        d = get_user_input()
+        d.addCallback(self.send_and_get_next_input)
 
-    # def send_and_get_next_input(self, message):
-    #     self.transport.write(message)
-    #     d = get_user_input()
-    #     d.addCallback(self.send_and_get_next_input)
+    def send_and_get_next_input(self, user_input):
+
+        # parse user input
+        parts = user_input.split()
+        pck_type = parts[0]
+        message_obj = parts[1:]
+
+        # send to server
+        self.send(pck_type, message_obj)
+
+        # get user input again
+        d = get_user_input()
+        d.addCallback(self.send_and_get_next_input)
 
     def connectionLost(self, reason):
         print("lost")
@@ -95,6 +106,11 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
+        # d = threads.deferToThread(self.transport.getHandle().sendall, data)
+        # d.addCallback(self.say_sent)
+
+    def say_sent(self, na):
+        print('sent')
 
 class EchoClientFactory(ClientFactory):
     def startedConnecting(self, connector):

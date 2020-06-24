@@ -1,7 +1,9 @@
 from twisted.internet.protocol import Protocol, Factory
-from twisted.internet import reactor
+from twisted.internet import reactor, threads, defer
 
 from protocol import MyProtocol
+from DBmanager import Database
+
 
 PORT = 8100
 
@@ -9,6 +11,11 @@ HEADER_SIZE = 4
 
 
 class Echo(Protocol):
+    def __init__(self, factory):
+        super().__init__()
+        # each connection knows the factory
+        self.factory = factory
+
     def connectionMade(self):
         # init data buffer
         self.dataBuffer = bytes()
@@ -48,6 +55,8 @@ class Echo(Protocol):
         # self.transport.write(data)
 
     def pck_received(self, pck):
+
+        # get packet type and message object
         p = MyProtocol(pck)
         pck_type = p.get_str()
         print("got pck type:", pck_type)
@@ -56,10 +65,26 @@ class Echo(Protocol):
         print("message obj: ", message_obj)
 
         # send message back
-        self.send(pck_type, message_obj)
+        # self.send(pck_type, message_obj)
+
+        # responses based on different types
+        if pck_type == 'register':
+
+            # get ac and psw
+            account = message_obj[0]
+            password = message_obj[1]
+
+            # register ok?
+            is_ok = self.factory.db.register(account, password)
+            if is_ok:
+                print('success!')
+                self.send('register_ok')
+            else:
+                print("account exists!")
+                self.send('account_exists')
 
     # actions
-    def send(self, protocol_name, content_obj):
+    def send(self, protocol_name, content_obj='na'):
         """send packet to server"""
 
         # make packet
@@ -70,15 +95,19 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
+        # d = threads.deferToThread(self.transport.getHandle().sendall, data)
+        # d.addCallback(self.say_sent)
 
-
+    def say_sent(self, na):
+        print('sent')
 
 class EchoFactory(Factory):
     def __init__(self):
         self.users = {}
+        self.db = Database()
 
     def buildProtocol(self, addr):
-        return Echo()
+        return Echo(self)
 
 
 reactor.listenTCP(PORT, EchoFactory())
