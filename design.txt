@@ -1,0 +1,5 @@
+frameworks used
+	twisted(event driven network engine)
+	
+	pygame(game engine)
+	pygame_gui(GUI engine)
