@@ -1,6 +1,8 @@
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import reactor, threads, defer
 
+from protocol import MyProtocol
+
 
 HOST = 'localhost'
 PORT = 8100
@@ -17,19 +19,42 @@ def get_user_input():
 
 class Echo(Protocol):
     def connectionMade(self):
-        a = ''
-        for i in range(6000):
-            a += str(i)
-        a = bytes(a.encode('utf-8'))
-        self.transport.write(a)
-        # self.transport.write(b'hello')
-        d = get_user_input()
-        d.addCallback(self.send_and_get_next_input)
+        # init data buffer
+        self.dataBuffer = bytes()
 
-    def send_and_get_next_input(self, message):
-        self.transport.write(message)
-        d = get_user_input()
-        d.addCallback(self.send_and_get_next_input)
+        print('connected')
+        a = ''
+        for i in range(10000):
+            a += str(i)
+        # a = bytes(a.encode('utf-8'))
+
+        self.send('test', a)
+
+
+        # self.transport.write(a)
+        # self.transport.write(b'hello')
+        # d = get_user_input()
+        # d.addCallback(self.send_and_get_next_input)
+
+    # def send_and_get_next_input(self, message):
+    #     self.transport.write(message)
+    #     d = get_user_input()
+    #     d.addCallback(self.send_and_get_next_input)
+
+    def send(self, protocol_name, content_obj):
+        """send packet to server"""
+
+        # make packet
+        p = MyProtocol()
+        p.add_str(protocol_name)
+        p.add_obj(content_obj)
+        data = p.get_pck_has_head()
+
+        # send packet
+        self.transport.write(data)
+
+    def connectionLost(self, reason):
+        print("lost")
 
     def dataReceived(self, data):
         print("got", data)
