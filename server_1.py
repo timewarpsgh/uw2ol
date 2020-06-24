@@ -8,15 +8,6 @@ PORT = 8100
 HEADER_SIZE = 4
 
 
-def pck_handler(pck):
-    p = MyProtocol(pck)
-    pck_type = p.get_str()
-    print("got pck type:", pck_type)
-
-    message_obj = p.get_obj()
-    print("message obj: ", message_obj)
-
-
 class Echo(Protocol):
     def connectionMade(self):
         # init data buffer
@@ -28,6 +19,7 @@ class Echo(Protocol):
         print("connection lost!")
 
     def dataReceived(self, data):
+        """combine data to get packet"""
         print("got", data)
         self.dataBuffer += data
 
@@ -47,13 +39,38 @@ class Echo(Protocol):
         print('got packet')
 
         # 把封包交给处理函数
-        pck_handler(pck)
+        self.pck_received(pck)
 
         # 删除已经读取的字节
         self.dataBuffer = self.dataBuffer[HEADER_SIZE + length_pck:]
 
         # print("got", data)
         # self.transport.write(data)
+
+    def pck_received(self, pck):
+        p = MyProtocol(pck)
+        pck_type = p.get_str()
+        print("got pck type:", pck_type)
+
+        message_obj = p.get_obj()
+        print("message obj: ", message_obj)
+
+        # send message back
+        self.send(pck_type, message_obj)
+
+    # actions
+    def send(self, protocol_name, content_obj):
+        """send packet to server"""
+
+        # make packet
+        p = MyProtocol()
+        p.add_str(protocol_name)
+        p.add_obj(content_obj)
+        data = p.get_pck_has_head()
+
+        # send packet
+        self.transport.write(data)
+
 
 
 class EchoFactory(Factory):

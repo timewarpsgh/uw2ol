@@ -7,6 +7,8 @@ from protocol import MyProtocol
 HOST = 'localhost'
 PORT = 8100
 
+HEADER_SIZE = 4
+
 
 def get_input():
     got_input = input()
@@ -17,16 +19,16 @@ def get_user_input():
     return d
 
 
+
+
 class Echo(Protocol):
     def connectionMade(self):
         # init data buffer
         self.dataBuffer = bytes()
 
         print('connected')
-        a = ''
-        for i in range(10000):
-            a += str(i)
-        # a = bytes(a.encode('utf-8'))
+        a = {1:1, 2:2}
+
 
         self.send('test', a)
 
@@ -41,6 +43,47 @@ class Echo(Protocol):
     #     d = get_user_input()
     #     d.addCallback(self.send_and_get_next_input)
 
+    def connectionLost(self, reason):
+        print("lost")
+
+    def dataReceived(self, data):
+        """combine data to get packet"""
+        print("got", data)
+        # d = get_user_input()
+        # d = d.addCallback(self.transport.write)
+        # d.addCallback(get_user_input)
+
+        self.dataBuffer += data
+
+        # if buffer size less than packet length
+        if len(self.dataBuffer) < HEADER_SIZE:
+            return
+
+        # read length of packet
+        length_pck = int.from_bytes(self.dataBuffer[:HEADER_SIZE], byteorder='little')
+
+        # if buffer size < header + packet length
+        if len(self.dataBuffer) < HEADER_SIZE + length_pck:
+            return
+
+        # 截取封包
+        pck = self.dataBuffer[HEADER_SIZE:HEADER_SIZE + length_pck]
+        print('got packet')
+
+        # 把封包交给处理函数
+        self.pck_received(pck)
+
+        # 删除已经读取的字节
+        self.dataBuffer = self.dataBuffer[HEADER_SIZE + length_pck:]
+
+    def pck_received(self, pck):
+        p = MyProtocol(pck)
+        pck_type = p.get_str()
+        print("got pck type:", pck_type)
+
+        message_obj = p.get_obj()
+        print("message obj: ", message_obj)
+
     def send(self, protocol_name, content_obj):
         """send packet to server"""
 
@@ -52,15 +95,6 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
-
-    def connectionLost(self, reason):
-        print("lost")
-
-    def dataReceived(self, data):
-        print("got", data)
-        # d = get_user_input()
-        # d = d.addCallback(self.transport.write)
-        # d.addCallback(get_user_input)
 
 class EchoClientFactory(ClientFactory):
     def startedConnecting(self, connector):
