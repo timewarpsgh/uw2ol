@@ -42,19 +42,20 @@ class Database:
         if rows:
             print("login success!" )
             id = rows[0][0]
-            return id, account
+            return account
         else:
             print("account or password wrong!")
-            return 0, 0
+            return False
         pass
 
     # data table
-    def create_character(self, id, account, character_name):
+    def create_character(self, account, character_name):
 
         # exists?
         try:
             player = pickle.load(open("data/save." + account, "rb"))
             print("exists!")
+            return False
 
         # no
         except:
@@ -74,6 +75,7 @@ class Database:
 
             pickle.dump(default_role, open("data/save." + account, "wb"))
             print("new player created!")
+            return True
 
 
     def get_character_data(self, account):

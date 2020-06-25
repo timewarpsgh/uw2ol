@@ -64,9 +64,6 @@ class Echo(Protocol):
         message_obj = p.get_obj()
         print("message obj: ", message_obj)
 
-        # send message back
-        # self.send(pck_type, message_obj)
-
         # responses based on different types
         if pck_type == 'register':
 
@@ -78,14 +75,64 @@ class Echo(Protocol):
             d = threads.deferToThread(self.factory.db.register, account, password)
             d.addCallback(self.on_register_got_result)
 
+        elif pck_type == 'login':
+
+            # get ac and psw
+            account = message_obj[0]
+            password = message_obj[1]
+
+            # try to login
+            d = threads.deferToThread(self.factory.db.login, account, password)
+            d.addCallback(self.on_login_got_result)
+
+        elif pck_type == 'create_new_role':
+            name = message_obj
+            account = self.account
+
+            d = threads.deferToThread(self.factory.db.create_character, account, name)
+            d.addCallback(self.on_create_character_got_result)
+
+    def on_create_character_got_result(self, is_ok):
+        if is_ok:
+            self.send('new_role_created')
+        else:
+            self.send('name_exists')
+
     def on_register_got_result(self, is_ok):
         if is_ok:
-            print('success!')
+            print('register success!')
             self.send('register_ok')
         else:
             print("account exists!")
             self.send('account_exists')
 
+    def on_login_got_result(self, account):
+
+        # ok
+        if account:
+            print('login success!', account)
+
+            self.account = account
+
+            d = threads.deferToThread(self.factory.db.get_character_data, account)
+            d.addCallback(self.on_get_character_data_got_result)
+
+            # role = self.factory.db.get_character_data(account)
+            #
+            # self.send('your_role_data', role)
+
+        # not ok
+        else:
+            print("login failed!")
+            self.send('login_failed')
+
+    def on_get_character_data_got_result(self, role):
+        # ok
+        if role != False:
+            self.send('your_role_data', role)
+        # not ok
+        else:
+            self.send('no_role_yet')
 
     # actions
     def send(self, protocol_name, content_obj='na'):

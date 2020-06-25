@@ -3,3 +3,11 @@ frameworks used
 	
 	pygame(game engine)
 	pygame_gui(GUI engine)
+
+protocols
+    client sent:
+        register            account password
+        login               account password
+        create_new_role     name
+
+        start_move x y direction
