@@ -6,15 +6,9 @@ from role import Role, Ship, Mate
 from game import Game
 import constants as c
 
-
 from twisted.internet.task import LoopingCall
 import pygame
 import sys
-
-
-
-
-HEADER_SIZE = 4
 
 
 def get_input():
@@ -65,25 +59,25 @@ class Echo(Protocol):
         self.dataBuffer += data
 
         # if buffer size less than packet length
-        if len(self.dataBuffer) < HEADER_SIZE:
+        if len(self.dataBuffer) < c.HEADER_SIZE:
             return
 
         # read length of packet
-        length_pck = int.from_bytes(self.dataBuffer[:HEADER_SIZE], byteorder='little')
+        length_pck = int.from_bytes(self.dataBuffer[:c.HEADER_SIZE], byteorder='little')
 
         # if buffer size < header + packet length
-        if len(self.dataBuffer) < HEADER_SIZE + length_pck:
+        if len(self.dataBuffer) < c.HEADER_SIZE + length_pck:
             return
 
         # 截取封包
-        pck = self.dataBuffer[HEADER_SIZE:HEADER_SIZE + length_pck]
+        pck = self.dataBuffer[c.HEADER_SIZE:c.HEADER_SIZE + length_pck]
         print('got packet')
 
         # 把封包交给处理函数
         self.pck_received(pck)
 
         # 删除已经读取的字节
-        self.dataBuffer = self.dataBuffer[HEADER_SIZE + length_pck:]
+        self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
 
     def pck_received(self, pck):
         # get packet type and message object
