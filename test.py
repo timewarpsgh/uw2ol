@@ -1,3 +1,4 @@
-a = input()
-a = bytes(a.encode('utf-8'))
+import constants as c
+
+a = c.WINDOW_WIDTH
 print(a)

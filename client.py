@@ -3,38 +3,16 @@ from twisted.internet import reactor, threads, defer
 
 from protocol import MyProtocol
 from role import Role, Ship, Mate
+from game import Game
+import constants as c
+
 
 from twisted.internet.task import LoopingCall
 import pygame
 import sys
 
 
-# pygame
-DESIRED_FPS = 30.0 # 30 frames per second
-WIDTH = 600
-HEIGHT = 800
-pygame.init()
-pygame.display.set_caption('网络游戏Demo')
-g_screen = pygame.display.set_mode([WIDTH, HEIGHT])
 
-def game_tick():
-   events = pygame.event.get()
-
-   # Process input events
-   for event in events:
-      if event.type == pygame.QUIT:
-          pygame.quit()
-          sys.exit()
-
-   # draw
-
-# Set up a looping call every 1/30th of a second to run your game tick
-tick = LoopingCall(game_tick)
-tick.start(1.0 / DESIRED_FPS)
-
-
-HOST = 'localhost'
-PORT = 8100
 
 HEADER_SIZE = 4
 
@@ -48,24 +26,17 @@ def get_user_input():
     return d
 
 
-
-
 class Echo(Protocol):
+    def __init__(self, game):
+        self.game = game
+        # send connection to game
+        self.game.get_connection(self)
+
     def connectionMade(self):
         # init data buffer
         self.dataBuffer = bytes()
 
         print('connected')
-        # a = ''
-        # for i in range(10000):
-        #     a += str(i)
-        #
-        #
-        # self.send('test', a)
-
-
-        # self.transport.write(a)
-        # self.transport.write(b'hello')
         d = get_user_input()
         d.addCallback(self.send_and_get_next_input)
 
@@ -89,10 +60,8 @@ class Echo(Protocol):
     def dataReceived(self, data):
         """combine data to get packet"""
         print("got", data)
-        # d = get_user_input()
-        # d = d.addCallback(self.transport.write)
-        # d.addCallback(get_user_input)
 
+        # append to buffer
         self.dataBuffer += data
 
         # if buffer size less than packet length
@@ -117,25 +86,18 @@ class Echo(Protocol):
         self.dataBuffer = self.dataBuffer[HEADER_SIZE + length_pck:]
 
     def pck_received(self, pck):
+        # get packet type and message object
         p = MyProtocol(pck)
         pck_type = p.get_str()
         print("got pck type:", pck_type)
-
         message_obj = p.get_obj()
         print("message obj: ", message_obj)
 
-        # different responses
-        if pck_type == 'your_role_data':
-            print("got my role data")
-            role = message_obj
-            self.my_role = role
-
-            print("my role's x y:", role.x, role.y, role.map)
-
+        # send type and message to game
+        self.game.pck_received(pck_type, message_obj)
 
     def send(self, protocol_name, content_obj):
         """send packet to server"""
-
         # make packet
         p = MyProtocol()
         p.add_str(protocol_name)
@@ -144,19 +106,18 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
-        # d = threads.deferToThread(self.transport.getHandle().sendall, data)
-        # d.addCallback(self.say_sent)
 
-    def say_sent(self, na):
-        print('sent')
 
 class EchoClientFactory(ClientFactory):
-    def startedConnecting(self, connector):
-        print('Started to connect.')
+    def __init__(self, game):
+        self.game = game
 
     def buildProtocol(self, addr):
         print('Connected.')
-        return Echo()
+        return Echo(self.game)
+
+    def startedConnecting(self, connector):
+        print('Started to connect.')
 
     def clientConnectionLost(self, connector, reason):
         print('Lost connection.  Reason:', reason)
@@ -164,6 +125,15 @@ class EchoClientFactory(ClientFactory):
     def clientConnectionFailed(self, connector, reason):
         print('Connection failed. Reason:', reason)
 
+def main():
+    # init game and schedule game loop
+    game = Game()
+    tick = LoopingCall(game.update)
+    tick.start(1.0 / c.FPS)
 
-reactor.connectTCP(HOST, PORT, EchoClientFactory())
-reactor.run()
+    # pass game to factory and run reactor
+    reactor.connectTCP(c.HOST, c.PORT, EchoClientFactory(game))
+    reactor.run()
+
+if __name__ == "__main__":
+    main()
