@@ -75,13 +75,17 @@ class Echo(Protocol):
             password = message_obj[1]
 
             # register ok?
-            is_ok = self.factory.db.register(account, password)
-            if is_ok:
-                print('success!')
-                self.send('register_ok')
-            else:
-                print("account exists!")
-                self.send('account_exists')
+            d = threads.deferToThread(self.factory.db.register, account, password)
+            d.addCallback(self.on_register_got_result)
+
+    def on_register_got_result(self, is_ok):
+        if is_ok:
+            print('success!')
+            self.send('register_ok')
+        else:
+            print("account exists!")
+            self.send('account_exists')
+
 
     # actions
     def send(self, protocol_name, content_obj='na'):
