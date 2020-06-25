@@ -5,6 +5,7 @@ import constants as c
 
 
 class Game():
+    # init
     def __init__(self):
         # pygame
         pygame.init()
@@ -35,10 +36,17 @@ class Game():
         # font
         self.font = pygame.font.SysFont("fangsong", 24)
 
+    # update
     def update(self):
         """called each frame"""
-        # process input events
+        self.process_input_events()
+        self.draw()
+
+    def process_input_events(self):
+        # get events
         events = pygame.event.get()
+
+        # iterate events
         for event in events:
             # quit
             if event.type == pygame.QUIT:
@@ -55,24 +63,26 @@ class Game():
                 elif event.key == ord('l'):
                     self.connection.send('login', ['1', '1'])
 
-        # draw
+    def draw(self):
+        # fill
         self.screen_surface.fill(c.BLACK)
 
-            # logged in
+        # if logged in
         if self.my_role:
 
             # draw map
             now_map = self.my_role.map
-            self.screen_surface.blit(self.images[now_map], (100, 100))
+            self.screen_surface.blit(self.images[now_map], (0, 0))
 
             # draw my role
             self.screen_surface.blit(self.images['person_in_port'], (self.my_role.x, self.my_role.y))
 
-            # not logged in
+        # not logged in
         else:
             text_surface = self.font.render('Please Login', True, c.WHITE)
             self.screen_surface.blit(text_surface, (5, 5))
 
+        # flip
         pygame.display.flip()
 
     def get_connection(self, obj):
