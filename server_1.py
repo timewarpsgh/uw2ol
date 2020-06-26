@@ -25,6 +25,12 @@ class Echo(Protocol):
     def connectionLost(self, reason):
         print("connection lost!")
 
+        # save role to DB
+        account = self.account
+        role_to_save = self.my_role
+        dbm = self.factory.db
+        dbm.save_character_data(account, role_to_save)
+
     def dataReceived(self, data):
         """combine data to get packet"""
         print("got", data)
@@ -159,11 +165,7 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
-        # d = threads.deferToThread(self.transport.getHandle().sendall, data)
-        # d.addCallback(self.say_sent)
 
-    def say_sent(self, na):
-        print('sent')
 
 class EchoFactory(Factory):
     def __init__(self):
