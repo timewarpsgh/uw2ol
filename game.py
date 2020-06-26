@@ -2,7 +2,7 @@ import pygame
 import sys
 from twisted.internet import reactor
 import constants as c
-
+from role import Role, Ship, Mate
 
 class Game():
     # init
@@ -126,8 +126,18 @@ class Game():
             name_of_logged_out_role = message_obj
             del self.other_roles[name_of_logged_out_role]
 
+        # sync packets
+        elif pck_type in Role.__dict__:
+            list = message_obj
+            name = list.pop()
+            func_name = pck_type
+            role = self.other_roles[name]
+            print("trying", func_name, list, "for", name)
+            func = getattr(role, func_name)
+            func(list)
+
 
     def change_and_send(self, protocol_name, params_list):
+        self.connection.send(protocol_name, params_list)
         func = getattr(self.my_role, protocol_name)
         func(params_list)
-        self.connection.send(protocol_name, params_list)

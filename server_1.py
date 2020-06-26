@@ -36,7 +36,6 @@ class Echo(Protocol):
         for conn in self.factory.users[self.my_role.map].values():
                 conn.send('logout', self.my_role.name)
 
-
     def dataReceived(self, data):
         """combine data to get packet"""
         print("got", data)
@@ -105,16 +104,16 @@ class Echo(Protocol):
             d.addCallback(self.on_create_character_got_result)
 
         elif pck_type in Role.__dict__:
-
+            """ commands that change my role's state are broadcast to other clients in same map """
             # server changes role state
             func_name = pck_type
             func = getattr(self.my_role, func_name)
             func(message_obj)
 
             # send to other clients
-            # actor_name = self.get_conn().role.name
-            # list.append(actor_name)
-            # self.send_to_other_clients(func_name, list)
+            params_list = message_obj
+            params_list.append(self.my_role.name)
+            self.send_to_other_clients(func_name, params_list)
 
     def on_create_character_got_result(self, is_ok):
         if is_ok:
@@ -177,7 +176,6 @@ class Echo(Protocol):
     # actions
     def send(self, protocol_name, content_obj='na'):
         """send packet to server"""
-
         # make packet
         p = MyProtocol()
         p.add_str(protocol_name)
@@ -186,7 +184,14 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
+        # self.transport.getHandle().sendall(data)
+        print("transport just wrote:", protocol_name, content_obj)
 
+    def send_to_other_clients(self, protocol_name, content_obj='na'):
+        """send packet to all clients in same map"""
+        for name, conn in self.factory.users[self.my_role.map].items():
+            if name != self.my_role.name:
+                conn.send(protocol_name, content_obj)
 
 class EchoFactory(Factory):
     def __init__(self):

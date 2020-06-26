@@ -15,6 +15,7 @@ def get_input():
     got_input = input()
     return got_input
 
+
 def get_user_input():
     d = threads.deferToThread(get_input)
     return d
@@ -100,6 +101,9 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
+        # self.transport.getHandle().sendall(data)
+
+        print("transport just wrote:", protocol_name, content_obj)
 
 
 class EchoClientFactory(ClientFactory):
