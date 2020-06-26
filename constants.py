@@ -3,7 +3,7 @@
 # graphics
 CAPTION = 'uncharted waters 2'
 WINDOW_WIDTH = 600
-WINODW_HIGHT = 600
+WINODW_HIGHT = 400
 FPS = 30.0
 
 # network

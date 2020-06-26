@@ -62,6 +62,8 @@ class Game():
                     print(self.my_role.name)
                 elif event.key == ord('l'):
                     self.connection.send('login', ['1', '1'])
+                elif event.key == ord('w'):
+                    self.change_and_send('move', ['up'])
 
     def draw(self):
         # fill
@@ -97,4 +99,7 @@ class Game():
             self.my_role = role
             print("my role's x y:", role.x, role.y, role.map)
 
-
+    def change_and_send(self, protocol_name, params_list):
+        func = getattr(self.my_role, protocol_name)
+        func(params_list)
+        self.connection.send(protocol_name, params_list)

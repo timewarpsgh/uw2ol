@@ -3,7 +3,7 @@ from twisted.internet import reactor, threads, defer
 
 from protocol import MyProtocol
 from DBmanager import Database
-
+from role import Role
 
 PORT = 8100
 
@@ -92,6 +92,18 @@ class Echo(Protocol):
             d = threads.deferToThread(self.factory.db.create_character, account, name)
             d.addCallback(self.on_create_character_got_result)
 
+        elif pck_type in Role.__dict__:
+
+            # server changes role state
+            func_name = pck_type
+            func = getattr(self.my_role, func_name)
+            func(message_obj)
+
+            # send to other clients
+            # actor_name = self.get_conn().role.name
+            # list.append(actor_name)
+            # self.send_to_other_clients(func_name, list)
+
     def on_create_character_got_result(self, is_ok):
         if is_ok:
             self.send('new_role_created')
@@ -129,6 +141,7 @@ class Echo(Protocol):
     def on_get_character_data_got_result(self, role):
         # ok
         if role != False:
+            self.my_role = role
             self.send('your_role_data', role)
         # not ok
         else:
