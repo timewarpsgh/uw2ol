@@ -17,6 +17,7 @@ class Game():
 
         # my role (data)
         self.my_role = None
+        self.other_roles = {}
 
         # load assets
         self.font = None
@@ -85,6 +86,10 @@ class Game():
             # draw my role
             self.screen_surface.blit(self.images['person_in_port'], (self.my_role.x, self.my_role.y))
 
+            # draw other roles
+            for role in self.other_roles.values():
+                self.screen_surface.blit(self.images['person_in_port'], (role.x, role.y))
+
         # not logged in
         else:
             text_surface = self.font.render('Please Login', True, c.WHITE)
@@ -98,12 +103,24 @@ class Game():
         self.connection = obj
 
     def pck_received(self, pck_type, message_obj):
-        # different responses
-        if pck_type == 'your_role_data':
+
+        if pck_type == 'your_role_data_and_others':
+            # my role
             print("got my role data")
-            role = message_obj
-            self.my_role = role
-            print("my role's x y:", role.x, role.y, role.map)
+            my_role = message_obj[0]
+            self.my_role = my_role
+            print("my role's x y:", my_role.x, my_role.y, my_role.map, my_role.name)
+
+            # other roles
+            other_roles = message_obj[1]
+            for role in other_roles:
+                self.other_roles[role.name] = role
+            print(other_roles)
+
+        elif pck_type == 'new_role':
+            new_role = message_obj
+            self.other_roles[new_role.name] = new_role
+            print("got new role named:", new_role.name)
 
     def change_and_send(self, protocol_name, params_list):
         func = getattr(self.my_role, protocol_name)

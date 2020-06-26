@@ -10,4 +10,8 @@ protocols
         login               account password
         create_new_role     name
 
-        start_move x y direction
+        move direction
+        (start_move x y direction)
+
+to do
+    see others in range

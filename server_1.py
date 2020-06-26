@@ -91,7 +91,7 @@ class Echo(Protocol):
             d.addCallback(self.on_login_got_result)
 
         elif pck_type == 'create_new_role':
-            name = message_obj
+            name = message_obj[0]
             account = self.account
 
             d = threads.deferToThread(self.factory.db.create_character, account, name)
@@ -146,8 +146,23 @@ class Echo(Protocol):
     def on_get_character_data_got_result(self, role):
         # ok
         if role != False:
+            # store role here and in users
             self.my_role = role
-            self.send('your_role_data', role)
+            self.factory.users[role.map][role.name] = self
+
+            # tell other clients in same map of new role
+            for name, conn in self.factory.users[role.map].items():
+                if name != role.name:
+                    conn.send('new_role', role)
+
+            # send to client other_roles
+            other_roles = []
+            for name, conn in self.factory.users[role.map].items():
+                if name != role.name:
+                    other_roles.append(conn.my_role)
+
+            self.send('your_role_data_and_others', [role, other_roles])
+
         # not ok
         else:
             self.send('no_role_yet')
@@ -168,7 +183,11 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
-        self.users = {}
+        self.users = {
+            'port':{},
+            'sea':{},
+            'battle':{},
+        }
         self.db = Database()
 
     def buildProtocol(self, addr):
