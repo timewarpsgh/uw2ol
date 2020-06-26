@@ -4,10 +4,7 @@ from twisted.internet import reactor, threads, defer
 from protocol import MyProtocol
 from DBmanager import Database
 from role import Role
-
-PORT = 8100
-
-HEADER_SIZE = 4
+import constants as c
 
 
 class Echo(Protocol):
@@ -42,25 +39,25 @@ class Echo(Protocol):
         self.dataBuffer += data
 
         # if buffer size less than packet length
-        if len(self.dataBuffer) < HEADER_SIZE:
+        if len(self.dataBuffer) < c.HEADER_SIZE:
             return
 
         # read length of packet
-        length_pck = int.from_bytes(self.dataBuffer[:HEADER_SIZE], byteorder='little')
+        length_pck = int.from_bytes(self.dataBuffer[:c.HEADER_SIZE], byteorder='little')
 
         # if buffer size < header + packet length
-        if len(self.dataBuffer) < HEADER_SIZE + length_pck:
+        if len(self.dataBuffer) < c.HEADER_SIZE + length_pck:
             return
 
         # 截取封包
-        pck = self.dataBuffer[HEADER_SIZE:HEADER_SIZE + length_pck]
+        pck = self.dataBuffer[c.HEADER_SIZE:c.HEADER_SIZE + length_pck]
         print('got packet')
 
         # 把封包交给处理函数
         self.pck_received(pck)
 
         # 删除已经读取的字节
-        self.dataBuffer = self.dataBuffer[HEADER_SIZE + length_pck:]
+        self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
 
         # print("got", data)
         # self.transport.write(data)
@@ -206,5 +203,5 @@ class EchoFactory(Factory):
         return Echo(self)
 
 
-reactor.listenTCP(PORT, EchoFactory())
+reactor.listenTCP(c.PORT, EchoFactory())
 reactor.run()

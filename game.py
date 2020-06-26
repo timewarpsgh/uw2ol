@@ -4,6 +4,9 @@ from twisted.internet import reactor
 import constants as c
 from role import Role, Ship, Mate
 
+EVENT_MOVE = pygame.USEREVENT + 5
+
+
 class Game():
     # init
     def __init__(self):
@@ -23,6 +26,11 @@ class Game():
         self.font = None
         self.images = {}
         self.load_assets()
+
+        # test looping event
+        pygame.time.set_timer(EVENT_MOVE, 300)
+        self.move_direction = 1
+        self.move_count = 0
 
     def load_assets(self):
         # maps
@@ -71,6 +79,21 @@ class Game():
                     self.change_and_send('move', ['left'])
                 elif event.key == ord('d'):
                     self.change_and_send('move', ['right'])
+
+            elif event.type == EVENT_MOVE:
+                # print("got move event")
+
+                if self.my_role:
+                    if self.move_direction == 1:
+                        self.change_and_send('move', ['right'])
+                    else:
+                        self.change_and_send('move', ['left'])
+
+                    self.move_count += 1
+
+                    if self.move_count >= 15:
+                        self.move_count = 0
+                        self.move_direction *= -1
 
     def draw(self):
         # fill

@@ -130,7 +130,15 @@ def main():
     tick.start(1.0 / c.FPS)
 
     # pass game to factory and run reactor
-    reactor.connectTCP(c.HOST, c.PORT, EchoClientFactory(game))
+    host = None
+    port = None
+    if c.REMOTE_ON:
+        host = c.REMOTE_HOST
+        port = c.REMOTE_PORT
+    else:
+        host = c.HOST
+        port = c.PORT
+    reactor.connectTCP(host, port, EchoClientFactory(game))
     reactor.run()
 
 if __name__ == "__main__":
