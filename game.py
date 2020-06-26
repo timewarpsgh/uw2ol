@@ -122,6 +122,11 @@ class Game():
             self.other_roles[new_role.name] = new_role
             print("got new role named:", new_role.name)
 
+        elif pck_type == 'logout':
+            name_of_logged_out_role = message_obj
+            del self.other_roles[name_of_logged_out_role]
+
+
     def change_and_send(self, protocol_name, params_list):
         func = getattr(self.my_role, protocol_name)
         func(params_list)

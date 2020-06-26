@@ -30,6 +30,13 @@ class Echo(Protocol):
         role_to_save = self.my_role
         d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
 
+        # delete from users dict and tell clients that you logged out
+        del self.factory.users[self.my_role.map][self.my_role.name]
+
+        for conn in self.factory.users[self.my_role.map].values():
+                conn.send('logout', self.my_role.name)
+
+
     def dataReceived(self, data):
         """combine data to get packet"""
         print("got", data)
