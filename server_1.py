@@ -28,8 +28,7 @@ class Echo(Protocol):
         # save role to DB
         account = self.account
         role_to_save = self.my_role
-        dbm = self.factory.db
-        dbm.save_character_data(account, role_to_save)
+        d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
 
     def dataReceived(self, data):
         """combine data to get packet"""

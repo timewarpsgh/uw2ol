@@ -64,6 +64,12 @@ class Game():
                     self.connection.send('login', ['1', '1'])
                 elif event.key == ord('w'):
                     self.change_and_send('move', ['up'])
+                elif event.key == ord('s'):
+                    self.change_and_send('move', ['down'])
+                elif event.key == ord('a'):
+                    self.change_and_send('move', ['left'])
+                elif event.key == ord('d'):
+                    self.change_and_send('move', ['right'])
 
     def draw(self):
         # fill
