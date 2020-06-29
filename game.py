@@ -21,6 +21,7 @@ class Game():
         # my role (data)
         self.my_role = None
         self.other_roles = {}
+        self.all_roles = {}
 
         # load assets
         self.font = None
@@ -101,6 +102,10 @@ class Game():
                 elif event.key == ord('v'):
                     self.change_and_send('try_to_fight_with', ['d'])
 
+                elif event.key == ord('k'):
+                    self.change_and_send('shoot_ship', [1, 1])
+
+
 
             elif event.type == EVENT_MOVE:
                 # print("got move event")
@@ -134,12 +139,63 @@ class Game():
             else:
                 self.screen_surface.blit(self.images['battle'], (0, 0))
 
-            # draw my role
-            self.screen_surface.blit(self.images['person_in_port'], (self.my_role.x, self.my_role.y))
+            # in port
+            if now_map == 'port':
+                # draw my role
+                self.screen_surface.blit(self.images['person_in_port'], (self.my_role.x, self.my_role.y))
 
-            # draw other roles
-            for role in self.other_roles.values():
-                self.screen_surface.blit(self.images['person_in_port'], (role.x, role.y))
+                # draw other roles
+                for role in self.other_roles.values():
+                    self.screen_surface.blit(self.images['person_in_port'], (role.x, role.y))
+
+            # at sea
+            elif now_map == 'sea':
+                # draw my role
+                self.screen_surface.blit(self.images['ship_at_sea'], (self.my_role.x, self.my_role.y))
+
+                # draw other roles
+                for role in self.other_roles.values():
+                    self.screen_surface.blit(self.images['ship_at_sea'], (role.x, role.y))
+
+            # in battle
+            else:
+                # my ships
+                index = 0
+                for ship in self.my_role.ships:
+                    index += 30
+
+                    # ship
+                    self.screen_surface.blit(self.images['ship_at_sea'], (10, 10 + index))
+
+                    # # state
+                    # if ship.state == 'shooting':
+                    #     self.screen_surface.blit(Ship.shooting_img, (60, 10 + index))
+                    # elif ship.state == 'shot':
+                    #     damage_img = g_font.render(ship.damage_got, True, COLOR_BLACK)
+                    #     self.screen_surface.blit(damage_img, (60, 10 + index))
+
+                    # hp
+                    now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
+                    self.screen_surface.blit(now_hp_img, (20 + 20, 10 + index))
+
+                # enemy ships
+                index = 0
+                for ship in self.other_roles[self.my_role.enemy_name].ships:
+                    index += 30
+
+                    # ship
+                    self.screen_surface.blit(self.images['ship_at_sea'], (c.WINDOW_WIDTH - 50, 10 + index))
+
+                    # # state
+                    # if ship.state == 'shooting':
+                    #     g_screen.blit(Ship.shooting_img, (WIDTH - 100, 10 + index))
+                    # elif ship.state == 'shot':
+                    #     damage_img = g_font.render(ship.damage_got, True, COLOR_BLACK)
+                    #     g_screen.blit(damage_img, (WIDTH - 100, 10 + index))
+
+                    # hp
+                    now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
+                    self.screen_surface.blit(now_hp_img, (c.WINDOW_WIDTH - 70 - 10, 10 + index))
 
         # not logged in
         else:
@@ -200,6 +256,11 @@ class Game():
                     self.my_role = role
                 else:
                     self.other_roles[name] = role
+
+                # set game and in client to role
+
+                role.in_client = True
+                role.game = self
 
         elif pck_type == 'new_roles_from_battle':
             new_roles_from_battle = message_obj

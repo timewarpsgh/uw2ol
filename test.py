@@ -1,4 +1,3 @@
-import constants as c
-
-a = c.WINDOW_WIDTH
-print(a)
+tt = {1:1}
+print(tt[1])
+print(tt[0])

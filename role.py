@@ -19,6 +19,12 @@ class Role:
     # set at server, when server first got name of player
     g_name_to_socket_pool = None
 
+    # in server
+    users = None
+
+    # in client
+    game = None
+
     def __init__(self, x, y, name, gold=2000):
         self.x = x
         self.y = y
@@ -35,6 +41,9 @@ class Role:
         self.mates = []
         self.discoveries = {}
 
+        self.conn = None
+        self.game = None
+
         # set at client, when client first gets role from server(when got packet 'your_role_data')
         self.in_client = False
 
@@ -42,16 +51,18 @@ class Role:
 
         # in client
         if self.in_client:
-            dict = Role.g_all_players
-            print(dict, name)
-            p = dict[name]
-            return p.role
+            if name in self.game.other_roles:
+                target_role = self.game.other_roles[name]
+                print("target is:", target_role.name)
+                return target_role
+            else:
+                print("target is:", self.game.my_role.name)
+                return self.game.my_role
 
         # in server
         else:
-            socket = Role.g_name_to_socket_pool[name]
-            conn = Role.g_conn_pool[socket]
-            return conn.role
+            target_role = Role.users[self.map][name].my_role
+            return target_role
 
     # anywhere
     def change_map(self, params):
@@ -205,19 +216,20 @@ class Role:
 
         # get ships
         my_ship = self.ships[my_ship_id]
-        enemy_ships = self._get_other_role_by_name(self.target_name).ships
+        enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
         target_ship = enemy_ships[target_ship_id]
 
+        print("started shooting")
         # shoot
         dead = my_ship.shoot(target_ship)
-        if dead:
-            del enemy_ships[target_ship_id]
-
-            # if flag ship dead
-            if target_ship_id == 0:
-                self.ships.extend(enemy_ships)
-                enemy_ships.clear()
-                self._exit_battle()
+        # if dead:
+        #     del enemy_ships[target_ship_id]
+        #
+        #     # if flag ship dead
+        #     if target_ship_id == 0:
+        #         self.ships.extend(enemy_ships)
+        #         enemy_ships.clear()
+        #         self._exit_battle()
 
     def all_ships_operate(self, params):
 
@@ -375,8 +387,8 @@ class Ship:
     def shoot(self, ship):
         self.state = 'shooting'
         ship.state = 'shot'
-        timer = Timer(1, self._clear_state, args=[ship])
-        timer.start()
+        # timer = Timer(1, self._clear_state, args=[ship])
+        # timer.start()
 
         ship.now_hp -= 3
         ship.damage_got = '3'

@@ -277,6 +277,7 @@ class Echo(Protocol):
             # store role here and in users
             self.my_role = role
             self.factory.users[role.map][role.name] = self
+            Role.users = self.factory.users
 
             # tell other clients in same map of new role
             for name, conn in self.factory.users[role.map].items():

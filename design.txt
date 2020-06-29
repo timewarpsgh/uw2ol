@@ -10,16 +10,14 @@ protocols
         login               account password
         create_new_role     name
 
-        move                direction(maybe change to start_move x y direction)
         change_map          map_name
-
         try_to_fight_with   enemy_name
-        exit_battle
+        exit_battle(if no loser only) V
 
+        move                direction(maybe change to start_move x y direction)
+        shoot_ship          my_ship_id target_ship_id
 
-to do
-    see others appear and disapear in range(same map)
-        login V
-        log out V
-        change_map
+draw
+    draw ship at sea
+    draw ship in battle V
 
