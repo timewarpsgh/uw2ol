@@ -100,6 +100,34 @@ class Echo(Protocol):
             d = threads.deferToThread(self.factory.db.create_character, account, name)
             d.addCallback(self.on_create_character_got_result)
 
+        elif pck_type == 'change_map':
+            # get now_map and target_map
+            now_map = self.my_role.map
+            target_map = message_obj[0]
+
+            # change my map
+            self.my_role.map = target_map
+
+            # change users() state
+            del self.factory.users[now_map][self.my_role.name]
+            self.factory.users[target_map][self.my_role.name] = self
+
+            # send roles_in_new_map to my client
+            roles_in_new_map = {}
+            for name, conn in self.factory.users[target_map].items():
+                roles_in_new_map[name] = conn.my_role
+
+            self.send('roles_in_new_map', roles_in_new_map)
+
+            # send disappear message to other roles in my previous map
+            for name, conn in self.factory.users[now_map].items():
+                conn.send('role_disappeared', self.my_role.name)
+
+            # send new_role to other roles in my current map
+            for name, conn in self.factory.users[target_map].items():
+                if name != self.my_role.name:
+                    conn.send('new_role', self.my_role)
+
         elif pck_type in Role.__dict__:
             """ commands that change my role's state are broadcast to other clients in same map """
             # server changes role state

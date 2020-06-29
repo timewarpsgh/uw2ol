@@ -57,16 +57,17 @@ class Role:
         map_name = params[0]
         self.map = map_name
 
+        print("map changed to sea!")
         # if to sea
         if map_name == 'sea':
-
-            # reset days at sea
-            self.max_days_at_sea = self._count_max_days_at_sea()
-            self.days_spent_at_sea = 0
-
-            # sea days check timer
-            timer = Timer(1, self._check_days_at_sea_timer)
-            timer.start()
+            pass
+            # # reset days at sea
+            # self.max_days_at_sea = self._count_max_days_at_sea()
+            # self.days_spent_at_sea = 0
+            #
+            # # sea days check timer
+            # timer = Timer(1, self._check_days_at_sea_timer)
+            # timer.start()
 
         # if to port
         elif map_name == 'port':

@@ -80,6 +80,11 @@ class Game():
                 elif event.key == ord('d'):
                     self.change_and_send('move', ['right'])
 
+                elif event.key == ord('n'):
+                    self.change_and_send('change_map', ['sea'])
+                elif event.key == ord('m'):
+                    self.change_and_send('change_map', ['port'])
+
             elif event.type == EVENT_MOVE:
                 # print("got move event")
 
@@ -148,6 +153,16 @@ class Game():
         elif pck_type == 'logout':
             name_of_logged_out_role = message_obj
             del self.other_roles[name_of_logged_out_role]
+
+        elif pck_type == 'roles_in_new_map':
+            roles_in_new_map = message_obj
+            self.my_role = roles_in_new_map[self.my_role.name]
+            del roles_in_new_map[self.my_role.name]
+            self.other_roles = roles_in_new_map
+
+        elif pck_type == 'role_disappeared':
+            name_of_role_that_disappeared = message_obj
+            del self.other_roles[name_of_role_that_disappeared]
 
         # sync packets
         elif pck_type in Role.__dict__:

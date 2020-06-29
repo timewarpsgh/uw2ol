@@ -10,8 +10,13 @@ protocols
         login               account password
         create_new_role     name
 
-        move direction
-        (start_move x y direction)
+        move direction(maybe change to start_move x y direction)
+        change_map map_name
+
 
 to do
-    see others in range
+    see others appear and disapear in range(same map)
+        login V
+        log out V
+        change_map
+
