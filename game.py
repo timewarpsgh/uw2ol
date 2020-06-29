@@ -28,7 +28,7 @@ class Game():
         self.load_assets()
 
         # test looping event
-        pygame.time.set_timer(EVENT_MOVE, 300)
+        # pygame.time.set_timer(EVENT_MOVE, 50)
         self.move_direction = 1
         self.move_count = 0
 
