@@ -10,8 +10,10 @@ protocols
         login               account password
         create_new_role     name
 
-        move direction(maybe change to start_move x y direction)
-        change_map map_name
+        move                direction(maybe change to start_move x y direction)
+        change_map          map_name
+
+        enter_battle_with   player_name
 
 
 to do

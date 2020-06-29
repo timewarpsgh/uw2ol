@@ -43,7 +43,8 @@ class Echo(Protocol):
         message_obj = parts[1:]
 
         # send to server
-        self.send(pck_type, message_obj)
+        self.game.change_and_send(pck_type, message_obj)
+        # self.send(pck_type, message_obj)
 
         # get user input again
         d = get_user_input()
