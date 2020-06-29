@@ -23,9 +23,10 @@ class Echo(Protocol):
         print("connection lost!")
 
         # save role to DB
-        account = self.account
-        role_to_save = self.my_role
-        d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
+        if c.SAVE_ON_CONNECTION_LOST:
+            account = self.account
+            role_to_save = self.my_role
+            d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
 
         # delete from users dict and tell clients that you logged out
         del self.factory.users[self.my_role.map][self.my_role.name]
@@ -128,6 +129,56 @@ class Echo(Protocol):
                 if name != self.my_role.name:
                     conn.send('new_role', self.my_role)
 
+        elif pck_type == 'try_to_fight_with':
+            enemy_name = message_obj[0]
+            enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+            enemy_role = enemy_conn.my_role
+            my_role = self.my_role
+
+            # can fight
+            if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
+                '''both enter battle map'''
+                print('can go battle!')
+
+                # store my previous map
+                my_previous_map = self.my_role.map
+
+                # change my map and enemy map
+                my_name = self.my_role.name
+                battle_map_name = 'battle_' + my_name
+                self.my_role.map = battle_map_name
+                enemy_role.map = battle_map_name
+
+                # change users dict state
+                del self.factory.users[my_previous_map][my_name]
+                del self.factory.users[my_previous_map][enemy_role.name]
+
+                self.factory.users[battle_map_name] = {}
+                self.factory.users[battle_map_name][my_name] = self
+                self.factory.users[battle_map_name][enemy_role.name] = enemy_conn
+
+                # send roles_in_new_map to my client and enemy client
+                roles_in_new_map = {}
+                for name, conn in self.factory.users[battle_map_name].items():
+                    roles_in_new_map[name] = conn.my_role
+
+                self.send('roles_in_battle_map', roles_in_new_map)
+                enemy_conn.send('roles_in_battle_map', roles_in_new_map)
+
+                # send disappear message to other roles in my previous map
+                names_of_roles_that_disappeared = []
+                names_of_roles_that_disappeared.append(self.my_role.name)
+                names_of_roles_that_disappeared.append(enemy_role.name)
+
+                for name, conn in self.factory.users[my_previous_map].items():
+                    conn.send('roles_disappeared', names_of_roles_that_disappeared)
+
+            # can't
+            else:
+                self.send('target_too_far')
+
+
+
         elif pck_type in Role.__dict__:
             """ commands that change my role's state are broadcast to other clients in same map """
             # server changes role state
@@ -223,7 +274,7 @@ class EchoFactory(Factory):
         self.users = {
             'port':{},
             'sea':{},
-            'battle':{},
+            # 'battle':{},
         }
         self.db = Database()
 

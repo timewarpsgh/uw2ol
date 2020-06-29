@@ -4,8 +4,8 @@ from twisted.internet import reactor
 import constants as c
 from role import Role, Ship, Mate
 
-EVENT_MOVE = pygame.USEREVENT + 5
-
+EVENT_MOVE = pygame.USEREVENT + 1
+EVENT_HEART_BEAT = pygame.USEREVENT + 2
 
 class Game():
     # init
@@ -13,7 +13,7 @@ class Game():
         # pygame
         pygame.init()
         pygame.display.set_caption(c.CAPTION)
-        self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINODW_HIGHT])
+        self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINDOW_HIGHT])
 
         # connection
         self.connection = None
@@ -29,6 +29,7 @@ class Game():
 
         # test looping event
         # pygame.time.set_timer(EVENT_MOVE, 50)
+        # pygame.time.set_timer(EVENT_HEART_BEAT, 1000)
         self.move_direction = 1
         self.move_count = 0
 
@@ -69,8 +70,14 @@ class Game():
                 # return (focus text entry)
                 if event.key == ord('p'):
                     print(self.my_role.name)
-                elif event.key == ord('l'):
+                elif event.key == ord('1'):
                     self.connection.send('login', ['1', '1'])
+                elif event.key == ord('2'):
+                    self.connection.send('login', ['2', '2'])
+                elif event.key == ord('3'):
+                    self.connection.send('login', ['3', '3'])
+                elif event.key == ord('4'):
+                    self.connection.send('login', ['4', '4'])
                 elif event.key == ord('w'):
                     self.change_and_send('move', ['up'])
                 elif event.key == ord('s'):
@@ -84,6 +91,8 @@ class Game():
                     self.change_and_send('change_map', ['sea'])
                 elif event.key == ord('m'):
                     self.change_and_send('change_map', ['port'])
+                elif event.key == ord('b'):
+                    self.change_and_send('try_to_fight_with', ['b'])
 
             elif event.type == EVENT_MOVE:
                 # print("got move event")
@@ -100,6 +109,9 @@ class Game():
                         self.move_count = 0
                         self.move_direction *= -1
 
+            elif event.type ==  EVENT_HEART_BEAT:
+                self.change_and_send('heart_beat', [])
+
     def draw(self):
         # fill
         self.screen_surface.fill(c.BLACK)
@@ -109,7 +121,10 @@ class Game():
 
             # draw map
             now_map = self.my_role.map
-            self.screen_surface.blit(self.images[now_map], (0, 0))
+            if now_map == 'port' or now_map == 'sea':
+                self.screen_surface.blit(self.images[now_map], (0, 0))
+            else:
+                self.screen_surface.blit(self.images['battle'], (0, 0))
 
             # draw my role
             self.screen_surface.blit(self.images['person_in_port'], (self.my_role.x, self.my_role.y))
@@ -164,6 +179,20 @@ class Game():
             name_of_role_that_disappeared = message_obj
             del self.other_roles[name_of_role_that_disappeared]
 
+        elif pck_type == 'roles_disappeared':
+            names_of_roles_that_disappeared = message_obj
+            for name in names_of_roles_that_disappeared:
+                del self.other_roles[name]
+
+        elif pck_type == 'roles_in_battle_map':
+            roles_in_battle_map = message_obj
+            self.other_roles = {}
+            for name, role in roles_in_battle_map.items():
+                if name == self.my_role.name:
+                    self.my_role = role
+                else:
+                    self.other_roles[name] = role
+
         # sync packets
         elif pck_type in Role.__dict__:
             list = message_obj
@@ -177,5 +206,8 @@ class Game():
 
     def change_and_send(self, protocol_name, params_list):
         self.connection.send(protocol_name, params_list)
-        func = getattr(self.my_role, protocol_name)
-        func(params_list)
+        try:
+            func = getattr(self.my_role, protocol_name)
+            func(params_list)
+        except:
+            pass

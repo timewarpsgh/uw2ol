@@ -13,6 +13,8 @@ protocols
         move                direction(maybe change to start_move x y direction)
         change_map          map_name
 
+        try_to_fight_with   enemy_name
+
         enter_battle_with   player_name
 
 
