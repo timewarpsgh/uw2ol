@@ -23,6 +23,7 @@ class Role:
         self.x = x
         self.y = y
         self.name = name
+        self.enemy_name = None
         self.map = 'port'
         self.battle_timer = 0
         self.max_days_at_sea = 0

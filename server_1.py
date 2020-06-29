@@ -130,10 +130,15 @@ class Echo(Protocol):
                     conn.send('new_role', self.my_role)
 
         elif pck_type == 'try_to_fight_with':
+            # gets
             enemy_name = message_obj[0]
             enemy_conn = self.factory.users[self.my_role.map][enemy_name]
             enemy_role = enemy_conn.my_role
             my_role = self.my_role
+
+            # sets
+            my_role.enemy_name = enemy_name
+            enemy_role.enemy_name = my_role.name
 
             # can fight
             if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
@@ -177,6 +182,47 @@ class Echo(Protocol):
             else:
                 self.send('target_too_far')
 
+        elif pck_type == 'exit_battle':
+        # if no loser
+
+            # gets
+            enemy_name = self.my_role.enemy_name
+            enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+            enemy_role = enemy_conn.my_role
+            my_role = self.my_role
+            my_previous_map = self.my_role.map
+
+            # sets
+            my_role.map = 'sea'
+            enemy_role.map = 'sea'
+
+            # change users dict state
+            del self.factory.users[my_previous_map]
+            print(self.factory.users)
+
+            self.factory.users['sea'][my_role.name] = self
+            self.factory.users['sea'][enemy_role.name] = enemy_conn
+
+            # send roles_in_new_map to my client and enemy client
+            roles_in_new_map = {}
+            for name, conn in self.factory.users['sea'].items():
+                roles_in_new_map[name] = conn.my_role
+
+            self.send('roles_in_new_map', roles_in_new_map)
+            enemy_conn.send('roles_in_new_map', roles_in_new_map)
+
+            # send new role message to other roles in new map
+            new_roles_from_battle = {}
+            new_roles_from_battle[self.my_role.name] = self.my_role
+            new_roles_from_battle[enemy_role.name] = enemy_role
+
+            for name, conn in self.factory.users['sea'].items():
+                if name != enemy_name and name != self.my_role.name:
+                    conn.send('new_roles_from_battle', new_roles_from_battle)
+
+
+
+        # if someone lost
 
 
         elif pck_type in Role.__dict__:

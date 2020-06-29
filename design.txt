@@ -14,8 +14,7 @@ protocols
         change_map          map_name
 
         try_to_fight_with   enemy_name
-
-        enter_battle_with   player_name
+        exit_battle
 
 
 to do

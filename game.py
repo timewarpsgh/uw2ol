@@ -78,6 +78,8 @@ class Game():
                     self.connection.send('login', ['3', '3'])
                 elif event.key == ord('4'):
                     self.connection.send('login', ['4', '4'])
+                elif event.key == ord('5'):
+                    self.connection.send('login', ['5', '5'])
                 elif event.key == ord('w'):
                     self.change_and_send('move', ['up'])
                 elif event.key == ord('s'):
@@ -91,8 +93,14 @@ class Game():
                     self.change_and_send('change_map', ['sea'])
                 elif event.key == ord('m'):
                     self.change_and_send('change_map', ['port'])
+
                 elif event.key == ord('b'):
                     self.change_and_send('try_to_fight_with', ['b'])
+                elif event.key == ord('e'):
+                    self.change_and_send('exit_battle', [])
+                elif event.key == ord('v'):
+                    self.change_and_send('try_to_fight_with', ['d'])
+
 
             elif event.type == EVENT_MOVE:
                 # print("got move event")
@@ -192,6 +200,11 @@ class Game():
                     self.my_role = role
                 else:
                     self.other_roles[name] = role
+
+        elif pck_type == 'new_roles_from_battle':
+            new_roles_from_battle = message_obj
+            for name, role in new_roles_from_battle.items():
+                self.other_roles[name] = role
 
         # sync packets
         elif pck_type in Role.__dict__:
