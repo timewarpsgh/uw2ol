@@ -1,10 +1,13 @@
 """constants"""
 
-# graphics
+# pygame graphics
 CAPTION = 'uncharted waters 2'
 WINDOW_WIDTH = 600
 WINDOW_HIGHT = 400
 FPS = 30.0
+
+# gui graphics
+BUTTON_WIDTH, BUTTON_HIGHT = 60, 30
 
 # Database
 SAVE_ON_CONNECTION_LOST = False

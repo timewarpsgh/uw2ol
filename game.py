@@ -5,21 +5,31 @@ from twisted.internet import reactor
 import constants as c
 from role import Role, Ship, Mate
 
+from gui import SelectionListWindow
+
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
+
+def test():
+    print('testing')
+
 
 class Game():
     # init
     def __init__(self):
         # pygame
         pygame.init()
+        self.clock = pygame.time.Clock()
         pygame.display.set_caption(c.CAPTION)
         self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINDOW_HIGHT])
+
+        # gui
+        self.init_gui()
 
         # connection
         self.connection = None
 
-        # my role (data)
+        # roles (data)
         self.my_role = None
         self.other_roles = {}
         self.all_roles = {}
@@ -34,6 +44,64 @@ class Game():
         # pygame.time.set_timer(EVENT_HEART_BEAT, 1000)
         self.move_direction = 1
         self.move_count = 0
+
+    def init_gui(self):
+        # ui_manager
+        self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT))
+
+        # text entry
+        self.text_entry = pygame_gui.elements.UITextEntryLine(
+            pygame.Rect((c.WINDOW_WIDTH / 2 - 260, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
+            object_id='#main_text_entry')
+
+        # buttons
+        self.buttons = {}
+        self.init_button({'Ships': self.on_button_click_ships}, 1)
+        self.init_button({'Mates': test}, 2)
+        # self.init_button({'Ships': on_button_click_ships}, 1)
+        # self.init_button({'Mates': on_button_click_mates}, 2)
+        # self.init_button({'Items': on_button_click_items}, 3)
+        # self.init_button({'Cmds': on_button_click_cmds}, 4)
+        # self.init_button({'Options': on_button_click_options}, 5)
+        # self.init_button({'Port': on_button_click_port}, 6)
+        # self.init_button({'Battle': on_button_click_battle}, 7)
+
+        # menu stack
+        self.menu_stack = []
+        self.selection_list_stack = []
+
+    # gui functions
+    def init_button(self, dict, position):
+
+        # get text and function from dict
+        text_list = list(dict.keys())
+        text = text_list[0]
+        function = dict[text]
+
+        # make button
+        button = pygame_gui.elements.UIButton(pygame.Rect((c.WINDOW_WIDTH - c.BUTTON_WIDTH * position,
+                                                           c.WINDOW_HIGHT - c.BUTTON_HIGHT),
+                                                          (c.BUTTON_WIDTH, c.BUTTON_HIGHT)),
+                                              text,
+                                              self.ui_manager,
+                                              object_id='#scaling_button')
+
+        # add to buttons dict
+        self.buttons[button] = function
+
+    def on_button_click_ships(self):
+        dict = {
+            'Fleet Info': test,
+            'Ship Info': test,
+            'Rearrange': test,
+        }
+        self.make_menu(dict)
+
+    def make_menu(self, dict):
+        SelectionListWindow(pygame.Rect((c.WINDOW_WIDTH - 224, 50),
+                                        (224, 250)),
+                                         self.ui_manager,
+                                         dict, self)
 
     def load_assets(self):
         # maps
@@ -55,76 +123,130 @@ class Game():
         self.draw()
 
     def process_input_events(self):
+
+        # update ui
+        time_delta = self.clock.tick(60) / 1000.0
+        self.ui_manager.update(time_delta)
+
         # get events
         events = pygame.event.get()
 
         # iterate events
         for event in events:
-            # quit
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                reactor.stop()
-                sys.exit()
+            self.handle_pygame_event(event)
+            self.handle_gui_event(event)
 
-            # key
-            elif event.type == pygame.KEYDOWN:
+    def handle_pygame_event(self, event):
+        # quit
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            reactor.stop()
+            sys.exit()
 
-                # return (focus text entry)
-                if event.key == ord('p'):
-                    print(self.my_role.name)
-                elif event.key == ord('1'):
-                    self.connection.send('login', ['1', '1'])
-                elif event.key == ord('2'):
-                    self.connection.send('login', ['2', '2'])
-                elif event.key == ord('3'):
-                    self.connection.send('login', ['3', '3'])
-                elif event.key == ord('4'):
-                    self.connection.send('login', ['4', '4'])
-                elif event.key == ord('5'):
-                    self.connection.send('login', ['5', '5'])
-                elif event.key == ord('w'):
-                    self.change_and_send('move', ['up'])
-                elif event.key == ord('s'):
-                    self.change_and_send('move', ['down'])
-                elif event.key == ord('a'):
-                    self.change_and_send('move', ['left'])
-                elif event.key == ord('d'):
+        # key
+        elif event.type == pygame.KEYDOWN:
+
+            # escape
+            if event.key == pygame.K_ESCAPE:
+
+                # pop menu_stack
+                if len(self.menu_stack) > 0:
+                    menu_to_kill = self.menu_stack.pop()
+                    self.selection_list_stack.pop()
+                    menu_to_kill.kill()
+                print(len(self.menu_stack))
+                print('escape pressed!')
+
+            # other keys
+            elif event.key == ord('p'):
+                print(self.my_role.name)
+            elif event.key == ord('1'):
+                self.connection.send('login', ['1', '1'])
+            elif event.key == ord('2'):
+                self.connection.send('login', ['2', '2'])
+            elif event.key == ord('3'):
+                self.connection.send('login', ['3', '3'])
+            elif event.key == ord('4'):
+                self.connection.send('login', ['4', '4'])
+            elif event.key == ord('5'):
+                self.connection.send('login', ['5', '5'])
+            elif event.key == ord('w'):
+                self.change_and_send('move', ['up'])
+            elif event.key == ord('s'):
+                self.change_and_send('move', ['down'])
+            elif event.key == ord('a'):
+                self.change_and_send('move', ['left'])
+            elif event.key == ord('d'):
+                self.change_and_send('move', ['right'])
+
+            elif event.key == ord('n'):
+                self.change_and_send('change_map', ['sea'])
+            elif event.key == ord('m'):
+                self.change_and_send('change_map', ['port'])
+
+            elif event.key == ord('b'):
+                self.change_and_send('try_to_fight_with', ['b'])
+            elif event.key == ord('e'):
+                self.change_and_send('exit_battle', [])
+            elif event.key == ord('v'):
+                self.change_and_send('try_to_fight_with', ['d'])
+
+            elif event.key == ord('k'):
+                self.change_and_send('shoot_ship', [0, 0])
+
+        # user defined events
+        elif event.type == EVENT_MOVE:
+            # print("got move event")
+
+            if self.my_role:
+                if self.move_direction == 1:
                     self.change_and_send('move', ['right'])
+                else:
+                    self.change_and_send('move', ['left'])
 
-                elif event.key == ord('n'):
-                    self.change_and_send('change_map', ['sea'])
-                elif event.key == ord('m'):
-                    self.change_and_send('change_map', ['port'])
+                self.move_count += 1
 
-                elif event.key == ord('b'):
-                    self.change_and_send('try_to_fight_with', ['b'])
-                elif event.key == ord('e'):
-                    self.change_and_send('exit_battle', [])
-                elif event.key == ord('v'):
-                    self.change_and_send('try_to_fight_with', ['d'])
+                if self.move_count >= 15:
+                    self.move_count = 0
+                    self.move_direction *= -1
 
-                elif event.key == ord('k'):
-                    self.change_and_send('shoot_ship', [0, 0])
+        elif event.type == EVENT_HEART_BEAT:
+            self.change_and_send('heart_beat', [])
 
+    def handle_gui_event(self, event):
 
+        # pass event to gui manager
+        self.ui_manager.process_events(event)
 
-            elif event.type == EVENT_MOVE:
-                # print("got move event")
+        # if event type is gui event
+        if event.type == pygame.USEREVENT:
 
-                if self.my_role:
-                    if self.move_direction == 1:
-                        self.change_and_send('move', ['right'])
+            # entry box entered
+            if (event.user_type == pygame_gui.UI_TEXT_ENTRY_FINISHED and
+                    event.ui_object_id == '#main_text_entry'):
+
+                # unfocus
+                if event.text:
+                    print(event.text)
+
+            # button press
+            elif event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element in self.buttons:
+                    self.buttons[event.ui_element]()
+
+            # selection list
+            elif event.user_type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
+                if event.ui_element == self.selection_list_stack[-1]:
+                    window = self.menu_stack[-1]
+                    dict = window.dict
+                    dict_value = dict[event.text]
+
+                    if isinstance(dict_value, list):
+                        function = dict[event.text][0]
+                        function(dict_value[1])
                     else:
-                        self.change_and_send('move', ['left'])
+                        dict[event.text]()
 
-                    self.move_count += 1
-
-                    if self.move_count >= 15:
-                        self.move_count = 0
-                        self.move_direction *= -1
-
-            elif event.type ==  EVENT_HEART_BEAT:
-                self.change_and_send('heart_beat', [])
 
     def draw(self):
         # fill
@@ -197,6 +319,9 @@ class Game():
                     # hp
                     now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
                     self.screen_surface.blit(now_hp_img, (c.WINDOW_WIDTH - 70 - 10, 10 + index))
+
+            # draw ui
+            self.ui_manager.draw_ui(self.screen_surface)
 
         # not logged in
         else:
