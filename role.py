@@ -224,12 +224,12 @@ class Role:
         dead = my_ship.shoot(target_ship)
         if dead:
             del enemy_ships[target_ship_id]
-        #
-        #     # if flag ship dead
-        #     if target_ship_id == 0:
-        #         self.ships.extend(enemy_ships)
-        #         enemy_ships.clear()
-        #         self._exit_battle()
+
+            # if flag ship dead
+            if target_ship_id == 0:
+                self.ships.extend(enemy_ships)
+                enemy_ships.clear()
+                print('battle ended. press e to exit battle.')
 
     def all_ships_operate(self, params):
 

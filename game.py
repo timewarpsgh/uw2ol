@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 import sys
 from twisted.internet import reactor
 import constants as c
@@ -103,7 +104,7 @@ class Game():
                     self.change_and_send('try_to_fight_with', ['d'])
 
                 elif event.key == ord('k'):
-                    self.change_and_send('shoot_ship', [1, 1])
+                    self.change_and_send('shoot_ship', [0, 0])
 
 
 

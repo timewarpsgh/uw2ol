@@ -19,5 +19,6 @@ protocols
 
 draw
     draw ship at sea
-    draw ship in battle V
+    draw ship in battle
+    GUI (ON)
 
