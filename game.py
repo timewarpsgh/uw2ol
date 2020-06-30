@@ -5,7 +5,7 @@ from twisted.internet import reactor
 import constants as c
 from role import Role, Ship, Mate
 
-from gui import SelectionListWindow
+from gui import SelectionListWindow, ButtonClickHandler
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -46,8 +46,9 @@ class Game():
         self.move_count = 0
 
     def init_gui(self):
-        # ui_manager
+        # ui_manager and handlers
         self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT))
+        self.button_click_handler = ButtonClickHandler(self)
 
         # text entry
         self.text_entry = pygame_gui.elements.UITextEntryLine(
@@ -56,15 +57,13 @@ class Game():
 
         # buttons
         self.buttons = {}
-        self.init_button({'Ships': self.on_button_click_ships}, 1)
-        self.init_button({'Mates': test}, 2)
-        # self.init_button({'Ships': on_button_click_ships}, 1)
-        # self.init_button({'Mates': on_button_click_mates}, 2)
-        # self.init_button({'Items': on_button_click_items}, 3)
-        # self.init_button({'Cmds': on_button_click_cmds}, 4)
-        # self.init_button({'Options': on_button_click_options}, 5)
-        # self.init_button({'Port': on_button_click_port}, 6)
-        # self.init_button({'Battle': on_button_click_battle}, 7)
+        self.init_button({'Ships': self.button_click_handler.on_button_click_ships}, 1)
+        self.init_button({'Mates': self.button_click_handler.on_button_click_mates}, 2)
+        self.init_button({'Items': self.button_click_handler.on_button_click_items}, 3)
+        self.init_button({'Cmds': self.button_click_handler.on_button_click_cmds}, 4)
+        self.init_button({'Options': self.button_click_handler.on_button_click_options}, 5)
+        self.init_button({'Port': self.button_click_handler.on_button_click_port}, 6)
+        self.init_button({'Battle': self.button_click_handler.on_button_click_battle}, 7)
 
         # menu stack
         self.menu_stack = []
@@ -94,6 +93,13 @@ class Game():
             'Fleet Info': test,
             'Ship Info': test,
             'Rearrange': test,
+        }
+        self.make_menu(dict)
+
+    def on_button_click_mates(self):
+        dict = {
+            'Admiral Info':test,
+            'Mate Info':test,
         }
         self.make_menu(dict)
 
