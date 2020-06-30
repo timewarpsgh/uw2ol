@@ -222,8 +222,8 @@ class Role:
         print("started shooting")
         # shoot
         dead = my_ship.shoot(target_ship)
-        # if dead:
-        #     del enemy_ships[target_ship_id]
+        if dead:
+            del enemy_ships[target_ship_id]
         #
         #     # if flag ship dead
         #     if target_ship_id == 0:
