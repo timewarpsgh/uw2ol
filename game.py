@@ -5,6 +5,7 @@ from twisted.internet import reactor
 import constants as c
 from role import Role, Ship, Mate
 import draw
+import gui
 
 from gui import SelectionListWindow, ButtonClickHandler
 
@@ -24,7 +25,7 @@ class Game():
         self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINDOW_HIGHT])
 
         # gui
-        self.init_gui()
+        gui.init_gui(self)
 
         # connection
         self.connection = None
@@ -44,52 +45,6 @@ class Game():
         # pygame.time.set_timer(EVENT_HEART_BEAT, 1000)
         self.move_direction = 1
         self.move_count = 0
-
-    def init_gui(self):
-        # ui_manager and handlers
-        self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT))
-        self.button_click_handler = ButtonClickHandler(self)
-
-        # text entry
-        self.text_entry = pygame_gui.elements.UITextEntryLine(
-            pygame.Rect((c.WINDOW_WIDTH / 2 - 260, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
-            object_id='#main_text_entry')
-
-        self.text_entry_active = False
-        self.active_input_boxes = []
-
-        # buttons
-        self.buttons = {}
-        self.init_button({'Ships': self.button_click_handler.on_button_click_ships}, 1)
-        self.init_button({'Mates': self.button_click_handler.on_button_click_mates}, 2)
-        self.init_button({'Items': self.button_click_handler.on_button_click_items}, 3)
-        self.init_button({'Cmds': self.button_click_handler.cmds}, 4)
-        self.init_button({'Options': self.button_click_handler.options}, 5)
-        self.init_button({'Port': self.button_click_handler.port}, 6)
-        self.init_button({'Battle': self.button_click_handler.battle}, 7)
-
-        self.buttons_in_windows = {}
-
-        # menu stack
-        self.menu_stack = []
-        self.selection_list_stack = []
-
-    def init_button(self, dict, position):
-        # get text and function from dict
-        text_list = list(dict.keys())
-        text = text_list[0]
-        function = dict[text]
-
-        # make button
-        button = pygame_gui.elements.UIButton(pygame.Rect((c.WINDOW_WIDTH - c.BUTTON_WIDTH * position,
-                                                           c.WINDOW_HIGHT - c.BUTTON_HIGHT),
-                                                          (c.BUTTON_WIDTH, c.BUTTON_HIGHT)),
-                                              text,
-                                              self.ui_manager,
-                                              object_id='#scaling_button')
-
-        # add to buttons dict
-        self.buttons[button] = function
 
     def load_assets(self):
         # maps
