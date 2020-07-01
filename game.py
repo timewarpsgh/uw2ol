@@ -16,7 +16,6 @@ def test():
 
 
 class Game():
-    # init
     def __init__(self):
         # pygame
         pygame.init()
@@ -75,9 +74,7 @@ class Game():
         self.menu_stack = []
         self.selection_list_stack = []
 
-    # gui functions
     def init_button(self, dict, position):
-
         # get text and function from dict
         text_list = list(dict.keys())
         text = text_list[0]
@@ -94,27 +91,6 @@ class Game():
         # add to buttons dict
         self.buttons[button] = function
 
-    def on_button_click_ships(self):
-        dict = {
-            'Fleet Info': test,
-            'Ship Info': test,
-            'Rearrange': test,
-        }
-        self.make_menu(dict)
-
-    def on_button_click_mates(self):
-        dict = {
-            'Admiral Info':test,
-            'Mate Info':test,
-        }
-        self.make_menu(dict)
-
-    def make_menu(self, dict):
-        SelectionListWindow(pygame.Rect((c.WINDOW_WIDTH - 224, 50),
-                                        (224, 250)),
-                                         self.ui_manager,
-                                         dict, self)
-
     def load_assets(self):
         # maps
         self.images['port'] = pygame.image.load("./assets/port.png").convert_alpha()
@@ -128,14 +104,12 @@ class Game():
         # font
         self.font = pygame.font.SysFont("fangsong", 24)
 
-    # update
     def update(self):
         """called each frame"""
         self.process_input_events()
         draw.draw(self)
 
     def process_input_events(self):
-
         # update ui
         time_delta = self.clock.tick(60) / 1000.0
         self.ui_manager.update(time_delta)
@@ -239,7 +213,6 @@ class Game():
             self.change_and_send('heart_beat', [])
 
     def handle_gui_event(self, event):
-
         # pass event to gui manager
         self.ui_manager.process_events(event)
 

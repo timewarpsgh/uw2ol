@@ -36,7 +36,6 @@ class Echo(Protocol):
         d.addCallback(self.send_and_get_next_input)
 
     def send_and_get_next_input(self, user_input):
-
         # parse user input
         parts = user_input.split()
         pck_type = parts[0]
@@ -44,7 +43,6 @@ class Echo(Protocol):
 
         # send to server
         self.game.change_and_send(pck_type, message_obj)
-        # self.send(pck_type, message_obj)
 
         # get user input again
         d = get_user_input()
@@ -102,8 +100,6 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
-        # self.transport.getHandle().sendall(data)
-
         print("transport just wrote:", protocol_name, content_obj)
 
 
@@ -130,7 +126,7 @@ def main():
     tick = LoopingCall(game.update)
     tick.start(1.0 / c.FPS)
 
-    # pass game to factory and run reactor
+    # remote or local connection
     host = None
     port = None
     if c.REMOTE_ON:
@@ -139,6 +135,8 @@ def main():
     else:
         host = c.HOST
         port = c.PORT
+
+    # pass game to factory and run reactor
     reactor.connectTCP(host, port, EchoClientFactory(game))
     reactor.run()
 

@@ -26,6 +26,7 @@ to do
     speak(OK)
     exe test(OK)
     all ships move(OK)
-    refactor draw(ON)
+    refactor draw(OK)
+    refactor gui(ON)
 
 

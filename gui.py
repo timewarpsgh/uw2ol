@@ -5,6 +5,36 @@ import constants as c
 def test():
     print('testing')
 
+# class GUI():
+#     def __init__(self, ):
+#         # ui_manager and handlers
+#         self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT))
+#         self.button_click_handler = ButtonClickHandler(self)
+#
+#         # text entry
+#         self.text_entry = pygame_gui.elements.UITextEntryLine(
+#             pygame.Rect((c.WINDOW_WIDTH / 2 - 260, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
+#             object_id='#main_text_entry')
+#
+#         self.text_entry_active = False
+#         self.active_input_boxes = []
+#
+#         # buttons
+#         self.buttons = {}
+#         self.init_button({'Ships': self.button_click_handler.on_button_click_ships}, 1)
+#         self.init_button({'Mates': self.button_click_handler.on_button_click_mates}, 2)
+#         self.init_button({'Items': self.button_click_handler.on_button_click_items}, 3)
+#         self.init_button({'Cmds': self.button_click_handler.cmds}, 4)
+#         self.init_button({'Options': self.button_click_handler.options}, 5)
+#         self.init_button({'Port': self.button_click_handler.port}, 6)
+#         self.init_button({'Battle': self.button_click_handler.battle}, 7)
+#
+#         self.buttons_in_windows = {}
+#
+#         # menu stack
+#         self.menu_stack = []
+#         self.selection_list_stack = []
+
 
 class MessageWindow(pygame_gui.elements.UIWindow):
     def __init__(self, rect, ui_manager, text, game):
