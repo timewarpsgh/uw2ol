@@ -1,3 +1,6 @@
+make exe
+	pyinstaller -i assets/ship.ico --onefile client.py constants.py DBmanager.py game.py gui.py protocol.py role.
+
 frameworks used
 	twisted(event driven network engine)
 	
@@ -21,6 +24,7 @@ to do
     each building menu(OK)
     rename(OK)
     speak(OK)
-    exe test(ON)
+    exe test(OK)
+    all ships move(ON)
 
 

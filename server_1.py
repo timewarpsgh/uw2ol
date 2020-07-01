@@ -154,6 +154,9 @@ class Echo(Protocol):
                 self.my_role.map = battle_map_name
                 enemy_role.map = battle_map_name
 
+                self.my_role.your_turn_in_battle = True
+                enemy_role.your_turn_in_battle = False
+
                 # change users dict state
                 del self.factory.users[my_previous_map][my_name]
                 del self.factory.users[my_previous_map][enemy_role.name]

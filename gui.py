@@ -247,7 +247,7 @@ class ButtonClickHandler():
             dict = {
                 'View Enemy Ships': self.menu_click_handler.battle.enemy_ships,
                 'View My Ships': test,
-                'All Ships Move': test,
+                'All Ships Move': self.menu_click_handler.battle.all_ships_move,
                 'Strategy': test,
             }
             self.make_menu(dict)
@@ -402,8 +402,8 @@ class MenuClickHandlerForBattle():
     def __init__(self, game):
         self.game = game
 
-    # def on_menu_click_all_ships_move():
-    #     change_and_send('all_ships_operate', [0])
+    def all_ships_move(self):
+        self.game.change_and_send('all_ships_operate', [])
 
     def enemy_ships(self):
         # get enemy ships

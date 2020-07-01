@@ -380,6 +380,28 @@ class Game():
                     now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
                     self.screen_surface.blit(now_hp_img, (c.WINDOW_WIDTH - 70 - 10, 10 + index))
 
+                # battle timer
+
+                    # me
+                my_timer_text = None
+                if self.my_role.your_turn_in_battle:
+                    my_timer_text = 'Your Turn'
+                else:
+                    my_timer_text = 'Please Wait...'
+                my_timer_img = self.font.render(my_timer_text, True, c.BLACK)
+                self.screen_surface.blit(my_timer_img, (20, 5))
+
+                    # enemy
+                enemy_timer_text = None
+                if self.other_roles[self.my_role.enemy_name].your_turn_in_battle:
+                    enemy_timer_text = 'Your Turn'
+                else:
+                    enemy_timer_text = 'Please Wait...'
+
+                enemy_timer_img = self.font.render(enemy_timer_text, True, c.BLACK)
+                self.screen_surface.blit(enemy_timer_img, (c.WINDOW_WIDTH - 150, 5))
+
+
             # draw speach
 
                 # my
