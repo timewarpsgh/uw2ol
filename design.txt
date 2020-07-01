@@ -18,6 +18,7 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    each building menu
-        port
+    each building menu(OK)
+    rename
+
 

@@ -429,16 +429,16 @@ class MenuClickHandlerForPort():
     def on_menu_click_port(self):
         dict = {
             'Sail': self.port.sail,
-            'Load Supply': self.port.on_menu_click_load_supply,
-            'Unload Supply': self.port.on_menu_click_unload_supply,
+            'Load Supply': self.port.load_supply,
+            'Unload Supply': self.port.unload_supply,
             'Dry Dock': test,
         }
         self.game.button_click_handler.make_menu(dict)
 
     def on_menu_click_market(self):
         dict = {
-            'Buy': self.market.on_menu_click_buy_goods,
-            'Sell': self.market.on_menu_click_sell_goods,
+            'Buy': self.market.buy,
+            'Sell': self.market.sell,
             'Invest': test,
             'Price Index': test,
         }
@@ -446,11 +446,11 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_bar(self):
         dict = {
-            'Recruit Crew': self.bar.on_menu_click_recruit_crew,
-            'Dismiss Crew': self.bar.on_menu_click_dismiss_crew,
+            'Recruit Crew': self.bar.recruit_crew,
+            'Dismiss Crew': self.bar.dismiss_crew,
             'Treat': test,
-            'Hire Mate': self.bar.on_menu_click_hire_mate,
-            'Fire Mate': self.bar.on_menu_click_fire_mate,
+            'Hire Mate': self.bar.hire_mate,
+            'Fire Mate': self.bar.fire_mate,
             'Waitress': test,
             'Gamble': test,
         }
@@ -459,9 +459,9 @@ class MenuClickHandlerForPort():
     def on_menu_click_dry_dock(self):
         dict = {
             'New Ship': test,
-            'Used Ship': self.dry_dock.on_menu_click_used_ship,
-            'Repair': self.dry_dock.on_menu_click_repair,
-            'Sell': self.dry_dock.on_menu_click_sell_ship,
+            'Used Ship': self.dry_dock.used_ship,
+            'Repair': self.dry_dock.repair,
+            'Sell': self.dry_dock.sell_ship,
             'Remodel': test,
             'Invest': test,
         }
@@ -532,31 +532,31 @@ class MenuClickHandlerForPortPort():
     def sail(self):
         self.game.change_and_send('change_map', ['sea'])
 
-    def on_menu_click_load_supply(self):
+    def load_supply(self):
         dict = {
             'Food':test,
             'Water':test,
             'Lumber':test,
             'Shot':test,
-            'Load':self.on_menu_click_load
+            'Load':self.load
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def on_menu_click_load(self):
+    def load(self):
         self.game.button_click_handler.\
             make_input_boxes('load_supply', ['supply name', 'count', 'ship num'])
 
-    def on_menu_click_unload_supply(self):
+    def unload_supply(self):
         dict = {
             'Food':test,
             'Water':test,
             'Lumber':test,
             'Shot':test,
-            'Unload':self.on_menu_click_unload,
+            'Unload':self.unload,
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def on_menu_click_unload(self):
+    def unload(self):
         self.game.button_click_handler.\
             make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])
 
@@ -564,11 +564,11 @@ class MenuClickHandlerForPortMarket():
     def __init__(self, game):
         self.game = game
 
-    def on_menu_click_buy_goods(self):
+    def buy(self):
         self.game.button_click_handler. \
             make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'])
 
-    def on_menu_click_sell_goods(self):
+    def sell(self):
         self.game.button_click_handler. \
             make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'])
 
@@ -576,19 +576,19 @@ class MenuClickHandlerForPortBar():
     def __init__(self, game):
         self.game = game
 
-    def on_menu_click_recruit_crew(self):
+    def recruit_crew(self):
         self.game.button_click_handler. \
             make_input_boxes('hire_crew', ['count', 'ship_num'])
 
-    def on_menu_click_dismiss_crew(self):
+    def dismiss_crew(self):
         self.game.button_click_handler. \
             make_input_boxes('fire_crew', ['count', 'ship_num'])
 
-    def on_menu_click_hire_mate(self):
+    def hire_mate(self):
         self.game.button_click_handler. \
             make_input_boxes('hire_mate', ['name', 'nation'])
 
-    def on_menu_click_fire_mate(self):
+    def fire_mate(self):
         self.game.button_click_handler. \
             make_input_boxes('fire_mate', ['mate num'])
 
@@ -596,15 +596,15 @@ class MenuClickHandlerForPortDryDock():
     def __init__(self, game):
         self.game = game
 
-    def on_menu_click_used_ship(self):
+    def used_ship(self):
         self.game.button_click_handler. \
             make_input_boxes('buy_ship', ['name', 'type'])
 
-    def on_menu_click_repair(self):
+    def repair(self):
         self.game.change_and_send('repair_all', [])
         self.game.button_click_handler. \
             make_message_box('all ships repaired!')
 
-    def on_menu_click_sell_ship(self):
+    def sell_ship(self):
         self.game.button_click_handler. \
             make_input_boxes('sell_ship', ['num'])
