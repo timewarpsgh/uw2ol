@@ -17,8 +17,7 @@ protocols
         move                direction(maybe change to start_move x y direction)
         shoot_ship          my_ship_id target_ship_id
 
-draw
-    draw ship at sea
-    draw ship in battle
-    GUI (ON)
+to do
+    each building menu
+        port
 

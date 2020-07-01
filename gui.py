@@ -6,7 +6,59 @@ def test():
     print('testing')
 
 
+class InputBoxWindow(pygame_gui.elements.UIWindow):
+    """a window with input boxes and an OK button"""
+    def __init__(self, rect, ui_manager, protocol_name, params_names_list, game):
+
+        # super
+        super().__init__(rect, ui_manager,
+                         window_display_title='',
+                         object_id='#scaling_window',
+                         resizable=True)
+
+        # get game
+        self.game = game
+
+        # clear active_input_boxes
+        self.game.active_input_boxes.clear()
+
+        # for each param
+        line_distance = 40
+        for i, name in enumerate(params_names_list):
+
+            # text box
+            pygame_gui.elements.UITextBox(html_text=name,
+                                          relative_rect=pygame.Rect(0, 0 + line_distance*i, 120, 40),
+                                          manager=ui_manager,
+                                          wrap_to_height=True,
+                                          container=self)
+
+            # input box
+            input_box = pygame_gui.elements.UITextEntryLine(
+                pygame.Rect((150, 0 + line_distance*i), (50, 40)), ui_manager,
+                object_id=str(i),
+                container=self)
+
+            # append to active_input_boxes
+            self.game.active_input_boxes.append(input_box)
+
+        self.game.active_input_boxes[0].focus()
+
+        # get dict
+        self.dict = {'OK':[protocol_name]}
+
+        # ok button
+        self.game.button_click_handler.make_button_in_window(self.dict, pygame.Rect((50, line_distance * len(params_names_list)), (50, 20)), self)
+
+        # set text entry to active
+        self.game.text_entry_active = True
+
+        # push into stacks
+        self.game.menu_stack.append(self)
+        self.game.selection_list_stack.append(self)
+
 class PanelWindow(pygame_gui.elements.UIWindow):
+    """displays info"""
     def __init__(self, rect, ui_manager, text, game):
 
         # super
@@ -30,13 +82,12 @@ class PanelWindow(pygame_gui.elements.UIWindow):
                                                  wrap_to_height=True,
                                                  container=self)
 
-        # push into menu stack
+        # push into stacks
         game.menu_stack.append(self)
-
-        # push into selection_list_stack
         game.selection_list_stack.append(self)
 
 class SelectionListWindow(pygame_gui.elements.UIWindow):
+    """provides a list for selection"""
     def __init__(self, rect, ui_manager, dict, game):
 
         # super
@@ -56,10 +107,8 @@ class SelectionListWindow(pygame_gui.elements.UIWindow):
                                             container=self,
                                             allow_multi_select=False)
 
-        # push into menu stack
+        # push into stacks
         game.menu_stack.append(self)
-
-        # push into selection_list_stack
         game.selection_list_stack.append(self.selection_list)
 
 
@@ -74,6 +123,30 @@ class ButtonClickHandler():
                                         (224, 250)),
                             self.ui_manager,
                             dict, self.game)
+
+    def make_input_boxes(self, prtocol_name, params_list):
+        InputBoxWindow(pygame.Rect((59, 50), (350, 400)),
+                       self.ui_manager, prtocol_name, params_list, self.game)
+
+        # g_player.text_entry_active = True
+
+    def make_button_in_window(self, dict, rect, window):
+        # get text and function from dict
+        text_list = list(dict.keys())
+        text = text_list[0]
+        function = dict[text]
+
+        # make button
+        button_in_window = pygame_gui.elements.UIButton(rect,
+                                                        text,
+                                                        self.ui_manager,
+                                                        object_id='#scaling_button',
+                                                        container=window)
+
+        # add to buttons_in_windows dict
+        self.game.buttons_in_windows[button_in_window] = function
+
+        print(len(self.game.buttons.keys()))
 
     def on_button_click_ships(self):
         dict = {
@@ -330,9 +403,9 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_port(self):
         dict = {
-            'Sail': self.port.on_menu_click_sail,
-            'Load Supply': test,
-            'Unload Supply': test,
+            'Sail': self.port.sail,
+            'Load Supply': self.port.on_menu_click_load_supply,
+            'Unload Supply': self.port.on_menu_click_unload_supply,
             'Dry Dock': test,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -426,37 +499,38 @@ class MenuClickHandlerForPort():
         self.game.button_click_handler.make_menu(dict)
 
 
-
 class MenuClickHandlerForPortPort():
     """menu options under building port"""
     def __init__(self, game):
         self.game = game
 
-    def on_menu_click_sail(self):
+    def sail(self):
         self.game.change_and_send('change_map', ['sea'])
 
-    def on_menu_click_load_supply():
+    def on_menu_click_load_supply(self):
         dict = {
-            'Food':test1,
-            'Water':test1,
-            'Lumber':test1,
-            'Shot':test1,
-            'Load':on_menu_click_load
+            'Food':test,
+            'Water':test,
+            'Lumber':test,
+            'Shot':test,
+            'Load':self.on_menu_click_load
         }
-        make_menu(dict)
+        self.game.button_click_handler.make_menu(dict)
 
-    def on_menu_click_load():
-        make_input_boxes('load_supply', ['supply name', 'count', 'ship num'])
+    def on_menu_click_load(self):
+        self.game.button_click_handler.\
+            make_input_boxes('load_supply', ['supply name', 'count', 'ship num'])
 
-    def on_menu_click_unload_supply():
+    def on_menu_click_unload_supply(self):
         dict = {
-            'Food':test1,
-            'Water':test1,
-            'Lumber':test1,
-            'Shot':test1,
-            'Unload':on_menu_click_unload,
+            'Food':test,
+            'Water':test,
+            'Lumber':test,
+            'Shot':test,
+            'Unload':self.on_menu_click_unload,
         }
-        make_menu(dict)
+        self.game.button_click_handler.make_menu(dict)
 
-    def on_menu_click_unload():
-        make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])
+    def on_menu_click_unload(self):
+        self.game.button_click_handler.\
+            make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])

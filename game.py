@@ -55,6 +55,9 @@ class Game():
             pygame.Rect((c.WINDOW_WIDTH / 2 - 260, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
             object_id='#main_text_entry')
 
+        self.text_entry_active = False
+        self.active_input_boxes = []
+
         # buttons
         self.buttons = {}
         self.init_button({'Ships': self.button_click_handler.on_button_click_ships}, 1)
@@ -64,6 +67,8 @@ class Game():
         self.init_button({'Options': self.button_click_handler.on_button_click_options}, 5)
         self.init_button({'Port': self.button_click_handler.on_button_click_port}, 6)
         self.init_button({'Battle': self.button_click_handler.on_button_click_battle}, 7)
+
+        self.buttons_in_windows = {}
 
         # menu stack
         self.menu_stack = []
@@ -163,42 +168,50 @@ class Game():
                 print(len(self.menu_stack))
                 print('escape pressed!')
 
+                # clear buttons_in_windows dict
+                self.buttons_in_windows.clear()
+                print('buttons_in_windows dict cleared!')
+
+                # deactivate text entry
+                self.text_entry_active = False
+
             # other keys
-            elif event.key == ord('p'):
-                print(self.my_role.name)
-            elif event.key == ord('1'):
-                self.connection.send('login', ['1', '1'])
-            elif event.key == ord('2'):
-                self.connection.send('login', ['2', '2'])
-            elif event.key == ord('3'):
-                self.connection.send('login', ['3', '3'])
-            elif event.key == ord('4'):
-                self.connection.send('login', ['4', '4'])
-            elif event.key == ord('5'):
-                self.connection.send('login', ['5', '5'])
-            elif event.key == ord('w'):
-                self.change_and_send('move', ['up'])
-            elif event.key == ord('s'):
-                self.change_and_send('move', ['down'])
-            elif event.key == ord('a'):
-                self.change_and_send('move', ['left'])
-            elif event.key == ord('d'):
-                self.change_and_send('move', ['right'])
+            if not self.text_entry_active:
+                if event.key == ord('p'):
+                    print(self.my_role.name)
+                elif event.key == ord('1'):
+                    self.connection.send('login', ['1', '1'])
+                elif event.key == ord('2'):
+                    self.connection.send('login', ['2', '2'])
+                elif event.key == ord('3'):
+                    self.connection.send('login', ['3', '3'])
+                elif event.key == ord('4'):
+                    self.connection.send('login', ['4', '4'])
+                elif event.key == ord('5'):
+                    self.connection.send('login', ['5', '5'])
+                elif event.key == ord('w'):
+                    self.change_and_send('move', ['up'])
+                elif event.key == ord('s'):
+                    self.change_and_send('move', ['down'])
+                elif event.key == ord('a'):
+                    self.change_and_send('move', ['left'])
+                elif event.key == ord('d'):
+                    self.change_and_send('move', ['right'])
 
-            elif event.key == ord('n'):
-                self.change_and_send('change_map', ['sea'])
-            elif event.key == ord('m'):
-                self.change_and_send('change_map', ['port'])
+                elif event.key == ord('n'):
+                    self.change_and_send('change_map', ['sea'])
+                elif event.key == ord('m'):
+                    self.change_and_send('change_map', ['port'])
 
-            elif event.key == ord('b'):
-                self.change_and_send('try_to_fight_with', ['b'])
-            elif event.key == ord('e'):
-                self.change_and_send('exit_battle', [])
-            elif event.key == ord('v'):
-                self.change_and_send('try_to_fight_with', ['d'])
+                elif event.key == ord('b'):
+                    self.change_and_send('try_to_fight_with', ['b'])
+                elif event.key == ord('e'):
+                    self.change_and_send('exit_battle', [])
+                elif event.key == ord('v'):
+                    self.change_and_send('try_to_fight_with', ['d'])
 
-            elif event.key == ord('k'):
-                self.change_and_send('shoot_ship', [0, 0])
+                elif event.key == ord('k'):
+                    self.change_and_send('shoot_ship', [0, 0])
 
         # user defined events
         elif event.type == EVENT_MOVE:
@@ -237,8 +250,37 @@ class Game():
 
             # button press
             elif event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+
+                # normal buttons
                 if event.ui_element in self.buttons:
                     self.buttons[event.ui_element]()
+
+                # buttons in windows
+                elif event.ui_element in self.buttons_in_windows:
+
+                    # get dict value
+                    window = self.menu_stack[-1]
+                    dict = window.dict
+                    dict_value = dict['OK']
+
+                    # if value is list
+                    if isinstance(dict_value, list):
+                        protocol_name = dict_value[0]
+
+                        params_list = []
+                        for input_box in self.active_input_boxes:
+                            text = input_box.get_text()
+
+                            if text.isdigit():
+                                text = int(text)
+
+                            params_list.append(text)
+
+                        self.change_and_send(protocol_name, params_list)
+
+                    # value is function
+                    else:
+                        self.buttons_in_windows[event.ui_element]()
 
             # selection list
             elif event.user_type == pygame_gui.UI_SELECTION_LIST_NEW_SELECTION:
