@@ -397,7 +397,7 @@ class MenuClickHandlerForPort():
         self.game = game
 
         self.port = MenuClickHandlerForPortPort(game)
-        self.market = None
+        self.market = MenuClickHandlerForPortMarket(game)
         self.bar = None
         self.dry_dock = None
 
@@ -412,8 +412,8 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_market(self):
         dict = {
-            'Buy': test,
-            'Sell': test,
+            'Buy': self.market.on_menu_click_buy_goods,
+            'Sell': self.market.on_menu_click_sell_goods,
             'Invest': test,
             'Price Index': test,
         }
@@ -534,3 +534,15 @@ class MenuClickHandlerForPortPort():
     def on_menu_click_unload(self):
         self.game.button_click_handler.\
             make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])
+
+class MenuClickHandlerForPortMarket():
+    def __init__(self, game):
+        self.game = game
+
+    def on_menu_click_buy_goods(self):
+        self.game.button_click_handler. \
+            make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'])
+
+    def on_menu_click_sell_goods(self):
+        self.game.button_click_handler. \
+            make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'])
