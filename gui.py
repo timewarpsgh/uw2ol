@@ -334,10 +334,10 @@ class MenuClickHandlerForMates():
     def mate_info(self):
         dict = {}
         for mate in self.game.my_role.mates:
-            dict[mate.name] = [self.how_one_mate, [mate]]
+            dict[mate.name] = [self.show_one_mate, [mate]]
         self.game.button_click_handler.make_menu(dict)
 
-    def how_one_mate(self, params):
+    def show_one_mate(self, params):
         # get param
         mate = params[0]
 
@@ -421,10 +421,10 @@ class MenuClickHandlerForPort():
     def __init__(self, game):
         self.game = game
 
-        self.port = MenuClickHandlerForPortPort(game)
-        self.market = MenuClickHandlerForPortMarket(game)
-        self.bar = MenuClickHandlerForPortBar(game)
-        self.dry_dock = MenuClickHandlerForPortDryDock(game)
+        self.port = Port(game)
+        self.market = Market(game)
+        self.bar = Bar(game)
+        self.dry_dock = DryDock(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -524,7 +524,7 @@ class MenuClickHandlerForPort():
         self.game.button_click_handler.make_menu(dict)
 
 
-class MenuClickHandlerForPortPort():
+class Port():
     """menu options under building port"""
     def __init__(self, game):
         self.game = game
@@ -560,7 +560,7 @@ class MenuClickHandlerForPortPort():
         self.game.button_click_handler.\
             make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])
 
-class MenuClickHandlerForPortMarket():
+class Market():
     def __init__(self, game):
         self.game = game
 
@@ -572,7 +572,7 @@ class MenuClickHandlerForPortMarket():
         self.game.button_click_handler. \
             make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'])
 
-class MenuClickHandlerForPortBar():
+class Bar():
     def __init__(self, game):
         self.game = game
 
@@ -592,7 +592,7 @@ class MenuClickHandlerForPortBar():
         self.game.button_click_handler. \
             make_input_boxes('fire_mate', ['mate num'])
 
-class MenuClickHandlerForPortDryDock():
+class DryDock():
     def __init__(self, game):
         self.game = game
 
