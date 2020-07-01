@@ -328,6 +328,8 @@ class EchoFactory(Factory):
     def buildProtocol(self, addr):
         return Echo(self)
 
+def main():
+    reactor.listenTCP(c.PORT, EchoFactory())
+    reactor.run()
 
-reactor.listenTCP(c.PORT, EchoFactory())
-reactor.run()
+main()
