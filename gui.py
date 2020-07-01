@@ -398,7 +398,7 @@ class MenuClickHandlerForPort():
 
         self.port = MenuClickHandlerForPortPort(game)
         self.market = MenuClickHandlerForPortMarket(game)
-        self.bar = None
+        self.bar = MenuClickHandlerForPortBar(game)
         self.dry_dock = None
 
     def on_menu_click_port(self):
@@ -421,11 +421,11 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_bar(self):
         dict = {
-            'Recruit Crew': test,
-            'Dismiss Crew': test,
+            'Recruit Crew': self.bar.on_menu_click_recruit_crew,
+            'Dismiss Crew': self.bar.on_menu_click_dismiss_crew,
             'Treat': test,
-            'Hire Mate': test,
-            'Fire Mate': test,
+            'Hire Mate': self.bar.on_menu_click_hire_mate,
+            'Fire Mate': self.bar.on_menu_click_fire_mate,
             'Waitress': test,
             'Gamble': test,
         }
@@ -546,3 +546,23 @@ class MenuClickHandlerForPortMarket():
     def on_menu_click_sell_goods(self):
         self.game.button_click_handler. \
             make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'])
+
+class MenuClickHandlerForPortBar():
+    def __init__(self, game):
+        self.game = game
+
+    def on_menu_click_recruit_crew(self):
+        self.game.button_click_handler. \
+            make_input_boxes('hire_crew', ['count', 'ship_num'])
+
+    def on_menu_click_dismiss_crew(self):
+        self.game.button_click_handler. \
+            make_input_boxes('fire_crew', ['count', 'ship_num'])
+
+    def on_menu_click_hire_mate(self):
+        self.game.button_click_handler. \
+            make_input_boxes('hire_mate', ['name', 'nation'])
+
+    def on_menu_click_fire_mate(self):
+        self.game.button_click_handler. \
+            make_input_boxes('fire_mate', ['mate num'])
