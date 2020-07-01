@@ -125,18 +125,18 @@ class ButtonClickHandler():
     def on_button_click_port(self):
         if self.game.my_role.map == 'port':
             dict = {
-                'Market': test,
-                'Bar': test,
-                'Dry Dock': test,
-                'Port': test,
-                'Inn': test,
-                'Palace': test,
-                'Job House': test,
+                'Market': self.menu_click_handler.port.on_menu_click_market,
+                'Bar': self.menu_click_handler.port.on_menu_click_bar,
+                'Dry Dock': self.menu_click_handler.port.on_menu_click_dry_dock,
+                'Port': self.menu_click_handler.port.on_menu_click_port,
+                'Inn': self.menu_click_handler.port.on_menu_click_inn,
+                'Palace': self.menu_click_handler.port.on_menu_click_palace,
+                'Job House': self.menu_click_handler.port.on_menu_click_job_house,
                 'Misc': test,
-                'Bank': test,
-                'Item Shop': test,
-                'Church': test,
-                'Fortune House': test,
+                'Bank': self.menu_click_handler.port.on_menu_click_bank,
+                'Item Shop': self.menu_click_handler.port.on_menu_click_item_shop,
+                'Church': self.menu_click_handler.port.on_menu_click_church,
+                'Fortune House': self.menu_click_handler.port.on_menu_click_fortune_house,
             }
             self.make_menu(dict)
         else:
@@ -300,10 +300,6 @@ class MenuClickHandlerForOptions():
     def __init__(self, game):
         self.game = game
 
-class MenuClickHandlerForPort():
-    def __init__(self, game):
-        self.game = game
-
 class MenuClickHandlerForBattle():
     def __init__(self, game):
         self.game = game
@@ -321,3 +317,146 @@ class MenuClickHandlerForBattle():
             dict[ship.name] = [self.game.button_click_handler.menu_click_handler.\
                 ships.on_menu_click_show_one_ship, [ship]]
         self.game.button_click_handler.make_menu(dict)
+
+class MenuClickHandlerForPort():
+    """contains handlers for all buildings in port"""
+    def __init__(self, game):
+        self.game = game
+
+        self.port = MenuClickHandlerForPortPort(game)
+        self.market = None
+        self.bar = None
+        self.dry_dock = None
+
+    def on_menu_click_port(self):
+        dict = {
+            'Sail': self.port.on_menu_click_sail,
+            'Load Supply': test,
+            'Unload Supply': test,
+            'Dry Dock': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_market(self):
+        dict = {
+            'Buy': test,
+            'Sell': test,
+            'Invest': test,
+            'Price Index': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_bar(self):
+        dict = {
+            'Recruit Crew': test,
+            'Dismiss Crew': test,
+            'Treat': test,
+            'Hire Mate': test,
+            'Fire Mate': test,
+            'Waitress': test,
+            'Gamble': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_dry_dock(self):
+        dict = {
+            'New Ship': test,
+            'Used Ship': test,
+            'Repair': test,
+            'Sell': test,
+            'Remodel': test,
+            'Invest': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_inn(self):
+        dict = {
+            'Check In': test,
+            'Gossip': test,
+            'Port Info': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_palace(self):
+        dict = {
+            'Meet Ruler': test,
+            'Defect': test,
+            'Gold Aid': test,
+            'Ship Aid': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_job_house(self):
+        dict = {
+            'Job Assignment': test,
+            'Country Info': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_bank(self):
+        dict = {
+            'Deposit': test,
+            'Withdraw': test,
+            'Borrow': test,
+            'Repay': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_item_shop(self):
+        dict = {
+            'Buy': test,
+            'Sell': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_church(self):
+        dict = {
+            'Pray': test,
+            'Donate': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_fortune_house(self):
+        dict = {
+            'Life': test,
+            'Career': test,
+            'Love': test,
+            'Mates': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+
+
+class MenuClickHandlerForPortPort():
+    """menu options under building port"""
+    def __init__(self, game):
+        self.game = game
+
+    def on_menu_click_sail(self):
+        self.game.change_and_send('change_map', ['sea'])
+
+    def on_menu_click_load_supply():
+        dict = {
+            'Food':test1,
+            'Water':test1,
+            'Lumber':test1,
+            'Shot':test1,
+            'Load':on_menu_click_load
+        }
+        make_menu(dict)
+
+    def on_menu_click_load():
+        make_input_boxes('load_supply', ['supply name', 'count', 'ship num'])
+
+    def on_menu_click_unload_supply():
+        dict = {
+            'Food':test1,
+            'Water':test1,
+            'Lumber':test1,
+            'Shot':test1,
+            'Unload':on_menu_click_unload,
+        }
+        make_menu(dict)
+
+    def on_menu_click_unload():
+        make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])
