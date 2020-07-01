@@ -1,7 +1,7 @@
 import random
 import time
 from threading import Timer
-
+from twisted.internet import reactor
 
 SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON = 1
 
@@ -120,11 +120,11 @@ class Role:
         self.speak_msg = msg
 
         # clear msg after 1s
-        timer = Timer(1, self._speak_clear_msg)
-        timer.start()
+        reactor.callLater(1, self._speak_clear_msg)
 
     def _speak_clear_msg(self):
         self.speak_msg = ''
+        print("speak msg cleared!")
 
     def set_target(self, params):
         target_name = params[0]
