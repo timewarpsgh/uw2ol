@@ -6,6 +6,25 @@ def test():
     print('testing')
 
 
+class MessageWindow(pygame_gui.elements.UIWindow):
+    def __init__(self, rect, ui_manager, text, game):
+        # super
+        super().__init__(rect, ui_manager,
+                         window_display_title='',
+                         object_id='#scaling_window',
+                         resizable=True)
+
+        # text box
+        pygame_gui.elements.UITextBox(html_text=text,
+                                     relative_rect=pygame.Rect(0, 0, 180, 100),
+                                     manager=ui_manager,
+                                     wrap_to_height=True,
+                                     container=self)
+
+        # push into stacks
+        game.menu_stack.append(self)
+        game.selection_list_stack.append(self)
+
 class InputBoxWindow(pygame_gui.elements.UIWindow):
     """a window with input boxes and an OK button"""
     def __init__(self, rect, ui_manager, protocol_name, params_names_list, game):
@@ -147,6 +166,12 @@ class ButtonClickHandler():
         self.game.buttons_in_windows[button_in_window] = function
 
         print(len(self.game.buttons.keys()))
+
+    def make_message_box(self, text):
+        MessageWindow(pygame.Rect((200, 50),
+                                  (224, 250)),
+                      self.ui_manager,
+                      text, self.game)
 
     def on_button_click_ships(self):
         dict = {
@@ -399,7 +424,7 @@ class MenuClickHandlerForPort():
         self.port = MenuClickHandlerForPortPort(game)
         self.market = MenuClickHandlerForPortMarket(game)
         self.bar = MenuClickHandlerForPortBar(game)
-        self.dry_dock = None
+        self.dry_dock = MenuClickHandlerForPortDryDock(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -434,9 +459,9 @@ class MenuClickHandlerForPort():
     def on_menu_click_dry_dock(self):
         dict = {
             'New Ship': test,
-            'Used Ship': test,
-            'Repair': test,
-            'Sell': test,
+            'Used Ship': self.dry_dock.on_menu_click_used_ship,
+            'Repair': self.dry_dock.on_menu_click_repair,
+            'Sell': self.dry_dock.on_menu_click_sell_ship,
             'Remodel': test,
             'Invest': test,
         }
@@ -566,3 +591,20 @@ class MenuClickHandlerForPortBar():
     def on_menu_click_fire_mate(self):
         self.game.button_click_handler. \
             make_input_boxes('fire_mate', ['mate num'])
+
+class MenuClickHandlerForPortDryDock():
+    def __init__(self, game):
+        self.game = game
+
+    def on_menu_click_used_ship(self):
+        self.game.button_click_handler. \
+            make_input_boxes('buy_ship', ['name', 'type'])
+
+    def on_menu_click_repair(self):
+        self.game.change_and_send('repair_all', [])
+        self.game.button_click_handler. \
+            make_message_box('all ships repaired!')
+
+    def on_menu_click_sell_ship(self):
+        self.game.button_click_handler. \
+            make_input_boxes('sell_ship', ['num'])
