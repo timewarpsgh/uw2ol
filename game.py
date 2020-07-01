@@ -63,10 +63,10 @@ class Game():
         self.init_button({'Ships': self.button_click_handler.on_button_click_ships}, 1)
         self.init_button({'Mates': self.button_click_handler.on_button_click_mates}, 2)
         self.init_button({'Items': self.button_click_handler.on_button_click_items}, 3)
-        self.init_button({'Cmds': self.button_click_handler.on_button_click_cmds}, 4)
-        self.init_button({'Options': self.button_click_handler.on_button_click_options}, 5)
-        self.init_button({'Port': self.button_click_handler.on_button_click_port}, 6)
-        self.init_button({'Battle': self.button_click_handler.on_button_click_battle}, 7)
+        self.init_button({'Cmds': self.button_click_handler.cmds}, 4)
+        self.init_button({'Options': self.button_click_handler.options}, 5)
+        self.init_button({'Port': self.button_click_handler.port}, 6)
+        self.init_button({'Battle': self.button_click_handler.battle}, 7)
 
         self.buttons_in_windows = {}
 

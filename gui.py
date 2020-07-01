@@ -198,7 +198,7 @@ class ButtonClickHandler():
         }
         self.make_menu(dict)
 
-    def on_button_click_cmds(self):
+    def cmds(self):
         dict = {
             'Set Target': test,
             'Enter Building': test,
@@ -211,7 +211,7 @@ class ButtonClickHandler():
         }
         self.make_menu(dict)
 
-    def on_button_click_options(self):
+    def options(self):
         dict = {
             'Language': test,
             'Sounds': test,
@@ -220,7 +220,7 @@ class ButtonClickHandler():
         }
         self.make_menu(dict)
 
-    def on_button_click_port(self):
+    def port(self):
         if self.game.my_role.map == 'port':
             dict = {
                 'Market': self.menu_click_handler.port.on_menu_click_market,
@@ -241,7 +241,7 @@ class ButtonClickHandler():
             print('only available in port!')
             # make_message_box('only available in port!')
 
-    def on_button_click_battle(self):
+    def battle(self):
 
         if 'battle' in self.game.my_role.map:
             dict = {
