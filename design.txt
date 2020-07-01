@@ -25,6 +25,7 @@ to do
     rename(OK)
     speak(OK)
     exe test(OK)
-    all ships move(ON)
+    all ships move(OK)
+    refactor draw(ON)
 
 
