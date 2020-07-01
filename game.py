@@ -157,6 +157,11 @@ class Game():
         # key
         elif event.type == pygame.KEYDOWN:
 
+            # return (focus text entry)
+            if event.key == pygame.K_RETURN:
+                self.text_entry.focus()
+                self.text_entry_active = True
+
             # escape
             if event.key == pygame.K_ESCAPE:
 
@@ -246,7 +251,14 @@ class Game():
 
                 # unfocus
                 if event.text:
-                    print(event.text)
+                    # send
+                    self.change_and_send('speak', [event.text])
+
+                    # clear
+                    self.text_entry.set_text('')
+                    self.text_entry.unfocus()
+                    self.text_entry_active = False
+                    print("entered:", event.text)
 
             # button press
             elif event.user_type == pygame_gui.UI_BUTTON_PRESSED:
@@ -367,6 +379,17 @@ class Game():
                     # hp
                     now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
                     self.screen_surface.blit(now_hp_img, (c.WINDOW_WIDTH - 70 - 10, 10 + index))
+
+            # draw speach
+
+                # my
+            my_speak_img = self.font.render(self.my_role.speak_msg, True, c.BLACK)
+            self.screen_surface.blit(my_speak_img, (self.my_role.x, self.my_role.y - 40))
+
+                # others
+            for role in self.other_roles.values():
+                speak_img = self.font.render(role.speak_msg, True, c.BLACK)
+                self.screen_surface.blit(speak_img, (role.x, role.y - 40))
 
             # draw ui
             self.ui_manager.draw_ui(self.screen_surface)

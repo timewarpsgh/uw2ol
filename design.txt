@@ -19,6 +19,7 @@ protocols
 
 to do
     each building menu(OK)
-    rename
+    rename(OK)
+    speak(ON)
 
 
