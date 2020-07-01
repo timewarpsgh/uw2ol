@@ -20,6 +20,7 @@ protocols
 to do
     each building menu(OK)
     rename(OK)
-    speak(ON)
+    speak(OK)
+    exe test(ON)
 
 

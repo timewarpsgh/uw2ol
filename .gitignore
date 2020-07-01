@@ -2,3 +2,14 @@
 *.pyc
 *.xml
 *.iml
+client.spec
+dist/client.exe
+build/client/base_library.zip
+build/client/client.exe.manifest
+build/client/EXE-00.toc
+build/client/PKG-00.pkg
+build/client/PKG-00.toc
+build/client/PYZ-00.pyz
+build/client/PYZ-00.toc
+build/client/warn-client.txt
+build/client/xref-client.html
