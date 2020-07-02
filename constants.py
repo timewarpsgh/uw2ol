@@ -25,6 +25,10 @@ HEADER_SIZE = 4
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-# player
+# player data
 PIXELS_COVERED_EACH_MOVE = 15
+
+# player image
+SHIP_SIZE_IN_PIXEL = 32
+PERSON_SIZE_IN_PIXEL = 64
 

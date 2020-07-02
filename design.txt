@@ -21,13 +21,12 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    each building menu(OK)
-    rename(OK)
-    speak(OK)
-    exe test(OK)
-    all ships move(OK)
-    refactor draw(OK)
-    refactor gui(OK)
     start move (OK)
+    ship image (OK)
+    ship animation (OK)
+    person image (ON)
+    person animation
+
+
 
 

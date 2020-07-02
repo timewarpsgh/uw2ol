@@ -29,6 +29,7 @@ class Role:
     def __init__(self, x, y, name, gold=2000):
         self.x = x
         self.y = y
+        self.direction = None
         self.name = name
         self.enemy_name = None
         self.map = 'port'
@@ -139,15 +140,20 @@ class Role:
 
         if direction == 'up':
             self.y -= c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'up'
         elif direction == 'down':
             self.y += c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'down'
         elif direction == 'left':
             self.x -= c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'left'
         elif direction == 'right':
             self.x += c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'right'
 
         print("now x:", self.x)
         print("new y:", self.y)
+        print("new direction:", self.direction)
 
     # at sea
     def discover(self, params):

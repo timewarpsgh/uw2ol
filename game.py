@@ -1,7 +1,7 @@
 import pygame
 import pygame_gui
 import sys
-from twisted.internet import reactor
+from twisted.internet import reactor, task
 import constants as c
 from role import Role, Ship, Mate
 
@@ -29,6 +29,10 @@ class Game():
         handle_pygame_event.init_key_mappings(self)
         self.movement = None
 
+        # loop to change ship frame state
+        self.ship_frame = 1
+        looping_task = task.LoopingCall(self.change_ship_frame_state)
+        looping_task.start(0.5)
 
         # gui
         gui.init_gui(self)
@@ -52,6 +56,9 @@ class Game():
         self.move_direction = 1
         self.move_count = 0
 
+    def change_ship_frame_state(self):
+        self.ship_frame *= -1
+
     def load_assets(self):
         # maps
         self.images['port'] = pygame.image.load("./assets/port.png").convert_alpha()
@@ -61,6 +68,8 @@ class Game():
         # sprite
         self.images['ship_at_sea'] = pygame.image.load("./assets/ship_at_sea.png").convert_alpha()
         self.images['person_in_port'] = pygame.image.load("./assets/person_in_port.png").convert_alpha()
+        self.images['ship-tileset'] = pygame.image.load("./assets/ship-tileset.png").convert_alpha()
+
 
         # font
         self.font = pygame.font.SysFont("fangsong", 24)

@@ -88,11 +88,6 @@ def other_keys_down(self, event):
     elif event.key == ord('s'):
         start_moving(self, 'down')
 
-
-        # self.change_and_send('move', ['right'])
-
-        # print(self.my_role.name)
-
     # send keys
     if event.key == ord('1'):
         self.connection.send('login', ['1', '1'])
@@ -115,8 +110,9 @@ def start_moving(self, direction):
 
 def key_up(self, event):
     key = chr(event.key)
+
+    # stop moving
     if key == 'w' or key == 's' or key == 'a' or key == 'd':
-        # stop moving
         try:
             self.movement.stop()
             self.movement = None
