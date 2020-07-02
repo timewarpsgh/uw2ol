@@ -30,6 +30,7 @@ class Role:
         self.x = x
         self.y = y
         self.direction = None
+        self.person_frame = -1
         self.name = name
         self.enemy_name = None
         self.map = 'port'
@@ -150,6 +151,8 @@ class Role:
         elif direction == 'right':
             self.x += c.PIXELS_COVERED_EACH_MOVE
             self.direction = 'right'
+
+        self.person_frame *= -1
 
         print("now x:", self.x)
         print("new y:", self.y)

@@ -56,9 +56,6 @@ class Game():
         self.move_direction = 1
         self.move_count = 0
 
-    def change_ship_frame_state(self):
-        self.ship_frame *= -1
-
     def load_assets(self):
         # maps
         self.images['port'] = pygame.image.load("./assets/port.png").convert_alpha()
@@ -68,8 +65,10 @@ class Game():
         # sprite
         self.images['ship_at_sea'] = pygame.image.load("./assets/ship_at_sea.png").convert_alpha()
         self.images['person_in_port'] = pygame.image.load("./assets/person_in_port.png").convert_alpha()
-        self.images['ship-tileset'] = pygame.image.load("./assets/ship-tileset.png").convert_alpha()
 
+        self.images['ship-tileset'] = pygame.image.load("./assets/ship-tileset.png").convert_alpha()
+        self.images['person_tileset'] = pygame.image.load("./assets/person_tileset.png").convert_alpha()
+        self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
         # font
         self.font = pygame.font.SysFont("fangsong", 24)
@@ -106,3 +105,7 @@ class Game():
             func(params_list)
         except:
             pass
+
+    def change_ship_frame_state(self):
+        """invoded every 1 second for ship animation"""
+        self.ship_frame *= -1

@@ -24,8 +24,12 @@ to do
     start move (OK)
     ship image (OK)
     ship animation (OK)
-    person image (ON)
-    person animation
+    person image (OK)
+    person animation (OK)
+    ship in battle (OK)
+    battle map (OK)
+    
+    port map (ON)
 
 
 
