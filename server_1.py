@@ -60,9 +60,6 @@ class Echo(Protocol):
         # 删除已经读取的字节
         self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
 
-        # print("got", data)
-        # self.transport.write(data)
-
     def pck_received(self, pck):
 
         # get packet type and message object
@@ -223,8 +220,6 @@ class Echo(Protocol):
                 if name != enemy_name and name != self.my_role.name:
                     conn.send('new_roles_from_battle', new_roles_from_battle)
 
-
-
         # if someone lost
 
 
@@ -259,16 +254,9 @@ class Echo(Protocol):
         # ok
         if account:
             print('login success!', account)
-
             self.account = account
-
             d = threads.deferToThread(self.factory.db.get_character_data, account)
             d.addCallback(self.on_get_character_data_got_result)
-
-            # role = self.factory.db.get_character_data(account)
-            #
-            # self.send('your_role_data', role)
-
         # not ok
         else:
             print("login failed!")
@@ -310,7 +298,6 @@ class Echo(Protocol):
 
         # send packet
         self.transport.write(data)
-        # self.transport.getHandle().sendall(data)
         print("transport just wrote:", protocol_name, content_obj)
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
@@ -324,7 +311,6 @@ class EchoFactory(Factory):
         self.users = {
             'port':{},
             'sea':{},
-            # 'battle':{},
         }
         self.db = Database()
 
