@@ -19,7 +19,9 @@ def draw_logged_in_state(self):
     # draw map
     now_map = self.my_role.map
     if now_map == 'port' or now_map == 'sea':
-        self.screen_surface.blit(self.images[now_map], (0, 0))
+        x = self.screen_surface_rect.centerx - self.my_role.x
+        y = self.screen_surface_rect.centery - self.my_role.y
+        self.screen_surface.blit(self.images[now_map], (x, y))
     else:
         self.screen_surface.blit(self.images['battle'], (0, 0))
 
@@ -43,7 +45,8 @@ def draw_in_port(self):
     frame = self.my_role.person_frame
     person_rect = person_direction_2_rect_in_sprite_sheet(self, direction, frame)
 
-    self.screen_surface.blit(self.images['person_tileset'], (self.my_role.x, self.my_role.y), person_rect)
+
+    self.screen_surface.blit(self.images['person_tileset'], self.screen_surface_rect.center, person_rect)
 
     # draw other roles
     for role in self.other_roles.values():
@@ -51,19 +54,27 @@ def draw_in_port(self):
         frame = role.person_frame
         person_rect = person_direction_2_rect_in_sprite_sheet(self, direction, frame)
 
-        self.screen_surface.blit(self.images['person_tileset'], (role.x, role.y), person_rect)
+        x = self.screen_surface_rect.centerx - self.my_role.x + role.x
+        y = self.screen_surface_rect.centery - self.my_role.y + role.y
+
+        self.screen_surface.blit(self.images['person_tileset'], (x, y), person_rect)
 
 def draw_at_sea(self):
     # draw my role
     direction = self.my_role.direction
     ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction)
-    self.screen_surface.blit(self.images['ship-tileset'], (self.my_role.x, self.my_role.y), ship_rect)
+
+    self.screen_surface.blit(self.images['ship-tileset'], self.screen_surface_rect.center, ship_rect)
 
     # draw other roles
     for role in self.other_roles.values():
         direction = role.direction
         ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction)
-        self.screen_surface.blit(self.images['ship-tileset'], (role.x, role.y), ship_rect)
+
+        x = self.screen_surface_rect.centerx - self.my_role.x + role.x
+        y = self.screen_surface_rect.centery - self.my_role.y + role.y
+
+        self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
 
 def ship_direction_2_rect_in_sprite_sheet(self, direction):
     ship_rect = self.images['ship_at_sea'].get_rect()

@@ -106,7 +106,7 @@ def start_moving(self, direction):
         self.movement = None
 
     self.movement = task.LoopingCall(self.change_and_send, 'move', [direction])
-    loopDeferred = self.movement.start(0.1)
+    loopDeferred = self.movement.start(0.15)
 
 def key_up(self, event):
     key = chr(event.key)
