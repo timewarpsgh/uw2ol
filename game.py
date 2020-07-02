@@ -26,6 +26,7 @@ class Game():
         self.clock = pygame.time.Clock()
         pygame.display.set_caption(c.CAPTION)
         self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINDOW_HIGHT])
+        handle_pygame_event.init_key_mappings(self)
 
         # gui
         gui.init_gui(self)
