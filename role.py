@@ -2,6 +2,7 @@ import random
 import time
 from threading import Timer
 from twisted.internet import reactor
+import constants as c
 
 SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON = 1
 
@@ -129,21 +130,21 @@ class Role:
 
     def set_target(self, params):
         target_name = params[0]
-        self.target_name = target_name
-        print("target_name:", self.target_name)
+        self.enemy_name = target_name
+        print("target_name:", self.enemy_name)
 
     # in port
     def move(self, params):
         direction = params[0]
 
         if direction == 'up':
-            self.y -= 5
+            self.y -= c.PIXELS_COVERED_EACH_MOVE
         elif direction == 'down':
-            self.y += 5
+            self.y += c.PIXELS_COVERED_EACH_MOVE
         elif direction == 'left':
-            self.x -= 5
+            self.x -= c.PIXELS_COVERED_EACH_MOVE
         elif direction == 'right':
-            self.x += 5
+            self.x += c.PIXELS_COVERED_EACH_MOVE
 
         print("now x:", self.x)
         print("new y:", self.y)

@@ -1,4 +1,6 @@
 import pygame
+from twisted.internet import reactor, task
+
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -9,7 +11,7 @@ def handle_pygame_event(self, event):
     if event.type == pygame.QUIT:
         quit(self, event)
 
-    # key pressed
+    # key down
     elif event.type == pygame.KEYDOWN:
 
         # return (focus text entry)
@@ -23,7 +25,11 @@ def handle_pygame_event(self, event):
 
         # other keys
         if not self.text_entry_active:
-            other_keys(self, event)
+            other_keys_down(self, event)
+
+    # key up
+    elif event.type == pygame.KEYUP:
+            key_up(self, event)
 
     # user defined events
     elif event.type == EVENT_MOVE:
@@ -71,7 +77,7 @@ def init_key_mappings(self):
         'k': ['shoot_ship', [0, 0]],
     }
 
-def other_keys(self, event):
+def other_keys_down(self, event):
     # change and send keys
     if chr(event.key) in self.key_mappings:
         cmd = self.key_mappings[chr(event.key)][0]
@@ -79,8 +85,19 @@ def other_keys(self, event):
         self.change_and_send(cmd, params)
 
     # read keys
-    if event.key == ord('t'):
-        print(self.my_role.name)
+    if event.key == ord('h'):
+        start_moving(self, 'right')
+    elif event.key == ord('f'):
+        start_moving(self, 'left')
+    elif event.key == ord('t'):
+        start_moving(self, 'up')
+    elif event.key == ord('g'):
+        start_moving(self, 'down')
+
+
+        # self.change_and_send('move', ['right'])
+
+        # print(self.my_role.name)
 
     # send keys
     if event.key == ord('1'):
@@ -93,6 +110,25 @@ def other_keys(self, event):
         self.connection.send('login', ['4', '4'])
     elif event.key == ord('5'):
         self.connection.send('login', ['5', '5'])
+
+def start_moving(self, direction):
+    if self.movement:
+        self.movement.stop()
+        self.movement = None
+
+    self.movement = task.LoopingCall(self.change_and_send, 'move', [direction])
+    loopDeferred = self.movement.start(0.1)
+
+def key_up(self, event):
+    key = chr(event.key)
+    if key == 'h' or key == 'f' or key == 't' or key == 'g':
+        # stop moving
+        try:
+            self.movement.stop()
+            self.movement = None
+        except:
+            pass
+
 
 def user_event_move(self, event):
     if self.my_role:

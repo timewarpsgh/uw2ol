@@ -247,14 +247,14 @@ class ButtonClickHandler():
 
     def cmds(self):
         dict = {
-            'Set Target': test,
+            'Set Target': self.menu_click_handler.cmds.set_target,
             'Enter Building': test,
             'Enter Port': self.menu_click_handler.cmds.enter_port,
             'Escort': test,
             'Go Ashore': self.menu_click_handler.cmds.go_ashore,
             'View': test,
             'Gossip': test,
-            'Battle': test,
+            'Battle': self.menu_click_handler.cmds.battle,
         }
         self.make_menu(dict)
 
@@ -424,8 +424,9 @@ class MenuClickHandlerForCmds():
     def __init__(self, game):
         self.game = game
 
-    # def on_menu_click_set_target():
-    #     make_input_boxes('set_target', ['target name'])
+    def set_target(self):
+        self.game.button_click_handler. \
+            make_input_boxes('set_target', ['target name'])
 
     def enter_port(self):
         self.game.change_and_send('change_map', ['port'])
@@ -433,13 +434,13 @@ class MenuClickHandlerForCmds():
     def go_ashore(self):
         self.game.change_and_send('discover', [])
 
-    # def on_menu_click_battle():
-    #
-    #     try:
-    #         target_name = g_player.role.target_name
-    #         change_and_send('enter_battle_with', [target_name])
-    #     except:
-    #         print('no target!')
+    def battle(self):
+        target_name = self.game.my_role.enemy_name
+        if target_name:
+            self.game.change_and_send('try_to_fight_with', [target_name])
+        else:
+            self.game.button_click_handler. \
+                make_message_box("you don't have a target")
 
 class MenuClickHandlerForOptions():
     def __init__(self, game):

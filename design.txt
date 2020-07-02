@@ -27,6 +27,7 @@ to do
     exe test(OK)
     all ships move(OK)
     refactor draw(OK)
-    refactor gui(ON)
+    refactor gui(OK)
+    start move (OK)
 
 
