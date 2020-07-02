@@ -28,8 +28,9 @@ to do
     person animation (OK)
     ship in battle (OK)
     battle map (OK)
-    
-    port map (ON)
+    port map (OK)
+
+    port map player center(ON)
 
 
 
