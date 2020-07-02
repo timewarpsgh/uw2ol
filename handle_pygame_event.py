@@ -61,12 +61,6 @@ def escape(self, event):
 def init_key_mappings(self):
     """cmds that change local state and sent to server"""
     self.key_mappings = {
-        # move
-        'w': ['move', ['up']],
-        's': ['move', ['down']],
-        'a': ['move', ['left']],
-        'd': ['move', ['right']],
-
         # change map
         'n': ['change_map', ['sea']],
         'm': ['change_map', ['port']],
@@ -85,13 +79,13 @@ def other_keys_down(self, event):
         self.change_and_send(cmd, params)
 
     # read keys
-    if event.key == ord('h'):
+    if event.key == ord('d'):
         start_moving(self, 'right')
-    elif event.key == ord('f'):
+    elif event.key == ord('a'):
         start_moving(self, 'left')
-    elif event.key == ord('t'):
+    elif event.key == ord('w'):
         start_moving(self, 'up')
-    elif event.key == ord('g'):
+    elif event.key == ord('s'):
         start_moving(self, 'down')
 
 
@@ -121,7 +115,7 @@ def start_moving(self, direction):
 
 def key_up(self, event):
     key = chr(event.key)
-    if key == 'h' or key == 'f' or key == 't' or key == 'g':
+    if key == 'w' or key == 's' or key == 'a' or key == 'd':
         # stop moving
         try:
             self.movement.stop()
