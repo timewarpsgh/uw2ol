@@ -1,4 +1,4 @@
-a = {
+hash_ports_meta_data = {
 	1: {
 	  'name': 'Lisbon',
 	  'x': 840,
@@ -6186,5 +6186,3 @@ a = {
 	'Far East',
   ],
 }
-
-print(a)

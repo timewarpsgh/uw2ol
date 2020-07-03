@@ -1,6 +1,7 @@
 import pygame_gui
 import pygame
 import constants as c
+from hashes.hash_ports_meta_data import hash_ports_meta_data
 
 def test():
     print('testing')
@@ -248,7 +249,7 @@ class ButtonClickHandler():
     def cmds(self):
         dict = {
             'Set Target': self.menu_click_handler.cmds.set_target,
-            'Enter Building': test,
+            'Enter Building': self.menu_click_handler.cmds.enter_building,
             'Enter Port': self.menu_click_handler.cmds.enter_port,
             'Escort': test,
             'Go Ashore': self.menu_click_handler.cmds.go_ashore,
@@ -427,6 +428,37 @@ class MenuClickHandlerForCmds():
     def set_target(self):
         self.game.button_click_handler. \
             make_input_boxes('set_target', ['target name'])
+
+    def enter_building(self):
+        # get my now position in piddle
+        x = int(self.game.my_role.x/c.PIXELS_COVERED_EACH_MOVE)
+        y = int(self.game.my_role.y/c.PIXELS_COVERED_EACH_MOVE)
+
+        # get building id to board positions dict
+        map_id = 29
+        dict = hash_ports_meta_data[map_id+1]['buildings']
+
+        for k, v in dict.items():
+            if v['x'] == x and v['y'] == y:
+                print("entered", k)
+                dict = {
+                    1:self.game.button_click_handler.menu_click_handler.port.on_menu_click_market,
+                    2:self.game.button_click_handler.menu_click_handler.port.on_menu_click_bar,
+                    3:self.game.button_click_handler.menu_click_handler.port.on_menu_click_dry_dock,
+                    4:self.game.button_click_handler.menu_click_handler.port.on_menu_click_port,
+                    5:self.game.button_click_handler.menu_click_handler.port.on_menu_click_inn,
+                    6: self.game.button_click_handler.menu_click_handler.port.on_menu_click_palace,
+                    7:self.game.button_click_handler.menu_click_handler.port.on_menu_click_job_house,
+                    8:test,
+                    9:self.game.button_click_handler.menu_click_handler.port.on_menu_click_bank,
+                    10:self.game.button_click_handler.menu_click_handler.port.on_menu_click_item_shop,
+                    11:self.game.button_click_handler.menu_click_handler.port.on_menu_click_church,
+                    12:self.game.button_click_handler.menu_click_handler.port.on_menu_click_fortune_house,
+                }
+                dict[k]()
+                return
+
+        print('no building to enter')
 
     def enter_port(self):
         self.game.change_and_send('change_map', ['port'])

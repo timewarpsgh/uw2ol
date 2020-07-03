@@ -25,7 +25,8 @@ to do
     show speech (OK)
     speech color (OK)
     port collision (OK)
-    enter building (ON)
+    enter building (OK)
+    show building background (ON)
 
 
 
