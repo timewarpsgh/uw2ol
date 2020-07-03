@@ -3,7 +3,7 @@ import pickle
 from role import Role
 from role import Ship
 from role import Mate
-
+import constants as c
 
 class Database:
     def __init__(self):
@@ -59,7 +59,8 @@ class Database:
 
         # no
         except:
-            default_role = Role(5,5,character_name)
+            x = y = c.PIXELS_COVERED_EACH_MOVE
+            default_role = Role(x, y, character_name)
             ship0 = Ship('Reagan', 'Frigate')
             ship1 = Ship('Reagan11', 'Balsa')
             ship2 = Ship('Reagan22', 'Balsa')

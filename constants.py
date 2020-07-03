@@ -24,11 +24,17 @@ HEADER_SIZE = 4
 # color
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+YELLOW = (255, 255, 0)
+
 
 # player data
-PIXELS_COVERED_EACH_MOVE = 15
+PIXELS_COVERED_EACH_MOVE = 16
+
 
 # player image
 SHIP_SIZE_IN_PIXEL = 32
 PERSON_SIZE_IN_PIXEL = 32
+
+# map data
+WALKABLE_TILES = SAILABLE_TILES = set(range(1, 32))
 

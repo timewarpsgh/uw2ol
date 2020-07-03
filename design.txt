@@ -21,16 +21,10 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    start move (OK)
-    ship image (OK)
-    ship animation (OK)
-    person image (OK)
-    person animation (OK)
-    ship in battle (OK)
-    battle map (OK)
-    port map (OK)
-
-    port map player center(ON)
+    port map player center(OK)
+    show speech (OK)
+    speech color (OK)
+    port collision (OK)
 
 
 

@@ -1,3 +1,1 @@
-tt = {1:1}
-print(tt[1])
-print(tt[0])
+print(int(16/16))

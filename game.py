@@ -4,6 +4,7 @@ import sys
 from twisted.internet import reactor, task
 import constants as c
 from role import Role, Ship, Mate
+from map_maker import MapMaker
 
 # code relocated to these files
 import draw
@@ -29,6 +30,13 @@ class Game():
         self.screen_surface_rect = self.screen_surface.get_rect()
         handle_pygame_event.init_key_mappings(self)
         self.movement = None
+        self.map_maker = MapMaker()
+        self.port_piddle = self.map_maker.make_port_piddle()
+
+        print(self.port_piddle)
+        x = 7
+        y = 4
+        print(self.port_piddle[x-2:x+3, y-2:y+3])
 
         # loop to change ship frame state
         self.ship_frame = 1

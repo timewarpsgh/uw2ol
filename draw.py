@@ -200,13 +200,17 @@ def draw_battle_timer(self):
 
 def draw_speech(self):
     # my
-    my_speak_img = self.font.render(self.my_role.speak_msg, True, c.BLACK)
-    self.screen_surface.blit(my_speak_img, (self.my_role.x, self.my_role.y - 40))
+    my_speak_img = self.font.render(self.my_role.speak_msg, True, c.YELLOW)
+    x = self.screen_surface_rect.centerx
+    y = self.screen_surface_rect.centery - 40
+    self.screen_surface.blit(my_speak_img, (x, y))
 
     # others
     for role in self.other_roles.values():
-        speak_img = self.font.render(role.speak_msg, True, c.BLACK)
-        self.screen_surface.blit(speak_img, (role.x, role.y - 40))
+        speak_img = self.font.render(role.speak_msg, True, c.YELLOW)
+        x = self.screen_surface_rect.centerx - self.my_role.x + role.x
+        y = self.screen_surface_rect.centery - self.my_role.y + role.y - 40
+        self.screen_surface.blit(speak_img, (x, y))
 
 def draw_not_logged_in_state(self):
     """argument self is game"""
