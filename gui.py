@@ -459,10 +459,17 @@ class MenuClickHandlerForCmds():
                     11:self.game.button_click_handler.menu_click_handler.port.on_menu_click_church,
                     12:self.game.button_click_handler.menu_click_handler.port.on_menu_click_fortune_house,
                 }
+
+                # # dialog box
+                # self.game.button_click_handler. \
+                #     make_message_box("Wellcome! How are you?")
+
+                # click event
                 dict[k]()
 
                 # set building type
                 self.game.my_role.in_building_type = k
+
                 return
 
         print('no building to enter')

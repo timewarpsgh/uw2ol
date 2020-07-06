@@ -96,7 +96,7 @@ class Game():
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
         # fonts
-        self.font = pygame.font.SysFont("fangsong", 24)
+        self.font = pygame.font.SysFont("fangsong", c.FONT_SIZE)
 
     def update(self):
         """called each frame"""

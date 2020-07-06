@@ -26,7 +26,9 @@ to do
     speech color (OK)
     port collision (OK)
     enter building (OK)
-    show building background (ON)
+    show building background (OK)
+    diff figure and text (ON)
+
 
 
 

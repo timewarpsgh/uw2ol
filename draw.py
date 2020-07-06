@@ -32,13 +32,15 @@ def draw_logged_in_state(self):
             # bg
         self.screen_surface.blit(self.images['building_bg'], (c.HUD_WIDTH, 0))
             # person
-        self.images['building_bg'].blit(self.images['bank'], (0, 0))
-            # dialog box
-        self.images['building_bg'].blit(self.images['building_chat'], (c.BUILDING_PERSON_WIDTH + 10, 0))
-            # dialog
-        self.font.render((str(ship.now_hp), True, c.BLACK))
-        self.images['building_chat'].blit(self.images['building_chat'], (c.BUILDING_PERSON_WIDTH + 10, 0))
+        self.screen_surface.blit(self.images['bank'], (c.HUD_WIDTH, 0))
 
+            # dialog box
+        self.screen_surface.blit(self.images['building_chat'], (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10, 0))
+            # dialog
+        text = "how are you today? oh say can you see? by the dawn's" \
+               " early light. what's proudly we hail, at the twilight's last gleaming"
+        # self.screen_surface.blit(text_surface, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5))
+        blit_text(self.screen_surface, text, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5), self.font)
         draw_hud(self)
 
         # not in building
@@ -243,3 +245,22 @@ def draw_not_logged_in_state(self):
     """argument self is game"""
     text_surface = self.font.render('Please Login', True, c.WHITE)
     self.screen_surface.blit(text_surface, (5, 5))
+
+def blit_text(surface, text, pos, font, color=pygame.Color('black')):
+    """draws text block in multiple lines"""
+    words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
+    space = font.size(' ')[0]  # The width of a space.
+    # max_width, max_height = surface.get_size()
+    max_width, max_height = (c.BUILDING_CHAT_WIDTH, c.BUILDING_CHAT_HIGHT)
+    x, y = pos
+    for line in words:
+        for word in line:
+            word_surface = font.render(word, 0, color)
+            word_width, word_height = word_surface.get_size()
+            if x + word_width >= max_width:
+                x = pos[0]  # Reset the x.
+                y += word_height  # Start on new row.
+            surface.blit(word_surface, (x, y))
+            x += word_width + space
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
