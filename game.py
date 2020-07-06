@@ -71,7 +71,23 @@ class Game():
         self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
         self.images['battle'] = pygame.image.load("./assets/battle.png").convert_alpha()
 
-        # sprite
+        # buildings
+        self.images['building_bg'] = pygame.image.load("./assets/images/buildings/building_bg.png").convert_alpha()
+        self.images['bank'] = pygame.image.load("./assets/images/buildings/bank.png").convert_alpha()
+        self.images['bank'] = pygame.transform.scale(self.images['bank'], (c.BUILDING_PERSON_WIDTH, c.BUILDING_PERSON_HIGHT))
+
+        self.images['building_chat'] = pygame.image.load("./assets/images/buildings/building_chat.png").convert_alpha()
+
+
+
+        # huds
+        self.images['hud_left'] = pygame.image.load("./assets/images/huds/hud-left.png").convert_alpha()
+        self.images['hud_left'] = pygame.transform.scale(self.images['hud_left'], (c.HUD_WIDTH, c.HUD_HIGHT))
+
+        self.images['hud_right'] = pygame.image.load("./assets/images/huds/hud-right.png").convert_alpha()
+        self.images['hud_right'] = pygame.transform.scale(self.images['hud_right'], (c.HUD_WIDTH, c.HUD_HIGHT))
+
+        # sprites
         self.images['ship_at_sea'] = pygame.image.load("./assets/ship_at_sea.png").convert_alpha()
         self.images['person_in_port'] = pygame.image.load("./assets/person_in_port.png").convert_alpha()
 
@@ -79,7 +95,7 @@ class Game():
         self.images['person_tileset'] = pygame.image.load("./assets/person_tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
-        # font
+        # fonts
         self.font = pygame.font.SysFont("fangsong", 24)
 
     def update(self):

@@ -186,10 +186,14 @@ class ButtonClickHandler():
         self.menu_click_handler = MenuClickHandler(game)
 
     def make_menu(self, dict):
-        SelectionListWindow(pygame.Rect((c.WINDOW_WIDTH - 224, 50),
-                                        (224, 250)),
+        SelectionListWindow(pygame.Rect((c.SELECTION_LIST_X, c.SELECTION_LIST_Y),
+                                        (c.SELECTION_LIST_WIDTH, c.SELECTION_LIST_HIGHT)),
                             self.ui_manager,
                             dict, self.game)
+        # SelectionListWindow(pygame.Rect((c.WINDOW_WIDTH - 224, 50),
+        #                                 (224, 250)),
+        #                     self.ui_manager,
+        #                     dict, self.game)
 
     def make_input_boxes(self, prtocol_name, params_list):
         InputBoxWindow(pygame.Rect((59, 50), (350, 400)),
@@ -456,6 +460,9 @@ class MenuClickHandlerForCmds():
                     12:self.game.button_click_handler.menu_click_handler.port.on_menu_click_fortune_house,
                 }
                 dict[k]()
+
+                # set building type
+                self.game.my_role.in_building_type = k
                 return
 
         print('no building to enter')

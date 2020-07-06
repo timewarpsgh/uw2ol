@@ -26,18 +26,45 @@ def draw_logged_in_state(self):
         self.screen_surface.blit(self.images['battle'], (0, 0))
 
     # draw based on map
-    if now_map == 'port':
-        draw_in_port(self)
-    elif now_map == 'sea':
-        draw_at_sea(self)
+
+        # in building
+    if self.my_role.in_building_type:
+            # bg
+        self.screen_surface.blit(self.images['building_bg'], (c.HUD_WIDTH, 0))
+            # person
+        self.images['building_bg'].blit(self.images['bank'], (0, 0))
+            # dialog box
+        self.images['building_bg'].blit(self.images['building_chat'], (c.BUILDING_PERSON_WIDTH + 10, 0))
+            # dialog
+        self.font.render((str(ship.now_hp), True, c.BLACK))
+        self.images['building_chat'].blit(self.images['building_chat'], (c.BUILDING_PERSON_WIDTH + 10, 0))
+
+        draw_hud(self)
+
+        # not in building
     else:
-        draw_in_battle(self)
+        if now_map == 'port':
+            draw_in_port(self)
+            draw_hud(self)
+        elif now_map == 'sea':
+            draw_at_sea(self)
+            draw_hud(self)
+        else:
+            draw_in_battle(self)
 
     # draw speach
     draw_speech(self)
 
     # draw ui
     self.ui_manager.draw_ui(self.screen_surface)
+
+def draw_hud(self):
+    # left hud
+    self.screen_surface.blit(self.images['hud_left'], (0, 0))
+    hud_left_rect = self.images['hud_left'].get_rect()
+
+    # right hud
+    self.screen_surface.blit(self.images['hud_right'], (c.WINDOW_WIDTH - hud_left_rect.width, 0))
 
 def draw_in_port(self):
     # draw my role

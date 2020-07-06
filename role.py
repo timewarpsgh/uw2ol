@@ -7,7 +7,7 @@ import constants as c
 SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON = 1
 
 # contains portable data for a player (transmitted from DB to server to client)
-# and setters(also protocls sent to and from server)
+# and setters(also protocols sent to and from server)
 # must only pass one argument called params(a list)
 class Role:
 
@@ -34,6 +34,7 @@ class Role:
         self.name = name
         self.enemy_name = None
         self.map = 'port'
+        self.in_building_type = None
         self.battle_timer = 0
         self.your_turn_in_battle = True
         self.max_days_at_sea = 0

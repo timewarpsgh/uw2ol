@@ -43,6 +43,11 @@ def quit(self, event):
     sys.exit()
 
 def escape(self, event):
+
+    # exit building
+    if len(self.menu_stack) == 1:
+        self.my_role.in_building_type = None
+
     # pop menu_stack
     if len(self.menu_stack) > 0:
         menu_to_kill = self.menu_stack.pop()
@@ -99,6 +104,9 @@ def other_keys_down(self, event):
         self.connection.send('login', ['4', '4'])
     elif event.key == ord('5'):
         self.connection.send('login', ['5', '5'])
+
+    if event.key == ord('z'):
+        self.button_click_handler.menu_click_handler.cmds.enter_building()
 
 def can_move(self, direction):
     # get piddle
