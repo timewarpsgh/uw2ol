@@ -2,6 +2,7 @@ import pygame_gui
 import pygame
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
+from hashes.look_up_tables import id_2_building_type
 
 def test():
     print('testing')
@@ -459,16 +460,13 @@ class MenuClickHandlerForCmds():
                     11:self.game.button_click_handler.menu_click_handler.port.on_menu_click_church,
                     12:self.game.button_click_handler.menu_click_handler.port.on_menu_click_fortune_house,
                 }
-
-                # # dialog box
-                # self.game.button_click_handler. \
-                #     make_message_box("Wellcome! How are you?")
-
-                # click event
                 dict[k]()
 
                 # set building type
                 self.game.my_role.in_building_type = k
+
+                # set building image
+                self.game.building_image = self.game.images[id_2_building_type[k]]
 
                 return
 
@@ -529,6 +527,8 @@ class MenuClickHandlerForPort():
         }
         self.game.button_click_handler.make_menu(dict)
 
+        self.game.building_text = 'Ready to sail?'
+
     def on_menu_click_market(self):
         dict = {
             'Buy': self.market.buy,
@@ -537,6 +537,8 @@ class MenuClickHandlerForPort():
             'Price Index': test,
         }
         self.game.button_click_handler.make_menu(dict)
+
+        self.game.building_text = "You are a merchant, aren't you?"
 
     def on_menu_click_bar(self):
         dict = {
@@ -549,6 +551,7 @@ class MenuClickHandlerForPort():
             'Gamble': test,
         }
         self.game.button_click_handler.make_menu(dict)
+
 
     def on_menu_click_dry_dock(self):
         dict = {

@@ -32,15 +32,14 @@ def draw_logged_in_state(self):
             # bg
         self.screen_surface.blit(self.images['building_bg'], (c.HUD_WIDTH, 0))
             # person
-        self.screen_surface.blit(self.images['bank'], (c.HUD_WIDTH, 0))
+        self.screen_surface.blit(self.building_image, (c.HUD_WIDTH + 5, 5))
 
             # dialog box
         self.screen_surface.blit(self.images['building_chat'], (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10, 0))
             # dialog
-        text = "how are you today? oh say can you see? by the dawn's" \
-               " early light. what's proudly we hail, at the twilight's last gleaming"
-        # self.screen_surface.blit(text_surface, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5))
-        blit_text(self.screen_surface, text, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5), self.font)
+        # text = "how are you today? oh say can you see? by the dawn's" \
+        #        " early light. what's proudly we hail, at the twilight's last gleaming"
+        blit_text(self.screen_surface, self.building_text, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5), self.font)
         draw_hud(self)
 
         # not in building

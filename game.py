@@ -14,7 +14,7 @@ import handle_gui_event
 import client_packet_received
 
 from gui import SelectionListWindow, ButtonClickHandler
-
+from hashes.look_up_tables import id_2_building_type
 
 def test():
     print('testing')
@@ -73,10 +73,16 @@ class Game():
 
         # buildings
         self.images['building_bg'] = pygame.image.load("./assets/images/buildings/building_bg.png").convert_alpha()
-        self.images['bank'] = pygame.image.load("./assets/images/buildings/bank.png").convert_alpha()
-        self.images['bank'] = pygame.transform.scale(self.images['bank'], (c.BUILDING_PERSON_WIDTH, c.BUILDING_PERSON_HIGHT))
-
         self.images['building_chat'] = pygame.image.load("./assets/images/buildings/building_chat.png").convert_alpha()
+        for building in id_2_building_type.values():
+            try:
+                self.images[building] = pygame.image.load(f"./assets/images/buildings/{building}.png").convert_alpha()
+            except:
+                pass
+
+
+
+
 
 
 
