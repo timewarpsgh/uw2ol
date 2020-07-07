@@ -133,12 +133,9 @@ def can_move(self, direction):
     return False
 
 def start_moving(self, direction):
-    if self.movement:
-        self.movement.stop()
-        self.movement = None
-
-    self.movement = task.LoopingCall(try_to_move,self, direction)
-    loopDeferred = self.movement.start(0.15)
+    if not self.movement:
+        self.movement = task.LoopingCall(try_to_move,self, direction)
+        loopDeferred = self.movement.start(0.15)
 
 def try_to_move(self, direction):
     if can_move(self, direction):
