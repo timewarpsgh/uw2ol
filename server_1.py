@@ -7,6 +7,11 @@ from role import Role
 import constants as c
 
 
+import os
+import sys
+f = open(os.devnull, 'w')
+sys.stdout = f
+
 class Echo(Protocol):
     def __init__(self, factory):
         super().__init__()
@@ -318,6 +323,7 @@ class EchoFactory(Factory):
         return Echo(self)
 
 def main():
+    print("Listening...")
     reactor.listenTCP(c.PORT, EchoFactory())
     reactor.run()
 

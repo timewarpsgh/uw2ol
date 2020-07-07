@@ -83,7 +83,7 @@ def other_keys_down(self, event):
         params = self.key_mappings[chr(event.key)][1]
         self.change_and_send(cmd, params)
 
-    # read keys
+    # move
     if event.key == ord('d'):
         start_moving(self, 'right')
     elif event.key == ord('a'):
@@ -105,8 +105,23 @@ def other_keys_down(self, event):
     elif event.key == ord('5'):
         self.connection.send('login', ['5', '5'])
 
+    # enter building
     if event.key == ord('z'):
         self.button_click_handler.menu_click_handler.cmds.enter_building()
+
+    # auto move
+    if event.key == ord('o'):
+        print('auto moving!')
+
+        timer = task.LoopingCall(move_right_and_then_back, self)
+        timer.start(5)
+
+
+def move_right_and_then_back(self):
+    start_moving(self, 'right')
+    reactor.callLater(2, stop_moving, self)
+    reactor.callLater(2.5, start_moving, self, 'left')
+    reactor.callLater(4.5, stop_moving, self)
 
 def can_move(self, direction):
     # get piddle
@@ -147,11 +162,12 @@ def key_up(self, event):
     # stop moving
     if key == 'w' or key == 's' or key == 'a' or key == 'd':
         try:
-            self.movement.stop()
-            self.movement = None
+            stop_moving(self)
         except:
             pass
-
+def stop_moving(self):
+    self.movement.stop()
+    self.movement = None
 
 def user_event_move(self, event):
     if self.my_role:

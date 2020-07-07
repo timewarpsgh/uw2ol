@@ -10,6 +10,11 @@ from twisted.internet.task import LoopingCall
 import pygame
 import sys
 
+import os
+import sys
+f = open(os.devnull, 'w')
+sys.stdout = f
+
 
 def get_input():
     got_input = input()

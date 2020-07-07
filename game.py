@@ -33,11 +33,6 @@ class Game():
         self.map_maker = MapMaker()
         self.port_piddle = self.map_maker.make_port_piddle()
 
-        print(self.port_piddle)
-        x = 7
-        y = 4
-        print(self.port_piddle[x-2:x+3, y-2:y+3])
-
         # loop to change ship frame state
         self.ship_frame = 1
         looping_task = task.LoopingCall(self.change_ship_frame_state)
@@ -58,6 +53,7 @@ class Game():
         self.font = None
         self.images = {}
         self.load_assets()
+        self.building_text = ''
 
         # test looping event
         # pygame.time.set_timer(EVENT_MOVE, 50)

@@ -21,14 +21,12 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    port map player center(OK)
-    show speech (OK)
-    speech color (OK)
-    port collision (OK)
-    enter building (OK)
     show building background (OK)
     diff figure and text (OK)
-    not sync problem (ON)
+    not sync problem (OK)
+    sync auto test (ON)
+    run server as daemon (ON)
+
 
 
 
