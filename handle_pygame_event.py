@@ -127,10 +127,17 @@ def other_keys_down(self, event):
 
 
 def move_right_and_then_back(self):
-    start_moving(self, 'right')
-    reactor.callLater(2, stop_moving, self)
-    reactor.callLater(2.5, start_moving, self, 'left')
-    reactor.callLater(4.5, stop_moving, self)
+    self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
+    reactor.callLater(2, self.change_and_send, 'stop_move', [])
+    reactor.callLater(2.5, start_moving_left, self)
+    reactor.callLater(4.5, self.change_and_send, 'stop_move', [])
+    # start_moving(self, 'right')
+    # reactor.callLater(2, stop_moving, self)
+    # reactor.callLater(2.5, start_moving, self, 'left')
+    # reactor.callLater(4.5, stop_moving, self)
+
+def start_moving_left(self):
+    self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
 
 def can_move(self, direction):
     # get piddle

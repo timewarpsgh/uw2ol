@@ -136,6 +136,9 @@ def main():
     tick = LoopingCall(game.update)
     tick.start(1.0 / c.FPS)
 
+    tick2 = LoopingCall(game.update_roles_positions)
+    tick2.start(c.MOVE_TIME_INVERVAL)
+
     # remote or local connection
     host = None
     port = None

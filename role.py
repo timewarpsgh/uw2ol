@@ -30,6 +30,7 @@ class Role:
         self.x = x
         self.y = y
         self.direction = None
+        self.moving = False
         self.person_frame = -1
         self.name = name
         self.enemy_name = None
@@ -148,11 +149,16 @@ class Role:
         self.y = y
 
         # repeat move
-        self.move_timer = task.LoopingCall(self.move, [direction])
-        self.move_timer.start(0.15)
+        self.direction = direction
+        self.moving = True
+
+        # self.move_timer = task.LoopingCall(self.move, [direction])
+        # self.move_timer.start(0.15)
 
     def stop_move(self, params):
-        self.move_timer.stop()
+        self.moving = False
+
+        # self.move_timer.stop()
 
 
     def move(self, params):

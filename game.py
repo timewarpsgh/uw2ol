@@ -136,3 +136,15 @@ class Game():
     def change_ship_frame_state(self):
         """invoded every 1 second for ship animation"""
         self.ship_frame *= -1
+
+    def update_roles_positions(self):
+        if self.my_role:
+            # my role
+            my_role = self.my_role
+            if my_role.moving:
+                my_role.move([my_role.direction])
+
+            # other roles
+            for role in self.other_roles.values():
+                if role.moving:
+                    role.move([role.direction])
