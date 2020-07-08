@@ -12,8 +12,6 @@ import sys
 
 import os
 import sys
-f = open(os.devnull, 'w')
-sys.stdout = f
 
 
 def get_input():
@@ -104,7 +102,9 @@ class Echo(Protocol):
         data = p.get_pck_has_head()
 
         # send packet
-        self.transport.write(data)
+        self.transport.getHandle().sendall(data)
+
+        # self.transport.write(data)
         print("transport just wrote:", protocol_name, content_obj)
 
 
@@ -126,6 +126,11 @@ class EchoClientFactory(ClientFactory):
         print('Connection failed. Reason:', reason)
 
 def main():
+    # print?
+    if c.DAEMON_MODE:
+        f = open(os.devnull, 'w')
+        sys.stdout = f
+
     # init game and schedule game loop
     game = Game()
     tick = LoopingCall(game.update)

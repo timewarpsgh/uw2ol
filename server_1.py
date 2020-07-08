@@ -6,11 +6,9 @@ from DBmanager import Database
 from role import Role
 import constants as c
 
-
 import os
 import sys
-f = open(os.devnull, 'w')
-sys.stdout = f
+
 
 class Echo(Protocol):
     def __init__(self, factory):
@@ -302,7 +300,9 @@ class Echo(Protocol):
         data = p.get_pck_has_head()
 
         # send packet
-        self.transport.write(data)
+        self.transport.getHandle().sendall(data)
+
+        # self.transport.write(data)
         print("transport just wrote:", protocol_name, content_obj)
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
@@ -323,6 +323,12 @@ class EchoFactory(Factory):
         return Echo(self)
 
 def main():
+    # print?
+    if c.DAEMON_MODE:
+        f = open(os.devnull, 'w')
+        sys.stdout = f
+
+    # reactor
     print("Listening...")
     reactor.listenTCP(c.PORT, EchoFactory())
     reactor.run()

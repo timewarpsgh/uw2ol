@@ -93,17 +93,9 @@ def other_keys_down(self, event):
     elif event.key == ord('s'):
         start_moving(self, 'down')
 
-    # send keys
-    if event.key == ord('1'):
-        self.connection.send('login', ['1', '1'])
-    elif event.key == ord('2'):
-        self.connection.send('login', ['2', '2'])
-    elif event.key == ord('3'):
-        self.connection.send('login', ['3', '3'])
-    elif event.key == ord('4'):
-        self.connection.send('login', ['4', '4'])
-    elif event.key == ord('5'):
-        self.connection.send('login', ['5', '5'])
+    # logins
+    if chr(event.key).isdigit():
+        self.connection.send('login', [chr(event.key), chr(event.key)])
 
     # enter building
     if event.key == ord('z'):
@@ -150,7 +142,7 @@ def can_move(self, direction):
 def start_moving(self, direction):
     if not self.movement:
         self.movement = task.LoopingCall(try_to_move,self, direction)
-        loopDeferred = self.movement.start(0.15)
+        loopDeferred = self.movement.start(0.6)
 
 def try_to_move(self, direction):
     if can_move(self, direction):
