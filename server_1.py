@@ -300,9 +300,9 @@ class Echo(Protocol):
         data = p.get_pck_has_head()
 
         # send packet
-        self.transport.getHandle().sendall(data)
+        # self.transport.getHandle().sendall(data)
 
-        # self.transport.write(data)
+        self.transport.write(data)
         print("transport just wrote:", protocol_name, content_obj)
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
@@ -330,6 +330,7 @@ def main():
 
     # reactor
     print("Listening...")
+    reactor.suggestThreadPoolSize(30)
     reactor.listenTCP(c.PORT, EchoFactory())
     reactor.run()
 

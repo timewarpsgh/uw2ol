@@ -66,10 +66,6 @@ def escape(self, event):
 def init_key_mappings(self):
     """cmds that change local state and sent to server"""
     self.key_mappings = {
-        # change map
-        'n': ['change_map', ['sea']],
-        'm': ['change_map', ['port']],
-
         # battle
         'b': ['try_to_fight_with', ['b']],
         'e': ['exit_battle', []],
@@ -93,9 +89,27 @@ def other_keys_down(self, event):
     elif event.key == ord('s'):
         start_moving(self, 'down')
 
+    # start move
+    if event.key == ord('h'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
+    elif event.key == ord('f'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
+    elif event.key == ord('t'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'up'])
+    elif event.key == ord('g'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
+
+
     # logins
     if chr(event.key).isdigit():
         self.connection.send('login', [chr(event.key), chr(event.key)])
+
+    # change map
+    if event.key == ord('n'):
+        self.change_and_send('change_map', ['sea'])
+    elif event.key == ord('m'):
+        self.change_and_send('change_map', ['port'])
+
 
     # enter building
     if event.key == ord('z'):
@@ -105,8 +119,11 @@ def other_keys_down(self, event):
     if event.key == ord('o'):
         print('auto moving!')
 
-        timer = task.LoopingCall(move_right_and_then_back, self)
-        timer.start(5)
+        self.timer = task.LoopingCall(move_right_and_then_back, self)
+        self.timer.start(5)
+    # stop timer
+    elif event.key == ord('p'):
+        self.timer.stop()
 
 
 def move_right_and_then_back(self):
@@ -142,7 +159,7 @@ def can_move(self, direction):
 def start_moving(self, direction):
     if not self.movement:
         self.movement = task.LoopingCall(try_to_move,self, direction)
-        loopDeferred = self.movement.start(0.6)
+        loopDeferred = self.movement.start(c.MOVE_TIME_INVERVAL)
 
 def try_to_move(self, direction):
     if can_move(self, direction):
@@ -157,6 +174,13 @@ def key_up(self, event):
             stop_moving(self)
         except:
             pass
+
+    if key == 'h' or key == 'f' or key == 't' or key == 'g':
+        try:
+            self.change_and_send('stop_move', [])
+        except:
+            pass
+
 def stop_moving(self):
     self.movement.stop()
     self.movement = None

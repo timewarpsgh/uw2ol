@@ -1,7 +1,7 @@
 import random
 import time
 from threading import Timer
-from twisted.internet import reactor
+from twisted.internet import reactor, task
 import constants as c
 
 SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON = 1
@@ -137,6 +137,24 @@ class Role:
         print("target_name:", self.enemy_name)
 
     # in port
+    def start_move(self, params):
+        # get params
+        x = params[0]
+        y = params[1]
+        direction = params[2]
+
+        # hard reset position
+        self.x = x
+        self.y = y
+
+        # repeat move
+        self.move_timer = task.LoopingCall(self.move, [direction])
+        self.move_timer.start(0.15)
+
+    def stop_move(self, params):
+        self.move_timer.stop()
+
+
     def move(self, params):
         direction = params[0]
 

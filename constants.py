@@ -40,6 +40,7 @@ YELLOW = (255, 255, 0)
 
 # player data
 PIXELS_COVERED_EACH_MOVE = 16
+MOVE_TIME_INVERVAL = 1
 
 
 # player image

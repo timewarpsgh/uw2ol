@@ -27,7 +27,9 @@ to do
     not sync problem (OK)
     sync auto test (OK)
     run server as daemon (OK)
-    slow send frequency (ON)
+    send frequency too fast (ON)
+        move start
+        move end
 
 
 
