@@ -24,7 +24,7 @@ DAEMON_MODE = True
 SAVE_ON_CONNECTION_LOST = False
 
 # network
-REMOTE_ON = True
+REMOTE_ON = False
 HOST = 'localhost'
 PORT = 8082
 REMOTE_HOST = 'a2z3673391.51mypc.cn'

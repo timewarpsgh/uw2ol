@@ -156,6 +156,11 @@ class Role:
         # self.move_timer.start(0.15)
 
     def stop_move(self, params):
+        x = params[0]
+        y = params[1]
+
+        self.x = x
+        self.y = y
         self.moving = False
 
         # self.move_timer.stop()

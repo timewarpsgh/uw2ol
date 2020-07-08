@@ -184,7 +184,7 @@ def key_up(self, event):
 
     if key == 'h' or key == 'f' or key == 't' or key == 'g':
         try:
-            self.change_and_send('stop_move', [])
+            self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])
         except:
             pass
 

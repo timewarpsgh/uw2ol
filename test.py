@@ -1,13 +1,23 @@
-from hashes.hash_ports_meta_data import hash_ports_meta_data
+from protocol import MyProtocol
+from timeit import timeit
+import time
 
-now_position_on_board = (1, 2)
+# make packet
+protocol_name = 'start_move'
+content_obj = [100, 200, 'right']
 
-# get all buildings' positions in this map
-dict = {
-    (1, 2): 'market',
-    (2, 3): 'bar',
-}
+def make_packet(protocol_name, content_obj):
+    p = MyProtocol()
+    p.add_str(protocol_name)
+    p.add_obj(content_obj)
+    data = p.get_pck_has_head()
 
-# is now position in buildings' positions
-if now_position_on_board in dict:
-    print("enter", dict[now_position_on_board])
+t1 = time.time()
+
+for i in range(300000):
+    make_packet(protocol_name, content_obj)
+
+
+
+t2 = time.time()
+print(t2 - t1)
