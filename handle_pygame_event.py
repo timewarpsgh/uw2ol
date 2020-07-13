@@ -1,6 +1,7 @@
 import pygame
 from twisted.internet import reactor, task
 import constants as c
+import sys
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2

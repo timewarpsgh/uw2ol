@@ -96,13 +96,3 @@ class Item:
     def __init__(self, count):
         self.count = count
 
-if __name__ == '__main__':
-    p = Protocol()
-
-
-    p.add_obj([1,2,3])
-
-
-    r = Protocol(p.get_pck_not_head())
-
-    print(r.get_obj())

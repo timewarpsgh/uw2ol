@@ -1,6 +1,6 @@
 make exe
 	pyinstaller -i assets/ship.ico --onefile client.py constants.py DBmanager.py game.py gui.py protocol.py role.
-	pyinstaller -i assets/ship.ico --onefile client.py client_packet_received.py constants.py DBmanager.py draw.py game.py gui.py handle_gui_event.py handle_pygame_event.py map_maker.py protocol.py role.py
+	pyinstaller -i assets/ship.ico --onefile client.pyw client_packet_received.py constants.py draw.py game.py gui.py handle_gui_event.py handle_pygame_event.py map_maker.py protocol.py role.py
 
 frameworks used
 	twisted(event driven network engine)
@@ -30,7 +30,9 @@ to do
     role.game -> role.GAME (OK)
 
     enter port and sail (OK)
-    same account login (ON)
+    same account login (OK)
+
+
 
 
 

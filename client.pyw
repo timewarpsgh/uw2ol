@@ -155,8 +155,12 @@ def main():
         port = c.PORT
 
     # pass game to factory and run reactor
-    reactor.connectTCP(host, port, EchoClientFactory(game))
-    reactor.run()
+    try:
+        reactor.connectTCP(host, port, EchoClientFactory(game))
+    except:
+        print("can't connect to server.")
+    else:
+        reactor.run()
 
 if __name__ == "__main__":
     main()
