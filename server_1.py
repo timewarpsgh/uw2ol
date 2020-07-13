@@ -25,6 +25,10 @@ class Echo(Protocol):
     def connectionLost(self, reason):
         print("connection lost!")
 
+        # set online to false
+        account = self.account
+        d = threads.deferToThread(self.factory.db.set_online_to_false, account)
+
         # save role to DB
         if c.SAVE_ON_CONNECTION_LOST:
             account = self.account
@@ -263,12 +267,14 @@ class Echo(Protocol):
             self.account = account
             d = threads.deferToThread(self.factory.db.get_character_data, account)
             d.addCallback(self.on_get_character_data_got_result)
+
         # not ok
         else:
             print("login failed!")
             self.send('login_failed')
 
     def on_get_character_data_got_result(self, role):
+
         # ok
         if role != False:
             # store role here and in users

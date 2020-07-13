@@ -22,6 +22,7 @@ DAEMON_MODE = False
 
 # Database
 SAVE_ON_CONNECTION_LOST = False
+SET_ONLINE_TO_TRUE_ON_LOGIN = False
 
 # network
 REMOTE_ON = False

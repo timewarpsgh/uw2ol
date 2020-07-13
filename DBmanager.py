@@ -34,13 +34,24 @@ class Database:
     def login(self, account, password):
 
         # check if such a row exists
-        sql_read = "SELECT * FROM accounts WHERE name = '{}' and pw = '{}'".format(account, password)
+        sql_read = "SELECT * FROM accounts WHERE name = '{}' and pw = '{}' and online = '0'".\
+            format(account, password)
+        print(sql_read)
         self.cursor.execute(sql_read)
         rows = self.cursor.fetchall()
 
         # if exits
         if rows:
             print("login success!" )
+
+            # set online to true
+            if c.SET_ONLINE_TO_TRUE_ON_LOGIN:
+                sql_update = "UPDATE accounts SET online = '1' WHERE name = '{}' and pw = '{}'".\
+                    format(account, password)
+                print(sql_update)
+                self.cursor.execute(sql_update)
+                self.db.commit()
+
             id = rows[0][0]
             return account
         else:
@@ -87,8 +98,17 @@ class Database:
             return False
 
     def save_character_data(self, account, player):
+
+        # save to file
         pickle.dump(player, open("data/save." + account, "wb"))
         print("saved!")
+
+    def set_online_to_false(self, account):
+        sql_update = "UPDATE accounts SET online = '0' WHERE name = '{}'". \
+            format(account)
+        print(sql_update)
+        self.cursor.execute(sql_update)
+        self.db.commit()
 
 if __name__ == '__main__':
     db = Database()
