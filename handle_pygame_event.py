@@ -142,30 +142,6 @@ def send_stop_moving(self):
 def start_moving_left(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
 
-def can_move(self, direction):
-    # get piddle
-    piddle = self.port_piddle
-
-    # perl piddle and python numpy(2d array) are different
-    y = int(self.my_role.x/16)
-    x = int(self.my_role.y/16)
-
-    # directions
-    if direction == 'up':
-        if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
-            return True
-    elif direction == 'down':
-        if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
-            return True
-    elif direction == 'left':
-        if piddle[x + 1, y - 1] in c.WALKABLE_TILES :
-            return True
-    elif direction == 'right':
-        if piddle[x + 1, y + 2] in c.WALKABLE_TILES :
-            return True
-
-    return False
-
 def start_moving(self, direction):
     if not self.movement:
         self.movement = task.LoopingCall(try_to_move,self, direction)

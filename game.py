@@ -48,6 +48,7 @@ class Game():
         self.my_role = None
         self.other_roles = {}
         self.all_roles = {}
+        Role.GAME = self
 
         # load assets
         self.font = None
@@ -135,10 +136,10 @@ class Game():
         if self.my_role:
             # my role
             my_role = self.my_role
-            if my_role.moving:
+            if my_role.moving and my_role.can_move(my_role.direction):
                 my_role.move([my_role.direction])
 
             # other roles
             for role in self.other_roles.values():
-                if role.moving:
+                if role.moving and role.can_move(role.direction):
                     role.move([role.direction])
