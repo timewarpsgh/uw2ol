@@ -79,26 +79,15 @@ def other_keys_down(self, event):
         params = self.key_mappings[chr(event.key)][1]
         self.change_and_send(cmd, params)
 
-    # move
-    if event.key == ord('d'):
-        start_moving(self, 'right')
-    elif event.key == ord('a'):
-        start_moving(self, 'left')
-    elif event.key == ord('w'):
-        start_moving(self, 'up')
-    elif event.key == ord('s'):
-        start_moving(self, 'down')
-
     # start move
-    if event.key == ord('h'):
+    if event.key == ord('d'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
-    elif event.key == ord('f'):
+    elif event.key == ord('a'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
-    elif event.key == ord('t'):
+    elif event.key == ord('w'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'up'])
-    elif event.key == ord('g'):
+    elif event.key == ord('s'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
-
 
     # logins
     if chr(event.key).isdigit():
@@ -109,7 +98,6 @@ def other_keys_down(self, event):
         self.change_and_send('change_map', ['sea'])
     elif event.key == ord('m'):
         self.change_and_send('change_map', ['port'])
-
 
     # enter building
     if event.key == ord('z'):
@@ -142,34 +130,15 @@ def send_stop_moving(self):
 def start_moving_left(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
 
-def start_moving(self, direction):
-    if not self.movement:
-        self.movement = task.LoopingCall(try_to_move,self, direction)
-        loopDeferred = self.movement.start(c.MOVE_TIME_INVERVAL)
-
-def try_to_move(self, direction):
-    if can_move(self, direction):
-        self.change_and_send('move', [direction])
-
 def key_up(self, event):
     key = chr(event.key)
 
     # stop moving
-    if key == 'w' or key == 's' or key == 'a' or key == 'd':
-        try:
-            stop_moving(self)
-        except:
-            pass
-
-    if key == 'h' or key == 'f' or key == 't' or key == 'g':
+    if key in ['w', 's', 'a', 'd']:
         try:
             self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])
         except:
             pass
-
-def stop_moving(self):
-    self.movement.stop()
-    self.movement = None
 
 def user_event_move(self, event):
     if self.my_role:

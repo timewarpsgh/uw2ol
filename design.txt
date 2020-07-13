@@ -27,7 +27,7 @@ to do
         move start
         move end
     client collision (OK)
-    role.game -> role.GAME (ON)
+    role.game -> role.GAME (OK)
 
 
 
