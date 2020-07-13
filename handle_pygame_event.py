@@ -95,9 +95,11 @@ def other_keys_down(self, event):
 
     # change map
     if event.key == ord('n'):
-        self.change_and_send('change_map', ['sea'])
+        if self.my_role.map != 'sea':
+            self.change_and_send('change_map', ['sea'])
     elif event.key == ord('m'):
-        self.change_and_send('change_map', ['port'])
+        if self.my_role.map != 'port':
+            self.change_and_send('change_map', ['port'])
 
     # enter building
     if event.key == ord('z'):

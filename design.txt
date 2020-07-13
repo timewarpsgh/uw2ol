@@ -29,6 +29,8 @@ to do
     client collision (OK)
     role.game -> role.GAME (OK)
 
+    enter port and sail (OK)
+    same account login (ON)
 
 
 
