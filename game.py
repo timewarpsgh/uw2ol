@@ -76,12 +76,6 @@ class Game():
             except:
                 pass
 
-
-
-
-
-
-
         # huds
         self.images['hud_left'] = pygame.image.load("./assets/images/huds/hud-left.png").convert_alpha()
         self.images['hud_left'] = pygame.transform.scale(self.images['hud_left'], (c.HUD_WIDTH, c.HUD_HIGHT))

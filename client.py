@@ -56,31 +56,36 @@ class Echo(Protocol):
 
     def dataReceived(self, data):
         """combine data to get packet"""
-        print("got", data)
+        print("got", "server data:", data)
 
         # append to buffer
         self.dataBuffer += data
+
+        print("buffer size", len(self.dataBuffer))
 
         # if buffer size less than packet length
         if len(self.dataBuffer) < c.HEADER_SIZE:
             return
 
-        # read length of packet
-        length_pck = int.from_bytes(self.dataBuffer[:c.HEADER_SIZE], byteorder='little')
+        # while there's anything in dataBuffer(may get two packets at once)
+        while self.dataBuffer:
 
-        # if buffer size < header + packet length
-        if len(self.dataBuffer) < c.HEADER_SIZE + length_pck:
-            return
+            # read length of packet
+            length_pck = int.from_bytes(self.dataBuffer[:c.HEADER_SIZE], byteorder='little')
 
-        # 截取封包
-        pck = self.dataBuffer[c.HEADER_SIZE:c.HEADER_SIZE + length_pck]
-        print('got packet')
+            # if buffer size < header + packet length
+            if len(self.dataBuffer) < c.HEADER_SIZE + length_pck:
+                return
 
-        # 把封包交给处理函数
-        self.pck_received(pck)
+            # 截取封包
+            pck = self.dataBuffer[c.HEADER_SIZE:c.HEADER_SIZE + length_pck]
+            print('got packet')
 
-        # 删除已经读取的字节
-        self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
+            # 把封包交给处理函数
+            self.pck_received(pck)
+
+            # 删除已经读取的字节
+            self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
 
     def pck_received(self, pck):
         # get packet type and message object

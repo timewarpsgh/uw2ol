@@ -128,13 +128,16 @@ def other_keys_down(self, event):
 
 def move_right_and_then_back(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
-    reactor.callLater(2, self.change_and_send, 'stop_move', [])
+    reactor.callLater(2, send_stop_moving, self)
     reactor.callLater(2.5, start_moving_left, self)
-    reactor.callLater(4.5, self.change_and_send, 'stop_move', [])
+    reactor.callLater(4.5, send_stop_moving, self)
     # start_moving(self, 'right')
     # reactor.callLater(2, stop_moving, self)
     # reactor.callLater(2.5, start_moving, self, 'left')
     # reactor.callLater(4.5, stop_moving, self)
+
+def send_stop_moving(self):
+    self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])
 
 def start_moving_left(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
