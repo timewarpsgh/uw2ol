@@ -48,7 +48,6 @@ class Role:
         self.discoveries = {}
 
         self.conn = None
-        self.game = None
 
         # set at client, when client first gets role from server(when got packet 'your_role_data')
         self.in_client = False
@@ -57,13 +56,13 @@ class Role:
 
         # in client
         if self.in_client:
-            if name in self.game.other_roles:
-                target_role = self.game.other_roles[name]
+            if name in self.GAME.other_roles:
+                target_role = self.GAME.other_roles[name]
                 print("target is:", target_role.name)
                 return target_role
             else:
-                print("target is:", self.game.my_role.name)
-                return self.game.my_role
+                print("target is:", self.GAME.my_role.name)
+                return self.GAME.my_role
 
         # in server
         else:

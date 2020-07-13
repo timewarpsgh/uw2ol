@@ -49,9 +49,8 @@ def process_packet(self, pck_type, message_obj):
                 self.other_roles[name] = role
 
             # set game and in client to role
-
             role.in_client = True
-            role.game = self
+
 
     elif pck_type == 'new_roles_from_battle':
         new_roles_from_battle = message_obj

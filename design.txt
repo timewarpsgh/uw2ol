@@ -26,7 +26,8 @@ to do
     send frequency too fast (OK)
         move start
         move end
-    client collision (ON)
+    client collision (OK)
+    role.game -> role.GAME (ON)
 
 
 
