@@ -24,7 +24,7 @@ protocols
 to do
     enter port and sail (OK)
     same account login (OK)
-    all ports (ON)
+    all ports (OK)
     world map (ON)
 
 

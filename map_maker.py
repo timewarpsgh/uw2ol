@@ -81,11 +81,49 @@ class MapMaker():
         # ret
         return port_img
 
+    def make_world_map_tiles(self):
+        # read img
+        img = Image.open(f"./assets/images/world_map/w_map regular tileset.png")
+
+        # cut to tiles
+        world_map_tiles = ['']
+        for k in range(8):
+            for i in range(16):
+                left = i * c.PIXELS_COVERED_EACH_MOVE
+                upper = k * c.PIXELS_COVERED_EACH_MOVE
+                width = height = c.PIXELS_COVERED_EACH_MOVE
+                right = left + width
+                lower = upper + height
+
+                region = (left, upper, right, lower)
+                img_cropped = img.crop(region)
+                world_map_tiles.append(img_cropped)
+
+        # ret
+        return world_map_tiles
+
     def make_world_piddle(self):
-        pass
+        """world map(sea) matrix"""
+        # columns and rows
+        COLUMNS = 12 * 2 * 30 * 3;
+        ROWS = 12 * 2 * 45;
+
+        # get piddle from txt
+        num_array = ''
+        with open("./assets/images/world_map/w_map_piddle_array.txt", 'r') as myfile:
+            num_array = myfile.read()
+
+        nums_list = num_array.split(',')
+        piddle = np.array(nums_list)
+        piddle = piddle.reshape(ROWS, COLUMNS)
+
+        # ret
+        return piddle
 
     def make_world_map(self):
         pass
 
 if __name__ == '__main__':
-    pass
+    map_maker = MapMaker()
+    # map_maker.make_world_map_tiles()
+    map_maker.make_world_piddle()
