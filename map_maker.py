@@ -125,9 +125,10 @@ class MapMaker():
             can be used after setting world_map_tiles and world_map_piddle.
         """
         # sea image with size 73 * 73
-        COLUMNS = ROWS = 73
+        COLUMNS = ROWS = c.PARTIAL_WORLD_MAP_TILES
         sea_img = Image.new('RGB', (COLUMNS * c.PIXELS_COVERED_EACH_MOVE, ROWS * c.PIXELS_COVERED_EACH_MOVE), 'red')
-        sea_piddle = self.world_map_piddle[y_tile-36:y_tile+36+1, x_tile-36:x_tile+36+1]
+        HALF_TILES = c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION
+        sea_piddle = self.world_map_piddle[y_tile-HALF_TILES:y_tile+HALF_TILES+1, x_tile-HALF_TILES:x_tile+HALF_TILES+1]
         print(sea_piddle.shape)
 
         # small piddle to image
@@ -157,5 +158,5 @@ if __name__ == '__main__':
     map_maker = MapMaker()
     map_maker.set_world_map_tiles()
     map_maker.set_world_piddle()
-    map_maker.make_partial_world_map(856, 252)
+    map_maker.make_partial_world_map(900, 262)
 

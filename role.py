@@ -34,7 +34,7 @@ class Role:
         self.person_frame = -1
         self.name = name
         self.enemy_name = None
-        self.map = 'port'
+        self.map = '29'
         self.in_building_type = None
         self.battle_timer = 0
         self.your_turn_in_battle = True
@@ -87,7 +87,7 @@ class Role:
             # timer.start()
 
         # if to port
-        elif map_name == 'port':
+        elif map_name.isdigit():
             pass
 
     def _check_days_at_sea_timer(self):
@@ -100,7 +100,7 @@ class Role:
                 print('your fleet starved to death!')
                 break
 
-            if self.map == 'port':
+            if self.map.isdigit():
                 break
 
     def _count_max_days_at_sea(self):
@@ -544,6 +544,7 @@ class Player:
 
 if __name__ == '__main__':
     role = Role(5, 5, 'test_name')
-    for i in range(10):
-        print(i)
-        role.discover([0])
+    a = {}
+    print(type(role.map))
+    a[role.map] = 123
+    print(a)

@@ -64,7 +64,7 @@ class Game():
     def load_assets(self):
         # maps
             # port
-        self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(29)
+        # self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(29)
             # partial_world_map
         self.map_maker.set_world_map_tiles()
         self.map_maker.set_world_piddle()
@@ -142,8 +142,10 @@ class Game():
         if self.my_role:
             # my role
             my_role = self.my_role
-            if my_role.moving and my_role.can_move(my_role.direction):
+            if my_role.moving:
                 my_role.move([my_role.direction])
+            # if my_role.moving and my_role.can_move(my_role.direction):
+            #     my_role.move([my_role.direction])
 
             # other roles
             for role in self.other_roles.values():

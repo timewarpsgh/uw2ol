@@ -18,10 +18,24 @@ def draw(self):
 def draw_logged_in_state(self):
     # draw map
     now_map = self.my_role.map
-    if now_map == 'port' or now_map == 'sea':
+
+        # in port
+    if now_map.isdigit():
         x = self.screen_surface_rect.centerx - self.my_role.x
         y = self.screen_surface_rect.centery - self.my_role.y
-        self.screen_surface.blit(self.images[now_map], (x, y))
+        self.screen_surface.blit(self.images['port'], (x, y))
+
+        # at sea
+    elif now_map == 'sea':
+        x = -(c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION * c.PIXELS_COVERED_EACH_MOVE
+              - self.screen_surface_rect.centerx + self.my_role.x - 900*16)
+        y = -(c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION * c.PIXELS_COVERED_EACH_MOVE
+              - self.screen_surface_rect.centery + self.my_role.y - 262*16)
+        print(x, y)
+
+        self.screen_surface.blit(self.images['sea'], (x, y))
+
+        # in battle
     else:
         self.screen_surface.blit(self.images['battle'], (0, 0))
 
@@ -44,7 +58,7 @@ def draw_logged_in_state(self):
 
         # not in building
     else:
-        if now_map == 'port':
+        if now_map.isdigit():
             draw_in_port(self)
             draw_hud(self)
         elif now_map == 'sea':

@@ -1,2 +1,6 @@
-a = str(12).zfill(3)
+a = {
+    '2': 2
+}
+print(a['2'])
+a['3'] = 4
 print(a)

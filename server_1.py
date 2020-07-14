@@ -5,6 +5,7 @@ from protocol import MyProtocol
 from DBmanager import Database
 from role import Role
 import constants as c
+from hashes.hash_ports_meta_data import hash_ports_meta_data
 
 import os
 import sys
@@ -113,8 +114,10 @@ class Echo(Protocol):
             now_map = self.my_role.map
             target_map = message_obj[0]
 
-            # change my map
+            # change my map and position
             self.my_role.map = target_map
+            self.my_role.x = hash_ports_meta_data[int(now_map) +1]['x'] * c.PIXELS_COVERED_EACH_MOVE
+            self.my_role.y = hash_ports_meta_data[int(now_map) +1]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
             # change users() state
             del self.factory.users[now_map][self.my_role.name]
@@ -323,6 +326,8 @@ class Echo(Protocol):
 class EchoFactory(Factory):
     def __init__(self):
         self.users = {
+            '33':{},
+            '29':{},
             'port':{},
             'sea':{},
         }
