@@ -81,7 +81,7 @@ class MapMaker():
         # ret
         return port_img
 
-    def make_world_map_tiles(self):
+    def set_world_map_tiles(self):
         # read img
         img = Image.open(f"./assets/images/world_map/w_map regular tileset.png")
 
@@ -99,10 +99,10 @@ class MapMaker():
                 img_cropped = img.crop(region)
                 world_map_tiles.append(img_cropped)
 
-        # ret
-        return world_map_tiles
+        # set
+        self.world_map_tiles = world_map_tiles
 
-    def make_world_piddle(self):
+    def set_world_piddle(self):
         """world map(sea) matrix"""
         # columns and rows
         COLUMNS = 12 * 2 * 30 * 3;
@@ -117,13 +117,45 @@ class MapMaker():
         piddle = np.array(nums_list)
         piddle = piddle.reshape(ROWS, COLUMNS)
 
+        # set
+        self.world_map_piddle = piddle
+
+    def make_partial_world_map(self, x_tile, y_tile):
+        """a small rectangular part of the world map.
+            can be used after setting world_map_tiles and world_map_piddle.
+        """
+        # sea image with size 73 * 73
+        COLUMNS = ROWS = 73
+        sea_img = Image.new('RGB', (COLUMNS * c.PIXELS_COVERED_EACH_MOVE, ROWS * c.PIXELS_COVERED_EACH_MOVE), 'red')
+        sea_piddle = self.world_map_piddle[y_tile-36:y_tile+36+1, x_tile-36:x_tile+36+1]
+        print(sea_piddle.shape)
+
+        # small piddle to image
+        for r in range(ROWS):
+            for i in range(COLUMNS):
+                left = i * c.PIXELS_COVERED_EACH_MOVE
+                upper = r * c.PIXELS_COVERED_EACH_MOVE
+                position = (left, upper)
+                img = self.world_map_tiles[int(sea_piddle[r, i])]
+                sea_img.paste(img, position)
+
+        # PIL image to pygame image
+        mode = sea_img.mode
+        size = sea_img.size
+        data = sea_img.tobytes()
+        sea_img = pygame.image.fromstring(data, size, mode)
+
         # ret
-        return piddle
+        return sea_img
+
+        # sea_img.save("sea_img.png")
 
     def make_world_map(self):
         pass
 
 if __name__ == '__main__':
     map_maker = MapMaker()
-    # map_maker.make_world_map_tiles()
-    map_maker.make_world_piddle()
+    map_maker.set_world_map_tiles()
+    map_maker.set_world_piddle()
+    map_maker.make_partial_world_map(856, 252)
+

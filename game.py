@@ -63,8 +63,15 @@ class Game():
 
     def load_assets(self):
         # maps
+            # port
         self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(27)
-        self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
+            # partial_world_map
+        self.map_maker.set_world_map_tiles()
+        self.map_maker.set_world_piddle()
+        self.images['sea'] = self.map_maker.make_partial_world_map(600, 252)
+
+            # battle
+        # self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
         self.images['battle'] = pygame.image.load("./assets/battle.png").convert_alpha()
 
         # buildings
