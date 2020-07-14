@@ -74,11 +74,6 @@ def init_key_mappings(self):
     }
 
 def other_keys_down(self, event):
-    # change and send keys
-    if chr(event.key) in self.key_mappings:
-        cmd = self.key_mappings[chr(event.key)][0]
-        params = self.key_mappings[chr(event.key)][1]
-        self.change_and_send(cmd, params)
 
     # start move
     if event.key == ord('d'):
@@ -106,15 +101,24 @@ def other_keys_down(self, event):
     if event.key == ord('z'):
         self.button_click_handler.menu_click_handler.cmds.enter_building()
 
-    # auto move
-    if event.key == ord('o'):
-        print('auto moving!')
+    # developer keys
+    if c.DEVELOPER_MODE_ON:
 
-        self.timer = task.LoopingCall(move_right_and_then_back, self)
-        self.timer.start(5)
-    # stop timer
-    elif event.key == ord('p'):
-        self.timer.stop()
+        # change and send keys
+        if chr(event.key) in self.key_mappings:
+            cmd = self.key_mappings[chr(event.key)][0]
+            params = self.key_mappings[chr(event.key)][1]
+            self.change_and_send(cmd, params)
+
+        # auto move
+        if event.key == ord('o'):
+            print('auto moving!')
+
+            self.timer = task.LoopingCall(move_right_and_then_back, self)
+            self.timer.start(5)
+        # stop timer
+        elif event.key == ord('p'):
+            self.timer.stop()
 
 
 def move_right_and_then_back(self):
@@ -122,10 +126,6 @@ def move_right_and_then_back(self):
     reactor.callLater(2, send_stop_moving, self)
     reactor.callLater(2.5, start_moving_left, self)
     reactor.callLater(4.5, send_stop_moving, self)
-    # start_moving(self, 'right')
-    # reactor.callLater(2, stop_moving, self)
-    # reactor.callLater(2.5, start_moving, self, 'left')
-    # reactor.callLater(4.5, stop_moving, self)
 
 def send_stop_moving(self):
     self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])

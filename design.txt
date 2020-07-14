@@ -22,15 +22,10 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    run server as daemon (OK)
-    send frequency too fast (OK)
-        move start
-        move end
-    client collision (OK)
-    role.game -> role.GAME (OK)
-
     enter port and sail (OK)
     same account login (OK)
+    all ports (ON)
+    world map (ON)
 
 
 
