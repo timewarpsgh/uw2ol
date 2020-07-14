@@ -2,13 +2,35 @@ import numpy as np
 from PIL import Image
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
+import pygame
 
 class MapMaker():
     def __init__(self):
         pass
 
-    def make_port_piddle(self, map_path='./assets/images/ports/PORTMAP.029'):
+    def make_port_piddle_and_map(self, port_index):
+        """make a port's tile matrix and image"""
+        # make piddle
+        port_piddle = self.make_port_piddle(port_index)
+
+        # make map
+        port_map_pil_img = self.make_port_map(port_piddle, port_index)
+        mode = port_map_pil_img.mode
+        size = port_map_pil_img.size
+        data = port_map_pil_img.tobytes()
+
+        port_map = pygame.image.fromstring(data, size, mode)
+
+        # ret
+        return (port_piddle, port_map)
+
+    def make_port_piddle(self, port_index):
         """piddle is a 2D-array(matrix)"""
+        # get path
+        port_index_with_leading_zeros = str(port_index).zfill(3)
+        map_path = f"./assets/images/ports/PORTMAP.{port_index_with_leading_zeros}"
+
+        # get piddle
         with open(map_path, 'rb') as file:
             bytes = file.read()
             list_of_numbers = list(bytes)
@@ -50,13 +72,14 @@ class MapMaker():
 
         for r in range(MAP_TILES_COUNT):
             for i in range(MAP_TILES_COUNT):
-                left = i * 16
-                upper = r * 16
+                left = i * c.PIXELS_COVERED_EACH_MOVE
+                upper = r * c.PIXELS_COVERED_EACH_MOVE
                 position = (left, upper)
                 img = port_tiles[port_piddle[r, i]]
                 port_img.paste(img, position)
 
-        port_img.save('out.png')
+        # ret
+        return port_img
 
     def make_world_piddle(self):
         pass
@@ -65,8 +88,4 @@ class MapMaker():
         pass
 
 if __name__ == '__main__':
-    map_maker = MapMaker()
-    piddle = map_maker.make_port_piddle()
-    # print(piddle[0, 10])
-
-    map_maker.make_port_map(piddle, 29)
+    pass

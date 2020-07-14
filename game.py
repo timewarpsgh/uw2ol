@@ -31,7 +31,6 @@ class Game():
         handle_pygame_event.init_key_mappings(self)
         self.movement = None
         self.map_maker = MapMaker()
-        self.port_piddle = self.map_maker.make_port_piddle()
 
         # loop to change ship frame state
         self.ship_frame = 1
@@ -64,7 +63,7 @@ class Game():
 
     def load_assets(self):
         # maps
-        self.images['port'] = pygame.image.load("./assets/port.png").convert_alpha()
+        self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(27)
         self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
         self.images['battle'] = pygame.image.load("./assets/battle.png").convert_alpha()
 
