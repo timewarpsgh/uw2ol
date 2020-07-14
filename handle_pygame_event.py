@@ -92,6 +92,7 @@ def other_keys_down(self, event):
     # change map
     if event.key == ord('n'):
         if self.my_role.map != 'sea':
+            self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
             self.change_and_send('change_map', ['sea'])
     elif event.key == ord('m'):
         if self.my_role.map != 'port':
@@ -116,6 +117,7 @@ def other_keys_down(self, event):
 
             self.timer = task.LoopingCall(move_right_and_then_back, self)
             self.timer.start(5)
+
         # stop timer
         elif event.key == ord('p'):
             self.timer.stop()
