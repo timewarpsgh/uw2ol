@@ -31,7 +31,6 @@ def draw_logged_in_state(self):
               - self.screen_surface_rect.centerx + self.my_role.x - 900*16)
         y = -(c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION * c.PIXELS_COVERED_EACH_MOVE
               - self.screen_surface_rect.centery + self.my_role.y - 262*16)
-        print(x, y)
 
         self.screen_surface.blit(self.images['sea'], (x, y))
 

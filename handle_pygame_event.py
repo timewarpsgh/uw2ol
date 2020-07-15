@@ -2,6 +2,7 @@ import pygame
 from twisted.internet import reactor, task
 import constants as c
 import sys
+from hashes.hash_ports_meta_data import hash_ports_meta_data
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -92,11 +93,16 @@ def other_keys_down(self, event):
     # change map
     if event.key == ord('n'):
         if self.my_role.map != 'sea':
-            self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
+            # make sea image
+            port_tile_x = hash_ports_meta_data[int(self.my_role.map) + 1]['x']
+            port_tile_y = hash_ports_meta_data[int(self.my_role.map) + 1]['y']
+            self.images['sea'] = self.map_maker.make_partial_world_map(port_tile_x, port_tile_y)
+
+            # send
             self.change_and_send('change_map', ['sea'])
     elif event.key == ord('m'):
-        if self.my_role.map != 'port':
-            self.change_and_send('change_map', ['port'])
+        if not self.my_role.map.isdigit():
+            self.change_and_send('change_map', ['29'])
 
     # enter building
     if event.key == ord('z'):

@@ -29,10 +29,18 @@ def process_packet(self, pck_type, message_obj):
         del self.other_roles[name_of_logged_out_role]
 
     elif pck_type == 'roles_in_new_map':
+        """response from change_map"""
         roles_in_new_map = message_obj
         self.my_role = roles_in_new_map[self.my_role.name]
         del roles_in_new_map[self.my_role.name]
         self.other_roles = roles_in_new_map
+
+        # make map
+        if self.my_role.map == 'sea':
+            pass
+        elif self.my_role.map.isdigit():
+            port_index = int(self.my_role.map)
+            self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
 
     elif pck_type == 'role_disappeared':
         name_of_role_that_disappeared = message_obj

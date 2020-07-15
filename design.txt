@@ -26,9 +26,10 @@ to do
     same account login (OK)
     all ports (OK)
     world map (OK)
-    sail to right position (ON)
-        change map name "port" to 29/28 (digit)  (ON)
-    enter port to right position
+    sail to right position (OK)
+        change map name "port" to 29/28 (digit)  (OK)
+    enter port to right position (ON)
+
 
 
 

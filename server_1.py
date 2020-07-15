@@ -116,10 +116,21 @@ class Echo(Protocol):
 
             # change my map and position
             self.my_role.map = target_map
-            self.my_role.x = hash_ports_meta_data[int(now_map) +1]['x'] * c.PIXELS_COVERED_EACH_MOVE
-            self.my_role.y = hash_ports_meta_data[int(now_map) +1]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
-            # change users() state
+            print("map changed to:", self.my_role.map)
+
+                # to sea
+            if target_map == 'sea':
+                self.my_role.x = hash_ports_meta_data[int(now_map) +1]['x'] * c.PIXELS_COVERED_EACH_MOVE
+                self.my_role.y = hash_ports_meta_data[int(now_map) +1]['y'] * c.PIXELS_COVERED_EACH_MOVE
+                # to port
+            elif target_map.isdigit():
+                self.my_role.x = hash_ports_meta_data[int(target_map) +1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
+                self.my_role.y = hash_ports_meta_data[int(target_map) +1]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
+
+                print("changed to", self.my_role.x, self.my_role.y)
+
+        # change users() state
             del self.factory.users[now_map][self.my_role.name]
             self.factory.users[target_map][self.my_role.name] = self
 

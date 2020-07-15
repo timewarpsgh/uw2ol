@@ -68,7 +68,7 @@ class Game():
             # partial_world_map
         self.map_maker.set_world_map_tiles()
         self.map_maker.set_world_piddle()
-        self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
+        # self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
 
             # battle
         # self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
