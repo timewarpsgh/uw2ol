@@ -188,28 +188,58 @@ class Role:
         print("new direction:", self.direction)
 
     def can_move(self, direction):
-        # get piddle
-        piddle = self.GAME.port_piddle
+        # in port
+        if self.map.isdigit():
 
-        # perl piddle and python numpy(2d array) are different
-        y = int(self.x / 16)
-        x = int(self.y / 16)
+            # get piddle
+            piddle = self.GAME.port_piddle
 
-        # directions
-        if direction == 'up':
-            if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
-                return True
-        elif direction == 'down':
-            if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
-                return True
-        elif direction == 'left':
-            if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
-                return True
-        elif direction == 'right':
-            if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
-                return True
+            # perl piddle and python numpy(2d array) are different
+            y = int(self.x / 16)
+            x = int(self.y / 16)
 
-        return False
+            # directions
+            if direction == 'up':
+                if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
+                    return True
+            elif direction == 'down':
+                if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
+                    return True
+            elif direction == 'left':
+                if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
+                    return True
+            elif direction == 'right':
+                if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
+                    return True
+
+            # ret
+            return False
+
+        # at sea
+        elif self.map == 'sea':
+            # get piddle
+            piddle = self.GAME.map_maker.world_map_piddle
+
+            # perl piddle and python numpy(2d array) are different
+            y = int(self.x / 16)
+            x = int(self.y / 16)
+
+            # directions
+            if direction == 'up':
+                if int(piddle[x - 1, y]) in c.WALKABLE_TILES:
+                    return True
+            elif direction == 'down':
+                if int(piddle[x + 2, y]) in c.WALKABLE_TILES:
+                    return True
+            elif direction == 'left':
+                if int(piddle[x + 1, y - 1]) in c.WALKABLE_TILES:
+                    return True
+            elif direction == 'right':
+                if int(piddle[x + 1, y + 2]) in c.WALKABLE_TILES:
+                    return True
+
+            # ret
+            return False
 
     # at sea
     def discover(self, params):

@@ -142,26 +142,22 @@ class Game():
         if self.my_role:
             # my role
             my_role = self.my_role
-            if my_role.moving:
+            if my_role.moving and my_role.can_move(my_role.direction):
                 my_role.move([my_role.direction])
 
-                # update sea image if far away from current partial map center
-                if my_role.map == 'sea':
-                    my_tile_x = int(self.my_role.x / c.PIXELS_COVERED_EACH_MOVE)
-                    my_tile_y = int(self.my_role.y / c.PIXELS_COVERED_EACH_MOVE)
-
-                    if abs(my_tile_x - self.map_maker.x_tile) >= 12 or abs(my_tile_y - self.map_maker.y_tile) >= 12:
-                        print("out of box! time to draw new map")
-                        self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y)
-
-
-            # if my_role.moving and my_role.can_move(my_role.direction):
-            #     my_role.move([my_role.direction])
+                # update sea image
+                self.update_sea_image()
 
             # other roles
             for role in self.other_roles.values():
-                if role.moving:
+                if role.moving and role.can_move(role.direction):
                     role.move([role.direction])
 
-                # if role.moving and role.can_move(role.direction):
-                #     role.move([role.direction])
+    def update_sea_image(self):
+        if self.my_role.map == 'sea':
+            my_tile_x = int(self.my_role.x / c.PIXELS_COVERED_EACH_MOVE)
+            my_tile_y = int(self.my_role.y / c.PIXELS_COVERED_EACH_MOVE)
+
+            if abs(my_tile_x - self.map_maker.x_tile) >= 12 or abs(my_tile_y - self.map_maker.y_tile) >= 12:
+                print("out of box! time to draw new map")
+                self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y)

@@ -31,7 +31,7 @@ to do
     enter port to right position (OK)
     enter a specific port from it's sea area (OK)
     continuous sea map (OK)
-    sea map collision (ON)
+    sea map collision (OK)
 
 
 
