@@ -35,7 +35,7 @@ to do
     enter port from nearby sea position (OK)
     enter buildings from all ports (OK)
 
-
+    buy real ship (ON)
 
 
 

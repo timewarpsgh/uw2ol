@@ -358,8 +358,14 @@ class MenuClickHandlerForShips():
         dict = {
             'name': ship.name,
             'type': ship.type,
-            'hp': f'{ship.now_hp}/{ship.max_hp}',
+            'durability': f'{ship.now_hp}/{ship.max_hp}',
+            'tacking': f'{ship.tacking}',
+            'power': f'{ship.power}',
+            'capacity': f'{ship.capacity}',
+            'useful_capacity': f'{ship.useful_capacity}',
+            'max_guns': f'{ship.max_guns}',
             'crew': f'{ship.crew}',
+            'min_crew/max_crew': f'{ship.min_crew}/{ship.max_crew}',
         }
 
         # supply

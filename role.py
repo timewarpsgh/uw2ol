@@ -3,22 +3,16 @@ import time
 from threading import Timer
 from twisted.internet import reactor, task
 import constants as c
+from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
 
-SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON = 1
 
-# contains portable data for a player (transmitted from DB to server to client)
-# and setters(also protocols sent to and from server)
-# must only pass one argument called params(a list)
 class Role:
+    """
+    contains portable data for a player (transmitted from DB to server to client)
+    and setters(also protocols sent to and from server)
+    must only pass one argument called params(a list)
 
-    # set at client, when client first gets role from server(when got packet 'your_role_data')
-    g_all_players = None
-
-    # set at server, when server first got connection from a client
-    g_conn_pool = None
-
-    # set at server, when server first got name of player
-    g_name_to_socket_pool = None
+    """
 
     # in server
     users = None
@@ -468,14 +462,32 @@ class Ship:
     shooting_img = ''
 
     def __init__(self, name, type):
+        # necessary params
         self.name = name
         self.type = type
+
+        # init from hash
+        ship_dict = hash_ship_name_to_attributes[type]
+
+        self.now_hp = ship_dict['durability']
+        self.max_hp = ship_dict['durability']
+
+        self.tacking = ship_dict['tacking']
+        self.power = ship_dict['power']
+
+        self.capacity = ship_dict['capacity']
+
+        self.max_guns = ship_dict['max_guns']
+        self.min_crew = ship_dict['min_crew']
+        self.max_crew = ship_dict['max_crew']
+
+        # others
+        self.useful_capacity = self.capacity - self.max_guns - self.max_crew
         self.x = 10
         self.y = 10
         self.state = ''
-        self.now_hp = 10
         self.damage_got = ''
-        self.max_hp = 10
+
         self.crew = 5
         self.cargoes = {}
         self.supplies = {
