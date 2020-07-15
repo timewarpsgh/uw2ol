@@ -28,9 +28,11 @@ def draw_logged_in_state(self):
         # at sea
     elif now_map == 'sea':
         x = -(c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION * c.PIXELS_COVERED_EACH_MOVE
-              - self.screen_surface_rect.centerx + self.my_role.x - 900*16)
+              - self.screen_surface_rect.centerx + self.my_role.x
+              - self.map_maker.x_tile * c.PIXELS_COVERED_EACH_MOVE)
         y = -(c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION * c.PIXELS_COVERED_EACH_MOVE
-              - self.screen_surface_rect.centery + self.my_role.y - 262*16)
+              - self.screen_surface_rect.centery + self.my_role.y
+              - self.map_maker.y_tile * c.PIXELS_COVERED_EACH_MOVE)
 
         self.screen_surface.blit(self.images['sea'], (x, y))
 

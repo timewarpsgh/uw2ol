@@ -130,7 +130,7 @@ class Echo(Protocol):
 
                 print("changed to", self.my_role.x, self.my_role.y)
 
-        # change users() state
+            # change users() state
             del self.factory.users[now_map][self.my_role.name]
             self.factory.users[target_map][self.my_role.name] = self
 
@@ -336,12 +336,16 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
+        # users at sea map
         self.users = {
-            '33':{},
-            '29':{},
-            'port':{},
             'sea':{},
         }
+
+        # users in ports
+        for i in range(101):
+            self.users[str(i)] = {}
+
+        # db
         self.db = Database()
 
     def buildProtocol(self, addr):

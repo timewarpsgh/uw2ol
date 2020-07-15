@@ -92,17 +92,23 @@ def other_keys_down(self, event):
 
     # change map
     if event.key == ord('n'):
+        # to sea
         if self.my_role.map != 'sea':
             # make sea image
             port_tile_x = hash_ports_meta_data[int(self.my_role.map) + 1]['x']
             port_tile_y = hash_ports_meta_data[int(self.my_role.map) + 1]['y']
+            print(port_tile_x, port_tile_y)
+
             self.images['sea'] = self.map_maker.make_partial_world_map(port_tile_x, port_tile_y)
 
             # send
             self.change_and_send('change_map', ['sea'])
     elif event.key == ord('m'):
+        # to port
         if not self.my_role.map.isdigit():
-            self.change_and_send('change_map', ['29'])
+            port_id = get_nearby_port_index(self)
+            if port_id:
+                self.change_and_send('change_map', [str(port_id)])
 
     # enter building
     if event.key == ord('z'):
@@ -128,6 +134,19 @@ def other_keys_down(self, event):
         elif event.key == ord('p'):
             self.timer.stop()
 
+
+def get_nearby_port_index(self):
+    # get x and y in tile position
+    x_tile = self.my_role.x / c.PIXELS_COVERED_EACH_MOVE
+    y_tile = self.my_role.y / c.PIXELS_COVERED_EACH_MOVE
+
+    # iterate each port
+    for i in range(1,131):
+        if x_tile == hash_ports_meta_data[i]['x'] and y_tile == hash_ports_meta_data[i]['y']:
+            port_id = i - 1
+            return port_id
+
+    return None
 
 def move_right_and_then_back(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])

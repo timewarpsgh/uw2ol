@@ -28,7 +28,11 @@ to do
     world map (OK)
     sail to right position (OK)
         change map name "port" to 29/28 (digit)  (OK)
-    enter port to right position (ON)
+    enter port to right position (OK)
+    enter a specific port from it's sea area (OK)
+    continuous sea map (OK)
+    sea map collision (ON)
+
 
 
 

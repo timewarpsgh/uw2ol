@@ -35,6 +35,8 @@ def process_packet(self, pck_type, message_obj):
         del roles_in_new_map[self.my_role.name]
         self.other_roles = roles_in_new_map
 
+        print("now my map:", self.my_role.map)
+
         # make map
         if self.my_role.map == 'sea':
             pass

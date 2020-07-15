@@ -124,6 +124,10 @@ class MapMaker():
         """a small rectangular part of the world map.
             can be used after setting world_map_tiles and world_map_piddle.
         """
+        # set partial_map_center
+        self.x_tile = x_tile
+        self.y_tile = y_tile
+
         # sea image with size 73 * 73
         COLUMNS = ROWS = c.PARTIAL_WORLD_MAP_TILES
         sea_img = Image.new('RGB', (COLUMNS * c.PIXELS_COVERED_EACH_MOVE, ROWS * c.PIXELS_COVERED_EACH_MOVE), 'red')
@@ -145,6 +149,9 @@ class MapMaker():
         size = sea_img.size
         data = sea_img.tobytes()
         sea_img = pygame.image.fromstring(data, size, mode)
+
+        # set to not drawing
+        self.drawing_partial_map = False
 
         # ret
         return sea_img
