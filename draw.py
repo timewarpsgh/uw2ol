@@ -1,5 +1,6 @@
 import pygame
 import constants as c
+from hashes.hash_ports_meta_data import hash_ports_meta_data
 
 def draw(self):
     """argument self is game"""
@@ -79,8 +80,37 @@ def draw_hud(self):
     self.screen_surface.blit(self.images['hud_left'], (0, 0))
     hud_left_rect = self.images['hud_left'].get_rect()
 
+        # gold
+    text = 'Gold:' + str(self.my_role.gold)
+    text_img = self.font.render(text, True, c.BLACK)
+    self.screen_surface.blit(text_img, (10, c.WINDOW_HIGHT - 50))
+
     # right hud
     self.screen_surface.blit(self.images['hud_right'], (c.WINDOW_WIDTH - hud_left_rect.width, 0))
+
+        # if in port
+    if self.my_role.map.isdigit():
+            # port name
+        port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
+        draw_text(self, port_name, c.WINDOW_WIDTH - 100, 5)
+
+        economy_id = hash_ports_meta_data[int(self.my_role.map) + 1]['economyId']
+        region_name = hash_ports_meta_data['markets'][economy_id]
+        draw_text(self, region_name, c.WINDOW_WIDTH - 100, 20)
+
+            # index
+        economy_index = hash_ports_meta_data[int(self.my_role.map) + 1]['economy']
+        industry_index = hash_ports_meta_data[int(self.my_role.map) + 1]['industry']
+
+        draw_text(self, 'Economy', c.WINDOW_WIDTH - 100, 80)
+        draw_text(self, str(economy_index), c.WINDOW_WIDTH - 100, 100)
+
+        draw_text(self, 'Industry', c.WINDOW_WIDTH - 100, 120)
+        draw_text(self, str(industry_index), c.WINDOW_WIDTH - 100, 140)
+
+def draw_text(self, text, x, y):
+    text_img = self.font.render(text, True, c.BLACK)
+    self.screen_surface.blit(text_img, (x, y))
 
 def draw_in_port(self):
     # draw my role
