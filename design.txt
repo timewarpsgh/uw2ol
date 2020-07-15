@@ -32,6 +32,7 @@ to do
     enter a specific port from it's sea area (OK)
     continuous sea map (OK)
     sea map collision (OK)
+    enter port from nearby sea position (ON)
 
 
 

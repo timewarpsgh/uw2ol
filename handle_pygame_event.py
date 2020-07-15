@@ -142,7 +142,8 @@ def get_nearby_port_index(self):
 
     # iterate each port
     for i in range(1,131):
-        if x_tile == hash_ports_meta_data[i]['x'] and y_tile == hash_ports_meta_data[i]['y']:
+        if abs(x_tile - hash_ports_meta_data[i]['x']) <= 2 \
+                and abs(y_tile - hash_ports_meta_data[i]['y']) <= 2:
             port_id = i - 1
             return port_id
 
