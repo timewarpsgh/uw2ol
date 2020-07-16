@@ -1,5 +1,3 @@
-
-
 hash_ship_name_to_attributes = {
 'Balsa': {
     'durability': 30,

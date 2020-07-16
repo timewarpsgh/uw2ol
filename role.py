@@ -481,6 +481,8 @@ class Ship:
         self.min_crew = ship_dict['min_crew']
         self.max_crew = ship_dict['max_crew']
 
+        self.price = ship_dict['price']
+
         # others
         self.useful_capacity = self.capacity - self.max_guns - self.max_crew
         self.x = 10

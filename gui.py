@@ -1,6 +1,9 @@
 import pygame_gui
 import pygame
 import constants as c
+from port import Port
+from role import Ship
+
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import id_2_building_type
 
@@ -279,7 +282,7 @@ class ButtonClickHandler():
                 'Market': self.menu_click_handler.port.on_menu_click_market,
                 'Bar': self.menu_click_handler.port.on_menu_click_bar,
                 'Dry Dock': self.menu_click_handler.port.on_menu_click_dry_dock,
-                'Port': self.menu_click_handler.port.on_menu_click_port,
+                'Harbor': self.menu_click_handler.port.on_menu_click_port,
                 'Inn': self.menu_click_handler.port.on_menu_click_inn,
                 'Palace': self.menu_click_handler.port.on_menu_click_palace,
                 'Job House': self.menu_click_handler.port.on_menu_click_job_house,
@@ -519,7 +522,7 @@ class MenuClickHandlerForPort():
     def __init__(self, game):
         self.game = game
 
-        self.port = Port(game)
+        self.port = Harbor(game)
         self.market = Market(game)
         self.bar = Bar(game)
         self.dry_dock = DryDock(game)
@@ -627,7 +630,7 @@ class MenuClickHandlerForPort():
         self.game.button_click_handler.make_menu(dict)
 
 
-class Port():
+class Harbor():
     """menu options under building port"""
     def __init__(self, game):
         self.game = game
@@ -700,8 +703,55 @@ class DryDock():
         self.game = game
 
     def used_ship(self):
+        # prepare dict
+        dict = {}
+
+            # available ships
+        my_map_id = int(self.game.my_role.map)
+        port = Port(my_map_id)
+        ships_list = port.get_available_ships()
+
+        for ship_type in ships_list:
+            dict[ship_type] = [self.show_used_ship, [ship_type]]
+
+            # buy
+        dict['buy'] = self.buy_used_ship
+
+        # make menu
+        self.game.button_click_handler.make_menu(dict)
+
+    def buy_used_ship(self):
         self.game.button_click_handler. \
             make_input_boxes('buy_ship', ['name', 'type'])
+
+    def show_used_ship(self, params):
+        # get param
+        ship_type = params[0]
+
+        # get ship
+        ship = Ship('', ship_type)
+
+        # dict
+        dict = {
+            'type': ship.type,
+            'durability': f'{ship.now_hp}/{ship.max_hp}',
+            'tacking': f'{ship.tacking}',
+            'power': f'{ship.power}',
+            'capacity': f'{ship.capacity}',
+            'useful_capacity': f'{ship.useful_capacity}',
+            'max_guns': f'{ship.max_guns}',
+            'min_crew/max_crew': f'{ship.min_crew}/{ship.max_crew}',
+            'price': ship.price
+        }
+
+        # make text from dict
+        text = ''
+        for k, v in dict.items():
+            text += f'{k}:{v}<br>'
+
+        # make window
+        PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                    self.game.ui_manager, text, self.game)
 
     def repair(self):
         self.game.change_and_send('repair_all', [])

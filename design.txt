@@ -35,7 +35,9 @@ to do
     enter port from nearby sea position (OK)
     enter buildings from all ports (OK)
 
-    buy real ship (ON)
+    buy real ship (OK)
+    dry dock show ship to buy (OK)
+    show ship image (ON)
 
 
 
