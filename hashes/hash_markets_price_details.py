@@ -1,4 +1,3 @@
-
 hash_markets_price_details = {
     0  : {#iberia
         'Available_items' : {

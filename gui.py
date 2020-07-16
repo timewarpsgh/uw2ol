@@ -683,6 +683,22 @@ class Market():
         self.game = game
 
     def buy(self):
+        # get available goods
+        map_id = int(self.game.my_role.map)
+        port = Port(map_id)
+        available_goods_dict = port.get_availbale_goods_dict()
+
+        # make menu
+        dict = {}
+        for item_name in available_goods_dict:
+            buy_price = port.get_commodity_buy_price(item_name)
+            show_text = item_name + ' ' + str(buy_price)
+            dict[show_text] = test
+        dict['buy'] = self.buy_cargo
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def buy_cargo(self):
         self.game.button_click_handler. \
             make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'])
 

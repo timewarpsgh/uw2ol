@@ -22,23 +22,21 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    enter port and sail (OK)
-    same account login (OK)
-    all ports (OK)
-    world map (OK)
-    sail to right position (OK)
-        change map name "port" to 29/28 (digit)  (OK)
-    enter port to right position (OK)
-    enter a specific port from it's sea area (OK)
-    continuous sea map (OK)
-    sea map collision (OK)
-    enter port from nearby sea position (OK)
-    enter buildings from all ports (OK)
 
-    buy real ship (OK)
-    dry dock show ship to buy (OK)
-    show ship image (OK)
+    # basic functions for most important buildings
+        # dry dock
+            buy
+                show ship image (OK)
+            sell
+            repair
 
+        # market
+            buy
+            sell
+
+        # bar
+
+        # harbor
 
 
 
