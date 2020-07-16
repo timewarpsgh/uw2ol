@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-import sys
+import sys, os
 from twisted.internet import reactor, task
 import constants as c
 from role import Role, Ship, Mate
@@ -55,12 +55,6 @@ class Game():
         self.load_assets()
         self.building_text = ''
 
-        # test looping event
-        # pygame.time.set_timer(EVENT_MOVE, 50)
-        # pygame.time.set_timer(EVENT_HEART_BEAT, 1000)
-        self.move_direction = 1
-        self.move_count = 0
-
     def load_assets(self):
         # maps
             # port
@@ -97,6 +91,13 @@ class Game():
         self.images['ship-tileset'] = pygame.image.load("./assets/ship-tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.image.load("./assets/person_tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
+
+        # ships
+        file_names = os.listdir("./assets/images/ships")
+        self.images['ships'] = {}
+        for file_name in file_names:
+            parts = file_name.split('.')
+            self.images['ships'][parts[0]] = pygame.image.load(f"./assets/images/ships/{file_name}").convert_alpha()
 
         # fonts
         self.font = pygame.font.SysFont("fangsong", c.FONT_SIZE)

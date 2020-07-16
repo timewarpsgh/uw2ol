@@ -130,25 +130,36 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
 
 class PanelWindow(pygame_gui.elements.UIWindow):
     """displays info"""
-    def __init__(self, rect, ui_manager, text, game):
+    def __init__(self, rect, ui_manager, text, game, image='none'):
+
+        if image == 'none':
+            image = game.images['ship_at_sea']
+
 
         # super
         super().__init__(rect, ui_manager,
-                         window_display_title='Scale',
+                         window_display_title='',
                          object_id='#scaling_window',
                          resizable=True)
 
         # image
-        pygame_gui.elements.UIImage(pygame.Rect((0, 0), (game.images['ship_at_sea'].get_rect().size
+        # pygame_gui.elements.UIImage(pygame.Rect((0, 0), (game.images['ship_at_sea'].get_rect().size
+        #                                                  )),
+        #                             game.images['ship_at_sea'], ui_manager,
+        #                           container=self,
+        #                           anchors={'top': 'top', 'bottom': 'bottom',
+        #                                    'left': 'left', 'right': 'right'})
+        #
+        pygame_gui.elements.UIImage(pygame.Rect((0, 0), (image.get_rect().size
                                                          )),
-                                    game.images['ship_at_sea'], ui_manager,
+                                    image, ui_manager,
                                   container=self,
                                   anchors={'top': 'top', 'bottom': 'bottom',
                                            'left': 'left', 'right': 'right'})
 
         # text box
         pygame_gui.elements.UITextBox(html_text=text,
-                                                 relative_rect=pygame.Rect(0, 50, 320, 10),
+                                                 relative_rect=pygame.Rect(0, image.get_rect().height, 320, 10),
                                                  manager=ui_manager,
                                                  wrap_to_height=True,
                                                  container=self)
@@ -386,8 +397,9 @@ class MenuClickHandlerForShips():
             text += f'{k}:{v}<br>'
 
         # make window
-        PanelWindow(pygame.Rect((59, 50), (350, 400)),
-                    self.game.ui_manager, text, self.game)
+        ship_image = self.game.images['ships'][ship.type.lower()]
+        PanelWindow(pygame.Rect((59, 10), (350, 400)),
+                    self.game.ui_manager, text, self.game, ship_image)
 
 class MenuClickHandlerForMates():
     def __init__(self, game):
@@ -750,8 +762,9 @@ class DryDock():
             text += f'{k}:{v}<br>'
 
         # make window
-        PanelWindow(pygame.Rect((59, 50), (350, 400)),
-                    self.game.ui_manager, text, self.game)
+        ship_image = self.game.images['ships'][ship.type.lower()]
+        PanelWindow(pygame.Rect((59, 10), (350, 400)),
+                    self.game.ui_manager, text, self.game, ship_image)
 
     def repair(self):
         self.game.change_and_send('repair_all', [])

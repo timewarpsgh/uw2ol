@@ -37,7 +37,8 @@ to do
 
     buy real ship (OK)
     dry dock show ship to buy (OK)
-    show ship image (ON)
+    show ship image (OK)
+
 
 
 
