@@ -34,8 +34,8 @@ to do
             repair
 
         # bar
-            add crew
-            cut crew
+            hire crew (OK)
+            fire crew (OK)
 
         # harbor
             load supply

@@ -402,16 +402,22 @@ class Role:
     def hire_crew(self, params):
         count = params[0]
         to_which_ship = params[1]
-        print("to_which_ship:", to_which_ship)
-        print(self.ships)
-        self.ships[to_which_ship].add_crew(count)
-        print(self.name, "ship", to_which_ship, "now has crew:", self.ships[to_which_ship].crew)
+
+        ship = self.ships[to_which_ship]
+        # if can hold crew
+        if ship.crew + count <= ship.max_crew:
+            ship.add_crew(count)
+            print(self.name, "ship", to_which_ship, "now has crew:", self.ships[to_which_ship].crew)
 
     def fire_crew(self, params):
         count = params[0]
         from_which_ship = params[1]
-        self.ships[from_which_ship].cut_crew(count)
-        print("ship", from_which_ship, "now has crew:", self.ships[from_which_ship].crew)
+
+        # if count right
+        ship = self.ships[from_which_ship]
+        if ship.crew >= count:
+            ship.cut_crew(count)
+            print("ship", from_which_ship, "now has crew:", self.ships[from_which_ship].crew)
 
     def hire_mate(self, params):
         name = params[0]
