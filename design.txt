@@ -38,8 +38,8 @@ to do
             fire crew (OK)
 
         # harbor
-            load supply
-            unload supply
+            load supply (OK)
+            unload supply (OK)
 
 
 

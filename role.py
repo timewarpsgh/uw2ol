@@ -479,23 +479,32 @@ class Role:
                 print(self.name, "ship", from_which_ship, "cargoes", self.ships[from_which_ship].cargoes)
                 print(self.name, "gold:", self.gold)
 
-    # port
+    # harbor
     def load_supply(self, params):
+        # params
         supply_name = params[0]
         count = params[1]
         to_which_ship = params[2]
 
-        self.ships[to_which_ship].load_supply(supply_name, count)
-        print(self.name, "ship", to_which_ship, "supplies", self.ships[to_which_ship].supplies[supply_name])
+        # if name right
+        ship = self.ships[to_which_ship]
+        if supply_name in ship.supplies:
+            # if count right
+            if count <= ship.get_cargo_and_supply_capacity():
+                ship.load_supply(supply_name, count)
+                self.gold -= count * c.SUPPLY_UNIT_COST
+                print(self.name, "ship", to_which_ship, "supplies", self.ships[to_which_ship].supplies[supply_name])
 
     def unload_supply(self, params):
+        # params
         supply_name = params[0]
         count = params[1]
         from_which_ship = params[2]
 
-        self.ships[from_which_ship].unload_supply(supply_name, count)
+        # if name right
+        ship = self.ships[from_which_ship]
+        ship.unload_supply(supply_name, count)
         print(self.name, "ship", from_which_ship, "supplies", 'unloaded')
-
 
 class Ship:
     shooting_img = ''
@@ -537,6 +546,8 @@ class Ship:
         self.supplies = {
             'Food':20,
             'Water':20,
+            'Lumber':0,
+            'Shot':0
         }
 
     def get_cargo_and_supply_capacity(self):
@@ -618,9 +629,8 @@ class Ship:
     def unload_supply(self, supply_name, count):
         if supply_name in self.supplies:
             self.supplies[supply_name] -= count
-            return True
-        else:
-            return False
+            if self.supplies[supply_name] < 0:
+                self.supplies[supply_name] = 0
 
 
 class Mate:

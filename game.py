@@ -128,13 +128,13 @@ class Game():
         client_packet_received.process_packet(self, pck_type, message_obj)
 
     def change_and_send(self, protocol_name, params_list):
-        try:
-            func = getattr(self.my_role, protocol_name)
-            func(params_list)
-        except:
-            print('invalid input!')
-        else:
-            self.connection.send(protocol_name, params_list)
+        # try:
+        func = getattr(self.my_role, protocol_name)
+        func(params_list)
+        # except:
+        #     print('invalid input!')
+        # else:
+        self.connection.send(protocol_name, params_list)
 
     def change_ship_frame_state(self):
         """invoded every 1 second for ship animation"""
