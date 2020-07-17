@@ -66,6 +66,15 @@ def draw_logged_in_state(self):
         elif now_map == 'sea':
             draw_at_sea(self)
             draw_hud(self)
+
+            # max days at sea
+            draw_text(self, 'Max Days', 10, c.WINDOW_HIGHT - 140)
+            draw_text(self, str(self.max_days_at_sea), 10, c.WINDOW_HIGHT - 120)
+
+            # days spent at sea
+            draw_text(self, 'Days Spent', 10, c.WINDOW_HIGHT - 100)
+            draw_text(self, str(self.days_spent_at_sea), 10, c.WINDOW_HIGHT - 80)
+
         else:
             draw_in_battle(self)
 

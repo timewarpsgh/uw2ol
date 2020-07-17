@@ -103,12 +103,26 @@ def other_keys_down(self, event):
 
             # send
             self.change_and_send('change_map', ['sea'])
+
+
+            # init timer at sea
+
+                # max days at sea (local game variable, not in role)
+            self.max_days_at_sea = self.my_role.calculate_max_days_at_sea()
+            self.days_spent_at_sea = 0
+                # timer
+            self.timer_at_sea = task.LoopingCall(pass_one_day_at_sea, self)
+            self.timer_at_sea.start(c.ONE_DAY_AT_SEA_IN_SECONDS)
+
     elif event.key == ord('m'):
         # to port
         if not self.my_role.map.isdigit():
             port_id = get_nearby_port_index(self)
             if port_id:
                 self.change_and_send('change_map', [str(port_id)])
+
+            # stop timer at sea
+            self.timer_at_sea.stop()
 
     # enter building
     if event.key == ord('z'):
@@ -134,6 +148,17 @@ def other_keys_down(self, event):
         elif event.key == ord('p'):
             self.timer.stop()
 
+
+def pass_one_day_at_sea(self):
+    # pass peacefully
+    if self.days_spent_at_sea <= self.max_days_at_sea:
+        self.days_spent_at_sea += 1
+        print(self.days_spent_at_sea)
+
+    # starved!
+    else:
+        self.timer_at_sea.stop()
+        self.change_and_send('change_map', ['29'])
 
 def get_nearby_port_index(self):
     # get x and y in tile position

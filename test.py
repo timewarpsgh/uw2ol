@@ -1,6 +1,3 @@
-a = set([1, 2, 3])
-
-print(a)
-
-for i in a:
-    print(i)
+a = 5
+b = 7
+print(min(a, b))

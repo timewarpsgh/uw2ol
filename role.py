@@ -240,6 +240,26 @@ class Role:
         port = Port(map_id)
         return port
 
+    def calculate_max_days_at_sea(self):
+        # get all supplies
+        all_food = 0
+        all_water = 0
+        for ship in self.ships:
+            all_food += ship.supplies['Food']
+            all_water += ship.supplies['Water']
+        all_supply = min(all_food, all_water)
+
+        # get all crew
+        all_crew = 0
+        for ship in self.ships:
+            all_crew += ship.crew
+
+        # calculate max days
+        max_days = int(all_supply / (all_crew * c.SUPPLY_UNIT_COST))
+
+        # ret
+        return max_days
+
     # at sea
     def discover(self, params):
         discovery_id = random.randint(0, 10)
