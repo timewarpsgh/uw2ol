@@ -4,7 +4,7 @@ from threading import Timer
 from twisted.internet import reactor, task
 import constants as c
 from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
-
+from port import Port
 
 class Role:
     """
@@ -419,13 +419,23 @@ class Role:
         count = params[1]
         to_which_ship = params[2]
 
-        can_add = self.ships[to_which_ship].add_cargo(cargo_name, count)
-        if can_add:
-            unit_price = 5
-            self.gold -= count * unit_price
+        map_id = int(self.map)
+        port = Port(map_id)
 
-        print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
-        print(self.name, "gold:", self.gold)
+        # if port has this item
+        if cargo_name in port.get_availbale_goods_dict():
+            # if ship has space to add cargo
+            ship = self.ships[to_which_ship]
+            if ship.can_add_cargo_or_supply(count):
+                # add cargo
+                ship.add_cargo(cargo_name, count)
+
+                # cut gold
+                unit_price = port.get_commodity_buy_price(cargo_name)
+                self.gold -= count * unit_price
+
+                print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
+                print(self.name, "gold:", self.gold)
 
     def sell_cargo(self, params):
         cargo_name = params[0]
@@ -490,12 +500,39 @@ class Ship:
         self.state = ''
         self.damage_got = ''
 
+        # crew
         self.crew = 5
+
+        # cargo and supply
         self.cargoes = {}
         self.supplies = {
             'Food':20,
             'Water':20,
         }
+
+    def get_cargo_and_supply_capacity(self):
+        """number of empty space for cargo and supply"""
+        # cargoes_count
+        cargoes_count = 0
+        for v in self.cargoes.values():
+            cargoes_count += v
+
+        # supplies_count
+        supplies_count = 0
+        for v in self.supplies.values():
+            supplies_count += v
+
+        # capacity
+        capacity = self.useful_capacity - cargoes_count - supplies_count
+
+        return capacity
+
+    def can_add_cargo_or_supply(self, count):
+        capacity = self.get_cargo_and_supply_capacity()
+        if count <= capacity:
+            return True
+        else:
+            return False
 
     def move(self, direction):
         if direction == 'up':

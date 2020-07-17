@@ -24,15 +24,14 @@ protocols
 to do
 
     # basic functions for most important buildings
-        # dry dock
-            buy
-                show ship image (OK)
-            sell
-            repair
-
         # market
             buy
             sell
+
+        # dry dock
+            buy
+            sell
+            repair
 
         # bar
 

@@ -113,8 +113,6 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
             # append to active_input_boxes
             self.game.active_input_boxes.append(input_box)
 
-        self.game.active_input_boxes[0].focus()
-
         # get dict
         self.dict = {'OK':[protocol_name]}
 
