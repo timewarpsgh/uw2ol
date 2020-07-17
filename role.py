@@ -235,6 +235,11 @@ class Role:
             # ret
             return False
 
+    def get_port(self):
+        map_id = int(self.map)
+        port = Port(map_id)
+        return port
+
     # at sea
     def discover(self, params):
         discovery_id = random.randint(0, 10)
@@ -419,8 +424,7 @@ class Role:
         count = params[1]
         to_which_ship = params[2]
 
-        map_id = int(self.map)
-        port = Port(map_id)
+        port = self.get_port()
 
         # if port has this item
         if cargo_name in port.get_availbale_goods_dict():
@@ -442,13 +446,22 @@ class Role:
         count = params[1]
         from_which_ship = params[2]
 
-        can_cut = self.ships[from_which_ship].cut_cargo(cargo_name, count)
-        if can_cut:
-            unit_price = 10
-            self.gold += count * unit_price
+        ship = self.ships[from_which_ship]
 
-        print(self.name, "ship", from_which_ship, "cargoes", self.ships[from_which_ship].cargoes)
-        print(self.name, "gold:", self.gold)
+        # if has cargo
+        if cargo_name in ship.cargoes:
+            # if count right
+            if count <= ship.cargoes[cargo_name]:
+                # cut cargo
+                ship.cut_cargo(cargo_name, count)
+
+                # add gold
+                port = self.get_port()
+                unit_price = port.get_commodity_sell_price(cargo_name)
+                self.gold += count * unit_price
+
+                print(self.name, "ship", from_which_ship, "cargoes", self.ships[from_which_ship].cargoes)
+                print(self.name, "gold:", self.gold)
 
     # port
     def load_supply(self, params):
@@ -573,15 +586,10 @@ class Ship:
         return True
 
     def cut_cargo(self, cargo_name, count):
-        if cargo_name in self.cargoes:
-            self.cargoes[cargo_name] -= count
+        self.cargoes[cargo_name] -= count
+        if self.cargoes[cargo_name] <= 0:
+            del self.cargoes[cargo_name]
 
-            if self.cargoes[cargo_name] <= 0:
-                del self.cargoes[cargo_name]
-
-            return True
-        else:
-            return False
 
     def load_supply(self, supply_name, count):
         if supply_name in self.supplies:

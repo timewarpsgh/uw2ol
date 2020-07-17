@@ -25,8 +25,8 @@ to do
 
     # basic functions for most important buildings
         # market
-            buy
-            sell
+            buy (OK)
+            sell (ON)
 
         # dry dock
             buy
