@@ -373,16 +373,26 @@ class Role:
         name = params[0]
         type = params[1]
 
-        ship = Ship(name, type)
-        self.ships.append(ship)
+        port = self.get_port()
+        # if port has this ship
+        if type in port.get_available_ships():
+            # max 10 ships
+            if len(self.ships) <= 9:
+                ship = Ship(name, type)
+                # if can afford
+                if ship.price <= self.gold:
+                    self.ships.append(ship)
+                    self.gold -= ship.price
 
-        print('now ships:', len(self.ships))
+                    print('now ships:', len(self.ships))
 
     def sell_ship(self, params):
         num = params[0]
 
-        del self.ships[num]
-        print('now ships:', len(self.ships))
+        if self.ships[num]:
+            self.gold += int(self.ships[num].price / 2)
+            del self.ships[num]
+            print('now ships:', len(self.ships))
 
     def repair_all(self, params):
         for ship in self.ships:

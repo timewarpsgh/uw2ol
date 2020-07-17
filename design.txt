@@ -26,17 +26,20 @@ to do
     # basic functions for most important buildings
         # market
             buy (OK)
-            sell (ON)
+            sell (OK)
 
         # dry dock
-            buy
-            sell
+            buy (OK)
+            sell (OK)
             repair
 
         # bar
+            add crew
+            cut crew
 
         # harbor
-
+            load supply
+            unload supply
 
 
 
