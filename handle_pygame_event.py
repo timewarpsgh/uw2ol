@@ -121,9 +121,7 @@ def other_keys_down(self, event):
             port_id = get_nearby_port_index(self)
             if port_id:
                 self.change_and_send('change_map', [str(port_id)])
-
-            # stop timer at sea
-            self.timer_at_sea.stop()
+                self.timer_at_sea.stop()
 
     # enter building
     if event.key == ord('z'):
@@ -149,17 +147,27 @@ def other_keys_down(self, event):
         elif event.key == ord('p'):
             self.timer.stop()
 
+        # battle
+        if event.key == ord('b'):
+            self.connection.send('try_to_fight_with', ['b'])
+        elif event.key == ord('e'):
+            self.connection.send('exit_battle', [])
+        elif event.key == ord('k'):
+            self.change_and_send('shoot_ship', [0, 0])
+
 
 def pass_one_day_at_sea(self):
-    # pass peacefully
-    if self.days_spent_at_sea <= self.max_days_at_sea:
-        self.days_spent_at_sea += 1
-        print(self.days_spent_at_sea)
+    if self.my_role.map == 'sea':
 
-    # starved!
-    else:
-        self.timer_at_sea.stop()
-        self.change_and_send('change_map', ['29'])
+        # pass peacefully
+        if self.days_spent_at_sea <= self.max_days_at_sea:
+            self.days_spent_at_sea += 1
+            print(self.days_spent_at_sea)
+
+        # starved!
+        else:
+            self.timer_at_sea.stop()
+            self.change_and_send('change_map', ['29'])
 
 def get_nearby_port_index(self):
     # get x and y in tile position

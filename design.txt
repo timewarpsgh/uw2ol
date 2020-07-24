@@ -45,7 +45,10 @@ to do
 
         # login scene (OK)
 
-        # render player name (ON)
+        # render player name (OK)
+
+        # player perspective (ON)
+            N M  bug
 
 
 
