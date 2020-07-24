@@ -296,8 +296,12 @@ def draw_speech(self):
 
 def draw_not_logged_in_state(self):
     """argument self is game"""
-    text_surface = self.font.render('Please Login', True, c.WHITE)
+    self.screen_surface.blit(self.images['login_bg'], (0,0))
+
+    text_surface = self.font.render('Please Login', True, c.BLACK)
     self.screen_surface.blit(text_surface, (5, 5))
+
+    self.ui_manager.draw_ui(self.screen_surface)
 
 def blit_text(surface, text, pos, font, color=pygame.Color('black')):
     """draws text block in multiple lines"""

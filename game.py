@@ -57,16 +57,20 @@ class Game():
 
     def load_assets(self):
         # maps
-            # port
-        # self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(29)
-            # partial_world_map
+                # port
+            # self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(29)
+                # partial_world_map
         self.map_maker.set_world_map_tiles()
         self.map_maker.set_world_piddle()
         # self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
 
-            # battle
-        # self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
+                # battle
+            # self.images['sea'] = pygame.image.load("./assets/sea.png").convert_alpha()
         self.images['battle'] = pygame.image.load("./assets/battle.png").convert_alpha()
+
+        # login backgound
+        self.images['login_bg'] = pygame.image.load("./assets/images/buildings/login_bg.png").convert_alpha()
+        self.images['login_bg'] = pygame.transform.scale(self.images['login_bg'], (c.WINDOW_WIDTH, c.WINDOW_HIGHT))
 
         # buildings
         self.images['building_bg'] = pygame.image.load("./assets/images/buildings/building_bg.png").convert_alpha()
@@ -128,13 +132,16 @@ class Game():
         client_packet_received.process_packet(self, pck_type, message_obj)
 
     def change_and_send(self, protocol_name, params_list):
-        # try:
-        func = getattr(self.my_role, protocol_name)
-        func(params_list)
-        # except:
-        #     print('invalid input!')
-        # else:
-        self.connection.send(protocol_name, params_list)
+        if self.my_role:
+            try:
+                func = getattr(self.my_role, protocol_name)
+                func(params_list)
+            except:
+                print('invalid input!')
+            else:
+                self.connection.send(protocol_name, params_list)
+        else:
+            self.connection.send(protocol_name, params_list)
 
     def change_ship_frame_state(self):
         """invoded every 1 second for ship animation"""

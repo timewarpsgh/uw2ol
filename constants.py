@@ -44,7 +44,7 @@ MOVE_TIME_INVERVAL = 0.15
 DEVELOPER_MODE_ON = True
 
 # world constants
-SUPPLY_UNIT_COST = 0.5
+SUPPLY_UNIT_COST = 0.1
 ONE_DAY_AT_SEA_IN_SECONDS = 3
 
 # player image

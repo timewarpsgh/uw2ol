@@ -48,7 +48,8 @@ def escape(self, event):
 
     # exit building
     if len(self.menu_stack) == 1:
-        self.my_role.in_building_type = None
+        if self.my_role:
+            self.my_role.in_building_type = None
 
     # pop menu_stack
     if len(self.menu_stack) > 0:

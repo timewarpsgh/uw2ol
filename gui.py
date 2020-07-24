@@ -18,7 +18,7 @@ def init_gui(self):
 
     # text entry
     self.text_entry = pygame_gui.elements.UITextEntryLine(
-        pygame.Rect((c.WINDOW_WIDTH / 2 - 260, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
+        pygame.Rect((2, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
         object_id='#main_text_entry')
 
     self.text_entry_active = False
@@ -33,6 +33,7 @@ def init_gui(self):
     init_button(self, {'Options': self.button_click_handler.options}, 5)
     init_button(self, {'Port': self.button_click_handler.port}, 6)
     init_button(self, {'Battle': self.button_click_handler.battle}, 7)
+    init_button(self, {'Login': self.button_click_handler.login}, 8)
 
     self.buttons_in_windows = {}
 
@@ -320,6 +321,21 @@ class ButtonClickHandler():
             # make_message_box('only available in battle!')
             print('only available in battle!')
 
+    def login(self):
+
+        # when not logged in
+        if  not self.game.my_role:
+            dict = {
+                'Login': self.menu_click_handler.login.login,
+                'Register': self.menu_click_handler.login.register,
+                'Make Character': self.menu_click_handler.login.make_character,
+            }
+            self.make_menu(dict)
+
+        # when logged in
+        else:
+            print('only available when not logged in!')
+
 class MenuClickHandler():
     def __init__(self, game):
         # need game info
@@ -334,6 +350,7 @@ class MenuClickHandler():
         self.options = MenuClickHandlerForOptions(game)
         self.port = MenuClickHandlerForPort(game)  # has a few buildings
         self.battle = MenuClickHandlerForBattle(game)
+        self.login = MenuClickHandlerForLogin(game)
 
 class MenuClickHandlerForShips():
     def __init__(self, game):
@@ -508,6 +525,25 @@ class MenuClickHandlerForCmds():
 class MenuClickHandlerForOptions():
     def __init__(self, game):
         self.game = game
+
+class MenuClickHandlerForLogin():
+    def __init__(self, game):
+        self.game = game
+
+    def login(self):
+        self.game.button_click_handler. \
+            make_input_boxes('login', ['account', 'password'])
+        print('trying to login')
+
+    def register(self):
+        self.game.button_click_handler. \
+            make_input_boxes('register', ['account', 'password'])
+        print('trying to register')
+
+    def make_character(self):
+        self.game.button_click_handler. \
+            make_input_boxes('create_new_role', ['role_name'])
+        print('trying to make character')
 
 class MenuClickHandlerForBattle():
     def __init__(self, game):
