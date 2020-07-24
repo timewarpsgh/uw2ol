@@ -53,16 +53,17 @@ def draw_logged_in_state(self):
             # dialog box
         self.screen_surface.blit(self.images['building_chat'], (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10, 0))
             # dialog
-        # text = "how are you today? oh say can you see? by the dawn's" \
-        #        " early light. what's proudly we hail, at the twilight's last gleaming"
         blit_text(self.screen_surface, self.building_text, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5), self.font)
         draw_hud(self)
 
         # not in building
     else:
+            # in port
         if now_map.isdigit():
             draw_in_port(self)
             draw_hud(self)
+
+            # at sea
         elif now_map == 'sea':
             draw_at_sea(self)
             draw_hud(self)
@@ -117,21 +118,26 @@ def draw_hud(self):
         draw_text(self, 'Industry', c.WINDOW_WIDTH - 100, 120)
         draw_text(self, str(industry_index), c.WINDOW_WIDTH - 100, 140)
 
-def draw_text(self, text, x, y):
-    text_img = self.font.render(text, True, c.BLACK)
+def draw_text(self, text, x, y, color=c.BLACK):
+    text_img = self.font.render(text, True, color)
     self.screen_surface.blit(text_img, (x, y))
 
 def draw_in_port(self):
     # draw my role
+
+        # image
     direction = self.my_role.direction
     frame = self.my_role.person_frame
     person_rect = person_direction_2_rect_in_sprite_sheet(self, direction, frame)
 
-
     self.screen_surface.blit(self.images['person_tileset'], self.screen_surface_rect.center, person_rect)
+
+        # name
+    draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
 
     # draw other roles
     for role in self.other_roles.values():
+        # image
         direction = role.direction
         frame = role.person_frame
         person_rect = person_direction_2_rect_in_sprite_sheet(self, direction, frame)
@@ -141,15 +147,24 @@ def draw_in_port(self):
 
         self.screen_surface.blit(self.images['person_tileset'], (x, y), person_rect)
 
+        # name
+        draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
+
 def draw_at_sea(self):
     # draw my role
+
+        # image
     direction = self.my_role.direction
     ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction)
 
     self.screen_surface.blit(self.images['ship-tileset'], self.screen_surface_rect.center, ship_rect)
 
+        # name
+    draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
+
     # draw other roles
     for role in self.other_roles.values():
+        # image
         direction = role.direction
         ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction)
 
@@ -157,6 +172,9 @@ def draw_at_sea(self):
         y = self.screen_surface_rect.centery - self.my_role.y + role.y
 
         self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
+
+        # name
+        draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
 
 def ship_direction_2_rect_in_sprite_sheet(self, direction):
     ship_rect = self.images['ship_at_sea'].get_rect()

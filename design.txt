@@ -31,7 +31,7 @@ to do
         # dry dock
             buy (OK)
             sell (OK)
-            repair
+            repair (OK)
 
         # bar
             hire crew (OK)
@@ -43,8 +43,9 @@ to do
 
         # sailing costs supply (OK)
 
-        # login scene
+        # login scene (OK)
 
+        # render player name (ON)
 
 
 
