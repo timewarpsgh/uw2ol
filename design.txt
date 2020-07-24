@@ -48,8 +48,7 @@ to do
         # render player name (OK)
 
         # player perspective (ON)
-            N M  bug
 
-
+        server pck_received (ON)
 
 

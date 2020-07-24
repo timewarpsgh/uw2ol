@@ -1,5 +1,3 @@
-a = '你好'
-
-
-b = str(a)
-print(b)
+a = 'staste'
+if a.contains('sta'):
+    print(111)

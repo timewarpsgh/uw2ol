@@ -26,21 +26,31 @@ class Echo(Protocol):
     def connectionLost(self, reason):
         print("connection lost!")
 
-        # set online to false
-        account = self.account
-        d = threads.deferToThread(self.factory.db.set_online_to_false, account)
+        # get current map
+        my_map = str(self.my_role.map)
 
-        # save role to DB
-        if c.SAVE_ON_CONNECTION_LOST:
+        # if not in battle
+        if my_map.isdigit() or my_map == 'sea':
+
+            # set online to false
             account = self.account
-            role_to_save = self.my_role
-            d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
+            d = threads.deferToThread(self.factory.db.set_online_to_false, account)
 
-        # delete from users dict and tell clients that you logged out
-        del self.factory.users[self.my_role.map][self.my_role.name]
+            # save role to DB
+            if c.SAVE_ON_CONNECTION_LOST:
+                account = self.account
+                role_to_save = self.my_role
+                d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
 
-        for conn in self.factory.users[self.my_role.map].values():
-                conn.send('logout', self.my_role.name)
+            # delete from users dict and tell clients that you logged out
+            del self.factory.users[self.my_role.map][self.my_role.name]
+
+            for conn in self.factory.users[self.my_role.map].values():
+                    conn.send('logout', self.my_role.name)
+
+        # if in battle
+        else:
+            pass
 
     def dataReceived(self, data):
         """combine data to get packet"""
@@ -80,6 +90,9 @@ class Echo(Protocol):
 
         message_obj = p.get_obj()
         print("message obj: ", message_obj)
+
+        # process packet_type and message_object
+        # client_packet_received.process_packet(self, pck_type, message_obj)
 
         # responses based on different types
         if pck_type == 'register':
