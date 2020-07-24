@@ -255,7 +255,7 @@ class Role:
             all_crew += ship.crew
 
         # calculate max days
-        max_days = int(all_supply / (all_crew * c.SUPPLY_UNIT_COST))
+        max_days = int(all_supply / (all_crew * c.SUPPLY_CONSUMPTION_PER_PERSON))
 
         # ret
         return max_days

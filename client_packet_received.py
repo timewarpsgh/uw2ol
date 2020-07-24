@@ -1,8 +1,29 @@
 from role import Role, Ship, Mate
-
+import handle_pygame_event
 
 def process_packet(self, pck_type, message_obj):
-    if pck_type == 'your_role_data_and_others':
+
+    # register responses
+    if pck_type == 'register_ok':
+        self.login_state_text = 'Register OK. Please Login.'
+        print('register_ok')
+
+    elif pck_type == 'account_exists':
+        self.login_state_text = 'Account exists!'
+        print('account_exists')
+
+    # login responses
+    elif pck_type == 'login_failed':
+        self.login_state_text = 'Login failed!'
+        print('account_exists')
+
+    elif pck_type == 'no_role_yet':
+        self.login_state_text = 'Login successful! Please create a character.'
+
+    elif pck_type == 'new_role_created':
+        self.login_state_text = 'Character created! Please login again.'
+
+    elif pck_type == 'your_role_data_and_others':
         # my role
         print("got my role data")
         my_role = message_obj[0]
@@ -18,6 +39,9 @@ def process_packet(self, pck_type, message_obj):
         for role in other_roles:
             self.other_roles[role.name] = role
         print(other_roles)
+
+        # escape
+        handle_pygame_event.escape(self, '')
 
     elif pck_type == 'new_role':
         new_role = message_obj

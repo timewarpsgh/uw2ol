@@ -31,6 +31,7 @@ class Game():
         handle_pygame_event.init_key_mappings(self)
         self.movement = None
         self.map_maker = MapMaker()
+        self.login_state_text = 'Please login or register.'
 
         # loop to change ship frame state
         self.ship_frame = 1
@@ -132,16 +133,23 @@ class Game():
         client_packet_received.process_packet(self, pck_type, message_obj)
 
     def change_and_send(self, protocol_name, params_list):
+        # when logged in
         if self.my_role:
             try:
                 func = getattr(self.my_role, protocol_name)
                 func(params_list)
             except:
                 print('invalid input!')
+                return False
             else:
                 self.connection.send(protocol_name, params_list)
+                return True
+
+        # when not logged in
         else:
-            self.connection.send(protocol_name, params_list)
+            params_list_in_str = [str(i) for i in params_list]
+            self.connection.send(protocol_name, params_list_in_str)
+            return True
 
     def change_ship_frame_state(self):
         """invoded every 1 second for ship animation"""

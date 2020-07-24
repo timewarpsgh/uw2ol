@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-
+import handle_pygame_event
 
 def handle_gui_event(self, event):
     # pass event to gui manager
@@ -46,6 +46,9 @@ def button_pressed(self, event):
         dict = window.dict
         dict_value = dict['OK']
 
+        # init operation result
+        is_operation_successful = True
+
         # if value is list
         if isinstance(dict_value, list):
             protocol_name = dict_value[0]
@@ -59,11 +62,20 @@ def button_pressed(self, event):
 
                 params_list.append(text)
 
-            self.change_and_send(protocol_name, params_list)
+            is_operation_successful = self.change_and_send(protocol_name, params_list)
 
         # value is function
         else:
             self.buttons_in_windows[event.ui_element]()
+
+        # operation successful?
+        if is_operation_successful:
+            handle_pygame_event.escape(self, '')
+        else:
+            handle_pygame_event.escape(self, '')
+            self.button_click_handler. \
+                make_message_box("Invalid Input!")
+
 
 def selection_list_picked(self, event):
     if event.ui_element == self.selection_list_stack[-1]:
