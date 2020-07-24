@@ -47,8 +47,10 @@ to do
 
         # render player name (OK)
 
-        # player perspective (ON)
+        # player perspective (later)
 
-        server pck_received (ON)
-
+        in battle, one guy disconnects (ON)
+            loose battle
+            exit
+            logout
 

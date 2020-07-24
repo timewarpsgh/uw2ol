@@ -96,61 +96,6 @@ class Echo(Protocol):
         # process packet_type and message_object
         server_packet_received.process_packet(self, pck_type, message_obj)
 
-    def on_create_character_got_result(self, is_ok):
-        if is_ok:
-            self.send('new_role_created')
-        else:
-            self.send('name_exists')
-
-    def on_register_got_result(self, is_ok):
-        if is_ok:
-            print('register success!')
-            self.send('register_ok')
-        else:
-            print("account exists!")
-            self.send('account_exists')
-
-    def on_login_got_result(self, account):
-
-        # ok
-        if account:
-            print('login success!', account)
-            self.account = account
-            d = threads.deferToThread(self.factory.db.get_character_data, account)
-            d.addCallback(self.on_get_character_data_got_result)
-
-        # not ok
-        else:
-            print("login failed!")
-            self.send('login_failed')
-
-    def on_get_character_data_got_result(self, role):
-
-        # ok
-        if role != False:
-            # store role here and in users
-            self.my_role = role
-            self.factory.users[role.map][role.name] = self
-            Role.users = self.factory.users
-
-            # tell other clients in same map of new role
-            for name, conn in self.factory.users[role.map].items():
-                if name != role.name:
-                    conn.send('new_role', role)
-
-            # send to client other_roles
-            other_roles = []
-            for name, conn in self.factory.users[role.map].items():
-                if name != role.name:
-                    other_roles.append(conn.my_role)
-
-            self.send('your_role_data_and_others', [role, other_roles])
-
-        # not ok
-        else:
-            self.send('no_role_yet')
-
-    # actions
     def send(self, protocol_name, content_obj='na'):
         """send packet to server"""
         # make packet
@@ -170,6 +115,21 @@ class Echo(Protocol):
         for name, conn in self.factory.users[self.my_role.map].items():
             if name != self.my_role.name:
                 conn.send(protocol_name, content_obj)
+
+    ###################### callbacks  ###########################
+    ###################### need self when using deffered.addCallBack  ###########################
+    def on_create_character_got_result(self, is_ok):
+        server_packet_received.on_create_character_got_result(self, is_ok)
+
+    def on_register_got_result(self, is_ok):
+        server_packet_received.on_register_got_result(self, is_ok)
+
+    def on_login_got_result(self, account):
+        server_packet_received.on_login_got_result(self, account)
+
+    def on_get_character_data_got_result(self, role):
+        server_packet_received.on_get_character_data_got_result(self, role)
+
 
 class EchoFactory(Factory):
     def __init__(self):

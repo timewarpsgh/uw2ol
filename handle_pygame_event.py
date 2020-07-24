@@ -103,7 +103,7 @@ def other_keys_down(self, event):
             self.images['sea'] = self.map_maker.make_partial_world_map(port_tile_x, port_tile_y)
 
             # send
-            self.change_and_send('change_map', ['sea'])
+            self.connection.send('change_map', ['sea'])
 
 
             # init timer at sea
@@ -120,7 +120,7 @@ def other_keys_down(self, event):
         if not self.my_role.map.isdigit():
             port_id = get_nearby_port_index(self)
             if port_id:
-                self.change_and_send('change_map', [str(port_id)])
+                self.connection.send('change_map', [str(port_id)])
                 self.timer_at_sea.stop()
 
     # enter building
