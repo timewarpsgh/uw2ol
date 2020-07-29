@@ -1,99 +1,12 @@
 from role import Role, Ship, Mate
 import handle_pygame_event
 
+
 def process_packet(self, pck_type, message_obj):
-
-    # register responses
-    if pck_type == 'register_ok':
-        self.login_state_text = 'Register OK. Please Login.'
-        print('register_ok')
-
-    elif pck_type == 'account_exists':
-        self.login_state_text = 'Account exists!'
-        print('account_exists')
-
-    # login responses
-    elif pck_type == 'login_failed':
-        self.login_state_text = 'Login failed!'
-        print('account_exists')
-
-    elif pck_type == 'no_role_yet':
-        self.login_state_text = 'Login successful! Please create a character.'
-
-    elif pck_type == 'new_role_created':
-        self.login_state_text = 'Character created! Please login again.'
-
-    elif pck_type == 'your_role_data_and_others':
-        # my role
-        print("got my role data")
-        my_role = message_obj[0]
-        self.my_role = my_role
-        print("my role's x y:", my_role.x, my_role.y, my_role.map, my_role.name)
-
-        if my_role.map.isdigit():
-            port_index = int(my_role.map)
-            self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
-
-        # other roles
-        other_roles = message_obj[1]
-        for role in other_roles:
-            self.other_roles[role.name] = role
-        print(other_roles)
-
-        # escape
-        handle_pygame_event.escape(self, '')
-
-    elif pck_type == 'new_role':
-        new_role = message_obj
-        self.other_roles[new_role.name] = new_role
-        print("got new role named:", new_role.name)
-
-    elif pck_type == 'logout':
-        name_of_logged_out_role = message_obj
-        del self.other_roles[name_of_logged_out_role]
-
-    elif pck_type == 'roles_in_new_map':
-        """response from change_map"""
-        roles_in_new_map = message_obj
-        self.my_role = roles_in_new_map[self.my_role.name]
-        del roles_in_new_map[self.my_role.name]
-        self.other_roles = roles_in_new_map
-
-        print("now my map:", self.my_role.map)
-
-        # make map
-        if self.my_role.map == 'sea':
-            pass
-        elif self.my_role.map.isdigit():
-            port_index = int(self.my_role.map)
-            self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
-
-    elif pck_type == 'role_disappeared':
-        name_of_role_that_disappeared = message_obj
-        del self.other_roles[name_of_role_that_disappeared]
-
-    elif pck_type == 'roles_disappeared':
-        names_of_roles_that_disappeared = message_obj
-        for name in names_of_roles_that_disappeared:
-            del self.other_roles[name]
-
-    elif pck_type == 'roles_in_battle_map':
-        roles_in_battle_map = message_obj
-        self.other_roles = {}
-        for name, role in roles_in_battle_map.items():
-            if name == self.my_role.name:
-                self.my_role = role
-            else:
-                self.other_roles[name] = role
-
-            # set game and in client to role
-            role.in_client = True
-
-
-    elif pck_type == 'new_roles_from_battle':
-        new_roles_from_battle = message_obj
-        for name, role in new_roles_from_battle.items():
-            self.other_roles[name] = role
+    # method not in role (in this file)
+    if pck_type not in Role.__dict__:
+        func_name = eval(pck_type)
+        func_name(self, message_obj)
 
     # sync packets
     elif pck_type in Role.__dict__:
@@ -105,3 +18,106 @@ def process_packet(self, pck_type, message_obj):
             print("trying", func_name, list, "for", name)
             func = getattr(role, func_name)
             func(list)
+
+
+# register responses
+def register_ok(self, message_obj):
+    self.login_state_text = 'Register OK. Please Login.'
+    print('register_ok')
+
+def account_exists(self, message_obj):
+    self.login_state_text = 'Account exists!'
+    print('account_exists')
+
+# make character response
+def new_role_created(self, message_obj):
+    self.login_state_text = 'Character created! Please login again.'
+
+# login responses
+def login_failed(self, message_obj):
+    self.login_state_text = 'Login failed!'
+    print('account_exists')
+
+def no_role_yet(self, message_obj):
+    self.login_state_text = 'Login successful! Please create a character.'
+
+def your_role_data_and_others(self, message_obj):
+    # my role
+    print("got my role data")
+    my_role = message_obj[0]
+    self.my_role = my_role
+    print("my role's x y:", my_role.x, my_role.y, my_role.map, my_role.name)
+
+    if my_role.map.isdigit():
+        port_index = int(my_role.map)
+        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+
+    # other roles
+    other_roles = message_obj[1]
+    for role in other_roles:
+        self.other_roles[role.name] = role
+    print(other_roles)
+
+    # escape
+    handle_pygame_event.escape(self, '')
+
+# someone logged in
+def new_role(self, message_obj):
+    new_role = message_obj
+    self.other_roles[new_role.name] = new_role
+    print("got new role named:", new_role.name)
+
+# someone logged out
+def logout(self, message_obj):
+    name_of_logged_out_role = message_obj
+    del self.other_roles[name_of_logged_out_role]
+
+# someone changed map
+def role_disappeared(self, message_obj):
+    name_of_role_that_disappeared = message_obj
+    del self.other_roles[name_of_role_that_disappeared]
+
+# change map response
+def roles_in_new_map(self, message_obj):
+    roles_in_new_map = message_obj
+    self.my_role = roles_in_new_map[self.my_role.name]
+    del roles_in_new_map[self.my_role.name]
+    self.other_roles = roles_in_new_map
+
+    print("now my map:", self.my_role.map)
+
+    # make map
+    if self.my_role.map == 'sea':
+        pass
+    elif self.my_role.map.isdigit():
+        port_index = int(self.my_role.map)
+        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+
+def roles_disappeared(self, message_obj):
+    names_of_roles_that_disappeared = message_obj
+    for name in names_of_roles_that_disappeared:
+        del self.other_roles[name]
+
+
+# enter battle responses
+def roles_in_battle_map(self, message_obj):
+    roles_in_battle_map = message_obj
+    self.other_roles = {}
+    for name, role in roles_in_battle_map.items():
+        if name == self.my_role.name:
+            self.my_role = role
+        else:
+            self.other_roles[name] = role
+
+        # set game and in client to role
+        role.in_client = True
+
+
+def new_roles_from_battle(self, message_obj):
+    new_roles_from_battle = message_obj
+    for name, role in new_roles_from_battle.items():
+        self.other_roles[name] = role
+
+
+
+

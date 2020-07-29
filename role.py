@@ -64,7 +64,7 @@ class Role:
             return target_role
 
     # anywhere
-   
+
     def _check_days_at_sea_timer(self):
         while True:
             time.sleep(3)

@@ -15,7 +15,7 @@ import sys
 
 def process_packet(self, pck_type, message_obj):
     """ self is Echo Protocol
-        responses based on different types
+        responses based on different packet types
     """
     # method not in role (in this file)
     if pck_type not in Role.__dict__:
@@ -44,6 +44,13 @@ def register(self, message_obj):
     d = threads.deferToThread(self.factory.db.register, account, password)
     d.addCallback(self.on_register_got_result)
 
+def create_new_role(self, message_obj):
+    name = message_obj[0]
+    account = self.account
+
+    d = threads.deferToThread(self.factory.db.create_character, account, name)
+    d.addCallback(self.on_create_character_got_result)
+
 def login(self, message_obj):
     # get ac and psw
     account = message_obj[0]
@@ -52,13 +59,6 @@ def login(self, message_obj):
     # try to login
     d = threads.deferToThread(self.factory.db.login, account, password)
     d.addCallback(self.on_login_got_result)
-
-def create_new_role(self, message_obj):
-    name = message_obj[0]
-    account = self.account
-
-    d = threads.deferToThread(self.factory.db.create_character, account, name)
-    d.addCallback(self.on_create_character_got_result)
 
 def change_map(self, message_obj):
     # get now_map and target_map
