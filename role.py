@@ -367,6 +367,7 @@ class Role:
                 random_target_ship_id = target_id
                 print("target id:", random_target_ship_id)
 
+        # shoot
         self.shoot_ship([i, random_target_ship_id])
 
 
