@@ -327,9 +327,6 @@ class Role:
 
     def all_ships_operate(self, params):
 
-        # if timer > 1
-        # if self.battle_timer > 1:
-
         if self.your_turn_in_battle:
 
             # get my and enemy ships
@@ -341,31 +338,35 @@ class Role:
             # each of my ship picks a random target ship to attack
             for i in range(len(my_ships)):
                 reactor.callLater(i*2 + 1, self._pick_random_ship_to_shoot, [i, enemy_ships])
-                # timer = Timer(i*2 + 1, self._pick_random_ship_to_shoot, args=[i, enemy_ships])
-                # timer.start()
 
             # change turn
             self.your_turn_in_battle = False
             reactor.callLater(len(my_ships) * 2 + 1, self._change_turn)
-            # self.your_turn_in_battle = False
-            # self._get_other_role_by_name(self.enemy_name).your_turn_in_battle = True
-            # # clear timer
-            # timer = Timer(len(my_ships) * 2 + 1, self._clear_timer)
-            # timer.start()
+
+    def set_all_ships_target(self, params):
+        target_id = params[0]
+        for ship in self.ships:
+            ship.target = target_id
 
     def _change_turn(self):
         self._get_other_role_by_name(self.enemy_name).your_turn_in_battle = True
-
-    def _clear_timer(self):
-        self.battle_timer = 1
 
     def _pick_random_ship_to_shoot(self, params):
         i = params[0]
         enemy_ships = params[1]
 
+        # calculate random target id
         rand_seed_num = enemy_ships[0].now_hp + len(enemy_ships)
         random.seed(rand_seed_num)
         random_target_ship_id = random.choice(range(len(enemy_ships)))
+
+        # set target id if have it
+        target_id = self.ships[i].target
+        if target_id or target_id == 0:
+            if enemy_ships[target_id]:
+                random_target_ship_id = target_id
+                print("target id:", random_target_ship_id)
+
         self.shoot_ship([i, random_target_ship_id])
 
 
@@ -536,6 +537,7 @@ class Ship:
         self.useful_capacity = self.capacity - self.max_guns - self.max_crew
         self.x = 10
         self.y = 10
+        self.target = None
         self.state = ''
         self.damage_got = ''
 

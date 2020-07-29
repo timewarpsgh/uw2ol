@@ -1,6 +1,7 @@
 from role import Role, Ship, Mate
+from twisted.internet.task import LoopingCall
 import handle_pygame_event
-
+import constants as c
 
 def process_packet(self, pck_type, message_obj):
     # method not in role (in this file)
@@ -101,6 +102,7 @@ def roles_disappeared(self, message_obj):
 
 # enter battle responses
 def roles_in_battle_map(self, message_obj):
+    """in battle now"""
     roles_in_battle_map = message_obj
     self.other_roles = {}
     for name, role in roles_in_battle_map.items():
@@ -112,6 +114,20 @@ def roles_in_battle_map(self, message_obj):
         # set game and in client to role
         role.in_client = True
 
+    # start battle timer
+    self.battle_timer = LoopingCall(_check_battle_timer, self)
+    self.battle_timer.start(1)
+
+def _check_battle_timer(self):
+    if self.my_role.map == 'sea':
+        self.battle_timer.stop()
+    else:
+        if self.my_role.your_turn_in_battle:
+            self.think_time_in_battle -= 1
+            print(self.think_time_in_battle)
+            if self.think_time_in_battle <= 0:
+                self.change_and_send('all_ships_operate', [])
+                self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
 def new_roles_from_battle(self, message_obj):
     new_roles_from_battle = message_obj

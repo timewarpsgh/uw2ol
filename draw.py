@@ -68,14 +68,15 @@ def draw_logged_in_state(self):
             draw_at_sea(self)
             draw_hud(self)
 
-            # max days at sea
+                # max days at sea
             draw_text(self, 'Max Days', 10, c.WINDOW_HIGHT - 140)
             draw_text(self, str(self.max_days_at_sea), 10, c.WINDOW_HIGHT - 120)
 
-            # days spent at sea
+                # days spent at sea
             draw_text(self, 'Days Spent', 10, c.WINDOW_HIGHT - 100)
             draw_text(self, str(self.days_spent_at_sea), 10, c.WINDOW_HIGHT - 80)
 
+            # in battle
         else:
             draw_in_battle(self)
 
@@ -253,7 +254,7 @@ def draw_my_ships(self):
         #     self.screen_surface.blit(damage_img, (60, 10 + index))
 
         # hp
-        now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
+        now_hp_img = self.font.render(str(ship.now_hp), True, c.YELLOW)
         self.screen_surface.blit(now_hp_img, (20 + 20, 10 + index))
 
 def draw_enemy_ships(self):
@@ -274,18 +275,18 @@ def draw_enemy_ships(self):
         #     g_screen.blit(damage_img, (WIDTH - 100, 10 + index))
 
         # hp
-        now_hp_img = self.font.render(str(ship.now_hp), True, c.BLACK)
+        now_hp_img = self.font.render(str(ship.now_hp), True, c.YELLOW)
         self.screen_surface.blit(now_hp_img, (c.WINDOW_WIDTH - 70 - 10, 10 + index))
 
 def draw_battle_timer(self):
     # me
     my_timer_text = None
     if self.my_role.your_turn_in_battle:
-        my_timer_text = 'Your Turn'
+        my_timer_text = 'Your Turn ' + str(self.think_time_in_battle)
     else:
         my_timer_text = 'Please Wait...'
 
-    my_timer_img = self.font.render(my_timer_text, True, c.BLACK)
+    my_timer_img = self.font.render(my_timer_text, True, c.YELLOW)
     self.screen_surface.blit(my_timer_img, (20, 5))
 
     # enemy
@@ -295,7 +296,7 @@ def draw_battle_timer(self):
     else:
         enemy_timer_text = 'Please Wait...'
 
-    enemy_timer_img = self.font.render(enemy_timer_text, True, c.BLACK)
+    enemy_timer_img = self.font.render(enemy_timer_text, True, c.YELLOW)
     self.screen_surface.blit(enemy_timer_img, (c.WINDOW_WIDTH - 150, 5))
 
 def draw_speech(self):

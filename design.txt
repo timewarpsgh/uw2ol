@@ -49,7 +49,8 @@ to do
 
         # player perspective (later)
 
-        in battle, one guy disconnects (ON)
-            loose battle
-            exit
-            logout
+        in battle
+            strategy
+                set target
+                set attack method
+

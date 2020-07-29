@@ -50,6 +50,8 @@ class Game():
         self.all_roles = {}
         Role.GAME = self
 
+        self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
+
         # load assets
         self.font = None
         self.images = {}
