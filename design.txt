@@ -53,5 +53,3 @@ to do
             loose battle
             exit
             logout
-
-        client packet_received refactor -> functions (ON)

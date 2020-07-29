@@ -40,9 +40,14 @@ def handle_pygame_event(self, event):
         self.change_and_send('heart_beat', [])
 
 def quit(self, event):
-    pygame.quit()
-    reactor.stop()
-    sys.exit()
+    if self.my_role.map.isdigit():
+        pygame.quit()
+        reactor.stop()
+        sys.exit()
+    else:
+        self.button_click_handler. \
+            make_message_box('Exit while in port please.')
+        print('Exit while in port please.')
 
 def escape(self, event):
 

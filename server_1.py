@@ -33,26 +33,29 @@ class Echo(Protocol):
 
         # if not in battle
         if my_map.isdigit() or my_map == 'sea':
-
-            # set online to false
-            account = self.account
-            d = threads.deferToThread(self.factory.db.set_online_to_false, account)
-
-            # save role to DB
-            if c.SAVE_ON_CONNECTION_LOST:
-                account = self.account
-                role_to_save = self.my_role
-                d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
-
-            # delete from users dict and tell clients that you logged out
-            del self.factory.users[self.my_role.map][self.my_role.name]
-
-            for conn in self.factory.users[self.my_role.map].values():
-                    conn.send('logout', self.my_role.name)
-
+            pass
         # if in battle
         else:
-            pass
+            server_packet_received.exit_battle(self, '')
+
+        self.log_role_out()
+
+    def log_role_out(self):
+        # set online to false
+        account = self.account
+        d = threads.deferToThread(self.factory.db.set_online_to_false, account)
+
+        # save role to DB
+        if c.SAVE_ON_CONNECTION_LOST:
+            account = self.account
+            role_to_save = self.my_role
+            d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
+
+        # delete from users dict and tell clients that you logged out
+        del self.factory.users[self.my_role.map][self.my_role.name]
+
+        for conn in self.factory.users[self.my_role.map].values():
+            conn.send('logout', self.my_role.name)
 
     def dataReceived(self, data):
         """combine data to get packet"""
