@@ -1,7 +1,7 @@
 import random
 import time
 from threading import Timer
-from twisted.internet import reactor, task
+from twisted.internet import reactor, task, defer
 import constants as c
 from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
 from port import Port
@@ -303,6 +303,9 @@ class Role:
         print(self.name, "'s ship", which_ship, "moved to ", ship.x, ship.y)
 
     def attack_ship(self, params):
+        """returns a deferred"""
+        # inits deferred
+        deferred = defer.Deferred()
 
         # get ids
         my_ship_id = params[0]
@@ -314,14 +317,21 @@ class Role:
         target_ship = enemy_ships[target_ship_id]
 
         # choose attack method
-        dead = False
+        d_dead = False
         if my_ship.attack_method is None or my_ship.attack_method == 'shoot':
-            dead = my_ship.shoot(target_ship)
+            d_dead = my_ship.try_to_shoot(target_ship)
         elif my_ship.attack_method == 'engage':
-            dead = my_ship.engage(target_ship)
+            d_dead = my_ship.try_to_engage(target_ship)
 
-        # attack result
-        if dead:
+        d_dead.addCallback(self._call_back_for_shoot_or_engage, enemy_ships, target_ship_id, deferred)
+
+        # ret deferred
+        return deferred
+
+    def _call_back_for_shoot_or_engage(self, d_dead, enemy_ships, target_ship_id, deferred):
+
+        # target dead
+        if d_dead:
             if enemy_ships[target_ship_id].now_hp <= 0:
                 del enemy_ships[target_ship_id]
 
@@ -331,11 +341,16 @@ class Role:
                 enemy_ships.clear()
                 print('battle ended. press e to exit battle.')
 
-                return False
+                deferred.callback(False)
+                # return deferred
             else:
-                return 'next_ship'
+                deferred.callback('next_ship')
+                # return deferred
+
+        # not dead
         else:
-            return 'next_ship'
+            deferred.callback('next_ship')
+            # return deferred
 
     def all_ships_operate(self, params):
 
@@ -392,8 +407,10 @@ class Role:
                 print("target id:", random_target_ship_id)
 
         # attack
-        result = self.attack_ship([i, random_target_ship_id])
+        d_result = self.attack_ship([i, random_target_ship_id])
+        d_result.addCallback(self._call_back_for_attack_ship, i, enemy_ships)
 
+    def _call_back_for_attack_ship(self, result, i, enemy_ships):
         # not won
         if result == 'next_ship':
             # my next ship
@@ -628,7 +645,12 @@ class Ship:
         elif direction == 'right':
             self.x += 1
 
-    def shoot(self, ship):
+    def try_to_shoot(self, ship):
+        """returns a deferred"""
+        # inits a deffered
+        deferred = defer.Deferred()
+
+        # check
         if ship.crew > 0 and self.crew > 0:
             self.state = 'shooting'
             ship.state = 'shot'
@@ -636,40 +658,60 @@ class Ship:
 
             ship.now_hp -= 30
             ship.damage_got = '30'
-        return ship.now_hp <= 0
+
+        # return
+        deferred.callback(ship.now_hp <= 0)
+        return deferred
 
     def engage(self, ship):
+        self.state = 'engaging'
+        ship.state = 'engaged'
+        reactor.callLater(1, self._clear_state, ship)
+
+        self.crew -= 1
+        ship.crew -= 1
+        ship.damage_got = '1'
+
+        return ship.crew <= 0
+
+    def try_to_engage(self, ship):
+        """returns a deferred"""
+        # inits a deffered
+        deferred = defer.Deferred()
+
+        # check
         if ship.crew > 0 and self.crew > 0:
-            # move closer
-
             # if in range
-            if 1:
+            if self.x == ship.x - 1:
+                # engage
+                result = self.engage(ship)
 
-                # fight
-                self.state = 'engaging'
-                ship.state = 'engaged'
-                reactor.callLater(1, self._clear_state, ship)
-
-                self.crew -= 3
-                ship.crew -= 3
-                ship.damage_got = '3'
-
-                return ship.crew <= 0
+                # call back
+                deferred.callback(result)
+                return deferred
 
             # if not in range
             else:
-                pass
-                # reactor.callLater(1, self.engage, ship)
+                self.move_closer(ship, deferred)
 
+        # ret
+        return deferred
 
-    def move_closer_to_engage_range(self, ship):
-        pass
-        # move closer
+    def move_closer(self, ship, deferred):
+        # move
+        self.move('right')
 
         # if in range
-            # fight
-        # else
-            # call later  move_closer_to_engage_range
+        if self.x == ship.x - 1:
+            # engage
+            result = self.engage(ship)
+
+            # call back
+            deferred.callback(result)
+
+        # not in range
+        else:
+            reactor.callLater(1, self.move_closer, ship, deferred)
 
     def _clear_state(self, ship):
         self.state = ''
