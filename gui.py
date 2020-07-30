@@ -314,7 +314,8 @@ class ButtonClickHandler():
                 'View Enemy Ships': self.menu_click_handler.battle.enemy_ships,
                 'View My Ships': test,
                 'All Ships Move': self.menu_click_handler.battle.all_ships_move,
-                'Strategy': self.menu_click_handler.battle.strategy,
+                'Strategy Target': self.menu_click_handler.battle.set_target,
+                'Strategy Attack Method': self.menu_click_handler.battle.set_attack_method,
             }
             self.make_menu(dict)
         else:
@@ -564,9 +565,13 @@ class MenuClickHandlerForBattle():
                 ships.show_one_ship, [ship]]
         self.game.button_click_handler.make_menu(dict)
 
-    def strategy(self):
+    def set_target(self):
         self.game.button_click_handler. \
             make_input_boxes('set_all_ships_target', ['target_id'])
+
+    def set_attack_method(self):
+        self.game.button_click_handler. \
+            make_input_boxes('set_all_ships_attack_method', ['attack_method_id'])
 
 class MenuClickHandlerForPort():
     """contains handlers for all buildings in port"""

@@ -51,6 +51,6 @@ to do
 
         in battle
             strategy
-                set target
-                set attack method
+                set all ships target (OK)
+                set attack method (OK)
 
