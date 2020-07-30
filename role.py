@@ -620,13 +620,13 @@ class Ship:
 
     def move(self, direction):
         if direction == 'up':
-            self.y -= 5
+            self.y -= 1
         elif direction == 'down':
-            self.y += 5
+            self.y += 1
         elif direction == 'left':
-            self.x -= 5
+            self.x -= 1
         elif direction == 'right':
-            self.x += 5
+            self.x += 1
 
     def shoot(self, ship):
         if ship.crew > 0 and self.crew > 0:
@@ -640,15 +640,36 @@ class Ship:
 
     def engage(self, ship):
         if ship.crew > 0 and self.crew > 0:
-            self.state = 'engaging'
-            ship.state = 'engaged'
-            reactor.callLater(1, self._clear_state, ship)
+            # move closer
 
-            self.crew -= 3
-            ship.crew -= 3
-            ship.damage_got = '3'
+            # if in range
+            if 1:
 
-        return ship.crew <= 0
+                # fight
+                self.state = 'engaging'
+                ship.state = 'engaged'
+                reactor.callLater(1, self._clear_state, ship)
+
+                self.crew -= 3
+                ship.crew -= 3
+                ship.damage_got = '3'
+
+                return ship.crew <= 0
+
+            # if not in range
+            else:
+                pass
+                # reactor.callLater(1, self.engage, ship)
+
+
+    def move_closer_to_engage_range(self, ship):
+        pass
+        # move closer
+
+        # if in range
+            # fight
+        # else
+            # call later  move_closer_to_engage_range
 
     def _clear_state(self, ship):
         self.state = ''
