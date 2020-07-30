@@ -142,6 +142,23 @@ def try_to_fight_with(self, message_obj):
         for name, conn in self.factory.users[battle_map_name].items():
             roles_in_new_map[name] = conn.my_role
 
+        # init all ships positions in battle
+        for role in roles_in_new_map.values():
+            # my role
+            if role.name == my_name:
+                y_index = 1
+                for ship in role.ships:
+                    ship.x = 1
+                    ship.y = y_index
+                    y_index += 1
+            # enemy role
+            else:
+                y_index = 1
+                for ship in role.ships:
+                    ship.x = 6
+                    ship.y = y_index
+                    y_index += 1
+
         self.send('roles_in_battle_map', roles_in_new_map)
         enemy_conn.send('roles_in_battle_map', roles_in_new_map)
 

@@ -55,3 +55,5 @@ to do
                 set attack method (OK)
                 win battle (OK)
                 exit if killed enemy flag ship (OK)
+                show ships positions in battle (ON)
+                show ships directions in battle
