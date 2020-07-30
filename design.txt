@@ -53,4 +53,5 @@ to do
             strategy
                 set all ships target (OK)
                 set attack method (OK)
-
+                win battle (OK)
+                exit if killed enemy flag ship (OK)

@@ -18,7 +18,7 @@ class Role:
     users = None
 
     # in client
-    Game = None
+    GAME = None
 
     def __init__(self, x, y, name, gold=2000):
         self.x = x
@@ -322,13 +322,20 @@ class Role:
 
         # attack result
         if dead:
-            del enemy_ships[target_ship_id]
+            if enemy_ships[target_ship_id].now_hp <= 0:
+                del enemy_ships[target_ship_id]
 
             # if flag ship dead
             if target_ship_id == 0:
                 self.ships.extend(enemy_ships)
                 enemy_ships.clear()
                 print('battle ended. press e to exit battle.')
+
+                return False
+            else:
+                return 'next_ship'
+        else:
+            return 'next_ship'
 
     def all_ships_operate(self, params):
 
@@ -340,13 +347,11 @@ class Role:
 
             print(enemy_ships)
 
-            # each of my ship picks a random target ship to attack
-            for i in range(len(my_ships)):
-                reactor.callLater(i * 2 + 1, self._pick_one_ship_to_attack, [i, enemy_ships])
+            # flag ship attacks
+            self._pick_one_ship_to_attack([0, enemy_ships])
 
-            # change turn
+            # stop my turn
             self.your_turn_in_battle = False
-            reactor.callLater(len(my_ships) * 2 + 1, self._change_turn)
 
     def set_all_ships_target(self, params):
         target_id = params[0]
@@ -387,7 +392,22 @@ class Role:
                 print("target id:", random_target_ship_id)
 
         # attack
-        self.attack_ship([i, random_target_ship_id])
+        result = self.attack_ship([i, random_target_ship_id])
+
+        # not won
+        if result == 'next_ship':
+            # my next ship
+            if (i+1) <= (len(self.ships) - 1):
+                reactor.callLater(2, self._pick_one_ship_to_attack, [i+1, enemy_ships])
+            # enemy turn
+            else:
+                reactor.callLater(2, self._change_turn)
+        # won battle
+        else:
+            print('won!')
+            if Role.GAME and Role.GAME.my_role.ships:
+                print('time to exit battle')
+                reactor.callLater(2, Role.GAME.connection.send, 'exit_battle', [])
 
 
     # ship yard
@@ -614,8 +634,8 @@ class Ship:
             ship.state = 'shot'
             reactor.callLater(1, self._clear_state, ship)
 
-            ship.now_hp -= 3
-            ship.damage_got = '3'
+            ship.now_hp -= 30
+            ship.damage_got = '30'
         return ship.now_hp <= 0
 
     def engage(self, ship):
@@ -624,11 +644,11 @@ class Ship:
             ship.state = 'engaged'
             reactor.callLater(1, self._clear_state, ship)
 
-            self.crew -= 1
-            ship.crew -= 1
-            ship.damage_got = '1'
+            self.crew -= 3
+            ship.crew -= 3
+            ship.damage_got = '3'
 
-        return ship.now_hp <= 0
+        return ship.crew <= 0
 
     def _clear_state(self, ship):
         self.state = ''
