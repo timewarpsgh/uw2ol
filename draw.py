@@ -167,7 +167,7 @@ def draw_at_sea(self):
     for role in self.other_roles.values():
         # image
         direction = role.direction
-        ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction)
+        ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction, others=True)
 
         x = self.screen_surface_rect.centerx - self.my_role.x + role.x
         y = self.screen_surface_rect.centery - self.my_role.y + role.y
@@ -177,30 +177,35 @@ def draw_at_sea(self):
         # name
         draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
 
-def ship_direction_2_rect_in_sprite_sheet(self, direction):
+def ship_direction_2_rect_in_sprite_sheet(self, direction, others=False):
     ship_rect = self.images['ship_at_sea'].get_rect()
+
+    # my ship or others ship
+    row_in_sprite = 1
+    if others:
+        row_in_sprite = 3
 
     # frame 1
     if self.ship_frame == 1:
         if direction == 'right':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 2, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 2, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'left':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 6, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 6, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'up':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 0, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 0, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'down':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 4, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 4, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
 
     # frame 2
     else:
         if direction == 'right':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 3, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 3, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'left':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 7, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 7, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'up':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 1, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 1, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'down':
-            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 5, c.SHIP_SIZE_IN_PIXEL * 1)
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 5, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
 
     return ship_rect
 
@@ -291,7 +296,7 @@ def draw_enemy_ships(self):
             index += 1
 
             # ship
-            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
+            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction, others=True)
 
             x = self.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
             y = self.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE

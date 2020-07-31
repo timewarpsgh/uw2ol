@@ -60,7 +60,7 @@ to do
 
                 must move within range to attack (OK)
 
-                show ship numbers (ON)
-                show enemy ships differently
+                show ship numbers (OK)
+                show enemy ships differently(ON)
 
 
