@@ -99,6 +99,13 @@ class Game():
         self.images['person_tileset'] = pygame.image.load("./assets/person_tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
+        # cannon and engage_sign
+        self.images['cannon'] = pygame.image.load("./assets/cannon.png").convert_alpha()
+        self.images['cannon'] = pygame.transform.scale(self.images['cannon'], (10, 10))
+
+        self.images['engage_sign'] = pygame.image.load("./assets/engage_sign.png").convert_alpha()
+        self.images['engage_sign'] = pygame.transform.scale(self.images['engage_sign'], (10, 10))
+
         # ships
         file_names = os.listdir("./assets/images/ships")
         self.images['ships'] = {}

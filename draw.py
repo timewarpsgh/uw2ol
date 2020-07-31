@@ -268,24 +268,32 @@ def draw_my_ships(self):
                 self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
 
             # ship number
-            draw_text(self, str(index-1), x, y, c.WHITE)
+            draw_text(self, str(index-1), x, y, c.BLACK)
 
             # state
             if ship.state == 'shooting':
-                draw_text(self, 'shooting', (x + 60), y, c.YELLOW)
+                self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
+                # draw_text(self, 'shooting', x, y, c.YELLOW)
             elif ship.state == 'shot':
-                draw_text(self, str(ship.damage_got), (x + 60), y, c.YELLOW)
+                self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
+                # draw_text(self, 'shot', x, y, c.YELLOW)
             elif ship.state == 'engaging':
-                draw_text(self, 'engaging', (x + 60), y, c.WHITE)
+                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                # draw_text(self, 'engaging', x, y, c.YELLOW)
             elif ship.state == 'engaged':
-                draw_text(self, str(ship.damage_got), (x + 60), y, c.WHITE)
+                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                # draw_text(self, 'engaged', x, y, c.YELLOW)
 
-            # hp
-            now_hp_img = self.font.render(str(ship.now_hp), True, c.YELLOW)
-            self.screen_surface.blit(now_hp_img, (x + 30, y))
+            # ships stats
 
-            # crew
-            draw_text(self, str(ship.crew), (x + 50), y, c.WHITE)
+                # ship num
+            draw_text(self, str(index - 1), 10, (20 + index * 20), c.BLACK)
+
+                # hp
+            draw_text(self, str(ship.now_hp), 30, (20 + index * 20), c.YELLOW)
+
+                # crew
+            draw_text(self, str(ship.crew), 50, (20 + index * 20), c.WHITE)
 
 def draw_enemy_ships(self):
     # enemy ships
@@ -308,20 +316,37 @@ def draw_enemy_ships(self):
 
             # state
             if ship.state == 'shooting':
-                draw_text(self, 'shooting', (x + 60), y, c.YELLOW)
+                self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
+                # draw_text(self, 'shooting', x, y, c.YELLOW)
             elif ship.state == 'shot':
-                draw_text(self, str(ship.damage_got), (x + 60), y, c.YELLOW)
+                self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
+                # draw_text(self, 'shot', x, y, c.YELLOW)
             elif ship.state == 'engaging':
-                draw_text(self, 'engaging', (x + 60), y, c.WHITE)
+                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                # draw_text(self, 'engaging', x, y, c.YELLOW)
             elif ship.state == 'engaged':
-                draw_text(self, str(ship.damage_got), (x + 60), y, c.WHITE)
+                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                # draw_text(self, 'engaged', x, y, c.YELLOW)
 
-            # hp
-            now_hp_img = self.font.render(str(ship.now_hp), True, c.YELLOW)
-            self.screen_surface.blit(now_hp_img, ((x + 30), y))
+            # if ship.state == 'shooting':
+            #     draw_text(self, 'shooting', (x + 60), y, c.YELLOW)
+            # elif ship.state == 'shot':
+            #     draw_text(self, str(ship.damage_got), (x + 60), y, c.YELLOW)
+            # elif ship.state == 'engaging':
+            #     draw_text(self, 'engaging', (x + 60), y, c.WHITE)
+            # elif ship.state == 'engaged':
+            #     draw_text(self, str(ship.damage_got), (x + 60), y, c.WHITE)
 
-            # crew
-            draw_text(self, str(ship.crew), (x + 50), y, c.WHITE)
+            # ships stats
+
+                # ship num
+            draw_text(self, str(index - 1), (c.WINDOW_WIDTH - 80), (20 + index * 20), c.BLACK)
+
+                # hp
+            draw_text(self, str(ship.now_hp), (c.WINDOW_WIDTH - 80 + 20), (20 + index * 20), c.YELLOW)
+
+                # crew
+            draw_text(self, str(ship.crew), (c.WINDOW_WIDTH - 80 + 40), (20 + index * 20), c.WHITE)
 
 def draw_battle_timer(self):
     # me

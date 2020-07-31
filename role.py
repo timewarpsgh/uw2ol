@@ -784,7 +784,9 @@ class Ship:
 
         self.crew -= 1
         ship.crew -= 1
+        self.damage_got = '1'
         ship.damage_got = '1'
+
 
         return ship.crew <= 0
 
