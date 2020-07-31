@@ -58,14 +58,9 @@ to do
                 show ships positions in battle (OK)
                 show ships directions in battle (LATER)
 
-                must move within range to attack (ON)
-                    engage
-                        range check (OK)
-                        move closer (OK)
-                        avoid taken positions (OK)
-                        need path finding (??)
-                        set max steps (OK)
-                        show direction in battle (OK)
+                must move within range to attack (OK)
 
-                    shoot
-                        must be within range to shoot (ON)
+                show ship numbers (ON)
+                show enemy ships differently
+
+

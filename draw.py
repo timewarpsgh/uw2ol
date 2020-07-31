@@ -242,14 +242,14 @@ def draw_my_ships(self):
     if self.my_role.ships:
         flag_ship = self.my_role.ships[0]
         for ship in self.my_role.ships:
-            index += 30
+            index += 1
 
             # ship
             ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
 
                 # flag ship
             x = y = 1
-            if index == 30:
+            if index == 1:
                 x = self.screen_surface_rect.centerx
                 y = self.screen_surface_rect.centery
 
@@ -262,6 +262,8 @@ def draw_my_ships(self):
 
                 self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
 
+            # ship number
+            draw_text(self, str(index-1), x, y, c.WHITE)
 
             # state
             if ship.state == 'shooting':
@@ -286,7 +288,7 @@ def draw_enemy_ships(self):
     if self.my_role.ships:
         flag_ship = self.my_role.ships[0]
         for ship in self.other_roles[self.my_role.enemy_name].ships:
-            index += 30
+            index += 1
 
             # ship
             ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
@@ -295,6 +297,9 @@ def draw_enemy_ships(self):
             y = self.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
 
             self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
+
+            # ship number
+            draw_text(self, str(index - 1), x, y, c.BLACK)
 
             # state
             if ship.state == 'shooting':
