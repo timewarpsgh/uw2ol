@@ -688,18 +688,88 @@ class Ship:
         # inits a deffered
         deferred = defer.Deferred()
 
+        # init max steps
+        self.steps_left = c.MAX_STEPS_IN_BATTLE
+
         # check
         if ship.crew > 0 and self.crew > 0:
-            self.state = 'shooting'
-            ship.state = 'shot'
-            reactor.callLater(1, self._clear_state, ship)
+            self.shoot_or_move_closer(ship, deferred)
+        else:
+            deferred.callback(False)
 
-            ship.now_hp -= 30
-            ship.damage_got = '30'
-
-        # return
-        deferred.callback(ship.now_hp <= 0)
+        # ret
         return deferred
+
+    def shoot_or_move_closer(self, ship, deferred):
+        # if in range
+        if abs(self.x - ship.x) + abs(self.y - ship.y) <= c.SHOOT_RANGE_IN_BATTLE:
+            # engage
+            result = self.shoot(ship)
+
+            # call back
+            deferred.callback(result)
+
+        # not in range
+        else:
+            # move closer
+            self.move_closer(ship, deferred)
+
+            # if have steps
+            if self.steps_left >= 1:
+                reactor.callLater(1, self.shoot_or_move_closer, ship, deferred)
+            # no more steps
+            else:
+                deferred.callback(False)
+
+    def move_closer(self, ship, deferred):
+        if self.x < ship.x:
+            if self.can_move('right'):
+                self.move('right')
+            elif self.can_move('up'):
+                self.move('up')
+            elif self.can_move('down'):
+                self.move('down')
+            else:
+                deferred.callback(False)
+        elif self.x > ship.x:
+            if self.can_move('left'):
+                self.move('left')
+            elif self.can_move('up'):
+                self.move('up')
+            elif self.can_move('down'):
+                self.move('down')
+            else:
+                deferred.callback(False)
+
+        elif self.y < ship.y:
+            if self.can_move('down'):
+                self.move('down')
+            elif self.can_move('left'):
+                self.move('left')
+            elif self.can_move('right'):
+                self.move('right')
+            else:
+                deferred.callback(False)
+        elif self.y > ship.y:
+            if self.can_move('up'):
+                self.move('up')
+            elif self.can_move('left'):
+                self.move('left')
+            elif self.can_move('right'):
+                self.move('right')
+            else:
+                deferred.callback(False)
+
+
+    def shoot(self, ship):
+        self.state = 'shooting'
+        ship.state = 'shot'
+        reactor.callLater(1, self._clear_state, ship)
+
+        ship.now_hp -= 30
+        ship.damage_got = '30'
+
+        return ship.now_hp <= 0
 
     def engage(self, ship):
         self.state = 'engaging'
@@ -741,43 +811,7 @@ class Ship:
         # not in range
         else:
             # move closer
-            if self.x < ship.x:
-                if self.can_move('right'):
-                    self.move('right')
-                elif self.can_move('up'):
-                    self.move('up')
-                elif self.can_move('down'):
-                    self.move('down')
-                else:
-                    deferred.callback(False)
-            elif self.x > ship.x:
-                if self.can_move('left'):
-                    self.move('left')
-                elif self.can_move('up'):
-                    self.move('up')
-                elif self.can_move('down'):
-                    self.move('down')
-                else:
-                    deferred.callback(False)
-
-            elif self.y < ship.y:
-                if self.can_move('down'):
-                    self.move('down')
-                elif self.can_move('left'):
-                    self.move('left')
-                elif self.can_move('right'):
-                    self.move('right')
-                else:
-                    deferred.callback(False)
-            elif self.y > ship.y:
-                if self.can_move('up'):
-                    self.move('up')
-                elif self.can_move('left'):
-                    self.move('left')
-                elif self.can_move('right'):
-                    self.move('right')
-                else:
-                    deferred.callback(False)
+            self.move_closer(ship, deferred)
 
             # if have steps
             if self.steps_left >= 1:

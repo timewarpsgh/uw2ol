@@ -65,6 +65,7 @@ to do
                         avoid taken positions (OK)
                         need path finding (??)
                         set max steps (OK)
-                        show direction in battle (ON)
+                        show direction in battle (OK)
 
                     shoot
+                        must be within range to shoot (ON)
