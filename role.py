@@ -597,6 +597,7 @@ class Ship:
         self.useful_capacity = self.capacity - self.max_guns - self.max_crew
         self.x = 10
         self.y = 10
+        self.direction = 'up'
         self.target = None
         self.attack_method = None
         self.state = ''
@@ -641,12 +642,18 @@ class Ship:
     def move(self, direction):
         if direction == 'up':
             self.y -= 1
+            self.direction = 'up'
         elif direction == 'down':
             self.y += 1
+            self.direction = 'down'
         elif direction == 'left':
             self.x -= 1
+            self.direction = 'left'
         elif direction == 'right':
             self.x += 1
+            self.direction = 'right'
+
+        self.steps_left -= 1
 
     def can_move(self, direction):
         # get future x,y
@@ -710,6 +717,9 @@ class Ship:
         # inits a deffered
         deferred = defer.Deferred()
 
+        # init max steps
+        self.steps_left = c.MAX_STEPS_IN_BATTLE
+
         # check
         if ship.crew > 0 and self.crew > 0:
             self.engage_or_move_closer(ship, deferred)
@@ -769,8 +779,12 @@ class Ship:
                 else:
                     deferred.callback(False)
 
-            # repeat self
-            reactor.callLater(1, self.engage_or_move_closer, ship, deferred)
+            # if have steps
+            if self.steps_left >= 1:
+                reactor.callLater(1, self.engage_or_move_closer, ship, deferred)
+            # no more steps
+            else:
+                deferred.callback(False)
 
     def _clear_state(self, ship):
         self.state = ''

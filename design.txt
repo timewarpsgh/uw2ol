@@ -64,6 +64,7 @@ to do
                         move closer (OK)
                         avoid taken positions (OK)
                         need path finding (??)
-                        set max steps (ON)
+                        set max steps (OK)
+                        show direction in battle (ON)
 
                     shoot

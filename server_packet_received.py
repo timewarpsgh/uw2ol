@@ -150,6 +150,7 @@ def try_to_fight_with(self, message_obj):
                 for ship in role.ships:
                     ship.x = 1
                     ship.y = y_index
+                    ship.direction = role.direction
                     y_index += 1
             # enemy role
             else:
@@ -157,6 +158,7 @@ def try_to_fight_with(self, message_obj):
                 for ship in role.ships:
                     ship.x = 6
                     ship.y = y_index
+                    ship.direction = role.direction
                     y_index += 1
 
         self.send('roles_in_battle_map', roles_in_new_map)

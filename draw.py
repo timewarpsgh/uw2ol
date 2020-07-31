@@ -245,7 +245,7 @@ def draw_my_ships(self):
             index += 30
 
             # ship
-            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, 'up')
+            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
 
                 # flag ship
             x = y = 1
@@ -289,7 +289,7 @@ def draw_enemy_ships(self):
             index += 30
 
             # ship
-            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, 'up')
+            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
 
             x = self.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
             y = self.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
