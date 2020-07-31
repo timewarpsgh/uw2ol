@@ -712,14 +712,15 @@ class Ship:
         # not in range
         else:
             # move closer
-            self.move_closer(ship, deferred)
+            moved = self.move_closer(ship, deferred)
 
-            # if have steps
-            if self.steps_left >= 1:
-                reactor.callLater(1, self.shoot_or_move_closer, ship, deferred)
-            # no more steps
-            else:
-                deferred.callback(False)
+            if moved:
+                # if have steps
+                if self.steps_left >= 1:
+                    reactor.callLater(1, self.shoot_or_move_closer, ship, deferred)
+                # no more steps
+                else:
+                    deferred.callback(False)
 
     def move_closer(self, ship, deferred):
         if self.x < ship.x:
@@ -731,6 +732,7 @@ class Ship:
                 self.move('down')
             else:
                 deferred.callback(False)
+                return False
         elif self.x > ship.x:
             if self.can_move('left'):
                 self.move('left')
@@ -740,6 +742,7 @@ class Ship:
                 self.move('down')
             else:
                 deferred.callback(False)
+                return False
 
         elif self.y < ship.y:
             if self.can_move('down'):
@@ -750,6 +753,7 @@ class Ship:
                 self.move('right')
             else:
                 deferred.callback(False)
+                return False
         elif self.y > ship.y:
             if self.can_move('up'):
                 self.move('up')
@@ -759,7 +763,9 @@ class Ship:
                 self.move('right')
             else:
                 deferred.callback(False)
+                return False
 
+        return True
 
     def shoot(self, ship):
         self.state = 'shooting'
@@ -811,14 +817,15 @@ class Ship:
         # not in range
         else:
             # move closer
-            self.move_closer(ship, deferred)
+            moved = self.move_closer(ship, deferred)
 
-            # if have steps
-            if self.steps_left >= 1:
-                reactor.callLater(1, self.engage_or_move_closer, ship, deferred)
-            # no more steps
-            else:
-                deferred.callback(False)
+            if moved:
+                # if have steps
+                if self.steps_left >= 1:
+                    reactor.callLater(1, self.engage_or_move_closer, ship, deferred)
+                # no more steps
+                else:
+                    deferred.callback(False)
 
     def _clear_state(self, ship):
         self.state = ''

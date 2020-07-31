@@ -51,16 +51,7 @@ to do
 
         in battle
             strategy
-                set all ships target (OK)
-                set attack method (OK)
-                win battle (OK)
-                exit if killed enemy flag ship (OK)
-                show ships positions in battle (OK)
-                show ships directions in battle (LATER)
-
-                must move within range to attack (OK)
-
                 show ship numbers (OK)
-                show enemy ships differently(ON)
+                show enemy ships differently(OK)
 
 
