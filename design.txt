@@ -62,6 +62,8 @@ to do
                     engage
                         range check (OK)
                         move closer (OK)
-                        avoid taken positions
+                        avoid taken positions (OK)
+                        need path finding (??)
+                        set max steps (ON)
 
                     shoot

@@ -356,6 +356,9 @@ class Role:
 
         if self.your_turn_in_battle:
 
+            # all ships know my_role
+            Ship.ROLE = self
+
             # get my and enemy ships
             enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
             my_ships = self.ships
@@ -645,6 +648,34 @@ class Ship:
         elif direction == 'right':
             self.x += 1
 
+    def can_move(self, direction):
+        # get future x,y
+        future_x = self.x
+        future_y = self.y
+        if direction == 'up':
+            future_y -= 1
+        elif direction == 'down':
+            future_y += 1
+        elif direction == 'left':
+            future_x -= 1
+        elif direction == 'right':
+            future_x += 1
+
+        # collide with any of my ships?
+        for ship in Ship.ROLE.ships:
+            if ship.x == future_x and ship.y == future_y:
+                return False
+
+        # collide with any of enemy ships?
+        enemy_name = Ship.ROLE.enemy_name
+        enemy_role = Ship.ROLE._get_other_role_by_name(enemy_name)
+        for ship in enemy_role.ships:
+            if ship.x == future_x and ship.y == future_y:
+                return False
+
+        # return ture
+        return True
+
     def try_to_shoot(self, ship):
         """returns a deferred"""
         # inits a deffered
@@ -690,8 +721,7 @@ class Ship:
 
     def engage_or_move_closer(self, ship, deferred):
         # if in range
-        engage_distance = abs(self.x - ship.x) + abs(self.y - ship.y)
-        if engage_distance == 1:
+        if abs(self.x - ship.x) <= 1 and abs(self.y - ship.y) <= 1:
             # engage
             result = self.engage(ship)
 
@@ -702,13 +732,42 @@ class Ship:
         else:
             # move closer
             if self.x < ship.x:
-                self.move('right')
+                if self.can_move('right'):
+                    self.move('right')
+                elif self.can_move('up'):
+                    self.move('up')
+                elif self.can_move('down'):
+                    self.move('down')
+                else:
+                    deferred.callback(False)
             elif self.x > ship.x:
-                self.move('left')
+                if self.can_move('left'):
+                    self.move('left')
+                elif self.can_move('up'):
+                    self.move('up')
+                elif self.can_move('down'):
+                    self.move('down')
+                else:
+                    deferred.callback(False)
+
             elif self.y < ship.y:
-                self.move('down')
+                if self.can_move('down'):
+                    self.move('down')
+                elif self.can_move('left'):
+                    self.move('left')
+                elif self.can_move('right'):
+                    self.move('right')
+                else:
+                    deferred.callback(False)
             elif self.y > ship.y:
-                self.move('up')
+                if self.can_move('up'):
+                    self.move('up')
+                elif self.can_move('left'):
+                    self.move('left')
+                elif self.can_move('right'):
+                    self.move('right')
+                else:
+                    deferred.callback(False)
 
             # repeat self
             reactor.callLater(1, self.engage_or_move_closer, ship, deferred)

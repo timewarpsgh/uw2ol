@@ -1,12 +1,11 @@
-import time
+s = {
+    '1.1': 1,
+    '2.2': 1,
+}
+print(s)
 
-def aa(b):
-    print(b)
+# move
+del s['1.1']
+s['1.2'] = 1
 
-def foo(b):
-    print(b)
-    time.sleep(1)
-    aa(b)
-
-a = foo(5)
-print(a)
+print(s)
