@@ -59,5 +59,9 @@ to do
                 show ships directions in battle (LATER)
 
                 must move within range to attack (ON)
-                    engage use defereed
+                    engage
+                        range check (OK)
+                        move closer (OK)
+                        avoid taken positions
+
                     shoot

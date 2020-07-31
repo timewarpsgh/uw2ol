@@ -681,28 +681,17 @@ class Ship:
 
         # check
         if ship.crew > 0 and self.crew > 0:
-            # if in range
-            if self.x == ship.x - 1:
-                # engage
-                result = self.engage(ship)
-
-                # call back
-                deferred.callback(result)
-                return deferred
-
-            # if not in range
-            else:
-                self.move_closer(ship, deferred)
+            self.engage_or_move_closer(ship, deferred)
+        else:
+            deferred.callback(False)
 
         # ret
         return deferred
 
-    def move_closer(self, ship, deferred):
-        # move
-        self.move('right')
-
+    def engage_or_move_closer(self, ship, deferred):
         # if in range
-        if self.x == ship.x - 1:
+        engage_distance = abs(self.x - ship.x) + abs(self.y - ship.y)
+        if engage_distance == 1:
             # engage
             result = self.engage(ship)
 
@@ -711,7 +700,18 @@ class Ship:
 
         # not in range
         else:
-            reactor.callLater(1, self.move_closer, ship, deferred)
+            # move closer
+            if self.x < ship.x:
+                self.move('right')
+            elif self.x > ship.x:
+                self.move('left')
+            elif self.y < ship.y:
+                self.move('down')
+            elif self.y > ship.y:
+                self.move('up')
+
+            # repeat self
+            reactor.callLater(1, self.engage_or_move_closer, ship, deferred)
 
     def _clear_state(self, ship):
         self.state = ''
