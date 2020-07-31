@@ -273,16 +273,12 @@ def draw_my_ships(self):
             # state
             if ship.state == 'shooting':
                 self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
-                # draw_text(self, 'shooting', x, y, c.YELLOW)
             elif ship.state == 'shot':
                 self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
-                # draw_text(self, 'shot', x, y, c.YELLOW)
             elif ship.state == 'engaging':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
-                # draw_text(self, 'engaging', x, y, c.YELLOW)
             elif ship.state == 'engaged':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
-                # draw_text(self, 'engaged', x, y, c.YELLOW)
 
             # ships stats
 
@@ -317,25 +313,12 @@ def draw_enemy_ships(self):
             # state
             if ship.state == 'shooting':
                 self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
-                # draw_text(self, 'shooting', x, y, c.YELLOW)
             elif ship.state == 'shot':
                 self.screen_surface.blit(self.images['cannon'], (x + 8, y + 8))
-                # draw_text(self, 'shot', x, y, c.YELLOW)
             elif ship.state == 'engaging':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
-                # draw_text(self, 'engaging', x, y, c.YELLOW)
             elif ship.state == 'engaged':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
-                # draw_text(self, 'engaged', x, y, c.YELLOW)
-
-            # if ship.state == 'shooting':
-            #     draw_text(self, 'shooting', (x + 60), y, c.YELLOW)
-            # elif ship.state == 'shot':
-            #     draw_text(self, str(ship.damage_got), (x + 60), y, c.YELLOW)
-            # elif ship.state == 'engaging':
-            #     draw_text(self, 'engaging', (x + 60), y, c.WHITE)
-            # elif ship.state == 'engaged':
-            #     draw_text(self, str(ship.damage_got), (x + 60), y, c.WHITE)
 
             # ships stats
 
