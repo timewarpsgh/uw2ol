@@ -268,7 +268,8 @@ def draw_my_ships(self):
                 self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
 
             # ship number
-            draw_text(self, str(index-1), x, y, c.BLACK)
+            if ship.crew > 0:
+                draw_text(self, str(index-1), x, y, c.WHITE)
 
             # state
             if ship.state == 'shooting':
@@ -308,7 +309,8 @@ def draw_enemy_ships(self):
             self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
 
             # ship number
-            draw_text(self, str(index - 1), x, y, c.BLACK)
+            if ship.crew > 0:
+                draw_text(self, str(index - 1), x, y, c.WHITE)
 
             # state
             if ship.state == 'shooting':

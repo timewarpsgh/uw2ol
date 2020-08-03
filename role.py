@@ -423,11 +423,8 @@ class Role:
                 self.ships.clear()
 
                 # exit if in client and have ships left (the winner sends exit_battle message to server)
-                print('lost!')
                 if Role.GAME and Role.GAME.my_role.ships:
-                    print('time to exit battle')
                     reactor.callLater(2, Role.GAME.connection.send, 'exit_battle', [])
-                print('battle ended. press e to exit battle.')
 
             # else
             else:
@@ -440,9 +437,7 @@ class Role:
         # won battle
         else:
             # exit
-            print('won!')
             if Role.GAME and Role.GAME.my_role.ships:
-                print('time to exit battle')
                 reactor.callLater(2, Role.GAME.connection.send, 'exit_battle', [])
 
 
@@ -784,25 +779,40 @@ class Ship:
         return True
 
     def shoot(self, ship):
+        # change states
         self.state = 'shooting'
         reactor.callLater(1, self._clear_shooting_state, ship)
 
-        ship.now_hp -= 30
-        ship.damage_got = '30'
+        # change values
+        ship.now_hp -= c.SHOOT_DAMAGE
+        ship.damage_got = str(c.SHOOT_DAMAGE)
 
+        # no negatives values
+        if ship.now_hp < 0:
+            ship.now_hp = 0
+
+        # ret
         return ship.now_hp <= 0
 
     def engage(self, ship):
+        # change states
         self.state = 'engaging'
         ship.state = 'engaged'
         reactor.callLater(1, self._clear_state, ship)
 
-        self.crew -= 10
-        ship.crew -= 1
-        self.damage_got = '1'
-        ship.damage_got = '1'
+        # change values
+        self.crew -= c.ENGAGE_DAMAGE
+        ship.crew -= c.ENGAGE_DAMAGE
+        self.damage_got = str(c.ENGAGE_DAMAGE)
+        ship.damage_got = str(c.ENGAGE_DAMAGE)
 
+        # no negative values
+        if self.crew < 0:
+            self.crew = 0
+        if ship.crew < 0:
+            ship.crew = 0
 
+        # ret
         return ship.crew <= 0
 
     def try_to_engage(self, ship):

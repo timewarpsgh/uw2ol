@@ -54,10 +54,6 @@ to do
                 show ship numbers (OK)
                 show enemy ships differently(OK)
                 show cannon and engage_sign (OK)
-                show cannon later for enemy (ON)
+                show cannon later for enemy (OK)
 
-                engage result
-                    enemy lose (OK)
-                    i lose (OK)
-
-                    both lose
+            attack constants (ON)
