@@ -45,7 +45,8 @@ to do
 
         battle scene
             click to select target
-
+                at sea
+                in port
 
 
 

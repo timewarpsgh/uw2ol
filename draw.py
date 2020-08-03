@@ -137,6 +137,7 @@ def draw_in_port(self):
     draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
 
     # draw other roles
+    self.other_roles_rects = {}
     for role in self.other_roles.values():
         # image
         direction = role.direction
@@ -148,8 +149,16 @@ def draw_in_port(self):
 
         self.screen_surface.blit(self.images['person_tileset'], (x, y), person_rect)
 
+        # set image rect
+        image_rect = pygame.Rect(x, y, c.SHIP_SIZE_IN_PIXEL, c.SHIP_SIZE_IN_PIXEL)
+        self.other_roles_rects[role.name] = image_rect
+
         # name
         draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
+
+        # target sign
+        if self.my_role.enemy_name and role.name == self.my_role.enemy_name:
+            draw_text(self, '[+]', x, -30 + y, c.YELLOW)
 
 def draw_at_sea(self):
     # draw my role
