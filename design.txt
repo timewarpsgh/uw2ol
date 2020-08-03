@@ -55,3 +55,9 @@ to do
                 show enemy ships differently(OK)
                 show cannon and engage_sign (OK)
                 show cannon later for enemy (ON)
+
+                engage result
+                    enemy lose (OK)
+                    i lose (OK)
+
+                    both lose

@@ -416,14 +416,30 @@ class Role:
     def _call_back_for_attack_ship(self, result, i, enemy_ships):
         # not won
         if result == 'next_ship':
-            # my next ship
-            if (i+1) <= (len(self.ships) - 1):
-                reactor.callLater(2, self._pick_one_ship_to_attack, [i+1, enemy_ships])
-            # enemy turn
+            # if self lost all crew:
+            if self.ships[0].crew <= 0:
+                # lose all my ships
+                enemy_ships.extend(self.ships)
+                self.ships.clear()
+
+                # exit if in client and have ships left (the winner sends exit_battle message to server)
+                print('lost!')
+                if Role.GAME and Role.GAME.my_role.ships:
+                    print('time to exit battle')
+                    reactor.callLater(2, Role.GAME.connection.send, 'exit_battle', [])
+                print('battle ended. press e to exit battle.')
+
+            # else
             else:
-                reactor.callLater(2, self._change_turn)
+                # my next ship
+                if (i+1) <= (len(self.ships) - 1):
+                    reactor.callLater(2, self._pick_one_ship_to_attack, [i+1, enemy_ships])
+                # enemy turn
+                else:
+                    reactor.callLater(2, self._change_turn)
         # won battle
         else:
+            # exit
             print('won!')
             if Role.GAME and Role.GAME.my_role.ships:
                 print('time to exit battle')
@@ -769,8 +785,7 @@ class Ship:
 
     def shoot(self, ship):
         self.state = 'shooting'
-        ship.state = 'shot'
-        reactor.callLater(1, self._clear_state, ship)
+        reactor.callLater(1, self._clear_shooting_state, ship)
 
         ship.now_hp -= 30
         ship.damage_got = '30'
@@ -782,7 +797,7 @@ class Ship:
         ship.state = 'engaged'
         reactor.callLater(1, self._clear_state, ship)
 
-        self.crew -= 1
+        self.crew -= 10
         ship.crew -= 1
         self.damage_got = '1'
         ship.damage_got = '1'
@@ -828,6 +843,11 @@ class Ship:
                 # no more steps
                 else:
                     deferred.callback(False)
+
+    def _clear_shooting_state(self, ship):
+        self.state = ''
+        ship.state = 'shot'
+        reactor.callLater(1, self._clear_state, ship)
 
     def _clear_state(self, ship):
         self.state = ''

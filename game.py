@@ -104,7 +104,7 @@ class Game():
         self.images['cannon'] = pygame.transform.scale(self.images['cannon'], (10, 10))
 
         self.images['engage_sign'] = pygame.image.load("./assets/engage_sign.png").convert_alpha()
-        self.images['engage_sign'] = pygame.transform.scale(self.images['engage_sign'], (10, 10))
+        self.images['engage_sign'] = pygame.transform.scale(self.images['engage_sign'], (16, 16))
 
         # ships
         file_names = os.listdir("./assets/images/ships")
