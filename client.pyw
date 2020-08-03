@@ -107,8 +107,6 @@ class Echo(Protocol):
         data = p.get_pck_has_head()
 
         # send packet
-        # self.transport.getHandle().sendall(data)
-
         self.transport.write(data)
         print("transport just wrote:", protocol_name, content_obj)
 
