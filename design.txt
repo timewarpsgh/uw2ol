@@ -44,7 +44,6 @@ to do
         # player perspective (later)
 
         in battle
-        ship info shows ship nums instead of names
 
 
 

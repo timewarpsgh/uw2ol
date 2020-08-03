@@ -401,10 +401,10 @@ class MenuClickHandlerForShips():
         }
 
         # supply
-        for k, v in ship.supplies.items():
-            dict[k] = v
+        dict['supplies'] = f"  F:{ship.supplies['Food']} W:{ship.supplies['Water']}" \
+                           f" L:{ship.supplies['Lumber']} S:{ship.supplies['Shot']}"
 
-            # cargo
+        # cargo
         cargoes_dict = ship.cargoes
         for cargo_name, count in cargoes_dict.items():
             dict[cargo_name] = count
