@@ -28,10 +28,11 @@ class Game():
         pygame.display.set_caption(c.CAPTION)
         self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINDOW_HIGHT])
         self.screen_surface_rect = self.screen_surface.get_rect()
-        handle_pygame_event.init_key_mappings(self)
+        # handle_pygame_event.init_key_mappings(self)
         self.movement = None
         self.map_maker = MapMaker()
         self.login_state_text = 'Please login or register.'
+        self.other_roles_rects = {}
 
         # loop to change ship frame state
         self.ship_frame = 1

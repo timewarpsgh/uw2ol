@@ -139,5 +139,7 @@ def new_roles_from_battle(self, message_obj):
         self.other_roles[name] = role
 
 
-
+def target_too_far(self, message_obj):
+    self.button_click_handler. \
+        make_message_box("target too far!")
 

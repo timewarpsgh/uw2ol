@@ -43,7 +43,10 @@ to do
 
         # player perspective (later)
 
-        in battle
+        battle scene
+            click to select target
+
+
 
 
 

@@ -33,6 +33,18 @@ def handle_pygame_event(self, event):
     elif event.type == pygame.KEYUP:
             key_up(self, event)
 
+    # mouse button down
+    elif event.type == pygame.MOUSEBUTTONDOWN:
+        if self.other_roles_rects:
+            for name, rect in self.other_roles_rects.items():
+                if rect.collidepoint(event.pos):
+                    self.my_role.enemy_name = name
+                    print('target set to:', name)
+                    return
+
+            if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
+                self.my_role.enemy_name = ''
+
     # user defined events
     elif event.type == EVENT_MOVE:
         user_event_move(self, event)
@@ -71,14 +83,14 @@ def escape(self, event):
     # deactivate text entry
     self.text_entry_active = False
 
-def init_key_mappings(self):
-    """cmds that change local state and sent to server"""
-    self.key_mappings = {
-        # battle
-        'b': ['try_to_fight_with', ['b']],
-        'e': ['exit_battle', []],
-        'k': ['shoot_ship', [0, 0]],
-    }
+# def init_key_mappings(self):
+#     """cmds that change local state and sent to server"""
+#     self.key_mappings = {
+#         # battle
+#         'b': ['try_to_fight_with', ['b']],
+#         'e': ['exit_battle', []],
+#         'k': ['shoot_ship', [0, 0]],
+#     }
 
 def other_keys_down(self, event):
 
@@ -135,11 +147,11 @@ def other_keys_down(self, event):
     # developer keys
     if c.DEVELOPER_MODE_ON:
 
-        # change and send keys
-        if chr(event.key) in self.key_mappings:
-            cmd = self.key_mappings[chr(event.key)][0]
-            params = self.key_mappings[chr(event.key)][1]
-            self.change_and_send(cmd, params)
+        # # change and send keys
+        # if chr(event.key) in self.key_mappings:
+        #     cmd = self.key_mappings[chr(event.key)][0]
+        #     params = self.key_mappings[chr(event.key)][1]
+        #     self.change_and_send(cmd, params)
 
         # auto move
         if event.key == ord('o'):
@@ -154,7 +166,8 @@ def other_keys_down(self, event):
 
         # battle
         if event.key == ord('b'):
-            self.connection.send('try_to_fight_with', ['b'])
+            if self.my_role.enemy_name:
+                self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
         elif event.key == ord('e'):
             self.connection.send('exit_battle', [])
         elif event.key == ord('k'):
