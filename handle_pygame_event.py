@@ -99,7 +99,7 @@ def other_keys_down(self, event):
     # change map
     if event.key == ord('n'):
         # to sea
-        if self.my_role.map != 'sea':
+        if self.my_role.map != 'sea' and self.my_role.ships:
             # make sea image
             port_tile_x = hash_ports_meta_data[int(self.my_role.map) + 1]['x']
             port_tile_y = hash_ports_meta_data[int(self.my_role.map) + 1]['y']

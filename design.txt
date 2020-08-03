@@ -41,21 +41,12 @@ to do
             load supply (OK)
             unload supply (OK)
 
-        # sailing costs supply (OK)
-
-        # login scene (OK)
-
-        # render player name (OK)
-
         # player perspective (later)
 
         in battle
-            strategy
-                show ship numbers (OK)
-                show enemy ships differently(OK)
-                show cannon and engage_sign (OK)
-                show cannon later for enemy (OK)
 
-            loser moves to london (OK)
+        can't sail if no ship
+
+
 
 
