@@ -49,7 +49,7 @@ class Role:
     def _get_other_role_by_name(self, name):
 
         # in client
-        if self.in_client:
+        if self.GAME:
             if name in self.GAME.other_roles:
                 target_role = self.GAME.other_roles[name]
                 print("target is:", target_role.name)

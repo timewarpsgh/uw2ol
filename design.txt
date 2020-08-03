@@ -44,9 +44,8 @@ to do
         # player perspective (later)
 
         battle scene
-            click to select target
-                at sea
-                in port
+            right click to view target
+
 
 
 

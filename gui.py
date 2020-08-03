@@ -357,12 +357,21 @@ class MenuClickHandlerForShips():
     def __init__(self, game):
         self.game = game
 
-    def fleet_info(self):
-        # get my ships
-        my_ships = self.game.my_role.ships
+    def fleet_info(self, target=False):
+        # get ships
+        ships = None
+        if target:
+            # enemy
+            role = self.game.my_role
+            enemy_name = role.enemy_name
+            enemy_role = role._get_other_role_by_name(enemy_name)
+            ships = enemy_role.ships
+            # my
+        else:
+            ships = self.game.my_role.ships
 
         # make panel window
-        types = [ship.type for ship in my_ships]
+        types = [ship.type for ship in ships]
         text = ''
         for type in types:
             text += f'{type}<br>'
@@ -370,21 +379,31 @@ class MenuClickHandlerForShips():
         PanelWindow(pygame.Rect((59, 50), (350, 400)),
                     self.game.ui_manager, text, self.game)
 
-    def ship_info(self):
-        # get my ships
-        my_ships = self.game.my_role.ships
+    def ship_info(self, target=False):
+        # get ships
+        ships = None
+        if target:
+            # enemy
+            role = self.game.my_role
+            enemy_name = role.enemy_name
+            enemy_role = role._get_other_role_by_name(enemy_name)
+            ships = enemy_role.ships
+            # my
+        else:
+            ships = self.game.my_role.ships
 
         # new menu
         dict = {}
         index = 0
-        for ship in my_ships:
-            dict[str(index)] = [self.show_one_ship, [ship]]
+        for ship in ships:
+            dict[str(index)] = [self.show_one_ship, [ship, target]]
             index += 1
         self.game.button_click_handler.make_menu(dict)
 
     def show_one_ship(self, params):
         # get param
         ship = params[0]
+        target = params[1]
 
         # dict
         dict = {
@@ -400,14 +419,16 @@ class MenuClickHandlerForShips():
             'min_crew/max_crew': f'{ship.min_crew}/{ship.max_crew}',
         }
 
-        # supply
-        dict['supplies'] = f"  F:{ship.supplies['Food']} W:{ship.supplies['Water']}" \
-                           f" L:{ship.supplies['Lumber']} S:{ship.supplies['Shot']}"
+        # if no target selected
+        if not target:
+            # supply
+            dict['supplies'] = f"  F:{ship.supplies['Food']} W:{ship.supplies['Water']}" \
+                               f" L:{ship.supplies['Lumber']} S:{ship.supplies['Shot']}"
 
-        # cargo
-        cargoes_dict = ship.cargoes
-        for cargo_name, count in cargoes_dict.items():
-            dict[cargo_name] = count
+            # cargo
+            cargoes_dict = ship.cargoes
+            for cargo_name, count in cargoes_dict.items():
+                dict[cargo_name] = count
 
         # make text from dict
         text = ''
@@ -836,3 +857,12 @@ class DryDock():
     def sell_ship(self):
         self.game.button_click_handler. \
             make_input_boxes('sell_ship', ['num'])
+
+
+def target_clicked(self):
+    # self is game
+    dict = {
+        'View Fleet': [self.button_click_handler.menu_click_handler.ships.fleet_info, True],
+        'View Ships': [self.button_click_handler.menu_click_handler.ships.ship_info, True],
+    }
+    self.button_click_handler.make_menu(dict)

@@ -3,6 +3,8 @@ from twisted.internet import reactor, task
 import constants as c
 import sys
 from hashes.hash_ports_meta_data import hash_ports_meta_data
+import gui
+
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -35,15 +37,36 @@ def handle_pygame_event(self, event):
 
     # mouse button down
     elif event.type == pygame.MOUSEBUTTONDOWN:
-        if self.other_roles_rects:
-            for name, rect in self.other_roles_rects.items():
-                if rect.collidepoint(event.pos):
-                    self.my_role.enemy_name = name
-                    print('target set to:', name)
-                    return
+        # left button
+        if event.button == 1:
+            if self.other_roles_rects:
+                # set target
+                for name, rect in self.other_roles_rects.items():
+                    if rect.collidepoint(event.pos):
+                        self.my_role.enemy_name = name
+                        print('target set to:', name)
+                        return
 
-            if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
-                self.my_role.enemy_name = ''
+                # clear target
+                # if self.menu_stack == 0:
+                #     if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
+                #         self.my_role.enemy_name = ''
+
+        # right button
+        elif event.button == 3:
+            if self.other_roles_rects:
+                # set target
+                for name, rect in self.other_roles_rects.items():
+                    if rect.collidepoint(event.pos):
+                        self.my_role.enemy_name = name
+                        print('target set to:', name)
+                        gui.target_clicked(self)
+                        return
+
+                # clear target
+                # if self.menu_stack == 0:
+                #     if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
+                #         self.my_role.enemy_name = ''
 
     # user defined events
     elif event.type == EVENT_MOVE:
