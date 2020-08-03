@@ -376,8 +376,10 @@ class MenuClickHandlerForShips():
 
         # new menu
         dict = {}
+        index = 0
         for ship in my_ships:
-            dict[ship.name] = [self.show_one_ship, [ship]]
+            dict[str(index)] = [self.show_one_ship, [ship]]
+            index += 1
         self.game.button_click_handler.make_menu(dict)
 
     def show_one_ship(self, params):

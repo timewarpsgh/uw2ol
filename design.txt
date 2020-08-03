@@ -44,8 +44,7 @@ to do
         # player perspective (later)
 
         in battle
-
-        can't sail if no ship
+        ship info shows ship nums instead of names
 
 
 
