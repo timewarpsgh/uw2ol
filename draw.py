@@ -347,7 +347,7 @@ def draw_battle_timer(self):
     # enemy
     enemy_timer_text = None
     if self.other_roles[self.my_role.enemy_name].your_turn_in_battle:
-        enemy_timer_text = 'Your Turn'
+        enemy_timer_text = 'Enemy Turn'
     else:
         enemy_timer_text = 'Please Wait...'
 

@@ -87,9 +87,13 @@ def roles_in_new_map(self, message_obj):
 
     print("now my map:", self.my_role.map)
 
-    # make map
+    # if at sea
     if self.my_role.map == 'sea':
-        pass
+        # if just lost from battle
+        if not self.my_role.ships:
+            self.connection.send('change_map', ['29'])
+
+    # if in port
     elif self.my_role.map.isdigit():
         port_index = int(self.my_role.map)
         self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)

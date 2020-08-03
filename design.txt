@@ -56,4 +56,5 @@ to do
                 show cannon and engage_sign (OK)
                 show cannon later for enemy (OK)
 
-            attack constants (ON)
+            loser moves to london
+
