@@ -585,7 +585,7 @@ class MenuClickHandlerForBattle():
         dict = {}
         for ship in enemy_ships:
             dict[ship.name] = [self.game.button_click_handler.menu_click_handler.\
-                ships.show_one_ship, [ship]]
+                ships.show_one_ship, [ship, True]]
         self.game.button_click_handler.make_menu(dict)
 
     def set_target(self):

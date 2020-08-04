@@ -44,8 +44,8 @@ to do
         # player perspective (later)
 
         battle scene
-            right click to view target
-
+            right click to view target (OK)
+            all ships engage
 
 
 
