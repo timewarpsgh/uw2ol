@@ -444,21 +444,21 @@ class Role:
 
                 # exit if in client and have ships left (the winner sends exit_battle message to server)
                 if Role.GAME and Role.GAME.my_role.ships:
-                    reactor.callLater(2, Role.GAME.connection.send, 'exit_battle', [])
+                    reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
             # else
             else:
                 # my next ship
                 if (i+1) <= (len(self.ships) - 1):
-                    reactor.callLater(2, self._pick_one_ship_to_attack, [i+1, enemy_ships])
+                    reactor.callLater(1, self._pick_one_ship_to_attack, [i+1, enemy_ships])
                 # enemy turn
                 else:
-                    reactor.callLater(2, self._change_turn)
+                    reactor.callLater(1, self._change_turn)
         # won battle
         else:
             # exit
             if Role.GAME and Role.GAME.my_role.ships:
-                reactor.callLater(2, Role.GAME.connection.send, 'exit_battle', [])
+                reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
 
     # ship yard
@@ -748,7 +748,7 @@ class Ship:
             if moved:
                 # if have steps
                 if self.steps_left >= 1:
-                    reactor.callLater(1, self.shoot_or_move_closer, ship, deferred)
+                    reactor.callLater(0.5, self.shoot_or_move_closer, ship, deferred)
                 # no more steps
                 else:
                     deferred.callback(False)
@@ -869,7 +869,7 @@ class Ship:
             if moved:
                 # if have steps
                 if self.steps_left >= 1:
-                    reactor.callLater(1, self.engage_or_move_closer, ship, deferred)
+                    reactor.callLater(0.5, self.engage_or_move_closer, ship, deferred)
                 # no more steps
                 else:
                     deferred.callback(False)
