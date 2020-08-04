@@ -47,8 +47,8 @@ to do
             right click to view target (OK)
             move faster(OK)
 
-        register same name issue
-
+        register same name issue (OK)
+        login scene (ON)
 
 
 

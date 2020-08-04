@@ -402,6 +402,10 @@ def draw_not_logged_in_state(self):
     # ui
     self.ui_manager.draw_ui(self.screen_surface)
 
+    # hide parts of ui
+    self.screen_surface.blit(self.images['login_bg'], (200, c.WINDOW_HIGHT - 30))
+    self.screen_surface.blit(self.images['login_bg'], (-c.WINDOW_WIDTH + 145, c.WINDOW_HIGHT - 30))
+
 def blit_text(surface, text, pos, font, color=pygame.Color('black')):
     """draws text block in multiple lines"""
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
