@@ -124,6 +124,8 @@ class EchoClientFactory(ClientFactory):
 
     def clientConnectionLost(self, connector, reason):
         print('Lost connection.  Reason:', reason)
+        self.game.button_click_handler. \
+            make_message_box("Lost Connection!")
 
     def clientConnectionFailed(self, connector, reason):
         print('Connection failed. Reason:', reason)

@@ -167,6 +167,16 @@ def other_keys_down(self, event):
     if event.key == ord('z'):
         self.button_click_handler.menu_click_handler.cmds.enter_building()
 
+    # battle
+    if event.key == ord('b'):
+        if self.my_role.enemy_name:
+            self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
+    elif event.key == ord('e'):
+        if self.my_role.your_turn_in_battle:
+            self.connection.send('exit_battle', [])
+    elif event.key == ord('k'):
+        self.button_click_handler.menu_click_handler.battle.all_ships_move()
+
     # developer keys
     if c.DEVELOPER_MODE_ON:
 
@@ -187,14 +197,7 @@ def other_keys_down(self, event):
         elif event.key == ord('p'):
             self.timer.stop()
 
-        # battle
-        if event.key == ord('b'):
-            if self.my_role.enemy_name:
-                self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
-        elif event.key == ord('e'):
-            self.connection.send('exit_battle', [])
-        elif event.key == ord('k'):
-            self.change_and_send('shoot_ship', [0, 0])
+
 
 
 def pass_one_day_at_sea(self):

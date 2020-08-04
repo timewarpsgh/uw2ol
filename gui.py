@@ -266,14 +266,10 @@ class ButtonClickHandler():
 
     def cmds(self):
         dict = {
-            'Set Target': self.menu_click_handler.cmds.set_target,
-            'Enter Building': self.menu_click_handler.cmds.enter_building,
-            'Enter Port': self.menu_click_handler.cmds.enter_port,
-            'Escort': test,
+            'Enter Building (Z)': test,
+            'Enter Port (M)': self.menu_click_handler.cmds.enter_port,
             'Go Ashore': self.menu_click_handler.cmds.go_ashore,
-            'View': test,
-            'Gossip': test,
-            'Battle': self.menu_click_handler.cmds.battle,
+            'Battle (B)': test,
         }
         self.make_menu(dict)
 
@@ -312,7 +308,6 @@ class ButtonClickHandler():
         if 'battle' in self.game.my_role.map:
             dict = {
                 'View Enemy Ships': self.menu_click_handler.battle.enemy_ships,
-                'View My Ships': test,
                 'All Ships Move': self.menu_click_handler.battle.all_ships_move,
                 'Set All Ships Target': self.menu_click_handler.battle.set_target,
                 'Set All Ships Strategy': self.menu_click_handler.battle.set_attack_method,
@@ -491,9 +486,9 @@ class MenuClickHandlerForCmds():
     def __init__(self, game):
         self.game = game
 
-    def set_target(self):
-        self.game.button_click_handler. \
-            make_input_boxes('set_target', ['target name'])
+    # def set_target(self):
+    #     self.game.button_click_handler. \
+    #         make_input_boxes('set_target', ['target name'])
 
     def enter_building(self):
         # get my now position in piddle

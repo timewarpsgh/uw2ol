@@ -48,8 +48,11 @@ class Echo(Protocol):
         # save role to DB
         if c.SAVE_ON_CONNECTION_LOST:
             account = self.account
-            role_to_save = self.my_role
-            d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
+            if account.isdigit():
+                pass
+            else:
+                role_to_save = self.my_role
+                d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
 
         # delete from users dict and tell clients that you logged out
         del self.factory.users[self.my_role.map][self.my_role.name]
