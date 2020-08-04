@@ -45,7 +45,6 @@ to do
 
         battle scene
             right click to view target (OK)
-            all ships engage
 
 
 

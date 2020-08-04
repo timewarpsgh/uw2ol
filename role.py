@@ -371,6 +371,22 @@ class Role:
             # stop my turn
             self.your_turn_in_battle = False
 
+    def set_one_ships_strategy(self, params):
+        # params
+        ship_id = params[0]
+        target_id = params[1]
+        attack_method = params[2]
+
+        # set target
+        ship = self.ships[ship_id]
+        ship.target = target_id
+
+        # set strategy
+        if attack_method == 0:
+            ship.attack_method = 'shoot'
+        elif attack_method == 1:
+            ship.attack_method = 'engage'
+
     def set_all_ships_target(self, params):
         target_id = params[0]
         for ship in self.ships:
