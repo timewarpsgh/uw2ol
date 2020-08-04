@@ -45,7 +45,9 @@ to do
 
         battle scene
             right click to view target (OK)
-            move faster
+            move faster(OK)
+
+        register same name issue
 
 
 

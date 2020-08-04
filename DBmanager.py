@@ -70,24 +70,44 @@ class Database:
 
         # no
         except:
-            x = y = c.PIXELS_COVERED_EACH_MOVE
-            default_role = Role(x, y, character_name)
-            ship0 = Ship('Reagan', 'Frigate')
-            ship1 = Ship('Reagan11', 'Balsa')
-            ship2 = Ship('Reagan22', 'Balsa')
-            ship3 = Ship('Reagan33', 'Balsa')
-            default_role.ships.append(ship0)
-            default_role.ships.append(ship1)
-            default_role.ships.append(ship2)
-            default_role.ships.append(ship3)
-            mate0 = Mate('Gus Johnson', 'England')
-            mate1 = Mate('Mike Dickens', 'Holland')
-            default_role.mates.append(mate0)
-            default_role.mates.append(mate1)
+            # check if role name exists
+            sql_read = "SELECT * FROM accounts WHERE role = '{}'". \
+                format(character_name)
+            print(sql_read)
+            self.cursor.execute(sql_read)
+            rows = self.cursor.fetchall()
 
-            pickle.dump(default_role, open("data/save." + account, "wb"))
-            print("new player created!")
-            return True
+            # exists
+            if rows:
+                return False
+
+            # not exist
+            else:
+                # set role name in DB
+                sql_update = "UPDATE accounts SET role = '{}' WHERE name = '{}'".\
+                    format(character_name,account)
+                print(sql_update)
+                self.cursor.execute(sql_update)
+                self.db.commit()
+
+                x = y = c.PIXELS_COVERED_EACH_MOVE
+                default_role = Role(x, y, character_name)
+                ship0 = Ship('Reagan', 'Frigate')
+                ship1 = Ship('Reagan11', 'Balsa')
+                ship2 = Ship('Reagan22', 'Balsa')
+                ship3 = Ship('Reagan33', 'Balsa')
+                default_role.ships.append(ship0)
+                default_role.ships.append(ship1)
+                default_role.ships.append(ship2)
+                default_role.ships.append(ship3)
+                mate0 = Mate('Gus Johnson', 'England')
+                mate1 = Mate('Mike Dickens', 'Holland')
+                default_role.mates.append(mate0)
+                default_role.mates.append(mate1)
+
+                pickle.dump(default_role, open("data/save." + account, "wb"))
+                print("new player created!")
+                return True
 
 
     def get_character_data(self, account):

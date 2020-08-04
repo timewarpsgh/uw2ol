@@ -34,6 +34,9 @@ def account_exists(self, message_obj):
 def new_role_created(self, message_obj):
     self.login_state_text = 'Character created! Please login again.'
 
+def name_exists(self, message_obj):
+    self.login_state_text = 'Name used! Please choose another name.'
+
 # login responses
 def login_failed(self, message_obj):
     self.login_state_text = 'Login failed!'

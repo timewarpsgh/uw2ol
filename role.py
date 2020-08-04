@@ -877,7 +877,7 @@ class Ship:
     def _clear_shooting_state(self, ship):
         self.state = ''
         ship.state = 'shot'
-        reactor.callLater(1, self._clear_state, ship)
+        reactor.callLater(0.3, self._clear_state, ship)
 
     def _clear_state(self, ship):
         self.state = ''
