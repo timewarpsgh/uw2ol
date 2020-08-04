@@ -129,6 +129,8 @@ class EchoClientFactory(ClientFactory):
 
     def clientConnectionFailed(self, connector, reason):
         print('Connection failed. Reason:', reason)
+        self.game.button_click_handler. \
+            make_message_box("Failed to connect! The server isn't working. Please exit.")
 
 def main():
     # print?

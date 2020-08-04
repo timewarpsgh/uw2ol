@@ -43,15 +43,6 @@ class Database:
         # if exits
         if rows:
             print("login success!" )
-
-            # set online to true
-            if c.SET_ONLINE_TO_TRUE_ON_LOGIN:
-                sql_update = "UPDATE accounts SET online = '1' WHERE name = '{}' and pw = '{}'".\
-                    format(account, password)
-                print(sql_update)
-                self.cursor.execute(sql_update)
-                self.db.commit()
-
             id = rows[0][0]
             return account
         else:
@@ -113,6 +104,15 @@ class Database:
     def get_character_data(self, account):
         try:
             player = pickle.load(open("data/save." + account, "rb"))
+
+            # set online to true
+            if c.SET_ONLINE_TO_TRUE_ON_LOGIN:
+                sql_update = "UPDATE accounts SET online = '1' WHERE name = '{}'".\
+                    format(account)
+                print(sql_update)
+                self.cursor.execute(sql_update)
+                self.db.commit()
+
             return player
         except:
             return False
