@@ -131,9 +131,8 @@ def other_keys_down(self, event):
     if chr(event.key).isdigit():
         self.connection.send('login', [chr(event.key), chr(event.key)])
 
-    # change map
+    # change map to sea
     if event.key == ord('n'):
-        # to sea
         if self.my_role.map != 'sea' and self.my_role.ships:
             # make sea image
             port_tile_x = hash_ports_meta_data[int(self.my_role.map) + 1]['x']
@@ -155,8 +154,8 @@ def other_keys_down(self, event):
             self.timer_at_sea = task.LoopingCall(pass_one_day_at_sea, self)
             self.timer_at_sea.start(c.ONE_DAY_AT_SEA_IN_SECONDS)
 
+    # change map to port
     elif event.key == ord('m'):
-        # to port
         if not self.my_role.map.isdigit():
             port_id = get_nearby_port_index(self)
             if port_id:
@@ -211,7 +210,7 @@ def pass_one_day_at_sea(self):
         # starved!
         else:
             self.timer_at_sea.stop()
-            self.change_and_send('change_map', ['29'])
+            self.connection.send('change_map', ['29'])
 
 def get_nearby_port_index(self):
     # get x and y in tile position

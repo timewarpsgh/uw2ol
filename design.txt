@@ -48,7 +48,9 @@ to do
             move faster(OK)
 
         register same name issue (OK)
-        login scene (ON)
+        login scene (OK)
+        max days bug (OK)
+
 
 
 
