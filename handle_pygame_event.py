@@ -4,7 +4,7 @@ import constants as c
 import sys
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import gui
-
+from pygame_gui._constants import UI_WINDOW_CLOSE
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -74,6 +74,13 @@ def handle_pygame_event(self, event):
     elif event.type == EVENT_HEART_BEAT:
         self.change_and_send('heart_beat', [])
 
+    elif event.type == pygame.USEREVENT:
+        if event.user_type == UI_WINDOW_CLOSE:
+            self.menu_stack.pop()
+            self.selection_list_stack.pop()
+            print('event ui window close!')
+            print('stack length:', len(self.menu_stack))
+
 def quit(self, event):
     # when in game
     if self.my_role:
@@ -100,10 +107,8 @@ def escape(self, event):
 
     # pop menu_stack
     if len(self.menu_stack) > 0:
-        menu_to_kill = self.menu_stack.pop()
-        self.selection_list_stack.pop()
+        menu_to_kill = self.menu_stack[-1]
         menu_to_kill.kill()
-    print(len(self.menu_stack))
     print('escape pressed!')
 
     # clear buttons_in_windows dict
@@ -203,8 +208,9 @@ def other_keys_down(self, event):
         elif event.key == ord('p'):
             self.timer.stop()
 
-
-
+        if event.key == ord('t'):
+            a = self.ui_manager.get_window_stack()
+            print(len(a))
 
 def pass_one_day_at_sea(self):
     if self.my_role.map == 'sea':

@@ -1,8 +1,11 @@
 import pygame_gui
+from pygame_gui._constants import UI_WINDOW_CLOSE, UI_WINDOW_MOVED_TO_FRONT, UI_BUTTON_PRESSED
 import pygame
 import constants as c
 from port import Port
 from role import Ship
+
+import handle_pygame_event
 
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import id_2_building_type
@@ -66,6 +69,8 @@ class MessageWindow(pygame_gui.elements.UIWindow):
                          window_display_title='',
                          object_id='#scaling_window',
                          resizable=True)
+
+        self.game = game
 
         # text box
         pygame_gui.elements.UITextBox(html_text=text,
@@ -141,14 +146,9 @@ class PanelWindow(pygame_gui.elements.UIWindow):
                          object_id='#scaling_window',
                          resizable=True)
 
+        self.game = game
+
         # image
-        # pygame_gui.elements.UIImage(pygame.Rect((0, 0), (game.images['ship_at_sea'].get_rect().size
-        #                                                  )),
-        #                             game.images['ship_at_sea'], ui_manager,
-        #                           container=self,
-        #                           anchors={'top': 'top', 'bottom': 'bottom',
-        #                                    'left': 'left', 'right': 'right'})
-        #
         pygame_gui.elements.UIImage(pygame.Rect((0, 0), (image.get_rect().size
                                                          )),
                                     image, ui_manager,
@@ -177,6 +177,8 @@ class SelectionListWindow(pygame_gui.elements.UIWindow):
                          object_id='#scaling_window',
                          resizable=True)
 
+        self.game = game
+
         # gets
         self.dict = dict
         item_list = dict.keys()
@@ -191,7 +193,6 @@ class SelectionListWindow(pygame_gui.elements.UIWindow):
         # push into stacks
         game.menu_stack.append(self)
         game.selection_list_stack.append(self.selection_list)
-
 
 class ButtonClickHandler():
     def __init__(self, game):

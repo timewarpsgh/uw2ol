@@ -29,34 +29,9 @@ protocols
 
 to do
 
-    # basic functions for most important buildings
-        # market
-            buy (OK)
-            sell (OK)
+    click exit button on UIWindow (OK)
 
-        # dry dock
-            buy (OK)
-            sell (OK)
-            repair (OK)
 
-        # bar
-            hire crew (OK)
-            fire crew (OK)
-
-        # harbor
-            load supply (OK)
-            unload supply (OK)
-
-        # player perspective (later)
-
-        battle scene
-            right click to view target (OK)
-            move faster(OK)
-
-        register same name issue (OK)
-        login scene (OK)
-        max days bug (OK)
-        release (ON)
 
 
 
