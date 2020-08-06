@@ -205,10 +205,6 @@ class ButtonClickHandler():
                                         (c.SELECTION_LIST_WIDTH, c.SELECTION_LIST_HIGHT)),
                             self.ui_manager,
                             dict, self.game)
-        # SelectionListWindow(pygame.Rect((c.WINDOW_WIDTH - 224, 50),
-        #                                 (224, 250)),
-        #                     self.ui_manager,
-        #                     dict, self.game)
 
     def make_input_boxes(self, prtocol_name, params_list):
         InputBoxWindow(pygame.Rect((59, 50), (350, 400)),

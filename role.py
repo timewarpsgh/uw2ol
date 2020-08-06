@@ -176,10 +176,12 @@ class Role:
             # directions
             if direction == 'up':
                 if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
-                    return True
+                    if self.y > 0:
+                        return True
             elif direction == 'down':
                 if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
-                    return True
+                    if self.y < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
+                        return True
             elif direction == 'left':
                 if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
                     return True

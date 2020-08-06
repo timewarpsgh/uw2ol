@@ -30,6 +30,7 @@ protocols
 to do
 
     click exit button on UIWindow (OK)
+    map edges
 
 
 
