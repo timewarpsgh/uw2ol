@@ -25,6 +25,9 @@ class Role:
         self.y = y
         self.direction = None
         self.moving = False
+        self.speed = 20
+        self.speed_counter = 0
+        self.speed_counter_max = int(200 / self.speed)
         self.person_frame = -1
         self.name = name
         self.enemy_name = None
@@ -110,6 +113,12 @@ class Role:
         target_name = params[0]
         self.enemy_name = target_name
         print("target_name:", self.enemy_name)
+
+    def set_speed(self, params):
+        speed = params[0]
+        self.speed = int(speed)
+        self.speed_counter_max = int(200/self.speed)
+
 
     # in port
     def start_move(self, params):

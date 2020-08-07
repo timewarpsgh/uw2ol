@@ -33,7 +33,17 @@ to do
     map edges (OK)
     chinese (can't now)
 
-    while moving can't enter battle
+    while moving can't enter battle (OK)
+
+    ships should be different (ON)
+        speed (ON)
+        capacity
+        weapons
+
+
+
+
+
 
     
 

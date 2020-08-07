@@ -1,5 +1,3 @@
-a = '你好'
-a.encode('utf8')
-print(a)
-b= '20320'.encode('utf8')
+a = 7.2
+b = int(a)
 print(b)

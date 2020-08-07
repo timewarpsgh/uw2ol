@@ -176,15 +176,21 @@ class Game():
             # my role
             my_role = self.my_role
             if my_role.moving and my_role.can_move(my_role.direction):
-                my_role.move([my_role.direction])
+                my_role.speed_counter += 1
+                if my_role.speed_counter == my_role.speed_counter_max:
+                    my_role.move([my_role.direction])
+                    my_role.speed_counter = 0
 
-                # update sea image
-                self.update_sea_image()
+                    # update sea image
+                    self.update_sea_image()
 
             # other roles
             for role in self.other_roles.values():
                 if role.moving and role.can_move(role.direction):
-                    role.move([role.direction])
+                    role.speed_counter +=1
+                    if role.speed_counter == role.speed_counter_max:
+                        role.move([role.direction])
+                        role.speed_counter = 0
 
     def update_sea_image(self):
         if self.my_role.map == 'sea':
