@@ -30,8 +30,12 @@ protocols
 to do
 
     click exit button on UIWindow (OK)
-    map edges
+    map edges (OK)
+    chinese (can't now)
 
+    while moving can't enter battle
+
+    
 
 
 

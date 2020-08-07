@@ -115,7 +115,7 @@ def try_to_fight_with(self, message_obj):
         enemy_role.enemy_name = my_role.name
 
         # can fight
-        if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
+        if 1:
             '''both enter battle map'''
             print('can go battle!')
 

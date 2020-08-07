@@ -63,7 +63,7 @@ def your_role_data_and_others(self, message_obj):
     print(other_roles)
 
     # escape
-    handle_pygame_event.escape(self, '')
+    # handle_pygame_event.escape(self, '')
 
 # someone logged in
 def new_role(self, message_obj):

@@ -181,10 +181,17 @@ def other_keys_down(self, event):
     # battle
     if event.key == ord('b'):
         if self.my_role.enemy_name:
-            self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
+            enemy_role = self.my_role._get_other_role_by_name(self.my_role.enemy_name)
+            my_role = self.my_role
+            if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
+                self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
+            else:
+                self.button_click_handler. \
+                    make_message_box("Target too far!")
     elif event.key == ord('e'):
-        if self.my_role.your_turn_in_battle:
-            self.connection.send('exit_battle', [])
+        if 'battle' in self.my_role.map:
+            if self.my_role.your_turn_in_battle:
+                self.connection.send('exit_battle', [])
     elif event.key == ord('k'):
         self.button_click_handler.menu_click_handler.battle.all_ships_move()
 

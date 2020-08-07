@@ -319,6 +319,7 @@ class ButtonClickHandler():
 
         # when not logged in
         if  not self.game.my_role:
+
             dict = {
                 'Login': self.menu_click_handler.login.login,
                 'Register': self.menu_click_handler.login.register,

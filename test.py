@@ -1,11 +1,5 @@
-s = {
-    '1.1': 1,
-    '2.2': 1,
-}
-print(s)
-
-# move
-del s['1.1']
-s['1.2'] = 1
-
-print(s)
+a = '你好'
+a.encode('utf8')
+print(a)
+b= '20320'.encode('utf8')
+print(b)

@@ -2,9 +2,12 @@ import pygame
 import pygame_gui
 import sys, os
 from twisted.internet import reactor, task
+
 import constants as c
 from role import Role, Ship, Mate
 from map_maker import MapMaker
+from translator import Translator
+
 
 # code relocated to these files
 import draw
@@ -38,6 +41,9 @@ class Game():
         self.ship_frame = 1
         looping_task = task.LoopingCall(self.change_ship_frame_state)
         looping_task.start(0.5)
+
+        # translator
+        self.translator = Translator()
 
         # gui
         gui.init_gui(self)
