@@ -36,9 +36,10 @@ to do
     while moving can't enter battle (OK)
 
     ships should be different (ON)
-        speed (ON)
-        capacity
-        weapons
+        speed (OK)
+        capacity (OK)
+        weapons (OK)
+        crew damage (OK)
 
 
 

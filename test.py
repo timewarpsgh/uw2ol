@@ -1,3 +1,2 @@
-a = 7.2
-b = int(a)
-print(b)
+a = [1,2,3,0]
+print(min(a))

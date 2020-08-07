@@ -370,6 +370,8 @@ class MenuClickHandlerForShips():
         for type in types:
             text += f'{type}<br>'
 
+        text += f'<br>Fleet Speed: {self.game.my_role.get_fleet_speed([])} knots'
+
         PanelWindow(pygame.Rect((59, 50), (350, 400)),
                     self.game.ui_manager, text, self.game)
 
@@ -401,16 +403,15 @@ class MenuClickHandlerForShips():
 
         # dict
         dict = {
-            'name': ship.name,
-            'type': ship.type,
+            'name': f'{ship.name}   type:{ship.type}',
             'durability': f'{ship.now_hp}/{ship.max_hp}',
-            'tacking': f'{ship.tacking}',
-            'power': f'{ship.power}',
+            'tacking': f'{ship.tacking}    power:{ship.power}',
+            'speed': f'{ship.get_speed()} knots',
             'capacity': f'{ship.capacity}',
-            'useful_capacity': f'{ship.useful_capacity}',
             'max_guns': f'{ship.max_guns}',
-            'crew': f'{ship.crew}',
             'min_crew/max_crew': f'{ship.min_crew}/{ship.max_crew}',
+            'useful_capacity': f'{ship.useful_capacity}',
+            'crew': f'{ship.crew}',
         }
 
         # if no target selected
@@ -645,7 +646,7 @@ class MenuClickHandlerForPort():
             'Used Ship': self.dry_dock.used_ship,
             'Repair': self.dry_dock.repair,
             'Sell': self.dry_dock.sell_ship,
-            'Remodel': test,
+            'Remodel': self.dry_dock.remodel,
             'Invest': test,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -856,6 +857,19 @@ class DryDock():
         self.game.button_click_handler. \
             make_input_boxes('sell_ship', ['num'])
 
+    def remodel(self):
+        dict = {
+            'Capacity':self.remodel_capacity,
+            'Weapon':test,
+            'Figure':test,
+            'Name': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+
+    def remodel_capacity(self):
+        self.game.button_click_handler. \
+            make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
 
 def target_clicked(self):
     # self is game

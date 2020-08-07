@@ -119,6 +119,11 @@ def draw_hud(self):
         draw_text(self, 'Industry', c.WINDOW_WIDTH - 100, 120)
         draw_text(self, str(industry_index), c.WINDOW_WIDTH - 100, 140)
 
+        # at sea
+    else:
+        draw_text(self, 'Speed', c.WINDOW_WIDTH - 100, 80)
+        draw_text(self, str(self.my_role.speed) + ' knots', c.WINDOW_WIDTH - 100, 100)
+
 def draw_text(self, text, x, y, color=c.BLACK):
     text_img = self.font.render(text, True, color)
     self.screen_surface.blit(text_img, (x, y))

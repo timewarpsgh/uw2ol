@@ -74,10 +74,16 @@ def change_map(self, message_obj):
     if target_map == 'sea':
         self.my_role.x = hash_ports_meta_data[int(now_map) + 1]['x'] * c.PIXELS_COVERED_EACH_MOVE
         self.my_role.y = hash_ports_meta_data[int(now_map) + 1]['y'] * c.PIXELS_COVERED_EACH_MOVE
-        # to port
+
+        fleet_speed = self.my_role.get_fleet_speed([])
+        self.my_role.set_speed([str(fleet_speed)])
+
+    # to port
     elif target_map.isdigit():
         self.my_role.x = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
         self.my_role.y = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
+
+        self.my_role.set_speed(['20'])
 
         print("changed to", self.my_role.x, self.my_role.y)
 

@@ -119,6 +119,21 @@ class Role:
         self.speed = int(speed)
         self.speed_counter_max = int(200/self.speed)
 
+    def get_fleet_speed(self, params):
+        # have ships
+        if self.ships:
+            speed_list = []
+            for ship in self.ships:
+                speed = ship.get_speed()
+                speed_list.append(speed)
+
+            fleet_speed = min(speed_list)
+            return fleet_speed
+
+        # no ship
+        else:
+            return 1
+
 
     # in port
     def start_move(self, params):
@@ -502,6 +517,13 @@ class Role:
         for ship in self.ships:
             ship.now_hp = ship.max_hp
 
+    def remodel_ship_capacity(self, params):
+        ship_num = params[0]
+        max_crew = params[1]
+        max_guns = params[2]
+
+        self.ships[ship_num].remodel_capacity(max_crew, max_guns)
+
     # bar
     def hire_crew(self, params):
         count = params[0]
@@ -657,6 +679,16 @@ class Ship:
             'Shot':0
         }
 
+    def remodel_capacity(self, max_crew, max_guns):
+        type = self.type
+        ship_dict = hash_ship_name_to_attributes[type]
+        if max_crew <= ship_dict['max_crew'] and max_crew >= self.min_crew:
+            self.max_crew = max_crew
+        if max_guns <= ship_dict['max_guns'] and max_guns >= 0:
+            self.max_guns = max_guns
+
+        self.useful_capacity = self.capacity - self.max_guns - self.max_crew
+
     def get_cargo_and_supply_capacity(self):
         """number of empty space for cargo and supply"""
         # cargoes_count
@@ -680,6 +712,16 @@ class Ship:
             return True
         else:
             return False
+
+    def get_speed(self):
+        speed = int((self.tacking + self.power)/10)
+        factor  = self.crew / self.min_crew
+        if factor < 1:
+            speed = int(speed * factor)
+            if speed < 1:
+                speed = 1
+
+        return speed
 
     def move(self, direction):
         if direction == 'up':
@@ -815,8 +857,8 @@ class Ship:
         reactor.callLater(1, self._clear_shooting_state, ship)
 
         # change values
-        ship.now_hp -= c.SHOOT_DAMAGE
-        ship.damage_got = str(c.SHOOT_DAMAGE)
+        ship.now_hp -= c.SHOOT_DAMAGE * self.max_guns
+        ship.damage_got = str(c.SHOOT_DAMAGE * self.max_guns)
 
         # no negatives values
         if ship.now_hp < 0:
@@ -832,8 +874,8 @@ class Ship:
         reactor.callLater(1, self._clear_state, ship)
 
         # change values
-        self.crew -= c.ENGAGE_DAMAGE
-        ship.crew -= c.ENGAGE_DAMAGE
+        ship.crew -= int(c.ENGAGE_DAMAGE * self.crew / 3)
+        self.crew -= int(c.ENGAGE_DAMAGE * ship.crew / 3)
         self.damage_got = str(c.ENGAGE_DAMAGE)
         ship.damage_got = str(c.ENGAGE_DAMAGE)
 
