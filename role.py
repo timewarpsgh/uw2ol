@@ -669,9 +669,12 @@ class Role:
 
     def submit_discovery_quest(self, params):
         if self.quest_discovery in self.discoveries and self.quest_discovery:
+            # result
             self.mates[0].exp += 100
+            self.gold += 5000
             self.quest_discovery = None
 
+            # client does
             if self.is_in_client_and_self():
                 self.GAME.button_click_handler.make_message_box("Quest complete!")
 
