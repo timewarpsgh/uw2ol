@@ -494,10 +494,42 @@ class MenuClickHandlerForItems():
         self.game.button_click_handler.make_menu(dict)
 
     def on_menu_click_discoveries(self):
+
+        def show_one_discovery(discovery):
+            # dict
+            dict = {
+                'name': discovery.name,
+                'description': discovery.description,
+            }
+
+            # make text from dict
+            text = ''
+            for k, v in dict.items():
+                text += f'{k}:{v}<br>'
+
+            # get figure image
+            figure_surface = discovery_x_y_2_image(discovery.image_x, discovery.image_y)
+
+            # make window
+            PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                        self.game.ui_manager, text, self.game, figure_surface)
+
+        def discovery_x_y_2_image(x, y):
+            discoveries_and_items_images = self.game.images['discoveries_and_items']
+            discovery_surface = pygame.Surface((c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE))
+            x_coord = -c.ITEMS_IMAGE_SIZE * (x - 1)
+            y_coord = -c.ITEMS_IMAGE_SIZE * (y - 1)
+            rect = pygame.Rect(x_coord, y_coord, c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE)
+            discovery_surface.blit(discoveries_and_items_images, rect)
+
+            return discovery_surface
+
+        # do
         my_discoveries = self.game.my_role.discoveries
         dict = {}
-        for k in my_discoveries:
-            dict[str(k)] = test
+        for id in my_discoveries:
+            discovery = Discovery(id)
+            dict[discovery.name] = [show_one_discovery, discovery]
         self.game.button_click_handler.make_menu(dict)
 
     def diary(self):

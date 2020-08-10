@@ -363,7 +363,11 @@ villages_dict = {
         'x': 1074,
         'latitude': '30N',
         'longitude': '29e',
-        'image_position': [16,2],
+        'description': """Black basalt slab bearing the same inscription in three languages- ancient
+  Egyptian hieroglyphics, a simpler ancient Egyptian writing system, and
+  Greek.""",
+        'image_x': 16,
+        'image_y': 2,
     },
     37: {
         'name': 'Khufu Pyramid',
@@ -646,6 +650,11 @@ villages_dict = {
         'x': 1736,
         'latitude': '12S',
         'longitude': '139e',
+        'description':"""Named for its cry, this is a flightless, nocturnal bird with a small head
+and a long, slender bill that has nostrils near the tip. It uses its
+highly developed sense of smell to find its food.""",
+        'image_x':1,
+        'image_y':1,
     },
     4: {
         'name': 'Tasmanian Devil',
@@ -660,6 +669,11 @@ villages_dict = {
         'x': 1788,
         'latitude': '30S',
         'longitude': '148e',
+        'description': """A tree-dwelling marsupial mammal that only eats the leaves of the
+  eucalyptus tree. Koala young spend their first 6 months in their mother's
+  pouch, feeding on predigested eucalyptus leaves.""",
+        'image_x': 8,
+        'image_y': 1,
     },
     88: {
         'name': 'Indo-Pacific Cowrie',

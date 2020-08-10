@@ -97,6 +97,8 @@ class Database:
                 default_role.mates.append(mate0)
                 default_role.mates.append(mate1)
 
+                default_role.discoveries[2] = 1
+
                 pickle.dump(default_role, open("data/save." + account, "wb"))
                 print("new player created!")
                 return True

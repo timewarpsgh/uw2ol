@@ -650,7 +650,7 @@ class Role:
         # discovery
     def start_discovery_quest(self, params):
         discovery_id = params[0]
-        discovery_id = 48
+        discovery_id = 31
 
         if discovery_id not in self.discoveries:
             self.quest_discovery = discovery_id

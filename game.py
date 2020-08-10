@@ -123,6 +123,9 @@ class Game():
         # figures
         self.images['figures'] = pygame.image.load("./assets/images/figures/figures.png").convert_alpha()
 
+        # discoveries_and_items
+        self.images['discoveries_and_items'] = pygame.image.load("./assets/images/discoveries_and_items/discoveries_and_items.png").convert_alpha()
+
         # fonts
         self.font = pygame.font.SysFont("fangsong", c.FONT_SIZE)
 
