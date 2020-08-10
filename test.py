@@ -1,2 +1,3 @@
-a = [1,2,3,0]
-print(min(a))
+a = '12'
+b = str(a)
+print(b)

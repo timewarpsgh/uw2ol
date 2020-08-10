@@ -44,6 +44,11 @@ class Role:
         self.mates = []
         self.discoveries = {}
 
+        # quests (3 types)
+        self.quest_discovery = None
+        self.quest_trade = None
+        self.quest_fight = None
+
         self.conn = None
 
         # set at client, when client first gets role from server(when got packet 'your_role_data')
@@ -269,12 +274,20 @@ class Role:
 
     # at sea
     def discover(self, params):
-        discovery_id = random.randint(0, 10)
+        # discovery_id = random.randint(0, 10)
+        discovery_id = params[0]
         if discovery_id in self.discoveries:
-            print(self.name, "have seen this")
+            if self.GAME:
+                self.GAME.button_click_handler.make_message_box("Have seen this.")
         else:
-            self.discoveries[discovery_id] = 1
-            print(self.name, "found new stuff. now discoveris:", self.discoveries)
+            if self.quest_discovery == discovery_id:
+                self.discoveries[discovery_id] = 1
+
+                if self.GAME:
+                    self.GAME.button_click_handler.make_message_box("We found something!")
+            else:
+                if self.GAME:
+                    self.GAME.button_click_handler.make_message_box("Can't find anything.")
 
     def enter_battle_with(self, params):
 
@@ -632,6 +645,38 @@ class Role:
         ship.unload_supply(supply_name, count)
         print(self.name, "ship", from_which_ship, "supplies", 'unloaded')
 
+    # job house
+
+        # discovery
+    def start_discovery_quest(self, params):
+        discovery_id = params[0]
+        discovery_id = 48
+
+        if discovery_id not in self.discoveries:
+            self.quest_discovery = discovery_id
+            print('quset started id:', discovery_id)
+        else:
+            print('have been there!')
+
+    def give_up_discovery_quest(self, params):
+        self.quest_discovery = None
+
+    def submit_discovery_quest(self, params):
+        if self.quest_discovery in self.discoveries and self.quest_discovery:
+            self.mates[0].exp += 100
+            self.quest_discovery = None
+
+            if self.GAME:
+                self.GAME.button_click_handler.make_message_box("Quest complete!")
+
+        # trade
+    def set_trade_quest(self):
+        pass
+
+        # fight
+    def set_fight_quest(self):
+        pass
+
 class Ship:
     shooting_img = ''
 
@@ -972,10 +1017,13 @@ class Ship:
 
 
 class Mate:
-    def __init__(self, name, nation):
+    def __init__(self, name, nation, image_x, image_y):
         self.name = name
         self.nation = nation
-
+        self.image_x = image_x
+        self.image_y = image_y
+        self.exp = 0
+        self.lv = 1
 
 class Cargo:
     def __init__(self, name, count):
@@ -996,8 +1044,39 @@ class Player:
 
 
 if __name__ == '__main__':
-    role = Role(5, 5, 'test_name')
-    a = {}
-    print(type(role.map))
-    a[role.map] = 123
-    print(a)
+    # new role
+    default_role = Role(1, 1, 'alex')
+
+    # add ships
+    ship0 = Ship('Reagan', 'Frigate')
+    ship1 = Ship('Reagan11', 'Balsa')
+    ship2 = Ship('Reagan22', 'Balsa')
+    ship3 = Ship('Reagan33', 'Balsa')
+    default_role.ships.append(ship0)
+    default_role.ships.append(ship1)
+    default_role.ships.append(ship2)
+    default_role.ships.append(ship3)
+
+    # add mates
+    mate0 = Mate('Gus Johnson', 'England', 1, 1)
+    mate1 = Mate('Mike Dickens', 'Holland', 3, 3)
+    default_role.mates.append(mate0)
+    default_role.mates.append(mate1)
+
+    # nickname
+    role = default_role
+
+    # testing 4 steps
+    role.start_discovery_quest([2])
+    print(role.quest_discovery)
+    role.discover([2])
+    role.submit_discovery_quest([])
+
+
+
+    role.start_discovery_quest([3])
+    role.discover([3])
+    role.submit_discovery_quest([])
+
+    print(role.quest_discovery)
+    print(role.mates[0].exp)

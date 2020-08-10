@@ -1,9 +1,13 @@
 import pygame_gui
 from pygame_gui._constants import UI_WINDOW_CLOSE, UI_WINDOW_MOVED_TO_FRONT, UI_BUTTON_PRESSED
 import pygame
+import random
+
 import constants as c
 from port import Port
 from role import Ship
+from discovery import Discovery
+from hashes import hash_villages
 
 import handle_pygame_event
 
@@ -255,7 +259,7 @@ class ButtonClickHandler():
         dict = {
             'Items': self.menu_click_handler.items.on_menu_click_items,
             'Discoveries': self.menu_click_handler.items.on_menu_click_discoveries,
-            'Diary': test,
+            'Diary': self.menu_click_handler.items.diary,
             'World Map': test,
             'Port Map': test
         }
@@ -453,6 +457,8 @@ class MenuClickHandlerForMates():
         dict = {
             'name': mate.name,
             'nation': mate.nation,
+            'lv': mate.lv,
+            'exp': mate.exp,
         }
 
         # make text from dict
@@ -460,9 +466,22 @@ class MenuClickHandlerForMates():
         for k, v in dict.items():
             text += f'{k}:{v}<br>'
 
+        # get figure image
+        figure_surface = self.figure_x_y_2_image(mate.image_x, mate.image_y)
+
         # make window
         PanelWindow(pygame.Rect((59, 50), (350, 400)),
-                    self.game.ui_manager, text, self.game)
+                    self.game.ui_manager, text, self.game, figure_surface)
+
+    def figure_x_y_2_image(self, x=8, y=8):
+        figures_image = self.game.images['figures']
+        figure_surface = pygame.Surface((c.FIGURE_WIDTH, c.FIGURE_HIGHT))
+        x_coord = -c.FIGURE_WIDTH * (x-1) - 3
+        y_coord = -c.FIGURE_HIGHT * (y-1) - 3
+        rect = pygame.Rect(x_coord, y_coord, c.FIGURE_WIDTH, c.FIGURE_HIGHT)
+        figure_surface.blit(figures_image, rect)
+
+        return figure_surface
 
 class MenuClickHandlerForItems():
     def __init__(self, game):
@@ -480,6 +499,36 @@ class MenuClickHandlerForItems():
         for k in my_discoveries:
             dict[str(k)] = test
         self.game.button_click_handler.make_menu(dict)
+
+    def diary(self):
+        dict = {
+            'Discovery': self.discovery,
+            'Trade': test,
+            'Fight': test,
+            'Abandon Quest': self.abandon_quest,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def discovery(self):
+        discovery_quest_id = self.game.my_role.quest_discovery
+        if discovery_quest_id:
+            discovery = Discovery(discovery_quest_id)
+            self.game.button_click_handler.make_message_box(f""
+                 f"On quest to investigate {discovery.longitude} {discovery.latitude}")
+        else:
+            self.game.button_click_handler.make_message_box("No quest.")
+
+    def abandon_quest(self):
+        dict = {
+            'Abandon Discovery Quest': self.abandon_discovery_quest,
+            'Abandon Trade Quest': test,
+            'Abandon Fight Quest': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def abandon_discovery_quest(self):
+        self.game.change_and_send('give_up_discovery_quest', [])
+        self.game.button_click_handler.make_message_box("Quest abandoned.")
 
 class MenuClickHandlerForCmds():
     def __init__(self, game):
@@ -531,7 +580,28 @@ class MenuClickHandlerForCmds():
         self.game.change_and_send('change_map', ['port'])
 
     def go_ashore(self):
-        self.game.change_and_send('discover', [])
+
+        def get_nearby_village_index():
+            # get x and y in tile position
+            x_tile = self.game.my_role.x / c.PIXELS_COVERED_EACH_MOVE
+            y_tile = self.game.my_role.y / c.PIXELS_COVERED_EACH_MOVE
+
+            # iterate each port
+            for i in range(1, 99):
+                if abs(x_tile - hash_villages.villages_dict[i]['x']) <= 2 \
+                        and abs(y_tile - hash_villages.villages_dict[i]['y']) <= 2:
+                    village_id = i
+                    return village_id
+
+            return None
+
+        village_id = get_nearby_village_index()
+        if village_id:
+            self.game.change_and_send('discover', [village_id])
+        else:
+            self.game.button_click_handler.make_message_box("Can't find anything.")
+
+
 
     def battle(self):
         target_name = self.game.my_role.enemy_name
@@ -604,6 +674,7 @@ class MenuClickHandlerForPort():
         self.market = Market(game)
         self.bar = Bar(game)
         self.dry_dock = DryDock(game)
+        self.job_house = JobHouse(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -670,8 +741,8 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_job_house(self):
         dict = {
-            'Job Assignment': test,
-            'Country Info': test,
+            'Job Assignment': self.job_house.job_assignment,
+            'Country Info': self.job_house.contry_info,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -870,6 +941,57 @@ class DryDock():
     def remodel_capacity(self):
         self.game.button_click_handler. \
             make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
+
+class JobHouse:
+    def __init__(self, game):
+        self.game = game
+
+    def job_assignment(self):
+        dict = {
+            'Discovery':self.discovery,
+            'Trade':test,
+            'Fight':test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def discovery(self):
+        # if have quest already
+        role = self.game.my_role
+        if role.quest_discovery:
+            # quest done
+            if role.quest_discovery in role.discoveries:
+                self.game.change_and_send('submit_discovery_quest', [])
+
+            # quest not finished
+            else:
+                self.game.button_click_handler. \
+                        make_message_box("Oh! Have you finished your quest?")
+
+        # no quest
+        else:
+            # generate random discovery
+            discovery_id = random.randint(1, 98)
+            discovery = Discovery(discovery_id)
+
+            # show message
+            self.game.button_click_handler. \
+                make_message_box("I heard there's something "
+                                 f"interesting at {discovery.longitude} {discovery.latitude}. "
+                                 f"Would you like to go and investigate?")
+
+            # make menu
+            dict = {
+                'OK':[self.start_discovery_quest, discovery_id],
+                'Maybe Later':test,
+            }
+            self.game.button_click_handler.make_menu(dict)
+
+    def start_discovery_quest(self, discovery_id):
+        self.game.change_and_send('start_discovery_quest', [discovery_id])
+        self.game.button_click_handler.make_message_box("Quest started.")
+
+    def contry_info(self):
+        pass
 
 def target_clicked(self):
     # self is game

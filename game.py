@@ -120,6 +120,9 @@ class Game():
             parts = file_name.split('.')
             self.images['ships'][parts[0]] = pygame.image.load(f"./assets/images/ships/{file_name}").convert_alpha()
 
+        # figures
+        self.images['figures'] = pygame.image.load("./assets/images/figures/figures.png").convert_alpha()
+
         # fonts
         self.font = pygame.font.SysFont("fangsong", c.FONT_SIZE)
 

@@ -29,17 +29,28 @@ protocols
 
 to do
 
-    click exit button on UIWindow (OK)
-    map edges (OK)
-    chinese (can't now)
+     think about Minimal Viable Product (later)
 
-    while moving can't enter battle (OK)
+     mates (ON important!  small 1st )
 
-    ships should be different (ON)
-        speed (OK)
-        capacity (OK)
-        weapons (OK)
-        crew damage (OK)
+
+
+     quest board (ON)
+        discover (OK)
+        show discovery image(ON)
+
+        buy
+        fight
+
+
+        new player guide (later)
+            sell gold
+            add crew
+            remodel
+
+
+
+
 
 
 

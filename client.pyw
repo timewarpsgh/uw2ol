@@ -44,8 +44,13 @@ class Echo(Protocol):
         pck_type = parts[0]
         message_obj = parts[1:]
 
-        # send to server
-        self.game.change_and_send(pck_type, message_obj)
+        # special (convert number to str)
+        if pck_type == 'change_map':
+            message_obj[0] = str(message_obj[0])
+            self.game.connection.send(pck_type, message_obj)
+        else:
+            # send to server
+            self.game.change_and_send(pck_type, message_obj)
 
         # get user input again
         d = get_user_input()

@@ -84,6 +84,7 @@ class Database:
                 x = y = c.PIXELS_COVERED_EACH_MOVE
                 default_role = Role(x, y, character_name)
                 ship0 = Ship('Reagan', 'Frigate')
+                ship0.crew = 20
                 ship1 = Ship('Reagan11', 'Balsa')
                 ship2 = Ship('Reagan22', 'Balsa')
                 ship3 = Ship('Reagan33', 'Balsa')
@@ -91,8 +92,8 @@ class Database:
                 default_role.ships.append(ship1)
                 default_role.ships.append(ship2)
                 default_role.ships.append(ship3)
-                mate0 = Mate('Gus Johnson', 'England')
-                mate1 = Mate('Mike Dickens', 'Holland')
+                mate0 = Mate('Gus Johnson', 'England', 1, 1)
+                mate1 = Mate('Mike Dickens', 'Holland', 3, 3)
                 default_role.mates.append(mate0)
                 default_role.mates.append(mate1)
 
