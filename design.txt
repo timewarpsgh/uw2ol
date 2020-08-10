@@ -37,9 +37,8 @@ to do
 
      quest board (ON)
         discover (OK)
-        show discovery image(OK)
 
-        buy
+        buy (ON)
         fight
 
 

@@ -72,6 +72,11 @@ class Role:
             return target_role
 
     # anywhere
+    def is_in_client_and_self(self):
+        if self.GAME and self.GAME.my_role.name == self.name:
+            return True
+        else:
+            return False
 
     def _check_days_at_sea_timer(self):
         while True:
@@ -650,7 +655,8 @@ class Role:
         # discovery
     def start_discovery_quest(self, params):
         discovery_id = params[0]
-        discovery_id = 31
+        # for testing (rosetta stone near Alexandra)
+        # discovery_id = 31
 
         if discovery_id not in self.discoveries:
             self.quest_discovery = discovery_id
@@ -666,7 +672,7 @@ class Role:
             self.mates[0].exp += 100
             self.quest_discovery = None
 
-            if self.GAME:
+            if self.is_in_client_and_self():
                 self.GAME.button_click_handler.make_message_box("Quest complete!")
 
         # trade
