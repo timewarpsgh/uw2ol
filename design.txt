@@ -38,7 +38,11 @@ to do
      quest board (ON)
         discover (OK)
 
-        buy (ON)
+        buy (OK)
+            A-E
+
+
+
         fight
 
 

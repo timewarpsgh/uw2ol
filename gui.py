@@ -78,7 +78,7 @@ class MessageWindow(pygame_gui.elements.UIWindow):
 
         # text box
         pygame_gui.elements.UITextBox(html_text=text,
-                                     relative_rect=pygame.Rect(0, 0, 180, 100),
+                                     relative_rect=pygame.Rect(0, 0, 300, 350),
                                      manager=ui_manager,
                                      wrap_to_height=True,
                                      container=self)
@@ -236,7 +236,7 @@ class ButtonClickHandler():
 
     def make_message_box(self, text):
         MessageWindow(pygame.Rect((200, 50),
-                                  (224, 250)),
+                                  (350, 350)),
                       self.ui_manager,
                       text, self.game)
 
@@ -981,7 +981,7 @@ class JobHouse:
     def job_assignment(self):
         dict = {
             'Discovery':self.discovery,
-            'Trade':test,
+            'Trade':self.trade,
             'Fight':test,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -1021,6 +1021,99 @@ class JobHouse:
     def start_discovery_quest(self, discovery_id):
         self.game.change_and_send('start_discovery_quest', [discovery_id])
         self.game.button_click_handler.make_message_box("Quest started.")
+
+
+    def trade(self):
+        dict = {
+            'A':self.a,
+            'B':self.b,
+            'C':self.c,
+            'D': self.d,
+            'E': self.e,
+            'F': self.f,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def a(self):
+        glass_beads_text = "Kids in West and East Africa are crazy about glass beads. " \
+                           "Amsterdam produces tons of them. You can also get " \
+                           "them from the mediterranean."
+        spice_text = "You can get spice from South East Asia for about 3 gold coins each " \
+                     "and sell them for more than 100 in Northern Europe."
+
+        dict = {
+            'Glass Beads':[self.game.button_click_handler.make_message_box, glass_beads_text],
+            'Spice of Life':[self.game.button_click_handler.make_message_box, spice_text],
+        }
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def b(self):
+        sleepy_text = "You can get tobacco from Havana or Caracas for about 35 gold coins each " \
+                     "and sell them for about 250 in the Far East. " \
+                   "You can get tea from India or the Far East for about 20 gold coins each " \
+                     "and sell them for about 220 in Northern Europe. " \
+                      "You can get coffee from the Middle East for about 35 gold coins each " \
+                      "and sell them for about 340 in the Ottoman Empire. "
+
+        feels_good_text = "You can get silk from Zeiton for about 30 gold coins each " \
+             "and sell them for about 250 in Northern Europe."
+
+        dict = {
+            'Sleepy?':[self.game.button_click_handler.make_message_box, sleepy_text],
+            'Feels Good':[self.game.button_click_handler.make_message_box, feels_good_text],
+        }
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def c(self):
+        text = "You can get coral from South East Asia for about 50 gold coins each " \
+                    "and sell them for about 280 in Europe. " \
+               "You can get ivory from some Afrian ports for about 70 gold coins each " \
+                    "and sell them for about 300 in the Far East. Do you know Timbuktu?" \
+               "You can get pearl from the Far East for about 60 gold coins each " \
+                    "and sell them for about 320 in Northern Europe. "
+
+        dict = {
+            'Luxury':[self.game.button_click_handler.make_message_box, text],
+        }
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def d(self):
+        text = "You can get velvet from Iberia for about 80 gold coins each " \
+                    "and sell them for about 310 in the Far East. " \
+               "You can get amber from Aden for about 100 gold coins each " \
+                    "and sell them for about 320 in the Mediterranean" \
+               "You can get art from the Far East for about 120 gold coins each " \
+                    "and sell them for about 400 in Europe. Athens and Cairo also sells art."
+
+        dict = {
+            'Mixed':[self.game.button_click_handler.make_message_box, text],
+        }
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def e(self):
+        text = "You can get glassware from Venice or Copenhagen for about 180 gold coins each " \
+                    "and sell them for about 450 in the Far East. " \
+
+        dict = {
+            'Delicate':[self.game.button_click_handler.make_message_box, text],
+        }
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def f(self):
+        text = "You can get gold from Africa, Veracruz or Rio de Janeiro " \
+                    "and sell them for about 1100 in Northern Europe. " \
+                    "But, please be cautious. There are pirates out there."
+
+        dict = {
+            'Shiny':[self.game.button_click_handler.make_message_box, text],
+        }
+
+        self.game.button_click_handler.make_menu(dict)
 
     def contry_info(self):
         pass
