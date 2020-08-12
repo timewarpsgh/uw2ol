@@ -38,11 +38,11 @@ to do
 
      release (OK)
 
-     show fleet nation (ON)
+     show fleet nation (OK)
 
-     add world map
+     add world map (OK)
 
-     add port map
+     add port map (OK)
 
      go through the menus
 

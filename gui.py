@@ -161,11 +161,12 @@ class PanelWindow(pygame_gui.elements.UIWindow):
                                            'left': 'left', 'right': 'right'})
 
         # text box
-        pygame_gui.elements.UITextBox(html_text=text,
-                                                 relative_rect=pygame.Rect(0, image.get_rect().height, 320, 10),
-                                                 manager=ui_manager,
-                                                 wrap_to_height=True,
-                                                 container=self)
+        if text:
+            pygame_gui.elements.UITextBox(html_text=text,
+                                                     relative_rect=pygame.Rect(0, image.get_rect().height, 320, 10),
+                                                     manager=ui_manager,
+                                                     wrap_to_height=True,
+                                                     container=self)
 
         # push into stacks
         game.menu_stack.append(self)
@@ -260,8 +261,8 @@ class ButtonClickHandler():
             'Items': self.menu_click_handler.items.on_menu_click_items,
             'Discoveries': self.menu_click_handler.items.on_menu_click_discoveries,
             'Diary': self.menu_click_handler.items.diary,
-            'World Map': test,
-            'Port Map': test
+            'World Map': self.menu_click_handler.items.world_map,
+            'Port Map': self.menu_click_handler.items.port_map
         }
         self.make_menu(dict)
 
@@ -567,6 +568,22 @@ class MenuClickHandlerForItems():
     def abandon_discovery_quest(self):
         self.game.change_and_send('give_up_discovery_quest', [])
         self.game.button_click_handler.make_message_box("Quest abandoned.")
+
+    def world_map(self):
+        world_map_grids_image = self.game.images['world_map_grids']
+        image_rect = world_map_grids_image.get_rect()
+        text = ''
+
+        PanelWindow(pygame.Rect((10, 10), (image_rect.width, (image_rect.height + 60))),
+                    self.game.ui_manager, text, self.game, world_map_grids_image)
+
+    def port_map(self):
+        if self.game.images['port']:
+            port_map = pygame.transform.scale(self.game.images['port'], (c.PORT_MAP_SIZE, c.PORT_MAP_SIZE))
+            text = ''
+
+            PanelWindow(pygame.Rect((10, 10), ((c.PORT_MAP_SIZE + 30), (c.PORT_MAP_SIZE + 60))),
+                    self.game.ui_manager, text, self.game, port_map)
 
 class MenuClickHandlerForCmds():
     def __init__(self, game):

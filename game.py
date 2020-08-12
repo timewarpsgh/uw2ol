@@ -126,6 +126,9 @@ class Game():
         # discoveries_and_items
         self.images['discoveries_and_items'] = pygame.image.load("./assets/images/discoveries_and_items/discoveries_and_items.png").convert_alpha()
 
+        # world map grids
+        self.images['world_map_grids'] = pygame.image.load("./assets/images/world_map/world_map_grids.png").convert_alpha()
+
         # fonts
         self.font = pygame.font.SysFont("fangsong", c.FONT_SIZE)
 
