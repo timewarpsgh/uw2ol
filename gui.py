@@ -356,17 +356,21 @@ class MenuClickHandlerForShips():
         self.game = game
 
     def fleet_info(self, target=False):
-        # get ships
+        # get ships and nation
         ships = None
+        nation = None
         if target:
             # enemy
             role = self.game.my_role
             enemy_name = role.enemy_name
             enemy_role = role._get_other_role_by_name(enemy_name)
             ships = enemy_role.ships
+
+            nation = enemy_role.mates[0].nation
             # my
         else:
             ships = self.game.my_role.ships
+            nation = self.game.my_role.mates[0].nation
 
         # make panel window
         types = [ship.type for ship in ships]
@@ -375,6 +379,8 @@ class MenuClickHandlerForShips():
             text += f'{type}<br>'
 
         text += f'<br>Fleet Speed: {self.game.my_role.get_fleet_speed([])} knots'
+        text += f'<br>Flag: {nation}'
+
 
         PanelWindow(pygame.Rect((59, 50), (350, 400)),
                     self.game.ui_manager, text, self.game)
@@ -1005,18 +1011,18 @@ class JobHouse:
             discovery_id = random.randint(1, 98)
             discovery = Discovery(discovery_id)
 
-            # show message
-            self.game.button_click_handler. \
-                make_message_box("I heard there's something "
-                                 f"interesting at {discovery.longitude} {discovery.latitude}. "
-                                 f"Would you like to go and investigate?")
-
             # make menu
             dict = {
                 'OK':[self.start_discovery_quest, discovery_id],
                 'Maybe Later':test,
             }
             self.game.button_click_handler.make_menu(dict)
+
+            # show message
+            self.game.button_click_handler. \
+                make_message_box("I heard there's something "
+                                 f"interesting at {discovery.longitude} {discovery.latitude}. "
+                                 f"Would you like to go and investigate?")
 
     def start_discovery_quest(self, discovery_id):
         self.game.change_and_send('start_discovery_quest', [discovery_id])
