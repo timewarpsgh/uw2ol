@@ -32,19 +32,16 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-     think about Minimal Viable Product (ALWAYS!)
+    think about Minimal Viable Product (ALWAYS!)
 
-     quest board (OK)
+    buy stuff interface (OK)
 
-     release (OK)
+    blocking bug (ON)
 
-     show fleet nation (OK)
 
-     add world map (OK)
 
-     add port map (OK)
 
-     go through the menus
+
 
 
 

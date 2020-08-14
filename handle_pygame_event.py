@@ -145,26 +145,7 @@ def other_keys_down(self, event):
 
     # change map to sea
     if event.key == ord('n'):
-        if self.my_role.map != 'sea' and self.my_role.ships:
-            # make sea image
-            port_tile_x = hash_ports_meta_data[int(self.my_role.map) + 1]['x']
-            port_tile_y = hash_ports_meta_data[int(self.my_role.map) + 1]['y']
-            print(port_tile_x, port_tile_y)
-
-            self.images['sea'] = self.map_maker.make_partial_world_map(port_tile_x, port_tile_y)
-
-            # send
-            self.connection.send('change_map', ['sea'])
-
-
-            # init timer at sea
-
-                # max days at sea (local game variable, not in role)
-            self.max_days_at_sea = self.my_role.calculate_max_days_at_sea()
-            self.days_spent_at_sea = 0
-                # timer
-            self.timer_at_sea = task.LoopingCall(pass_one_day_at_sea, self)
-            self.timer_at_sea.start(c.ONE_DAY_AT_SEA_IN_SECONDS)
+        self.button_click_handler.menu_click_handler.port.port.sail_ok()
 
     # change map to port
     elif event.key == ord('m'):
@@ -218,19 +199,6 @@ def other_keys_down(self, event):
         if event.key == ord('t'):
             a = self.ui_manager.get_window_stack()
             print(len(a))
-
-def pass_one_day_at_sea(self):
-    if self.my_role.map == 'sea':
-
-        # pass peacefully
-        if self.days_spent_at_sea <= self.max_days_at_sea:
-            self.days_spent_at_sea += 1
-            print(self.days_spent_at_sea)
-
-        # starved!
-        else:
-            self.timer_at_sea.stop()
-            self.connection.send('change_map', ['29'])
 
 def get_nearby_port_index(self):
     # get x and y in tile position

@@ -1,6 +1,7 @@
 import pygame_gui
 from pygame_gui._constants import UI_WINDOW_CLOSE, UI_WINDOW_MOVED_TO_FRONT, UI_BUTTON_PRESSED
 import pygame
+from twisted.internet import reactor, task
 import random
 
 import constants as c
@@ -89,7 +90,7 @@ class MessageWindow(pygame_gui.elements.UIWindow):
 
 class InputBoxWindow(pygame_gui.elements.UIWindow):
     """a window with input boxes and an OK button"""
-    def __init__(self, rect, ui_manager, protocol_name, params_names_list, game):
+    def __init__(self, rect, ui_manager, protocol_name, params_names_list, values_list, game):
 
         # super
         super().__init__(rect, ui_manager,
@@ -104,6 +105,7 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
         self.game.active_input_boxes.clear()
 
         # for each param
+        input_box_list = []
         line_distance = 40
         for i, name in enumerate(params_names_list):
 
@@ -116,12 +118,22 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
 
             # input box
             input_box = pygame_gui.elements.UITextEntryLine(
-                pygame.Rect((150, 0 + line_distance*i), (50, 40)), ui_manager,
+                pygame.Rect((150, 0 + line_distance*i), (80, 40)), ui_manager,
                 object_id=str(i),
                 container=self)
 
+            input_box_list.append(input_box)
+
+
             # append to active_input_boxes
             self.game.active_input_boxes.append(input_box)
+
+        # for each value (given)
+        if values_list:
+            index = 0
+            for value in values_list:
+                input_box_list[index].set_text(value)
+                index +=1
 
         # get dict
         self.dict = {'OK':[protocol_name]}
@@ -211,9 +223,9 @@ class ButtonClickHandler():
                             self.ui_manager,
                             dict, self.game)
 
-    def make_input_boxes(self, prtocol_name, params_list):
+    def make_input_boxes(self, prtocol_name, params_list, values_list=[]):
         InputBoxWindow(pygame.Rect((59, 50), (350, 400)),
-                       self.ui_manager, prtocol_name, params_list, self.game)
+                       self.ui_manager, prtocol_name, params_list, values_list, self.game)
 
         # g_player.text_entry_active = True
 
@@ -627,6 +639,9 @@ class MenuClickHandlerForCmds():
                 # set building image
                 self.game.building_image = self.game.images[id_2_building_type[k]]
 
+                # welcome text
+                self.game.building_text = 'Welcome! What can I do for you?'
+
                 return
 
         print('no building to enter')
@@ -730,13 +745,15 @@ class MenuClickHandlerForPort():
         self.bar = Bar(game)
         self.dry_dock = DryDock(game)
         self.job_house = JobHouse(game)
+        self.church = Church(game)
+        self.palace = Palace(game)
 
     def on_menu_click_port(self):
         dict = {
             'Sail': self.port.sail,
             'Load Supply': self.port.load_supply,
             'Unload Supply': self.port.unload_supply,
-            'Dry Dock': test,
+            'Dry Dock': self.port.dry_dock,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -768,12 +785,12 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_dry_dock(self):
         dict = {
-            'New Ship': test,
+            'New Ship': self.dry_dock.new_ship,
             'Used Ship': self.dry_dock.used_ship,
             'Repair': self.dry_dock.repair,
             'Sell': self.dry_dock.sell_ship,
             'Remodel': self.dry_dock.remodel,
-            'Invest': test,
+            'Invest': self.dry_dock.invest,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -787,10 +804,10 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_palace(self):
         dict = {
-            'Meet Ruler': test,
-            'Defect': test,
-            'Gold Aid': test,
-            'Ship Aid': test,
+            'Meet Ruler': self.palace.meet_ruler,
+            'Defect': self.palace.defect,
+            'Gold Aid': self.palace.gold_aid,
+            'Ship Aid': self.palace.ship_aid,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -819,8 +836,8 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_church(self):
         dict = {
-            'Pray': test,
-            'Donate': test,
+            'Pray': self.church.pray,
+            'Donate': self.church.donate,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -840,35 +857,96 @@ class Harbor():
         self.game = game
 
     def sail(self):
-        self.game.change_and_send('change_map', ['sea'])
+        # show dialogue
+        max_days = self.game.my_role.calculate_max_days_at_sea()
+        fleet_speed = self.game.my_role.get_fleet_speed([])
+
+        self.game.building_text = f"You can sail for {max_days} days " \
+                                  f"at an average speed of {fleet_speed} knots. " \
+                                  f"Are you sure you wnat to set sail?"
+
+        # make menu
+        dict = {
+            'OK':self.sail_ok,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def sail_ok(self):
+
+        # def
+        def pass_one_day_at_sea(self):
+            if self.my_role.map == 'sea':
+
+                # pass peacefully
+                if self.days_spent_at_sea <= self.max_days_at_sea:
+                    self.days_spent_at_sea += 1
+                    print(self.days_spent_at_sea)
+
+                # starved!
+                else:
+                    self.timer_at_sea.stop()
+                    self.connection.send('change_map', ['29'])
+
+        # main
+        if self.game.my_role.map != 'sea' and self.game.my_role.ships:
+            # make sea image
+            port_tile_x = hash_ports_meta_data[int(self.game.my_role.map) + 1]['x']
+            port_tile_y = hash_ports_meta_data[int(self.game.my_role.map) + 1]['y']
+            print(port_tile_x, port_tile_y)
+
+            self.game.images['sea'] = self.game.map_maker.make_partial_world_map(port_tile_x, port_tile_y)
+
+            # send
+            self.game.connection.send('change_map', ['sea'])
+
+            # init timer at sea
+
+            # max days at sea (local game variable, not in role)
+            self.game.max_days_at_sea = self.game.my_role.calculate_max_days_at_sea()
+            self.game.days_spent_at_sea = 0
+            # timer
+            self.game.timer_at_sea = task.LoopingCall(pass_one_day_at_sea, self.game)
+            self.game.timer_at_sea.start(c.ONE_DAY_AT_SEA_IN_SECONDS)
+
+            # lose menu
+            if len(self.game.menu_stack) >= 1:
+                handle_pygame_event.escape(self.game, '')
+                reactor.callLater(0.1, handle_pygame_event.escape, self.game, '')
+                # menu_to_kill = self.game.menu_stack[-1]
+                # menu_to_kill.kill()
+                # handle_pygame_event.escape(self.game, '')
+                # handle_pygame_event.escape(self.game, '')
+            # handle_pygame_event.escape(self.game, '')
 
     def load_supply(self):
         dict = {
-            'Food':test,
-            'Water':test,
-            'Lumber':test,
-            'Shot':test,
-            'Load':self.load
+            'Food':[self.load, 'Food'],
+            'Water':[self.load, 'Water'],
+            'Lumber':[self.load, 'Lumber'],
+            'Shot':[self.load, 'Shot'],
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def load(self):
+    def load(self, item_name):
         self.game.button_click_handler.\
-            make_input_boxes('load_supply', ['supply name', 'count', 'ship num'])
+            make_input_boxes('load_supply', ['supply name', 'count', 'ship num'], [item_name])
 
     def unload_supply(self):
         dict = {
-            'Food':test,
-            'Water':test,
-            'Lumber':test,
-            'Shot':test,
-            'Unload':self.unload,
+            'Food':[self.unload, 'Food'],
+            'Water':[self.unload, 'Water'],
+            'Lumber':[self.unload, 'Lumber'],
+            'Shot':[self.unload, 'Shot'],
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def unload(self):
+    def unload(self, item_name):
         self.game.button_click_handler.\
-            make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'])
+            make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'], [item_name])
+
+    def dry_dock(self):
+        self.game.building_text = "We don't have any space left for you. Sorry."
+
 
 class Market():
     def __init__(self, game):
@@ -885,14 +963,14 @@ class Market():
         for item_name in available_goods_dict:
             buy_price = port.get_commodity_buy_price(item_name)
             show_text = item_name + ' ' + str(buy_price)
-            dict[show_text] = test
-        dict['buy'] = self.buy_cargo
+            dict[show_text] = [self.do_buy, item_name]
+        # dict['buy'] = self.buy_cargo
 
         self.game.button_click_handler.make_menu(dict)
 
-    def buy_cargo(self):
+    def do_buy(self, cargo_name):
         self.game.button_click_handler. \
-            make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'])
+            make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'], [cargo_name])
 
     def sell(self):
         self.game.button_click_handler. \
@@ -922,7 +1000,20 @@ class DryDock():
     def __init__(self, game):
         self.game = game
 
+    def new_ship(self):
+        self.game.building_text = "No, kid. You don't to build a ship from scratch. " \
+                                  "It takes too much time and resource. Just grab a used one."
+
     def used_ship(self):
+        dict = {
+            'view':self.view_used_ship,
+            'buy':self.buy_used_ship,
+        }
+
+        self.game.button_click_handler.make_menu(dict)
+
+
+    def view_used_ship(self):
         # prepare dict
         dict = {}
 
@@ -934,15 +1025,27 @@ class DryDock():
         for ship_type in ships_list:
             dict[ship_type] = [self.show_used_ship, [ship_type]]
 
-            # buy
-        dict['buy'] = self.buy_used_ship
-
         # make menu
         self.game.button_click_handler.make_menu(dict)
 
     def buy_used_ship(self):
+        # prepare dict
+        dict = {}
+
+        # available ships
+        my_map_id = int(self.game.my_role.map)
+        port = Port(my_map_id)
+        ships_list = port.get_available_ships()
+
+        for ship_type in ships_list:
+            dict[ship_type] = [self.do_buy_ship, ship_type]
+
+        # make menu
+        self.game.button_click_handler.make_menu(dict)
+
+    def do_buy_ship(self, type):
         self.game.button_click_handler. \
-            make_input_boxes('buy_ship', ['name', 'type'])
+            make_input_boxes('buy_ship', ['name', 'type'], ['', type])
 
     def show_used_ship(self, params):
         # get param
@@ -997,11 +1100,17 @@ class DryDock():
         self.game.button_click_handler. \
             make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
 
+    def invest(self):
+        self.game.building_text = "You do want to invest 5 gold ingots to our industry? " \
+                                  "That'll definitely help us."
+
 class JobHouse:
     def __init__(self, game):
         self.game = game
 
     def job_assignment(self):
+        self.game.building_text = "Don't know what to do? I have a few suggestions for you."
+
         dict = {
             'Discovery':self.discovery,
             'Trade':self.trade,
@@ -1139,7 +1248,36 @@ class JobHouse:
         self.game.button_click_handler.make_menu(dict)
 
     def contry_info(self):
-        pass
+        self.game.building_text = "Well...Don't worry about that."
+
+class Church:
+    def __init__(self, game):
+        self.game = game
+
+    def pray(self):
+        self.game.building_text = 'May God bless you in all your endeavours.'
+
+    def donate(self):
+        self.game.building_text = 'Thank you for your generosity. ' \
+                                  'But please take good care of yourself at the moment.'
+
+class Palace:
+    def __init__(self, game):
+        self.game = game
+
+    def meet_ruler(self):
+        self.game.building_text = "I'm afraid the King's too buy to see you."
+
+    def defect(self):
+        self.game.building_text = "We do appreciate your willingness to join us. " \
+                                  "Unfortunately, however, our quota has already been fulfilled this year."
+
+    def ship_aid(self):
+        self.game.building_text = "If you want a ship, go earn it."
+
+    def gold_aid(self):
+        self.game.building_text = "We'd like to help, but doing so " \
+                                  "might be detrimental to the value you're trying to prove."
 
 def target_clicked(self):
     # self is game

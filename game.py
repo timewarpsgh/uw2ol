@@ -130,7 +130,7 @@ class Game():
         self.images['world_map_grids'] = pygame.image.load("./assets/images/world_map/world_map_grids.png").convert_alpha()
 
         # fonts
-        self.font = pygame.font.SysFont("fangsong", c.FONT_SIZE)
+        self.font = pygame.font.SysFont("Times New Roman", c.FONT_SIZE)
 
     def update(self):
         """called each frame"""
