@@ -277,6 +277,20 @@ class Role:
         # ret
         return max_days
 
+    def set_mates_duty(self, params):
+        mate_num = params[0]
+        ship_num = params[1]
+
+        mate = self.mates[mate_num]
+        ship = self.ships[ship_num]
+        mate.set_as_captain_of(ship)
+
+    def relieve_mates_duty(self, params):
+        mate_num = params[0]
+
+        mate = self.mates[mate_num]
+        mate.relieve_duty()
+
     # at sea
     def discover(self, params):
         # discovery_id = random.randint(0, 10)
@@ -575,6 +589,7 @@ class Role:
     def fire_mate(self, params):
         num = params[0]
 
+        self.mates[num].relieve_duty()
         del self.mates[num]
         print('now mates:', len(self.mates))
 
@@ -721,6 +736,9 @@ class Ship:
         self.state = ''
         self.damage_got = ''
 
+        # captain mate num
+        self.captain = None
+
         # crew
         self.crew = 5
 
@@ -768,14 +786,20 @@ class Ship:
             return False
 
     def get_speed(self):
-        speed = int((self.tacking + self.power)/10)
-        factor  = self.crew / self.min_crew
-        if factor < 1:
-            speed = int(speed * factor)
-            if speed < 1:
-                speed = 1
+        # have captain
+        if self.captain:
+            speed = int((self.tacking + self.power)/10)
+            factor  = self.crew / self.min_crew
+            if factor < 1:
+                speed = int(speed * factor)
+                if speed < 1:
+                    speed = 1
 
-        return speed
+            return speed
+
+        # no captain
+        else:
+            return 1
 
     def move(self, direction):
         if direction == 'up':
@@ -1026,13 +1050,53 @@ class Ship:
 
 
 class Mate:
-    def __init__(self, name, nation, image_x, image_y):
+    def __init__(self, name, nation, image_x=3, image_y=3):
         self.name = name
         self.nation = nation
+
         self.image_x = image_x
         self.image_y = image_y
+
         self.exp = 0
         self.lv = 1
+
+        self.duty = None
+
+        self.points = 0
+
+        self.leadership = 50
+
+        self.seamanship = 50
+        self.luck = 50
+        self.knowledge = 50
+        self.intuition = 50
+        self.courage = 50
+        self.swordplay = 50
+
+
+        self.accounting = 0
+        self.gunnery = 0
+        self.navigation = 0
+
+    def set_as_captain_of(self, ship):
+        if not self.duty:
+            ship.captain = self
+            self.duty = ship
+
+    def relieve_duty(self):
+        if self.duty:
+            self.duty.captain = None
+            self.duty = None
+
+    def get_exp(self):
+        pass
+
+    def add_lv(self):
+        pass
+
+    def add_attribute(self):
+        pass
+
 
 class Cargo:
     def __init__(self, name, count):

@@ -425,8 +425,12 @@ class MenuClickHandlerForShips():
         target = params[1]
 
         # dict
+        captain_name = 'None'
+        if ship.captain:
+            captain_name = ship.captain.name
         dict = {
             'name': f'{ship.name}   type:{ship.type}',
+            'captain': f'{captain_name}',
             'durability': f'{ship.now_hp}/{ship.max_hp}',
             'tacking': f'{ship.tacking}    power:{ship.power}',
             'speed': f'{ship.get_speed()} knots',
@@ -464,20 +468,34 @@ class MenuClickHandlerForMates():
 
     def mate_info(self):
         dict = {}
+        index = 0
         for mate in self.game.my_role.mates:
-            dict[mate.name] = [self.show_one_mate, [mate]]
+            dict[mate.name] = [self.show_one_mate, [mate, index]]
+            index += 1
         self.game.button_click_handler.make_menu(dict)
 
     def show_one_mate(self, params):
         # get param
         mate = params[0]
+        mate_num = params[1]
 
         # dict
+        duty_name = 'None'
+        if mate.duty:
+            duty_name = 'captain of ' + mate.duty.name
+
         dict = {
             'name': mate.name,
             'nation': mate.nation,
-            'lv': mate.lv,
-            'exp': mate.exp,
+            'duty': duty_name,
+            'lv': f"{mate.lv} exp:{mate.exp} points:{mate.points}",
+            'leadership': mate.leadership,
+            'seamanship': f"{mate.seamanship} luck:{mate.luck}",
+            'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
+            'courage': f"{mate.courage} swordplay:{mate.swordplay}",
+            'accounting': mate.accounting,
+            'gunnery': mate.gunnery,
+            'navigation': mate.navigation,
         }
 
         # make text from dict
@@ -491,6 +509,23 @@ class MenuClickHandlerForMates():
         # make window
         PanelWindow(pygame.Rect((59, 50), (350, 400)),
                     self.game.ui_manager, text, self.game, figure_surface)
+
+        # make actions menu
+        dict1 = {
+            'Set as Captain of': [self.set_as_captain_of, mate_num],
+            'Relieve Duty': [self.relieve_duty, mate_num],
+        }
+
+        self.game.button_click_handler.make_menu(dict1)
+
+    def set_as_captain_of(self, mate_num):
+        self.game.button_click_handler. \
+            make_input_boxes('set_mates_duty', ['mate num', 'ship num'], [str(mate_num)])
+
+    def relieve_duty(self, mate_num):
+        self.game.button_click_handler. \
+            make_input_boxes('relieve_mates_duty', ['mate num'], [str(mate_num)])
+
 
     def figure_x_y_2_image(self, x=8, y=8):
         figures_image = self.game.images['figures']

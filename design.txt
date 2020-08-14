@@ -36,7 +36,20 @@ to do
 
     buy stuff interface (OK)
 
-    blocking bug (ON)
+    blocking bug (OK)
+
+    release (OK)
+
+    mates (ON)
+        each ship must have captain to move (OK)
+
+        hire mate (OK)
+        fire mate (OK)
+
+        hire mate depends on leadership (ON)
+        improve leadership ?
+        improve lv ?
+
 
 
 
