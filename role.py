@@ -304,6 +304,14 @@ class Role:
         mate = self.mates[mate_num]
         mate.add_attribute(attribute)
 
+    def give_exp_to_other_mates(self, params):
+        mate_num = params[0]
+        amount = params[1]
+
+        if mate_num != 0 and amount <= self.mates[0].exp:
+            self.mates[0].exp -= amount
+            mate = self.mates[mate_num]
+            mate.get_exp(amount)
 
     # at sea
     def discover(self, params):

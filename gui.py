@@ -518,7 +518,15 @@ class MenuClickHandlerForMates():
             'Add Attribute': [self.add_attribute, mate_num]
         }
 
+        # admiral special functions
+        if mate_num == 0:
+            dict1['Distribute Exp'] = [self.assign_exp, mate_num]
+
         self.game.button_click_handler.make_menu(dict1)
+
+    def assign_exp(self, mate_num):
+        self.game.button_click_handler. \
+            make_input_boxes('give_exp_to_other_mates', ['mate num', 'amount'])
 
     def level_up(self, mate_num):
         self.game.button_click_handler. \
