@@ -1097,8 +1097,8 @@ class Mate:
         self.name = name
         self.nation = nation
 
-        self.image_x = image_x
-        self.image_y = image_y
+        self.image_x = random.randint(1, 16)
+        self.image_y = random.randint(1, 6)
 
         self.exp = 0
         self.lv = 1

@@ -46,8 +46,7 @@ to do
         hire mate (OK)
         fire mate (OK)
 
-
-        assign exp to other mates (ON)
+        assign exp to other mates (OK)
 
 
         hire different mates from bar (ON)
