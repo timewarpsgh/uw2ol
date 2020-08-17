@@ -315,6 +315,7 @@ class Role:
         else:
             if self.quest_discovery == discovery_id:
                 self.discoveries[discovery_id] = 1
+                self.mates[0].exp += 100
 
                 if self.GAME:
                     self.GAME.button_click_handler.make_message_box("We found something!")
@@ -665,6 +666,9 @@ class Role:
                 port = self.get_port()
                 unit_price = port.get_commodity_sell_price(cargo_name)
                 self.gold += count * unit_price
+
+                # add exp
+                self.mates[0].exp += int(count * unit_price / 100)
 
                 print(self.name, "ship", from_which_ship, "cargoes", self.ships[from_which_ship].cargoes)
                 print(self.name, "gold:", self.gold)

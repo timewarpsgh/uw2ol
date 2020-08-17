@@ -49,10 +49,19 @@ to do
         hire mate depends on leadership (OK)
         can't hire same mate (OK)
 
-
         improve lv (OK)
         improve attribute OK
 
+
+        assign exp to other mates (ON)
+
+
+        hire different mates from bar (ON)
+
+
+        explore to get exp (ON)
+
+        all attributes should be useful (ON)
 
 
 
