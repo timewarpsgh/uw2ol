@@ -291,6 +291,20 @@ class Role:
         mate = self.mates[mate_num]
         mate.relieve_duty()
 
+    def add_mates_lv(self, params):
+        mate_num = params[0]
+
+        mate = self.mates[mate_num]
+        mate.add_lv()
+
+    def add_mates_attribute(self, params):
+        mate_num = params[0]
+        attribute = params[1]
+
+        mate = self.mates[mate_num]
+        mate.add_attribute(attribute)
+
+
     # at sea
     def discover(self, params):
         # discovery_id = random.randint(0, 10)
@@ -581,6 +595,23 @@ class Role:
         name = params[0]
         nation = params[1]
 
+        # can't hire same mate twice
+        for mate in self.mates:
+            if mate.name == name:
+                print('have this guy already.')
+                if self.is_in_client_and_self():
+                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
+                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
+                return
+
+        # leadership must be enough
+        if int(self.mates[0].leadership / 10) <= len(self.mates):
+            if self.is_in_client_and_self():
+                self.GAME.button_click_handler.make_message_box("Leadership not enough.")
+                self.GAME.button_click_handler.make_message_box("Leadership not enough.")
+            return
+
+        # do hire
         mate = Mate(name, nation)
         self.mates.append(mate)
 
@@ -1088,15 +1119,22 @@ class Mate:
             self.duty.captain = None
             self.duty = None
 
-    def get_exp(self):
-        pass
+    def get_exp(self, amount):
+        self.exp += amount
 
     def add_lv(self):
-        pass
+        # if self.exp >= 100:
+        self.exp -= 100
+        self.lv += 1
+        self.points += 5
 
-    def add_attribute(self):
-        pass
+    def add_attribute(self, attribute_name):
+        if self.points >= 1:
+            self.points -= 1
 
+            value = getattr(self, attribute_name)
+            value += 1
+            setattr(self, attribute_name, value)
 
 class Cargo:
     def __init__(self, name, count):
@@ -1140,16 +1178,13 @@ if __name__ == '__main__':
     role = default_role
 
     # testing 4 steps
-    role.start_discovery_quest([2])
-    print(role.quest_discovery)
-    role.discover([2])
-    role.submit_discovery_quest([])
+    mate0 = role.mates[0]
+    mate0.get_exp(1000)
 
-
-
-    role.start_discovery_quest([3])
-    role.discover([3])
-    role.submit_discovery_quest([])
-
-    print(role.quest_discovery)
+    mate0.add_lv()
+    print(role.mates[0].lv)
+    print(role.mates[0].points)
+    mate0.add_attribute('leadership')
+    print(role.mates[0].leadership)
+    print(role.mates[0].points)
     print(role.mates[0].exp)

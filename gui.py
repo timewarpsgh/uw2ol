@@ -514,6 +514,32 @@ class MenuClickHandlerForMates():
         dict1 = {
             'Set as Captain of': [self.set_as_captain_of, mate_num],
             'Relieve Duty': [self.relieve_duty, mate_num],
+            'Level Up': [self.level_up, mate_num],
+            'Add Attribute': [self.add_attribute, mate_num]
+        }
+
+        self.game.button_click_handler.make_menu(dict1)
+
+    def level_up(self, mate_num):
+        self.game.button_click_handler. \
+            make_input_boxes('add_mates_lv', ['mate num'], [str(mate_num)])
+
+    def add_attribute(self, mate_num):
+
+        def do_add_attribute(params):
+            mate_num = params[0]
+            attribute_name = params[1]
+            self.game.button_click_handler. \
+                make_input_boxes('add_mates_attribute', ['mate num', 'attribute'], [str(mate_num), attribute_name])
+
+        dict1 = {
+            'Leadership': [do_add_attribute, [mate_num, 'leadership']],
+            'Seamanship': [do_add_attribute, [mate_num, 'seamanship']],
+            'Luck': [do_add_attribute, [mate_num, 'luck']],
+            'Knowledge': [do_add_attribute, [mate_num, 'knowledge']],
+            'Intuition': [do_add_attribute, [mate_num, 'intuition']],
+            'Courage': [do_add_attribute, [mate_num, 'courage']],
+            'Swordplay': [do_add_attribute, [mate_num, 'swordplay']],
         }
 
         self.game.button_click_handler.make_menu(dict1)

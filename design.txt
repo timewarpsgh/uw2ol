@@ -46,10 +46,12 @@ to do
         hire mate (OK)
         fire mate (OK)
 
-        hire mate depends on leadership (ON)
-        improve leadership ?
-        improve lv ?
+        hire mate depends on leadership (OK)
+        can't hire same mate (OK)
 
+
+        improve lv (OK)
+        improve attribute OK
 
 
 
