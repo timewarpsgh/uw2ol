@@ -833,7 +833,7 @@ class MenuClickHandlerForPort():
         dict = {
             'Recruit Crew': self.bar.recruit_crew,
             'Dismiss Crew': self.bar.dismiss_crew,
-            'Treat': test,
+            'Treat': self.bar.treat,
             'Meet': self.bar.meet,
             'Fire Mate': self.bar.fire_mate,
             'Waitress': test,
@@ -1092,13 +1092,13 @@ class Bar():
 
         # make actions menu
         dict1 = {
-            'Treat': [self.treat, mate],
+            'Treat': [self.treat_mate, mate],
             'Gossip': [self.gossip, mate],
             'Hire': [self.hire_mate, mate_id],
         }
         self.game.button_click_handler.make_menu(dict1)
 
-    def treat(self, mate):
+    def treat_mate(self, mate):
         message = 'Thank you!'
         mate_speak(self.game, mate, message)
 
@@ -1113,6 +1113,9 @@ class Bar():
     def fire_mate(self):
         self.game.button_click_handler. \
             make_input_boxes('fire_mate', ['mate num'])
+
+    def treat(self):
+        self.game.building_text = f"Thank you for your hospitality, Captain {self.game.my_role.name}"
 
 class DryDock():
     def __init__(self, game):
