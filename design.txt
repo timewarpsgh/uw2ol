@@ -50,7 +50,8 @@ to do
 
 
         hire different mates from bar (OK)
-        treat
+        treat (OK)
+
 
 
         all attributes should be useful (ON)
