@@ -6,6 +6,7 @@ import random
 
 import constants as c
 from port import Port
+from role import Mate
 from role import Ship
 from discovery import Discovery
 from hashes import hash_villages
@@ -504,7 +505,7 @@ class MenuClickHandlerForMates():
             text += f'{k}:{v}<br>'
 
         # get figure image
-        figure_surface = self.figure_x_y_2_image(mate.image_x, mate.image_y)
+        figure_surface = figure_x_y_2_image(self.game ,mate.image_x, mate.image_y)
 
         # make window
         PanelWindow(pygame.Rect((59, 50), (350, 400)),
@@ -559,17 +560,6 @@ class MenuClickHandlerForMates():
     def relieve_duty(self, mate_num):
         self.game.button_click_handler. \
             make_input_boxes('relieve_mates_duty', ['mate num'], [str(mate_num)])
-
-
-    def figure_x_y_2_image(self, x=8, y=8):
-        figures_image = self.game.images['figures']
-        figure_surface = pygame.Surface((c.FIGURE_WIDTH, c.FIGURE_HIGHT))
-        x_coord = -c.FIGURE_WIDTH * (x-1) - 3
-        y_coord = -c.FIGURE_HIGHT * (y-1) - 3
-        rect = pygame.Rect(x_coord, y_coord, c.FIGURE_WIDTH, c.FIGURE_HIGHT)
-        figure_surface.blit(figures_image, rect)
-
-        return figure_surface
 
 class MenuClickHandlerForItems():
     def __init__(self, game):
@@ -844,7 +834,7 @@ class MenuClickHandlerForPort():
             'Recruit Crew': self.bar.recruit_crew,
             'Dismiss Crew': self.bar.dismiss_crew,
             'Treat': test,
-            'Hire Mate': self.bar.hire_mate,
+            'Meet': self.bar.meet,
             'Fire Mate': self.bar.fire_mate,
             'Waitress': test,
             'Gamble': test,
@@ -1057,12 +1047,68 @@ class Bar():
         self.game.button_click_handler. \
             make_input_boxes('fire_crew', ['count', 'ship_num'])
 
-    def hire_mate(self):
+    def meet(self):
+        # no mate
         if int(self.game.my_role.map) % 2 == 0:
             self.game.button_click_handler.make_message_box("No one's availabale here.")
+
+        # have mate
         else:
-            self.game.button_click_handler. \
-                make_input_boxes('hire_mate', ['name', 'nation'])
+            mate_id = int((int(self.game.my_role.map) + 1) / 2)
+            mate = Mate(mate_id)
+            self.show_one_mate_to_hire(mate, mate_id)
+
+    def show_one_mate_to_hire(self, mate, mate_id):
+        # dict
+        duty_name = 'None'
+        if mate.duty:
+            duty_name = 'captain of ' + mate.duty.name
+
+        dict = {
+            'name': mate.name,
+            'nation': mate.nation,
+            'duty': duty_name,
+            'lv': f"{mate.lv} exp:{mate.exp} points:{mate.points}",
+            'leadership': mate.leadership,
+            'seamanship': f"{mate.seamanship} luck:{mate.luck}",
+            'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
+            'courage': f"{mate.courage} swordplay:{mate.swordplay}",
+            'accounting': mate.accounting,
+            'gunnery': mate.gunnery,
+            'navigation': mate.navigation,
+        }
+
+        # make text from dict
+        text = ''
+        for k, v in dict.items():
+            text += f'{k}:{v}<br>'
+
+        # get figure image
+        figure_surface = figure_x_y_2_image(self.game, mate.image_x, mate.image_y)
+
+        # make window
+        PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                    self.game.ui_manager, text, self.game, figure_surface)
+
+        # make actions menu
+        dict1 = {
+            'Treat': [self.treat, mate],
+            'Gossip': [self.gossip, mate],
+            'Hire': [self.hire_mate, mate_id],
+        }
+        self.game.button_click_handler.make_menu(dict1)
+
+    def treat(self, mate):
+        message = 'Thank you!'
+        mate_speak(self.game, mate, message)
+
+    def gossip(self, mate):
+        message = "I miss the high seas. Just can't sleep well on land."
+        mate_speak(self.game, mate, message)
+
+    def hire_mate(self, mate_id):
+        self.game.button_click_handler. \
+            make_input_boxes('hire_mate', ['mate id'], [str(mate_id)])
 
     def fire_mate(self):
         self.game.button_click_handler. \
@@ -1358,3 +1404,24 @@ def target_clicked(self):
         'View Ships': [self.button_click_handler.menu_click_handler.ships.ship_info, True],
     }
     self.button_click_handler.make_menu(dict)
+
+def figure_x_y_2_image(game, x=8, y=8):
+    figures_image = game.images['figures']
+    figure_surface = pygame.Surface((c.FIGURE_WIDTH, c.FIGURE_HIGHT))
+    x_coord = -c.FIGURE_WIDTH * (x-1) - 3
+    y_coord = -c.FIGURE_HIGHT * (y-1) - 3
+    rect = pygame.Rect(x_coord, y_coord, c.FIGURE_WIDTH, c.FIGURE_HIGHT)
+    figure_surface.blit(figures_image, rect)
+
+    return figure_surface
+
+def mate_speak(game, mate, message):
+    # make text from dict
+    text = message
+
+    # get figure image
+    figure_surface = figure_x_y_2_image(game, mate.image_x, mate.image_y)
+
+    # make window
+    PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                game.ui_manager, text, game, figure_surface)

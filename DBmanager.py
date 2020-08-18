@@ -88,8 +88,8 @@ class Database:
                 ship1 = Ship('Reagan11', 'Balsa')
                 default_role.ships.append(ship0)
                 default_role.ships.append(ship1)
-                mate0 = Mate('Gus Johnson', 'England', 1, 1)
-                mate1 = Mate('Mike Dickens', 'Holland', 3, 3)
+                mate0 = Mate(1)
+                mate1 = Mate(2)
                 default_role.mates.append(mate0)
                 default_role.mates.append(mate1)
 

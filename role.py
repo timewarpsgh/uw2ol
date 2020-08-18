@@ -4,6 +4,7 @@ from threading import Timer
 from twisted.internet import reactor, task, defer
 import constants as c
 from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
+from hashes.hash_mates import hash_mates
 from port import Port
 
 class Role:
@@ -601,17 +602,16 @@ class Role:
             print("ship", from_which_ship, "now has crew:", self.ships[from_which_ship].crew)
 
     def hire_mate(self, params):
-        name = params[0]
-        nation = params[1]
+        id = params[0]
+        mate = Mate(id)
+        name = mate.name
 
-        # can't hire same mate twice
-        for mate in self.mates:
-            if mate.name == name:
-                print('have this guy already.')
-                if self.is_in_client_and_self():
-                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
-                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
-                return
+        # lv not enough
+        if self.mates[0].lv + 10 < mate.lv:
+            if self.is_in_client_and_self():
+                self.GAME.button_click_handler.make_message_box("Lv too low.")
+                self.GAME.button_click_handler.make_message_box("Lv too low.")
+            return
 
         # leadership must be enough
         if int(self.mates[0].leadership / 10) <= len(self.mates):
@@ -620,8 +620,17 @@ class Role:
                 self.GAME.button_click_handler.make_message_box("Leadership not enough.")
             return
 
+        # can't hire same mate twice
+        for mate_t in self.mates:
+            if mate_t.name == name:
+                print('have this guy already.')
+                if self.is_in_client_and_self():
+                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
+                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
+                return
+
+
         # do hire
-        mate = Mate(name, nation)
         self.mates.append(mate)
 
         print('now mates:', len(self.mates))
@@ -1093,33 +1102,34 @@ class Ship:
 
 
 class Mate:
-    def __init__(self, name, nation, image_x=3, image_y=3):
-        self.name = name
-        self.nation = nation
+    def __init__(self, id):
+        mate_dict = hash_mates[id]
 
-        self.image_x = random.randint(1, 16)
-        self.image_y = random.randint(1, 6)
+        self.name = mate_dict['name']
+        self.nation = mate_dict['nation']
+
+        self.image_x = mate_dict['image_x']
+        self.image_y = mate_dict['image_y']
 
         self.exp = 0
-        self.lv = 1
+        self.lv = mate_dict['lv']
 
         self.duty = None
 
         self.points = 0
 
-        self.leadership = 50
+        self.leadership = mate_dict['leadership']
 
-        self.seamanship = 50
-        self.luck = 50
-        self.knowledge = 50
-        self.intuition = 50
-        self.courage = 50
-        self.swordplay = 50
+        self.seamanship = mate_dict['seamanship']
+        self.luck = mate_dict['luck']
+        self.knowledge = mate_dict['knowledge']
+        self.intuition = mate_dict['intuition']
+        self.courage = mate_dict['courage']
+        self.swordplay = mate_dict['swordplay']
 
-
-        self.accounting = 0
-        self.gunnery = 0
-        self.navigation = 0
+        self.accounting = mate_dict['accounting']
+        self.gunnery = mate_dict['gunnery']
+        self.navigation = mate_dict['navigation']
 
     def set_as_captain_of(self, ship):
         if not self.duty:
@@ -1181,8 +1191,8 @@ if __name__ == '__main__':
     default_role.ships.append(ship3)
 
     # add mates
-    mate0 = Mate('Gus Johnson', 'England', 1, 1)
-    mate1 = Mate('Mike Dickens', 'Holland', 3, 3)
+    mate0 = Mate(1)
+    mate1 = Mate(2)
     default_role.mates.append(mate0)
     default_role.mates.append(mate1)
 
@@ -1190,13 +1200,6 @@ if __name__ == '__main__':
     role = default_role
 
     # testing 4 steps
-    mate0 = role.mates[0]
-    mate0.get_exp(1000)
+    role.hire_mate([18])
+    print(len(role.mates))
 
-    mate0.add_lv()
-    print(role.mates[0].lv)
-    print(role.mates[0].points)
-    mate0.add_attribute('leadership')
-    print(role.mates[0].leadership)
-    print(role.mates[0].points)
-    print(role.mates[0].exp)
