@@ -1058,8 +1058,11 @@ class Bar():
             make_input_boxes('fire_crew', ['count', 'ship_num'])
 
     def hire_mate(self):
-        self.game.button_click_handler. \
-            make_input_boxes('hire_mate', ['name', 'nation'])
+        if int(self.game.my_role.map) % 2 == 0:
+            self.game.button_click_handler.make_message_box("No one's availabale here.")
+        else:
+            self.game.button_click_handler. \
+                make_input_boxes('hire_mate', ['name', 'nation'])
 
     def fire_mate(self):
         self.game.button_click_handler. \
