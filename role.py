@@ -788,7 +788,7 @@ class Ship:
         self.state = ''
         self.damage_got = ''
 
-        # captain mate num
+        # mate
         self.captain = None
 
         # crew
@@ -840,7 +840,11 @@ class Ship:
     def get_speed(self):
         # have captain
         if self.captain:
-            speed = int((self.tacking + self.power)/10)
+            speed = int((self.tacking + self.power +
+                         self.captain.seamanship + self.captain.navigation * 10)/10) - 5
+            if speed >= 20:
+                speed = 20
+
             factor  = self.crew / self.min_crew
             if factor < 1:
                 speed = int(speed * factor)
@@ -987,10 +991,11 @@ class Ship:
         reactor.callLater(1, self._clear_shooting_state, ship)
 
         # change values
-        ship.now_hp -= c.SHOOT_DAMAGE * self.max_guns
-        ship.damage_got = str(c.SHOOT_DAMAGE * self.max_guns)
+        damage = c.SHOOT_DAMAGE * int((self.max_guns + int(self.captain.courage / 2) + self.captain.gunnery * 20) / 10)
+        ship.now_hp -= damage
+        ship.damage_got = str(damage)
 
-        # no negatives values
+        # no negative values
         if ship.now_hp < 0:
             ship.now_hp = 0
 
@@ -1004,10 +1009,20 @@ class Ship:
         reactor.callLater(1, self._clear_state, ship)
 
         # change values
-        ship.crew -= int(c.ENGAGE_DAMAGE * self.crew / 3)
-        self.crew -= int(c.ENGAGE_DAMAGE * ship.crew / 3)
-        self.damage_got = str(c.ENGAGE_DAMAGE)
-        ship.damage_got = str(c.ENGAGE_DAMAGE)
+        self_damage_ratio = (self.captain.swordplay + self.captain.gunnery * 20) / 100
+        self_damage = int(c.ENGAGE_DAMAGE * self.crew * self_damage_ratio / 3)
+        if self_damage <= 5:
+            self_damage = 5
+        ship.crew -= self_damage
+
+        enemy_damage_ratio = (ship.captain.swordplay + ship.captain.gunnery * 20) / 100
+        enemy_damage = int(c.ENGAGE_DAMAGE * ship.crew * enemy_damage_ratio / 3)
+        if enemy_damage <= 5:
+            enemy_damage = 5
+        self.crew -= enemy_damage
+
+        # self.damage_got = str(c.ENGAGE_DAMAGE)
+        # ship.damage_got = str(c.ENGAGE_DAMAGE)
 
         # no negative values
         if self.crew < 0:

@@ -55,9 +55,22 @@ to do
 
 
         all attributes should be useful (ON)
+            seamanship (OK)
+            luck  (Later)
+            knowledge
+            intuition
+            courage  shoot(OK)
+            swordplay engage(OK)
 
 
+            accounting
+            gunnery (OK)
+            navigation (OK)
 
+
+            accountant
+            first_mate
+            chief_navigator
 
 
 
