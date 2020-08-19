@@ -264,7 +264,7 @@ class ButtonClickHandler():
 
     def on_button_click_mates(self):
         dict = {
-            'Admiral Info':test,
+            'Admiral Info':self.menu_click_handler.mates.admiral_info,
             'Mate Info':self.menu_click_handler.mates.mate_info,
         }
         self.make_menu(dict)
@@ -467,6 +467,34 @@ class MenuClickHandlerForMates():
     def __init__(self, game):
         self.game = game
 
+    def admiral_info(self):
+
+        role = self.game.my_role
+        accountant_text = role.accountant.name if role.accountant else 'None'
+        first_mate_text = role.first_mate.name if role.first_mate else 'None'
+        chief_navigator_text = role.accountant.name if role.chief_navigator else 'None'
+
+        dict = {
+            'name': self.game.my_role.name,
+            ' ': " ",
+            'accountant': accountant_text,
+            'first mate': first_mate_text,
+            'chief navigator': chief_navigator_text,
+
+        }
+
+        # make text from dict
+        text = ''
+        for k, v in dict.items():
+            text += f'{k}:{v}<br>'
+
+        # get figure image
+        figure_surface = figure_x_y_2_image(self.game, role.mates[0].image_x, role.mates[0].image_y)
+
+        # make window
+        PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                    self.game.ui_manager, text, self.game, figure_surface)
+
     def mate_info(self):
         dict = {}
         index = 0
@@ -483,7 +511,10 @@ class MenuClickHandlerForMates():
         # dict
         duty_name = 'None'
         if mate.duty:
-            duty_name = 'captain of ' + mate.duty.name
+            if mate.duty in ['accountant', 'first_mate', 'chief_navigator']:
+                duty_name = mate.duty
+            else:
+                duty_name = 'captain of ' + mate.duty.name
 
         dict = {
             'name': mate.name,
@@ -514,6 +545,7 @@ class MenuClickHandlerForMates():
         # make actions menu
         dict1 = {
             'Set as Captain of': [self.set_as_captain_of, mate_num],
+            'Set as hand': [self.set_as_hand, mate_num],
             'Relieve Duty': [self.relieve_duty, mate_num],
             'Level Up': [self.level_up, mate_num],
             'Add Attribute': [self.add_attribute, mate_num]
@@ -522,6 +554,28 @@ class MenuClickHandlerForMates():
         # admiral special functions
         if mate_num == 0:
             dict1['Distribute Exp'] = [self.assign_exp, mate_num]
+
+        self.game.button_click_handler.make_menu(dict1)
+
+    def set_as_hand(self, mate_num):
+
+        def accountant(mate_num):
+            self.game.button_click_handler. \
+                make_input_boxes('set_mate_as_hand', ['mate num', 'position'], [str(mate_num), 'accountant'])
+
+        def first_mate(mate_num):
+            self.game.button_click_handler. \
+                make_input_boxes('set_mate_as_hand', ['mate num', 'position'], [str(mate_num), 'first_mate'])
+
+        def chief_navigator(mate_num):
+            self.game.button_click_handler. \
+                make_input_boxes('set_mate_as_hand', ['mate num', 'position'], [str(mate_num), 'chief_navigator'])
+
+        dict1 = {
+            'Accountant': [accountant, mate_num],
+            'First Mate': [first_mate, mate_num],
+            'Chief Navigator': [chief_navigator, mate_num],
+        }
 
         self.game.button_click_handler.make_menu(dict1)
 

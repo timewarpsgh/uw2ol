@@ -68,9 +68,9 @@ to do
             navigation (OK)
 
 
-            accountant
-            first_mate
-            chief_navigator
+            accountant (OK)
+            first_mate (OK)
+            chief_navigator (OK)
 
 
 

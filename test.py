@@ -1,4 +1,5 @@
-a = 10
-b = 3
-c = a % 3
-print(c)
+
+
+accountant_text = 1 if False else 'None'
+
+print(accountant_text)

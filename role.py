@@ -45,6 +45,10 @@ class Role:
         self.mates = []
         self.discoveries = {}
 
+        self.accountant = None
+        self.first_mate = None
+        self.chief_navigator = None
+
         # quests (3 types)
         self.quest_discovery = None
         self.quest_trade = None
@@ -286,11 +290,22 @@ class Role:
         ship = self.ships[ship_num]
         mate.set_as_captain_of(ship)
 
+    def set_mate_as_hand(self, params):
+        mate_num = params[0]
+        position_name = params[1]
+
+        mate = self.mates[mate_num]
+        mate.set_as_hand(position_name, self)
+
     def relieve_mates_duty(self, params):
         mate_num = params[0]
 
         mate = self.mates[mate_num]
-        mate.relieve_duty()
+        if mate.duty:
+            if mate.duty in ['accountant', 'first_mate', 'chief_navigator']:
+                mate.relieve_duty(self)
+            else:
+                mate.relieve_duty()
 
     def add_mates_lv(self, params):
         mate_num = params[0]
@@ -638,7 +653,7 @@ class Role:
     def fire_mate(self, params):
         num = params[0]
 
-        self.mates[num].relieve_duty()
+        self.relieve_mates_duty([num])
         del self.mates[num]
         print('now mates:', len(self.mates))
 
@@ -1151,10 +1166,22 @@ class Mate:
             ship.captain = self
             self.duty = ship
 
-    def relieve_duty(self):
-        if self.duty:
-            self.duty.captain = None
+    def set_as_hand(self, position_name, role):
+        if not self.duty:
+            self.duty = position_name
+            setattr(role, position_name, self)
+
+    def relieve_duty(self, role=''):
+        # from hands
+        if role:
+            setattr(role, self.duty, None)
             self.duty = None
+
+        # from captain
+        else:
+            if self.duty:
+                self.duty.captain = None
+                self.duty = None
 
     def get_exp(self, amount):
         self.exp += amount
@@ -1208,13 +1235,33 @@ if __name__ == '__main__':
     # add mates
     mate0 = Mate(1)
     mate1 = Mate(2)
+    mate2 = Mate(3)
+    mate3 = Mate(4)
+
     default_role.mates.append(mate0)
     default_role.mates.append(mate1)
+    default_role.mates.append(mate2)
+    default_role.mates.append(mate3)
 
     # nickname
     role = default_role
 
     # testing 4 steps
-    role.hire_mate([18])
-    print(len(role.mates))
+    print(role.accountant)
+    role.set_mate_as_hand([1, 'accountant'])
+    role.set_mate_as_hand([2, 'first_mate'])
+    role.set_mate_as_hand([3, 'chief_navigator'])
 
+    print(role.accountant.name)
+    print(role.first_mate.name)
+    print(role.chief_navigator.name)
+
+    role.relieve_mates_duty([1])
+    role.relieve_mates_duty([2])
+    role.relieve_mates_duty([3])
+
+    print(role.mates[1].duty)
+
+    # print(role.accountant)
+    # print(role.first_mate.name)
+    # print(role.chief_navigator.name)
