@@ -68,10 +68,6 @@ to do
             navigation (OK)
 
 
-            accountant (OK)
-            first_mate (OK)
-            chief_navigator (OK)
-
 
 
 
