@@ -1076,18 +1076,100 @@ class Market():
         for item_name in available_goods_dict:
             buy_price = port.get_commodity_buy_price(item_name)
             show_text = item_name + ' ' + str(buy_price)
-            dict[show_text] = [self.do_buy, item_name]
-        # dict['buy'] = self.buy_cargo
+            dict[show_text] = [self.negotiate_for_price, [item_name,buy_price]]
 
         self.game.button_click_handler.make_menu(dict)
 
-    def do_buy(self, cargo_name):
-        self.game.button_click_handler. \
-            make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'], [cargo_name])
+    def negotiate_for_price(self, params):
+        # params
+        cargo_name = params[0]
+        buy_price = params[1]
+
+        # price chat
+        role = self.game.my_role
+        buy_price_modifier = role.get_buy_price_modifier()
+        buy_price = int(buy_price * buy_price_modifier)
+
+        self.game.building_text = f"You look like a good partner. I can sell this for {buy_price}."
+        mate = None
+        if role.accountant:
+            mate = role.accountant
+        else:
+            mate = role.mates[0]
+        mate_speak(self.game, mate, f'I think {buy_price} is a reasonable price for {cargo_name}.'
+                                                          f'You can still make good profits.')
+
+        # buy button
+        def buy(cargo_name):
+            self.game.button_click_handler. \
+                make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'], [cargo_name])
+
+        dict = {
+            'Buy': [buy, cargo_name]
+        }
+
+        self.game.button_click_handler.make_menu(dict)
 
     def sell(self):
-        self.game.button_click_handler. \
-            make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'])
+
+        # def
+        def show_cargo_in_ship(index):
+
+            # def
+            def negotiate_for_price(cargo_name):
+                # price chat
+                role = self.game.my_role
+
+                port = role.get_port()
+                unit_price = port.get_commodity_sell_price(cargo_name)
+
+                sell_price_modifier = role.get_sell_price_modifier()
+                unit_price = int(unit_price * sell_price_modifier)
+
+                self.game.building_text = f"Alright. Alright... I'm willing to pay {unit_price} each ."
+                mate = None
+                if role.accountant:
+                    mate = role.accountant
+                else:
+                    mate = role.mates[0]
+                mate_speak(self.game, mate, f'I think {unit_price} is a reasonable price here for {cargo_name}.'
+                                            f'What do you say?')
+
+                # sell button
+                def sell(cargo_name):
+                    self.game.button_click_handler. \
+                        make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'], [cargo_name, '', str(index)])
+
+                dict = {
+                    'Sell': [sell, cargo_name]
+                }
+
+                self.game.button_click_handler.make_menu(dict)
+
+
+            # main
+            dict = {}
+
+            for cargo_name, amount in self.game.my_role.ships[index].cargoes.items():
+                dict[(str(amount) + ' ' + cargo_name)] = [negotiate_for_price, cargo_name]
+
+            self.game.button_click_handler.make_menu(dict)
+
+        # main
+        dict = {}
+
+        index = 0
+        for ship in self.game.my_role.ships:
+            dict[str(index)] = [show_cargo_in_ship, index]
+            index += 1
+
+        self.game.button_click_handler.make_menu(dict)
+
+
+
+
+        # self.game.button_click_handler. \
+        #     make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'])
 
 class Bar():
     def __init__(self, game):

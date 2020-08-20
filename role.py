@@ -658,6 +658,26 @@ class Role:
         print('now mates:', len(self.mates))
 
     # market
+    def get_buy_price_modifier(self):
+        mate = None
+        if self.accountant:
+            mate = self.accountant
+        else:
+            mate = self.mates[0]
+
+        buy_price_modifier = (100 - (mate.knowledge + mate.accounting * 20) / 4) / 100
+        return buy_price_modifier
+
+    def get_sell_price_modifier(self):
+        mate = None
+        if self.accountant:
+            mate = self.accountant
+        else:
+            mate = self.mates[0]
+
+        sell_price_modifier = (50 + mate.intuition + mate.accounting * 10) / 100
+        return sell_price_modifier
+
     def buy_cargo(self, params):
         cargo_name = params[0]
         count = params[1]
@@ -675,6 +695,10 @@ class Role:
 
                 # cut gold
                 unit_price = port.get_commodity_buy_price(cargo_name)
+                buy_price_modifier = self.get_buy_price_modifier()
+                unit_price = int(unit_price * buy_price_modifier)
+
+
                 self.gold -= count * unit_price
 
                 print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
@@ -697,6 +721,8 @@ class Role:
                 # add gold
                 port = self.get_port()
                 unit_price = port.get_commodity_sell_price(cargo_name)
+                sell_price_modifier = self.get_sell_price_modifier()
+                unit_price = int(unit_price * sell_price_modifier)
                 self.gold += count * unit_price
 
                 # add exp

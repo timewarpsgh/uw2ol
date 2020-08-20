@@ -1,5 +1,4 @@
 
 
-accountant_text = 1 if False else 'None'
-
-print(accountant_text)
+a = 10 / 3
+print(a)

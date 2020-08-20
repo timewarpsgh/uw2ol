@@ -57,13 +57,13 @@ to do
         all attributes should be useful (ON)
             seamanship (OK)
             luck  (Later)
-            knowledge
-            intuition
+            knowledge (buy low) (OK)
+            intuition (sell high) (OK)
             courage  shoot(OK)
             swordplay engage(OK)
 
 
-            accounting
+            accounting (OK)
             gunnery (OK)
             navigation (OK)
 
