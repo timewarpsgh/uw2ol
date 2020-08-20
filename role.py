@@ -138,9 +138,15 @@ class Role:
         # have ships
         if self.ships:
             speed_list = []
+            index = 0
             for ship in self.ships:
-                speed = ship.get_speed()
+                speed = None
+                if index == 0:
+                    speed = ship.get_speed(self)
+                else:
+                    speed = ship.get_speed()
                 speed_list.append(speed)
+                index += 1
 
             fleet_speed = min(speed_list)
             return fleet_speed
@@ -878,22 +884,36 @@ class Ship:
         else:
             return False
 
-    def get_speed(self):
+    def get_speed(self, role=''):
         # have captain
         if self.captain:
-            speed = int((self.tacking + self.power +
-                         self.captain.seamanship + self.captain.navigation * 10)/10) - 5
+            speed = 1
+
+            # when role not passed (not flag ship)
+            if not role:
+                speed = int((self.tacking + self.power +
+                             self.captain.seamanship + self.captain.navigation * 10)/10) - 5
+            # when role is passed (flag ship)
+            else:
+                # if have navigator
+                if role.chief_navigator:
+                    speed = int((self.tacking + self.power +
+                                 role.chief_navigator.seamanship + role.chief_navigator.navigation * 10) / 10) - 5
+                # no navigator
+                else:
+                    speed = int((self.tacking + self.power +
+                                 self.captain.seamanship + self.captain.navigation * 10)/10) - 5
+            # modify speed
             if speed >= 20:
                 speed = 20
 
-            factor  = self.crew / self.min_crew
+            factor = self.crew / self.min_crew
             if factor < 1:
                 speed = int(speed * factor)
                 if speed < 1:
                     speed = 1
 
             return speed
-
         # no captain
         else:
             return 1

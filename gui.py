@@ -416,7 +416,7 @@ class MenuClickHandlerForShips():
         dict = {}
         index = 0
         for ship in ships:
-            dict[str(index)] = [self.show_one_ship, [ship, target]]
+            dict[str(index)] = [self.show_one_ship, [ship, target, index]]
             index += 1
         self.game.button_click_handler.make_menu(dict)
 
@@ -424,17 +424,25 @@ class MenuClickHandlerForShips():
         # get param
         ship = params[0]
         target = params[1]
+        ship_id = params[2]
 
         # dict
         captain_name = 'None'
         if ship.captain:
             captain_name = ship.captain.name
+
+        speed = 1
+        if ship_id == 0:
+            speed = ship.get_speed(self.game.my_role)
+        else:
+            speed = ship.get_speed()
+
         dict = {
             'name': f'{ship.name}   type:{ship.type}',
             'captain': f'{captain_name}',
             'durability': f'{ship.now_hp}/{ship.max_hp}',
             'tacking': f'{ship.tacking}    power:{ship.power}',
-            'speed': f'{ship.get_speed()} knots',
+            'speed': f'{speed} knots',
             'capacity': f'{ship.capacity}',
             'max_guns': f'{ship.max_guns}',
             'min_crew/max_crew': f'{ship.min_crew}/{ship.max_crew}',
@@ -472,7 +480,7 @@ class MenuClickHandlerForMates():
         role = self.game.my_role
         accountant_text = role.accountant.name if role.accountant else 'None'
         first_mate_text = role.first_mate.name if role.first_mate else 'None'
-        chief_navigator_text = role.accountant.name if role.chief_navigator else 'None'
+        chief_navigator_text = role.chief_navigator.name if role.chief_navigator else 'None'
 
         dict = {
             'name': self.game.my_role.name,
