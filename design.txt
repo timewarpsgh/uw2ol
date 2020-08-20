@@ -69,8 +69,8 @@ to do
 
 
             accountant (OK)
-            chief_navigator (ON)
-            first_mate
+            chief_navigator (OK)
+            first_mate (ON)
 
 
 

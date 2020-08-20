@@ -1052,7 +1052,14 @@ class Ship:
         reactor.callLater(1, self._clear_shooting_state, ship)
 
         # change values
-        damage = c.SHOOT_DAMAGE * int((self.max_guns + int(self.captain.courage / 2) + self.captain.gunnery * 20) / 10)
+        damage = 0
+            # if no first mate
+        if not self.captain.first_mate:
+            damage = c.SHOOT_DAMAGE * int((self.max_guns + int(self.captain.courage / 2) + self.captain.gunnery * 20) / 10)
+            # if have first mate
+        else:
+            damage = c.SHOOT_DAMAGE * int(
+                (self.max_guns + int(self.captain.first_mate.courage / 2) + self.captain.first_mate.gunnery * 20) / 10)
         ship.now_hp -= damage
         ship.damage_got = str(damage)
 
@@ -1070,13 +1077,25 @@ class Ship:
         reactor.callLater(1, self._clear_state, ship)
 
         # change values
-        self_damage_ratio = (self.captain.swordplay + self.captain.gunnery * 20) / 100
+            # self engage
+        self_damage_ratio = 0
+        if not self.captain.first_mate:
+            self_damage_ratio = (self.captain.swordplay + self.captain.gunnery * 20) / 100
+        else:
+            self_damage_ratio = (self.captain.first_mate.swordplay + self.captain.first_mate.gunnery * 20) / 100
+
         self_damage = int(c.ENGAGE_DAMAGE * self.crew * self_damage_ratio / 3)
         if self_damage <= 5:
             self_damage = 5
         ship.crew -= self_damage
 
-        enemy_damage_ratio = (ship.captain.swordplay + ship.captain.gunnery * 20) / 100
+            # enemy engage
+        enemy_damage_ratio = 0
+        if not ship.captain.first_mate:
+            enemy_damage_ratio = (ship.captain.swordplay + ship.captain.gunnery * 20) / 100
+        else:
+            enemy_damage_ratio = (ship.captain.first_mate.swordplay + ship.captain.first_mate.gunnery * 20) / 100
+
         enemy_damage = int(c.ENGAGE_DAMAGE * ship.crew * enemy_damage_ratio / 3)
         if enemy_damage <= 5:
             enemy_damage = 5
@@ -1207,6 +1226,10 @@ class Mate:
         self.gunnery = mate_dict['gunnery']
         self.navigation = mate_dict['navigation']
 
+        self.accountant = None
+        self.first_mate = None
+        self.chief_navigator = None
+
     def set_as_captain_of(self, ship):
         if not self.duty:
             ship.captain = self
@@ -1216,11 +1239,13 @@ class Mate:
         if not self.duty:
             self.duty = position_name
             setattr(role, position_name, self)
+            setattr(role.mates[0], position_name, self)
 
     def relieve_duty(self, role=''):
         # from hands
         if role:
             setattr(role, self.duty, None)
+            setattr(role.mates[0], self.duty, None)
             self.duty = None
 
         # from captain
