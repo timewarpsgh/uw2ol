@@ -1329,10 +1329,10 @@ class Mate:
         self.exp += amount
 
     def add_lv(self):
-        # if self.exp >= 100:
-        self.exp -= 100
-        self.lv += 1
-        self.points += 5
+        if self.exp >= 100:
+            self.exp -= 100
+            self.lv += 1
+            self.points += 5
 
     def add_attribute(self, attribute_name):
         if self.points >= 1:

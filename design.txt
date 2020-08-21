@@ -3,6 +3,7 @@ make exe
 	pyinstaller -i assets/ship.ico --onefile client.pyw client_packet_received.py constants.py draw.py game.py gui.py handle_gui_event.py handle_pygame_event.py map_maker.py port.py protocol.py role.py discovery.py translator.py
 
 release
+    set constants.py
     update server (cloud)
     make exe
     update client (legend)
@@ -55,9 +56,9 @@ to do
 
     port button only for DEV mode (OK)
 
-    invalid input bug (ON)
+    invalid input bug (OK)
 
-
+    release (ON)
 
 
 
