@@ -52,9 +52,7 @@ to do
         hire different mates from bar (OK)
         treat (OK)
 
-
-
-        all attributes should be useful (ON)
+        all attributes should be useful (OK)
             seamanship (OK)
             luck  (Later)
             knowledge (buy low) (OK)
@@ -62,17 +60,16 @@ to do
             courage  shoot(OK)
             swordplay engage(OK)
 
-
             accounting (OK)
             gunnery (OK)
             navigation (OK)
-
 
             accountant (OK)
             chief_navigator (OK)
             first_mate (ON)
 
-
+        ship 0 and mate 0 can't be sold (ON)
+        rearrange ships others -> 0
 
 
 

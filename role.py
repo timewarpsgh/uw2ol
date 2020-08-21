@@ -659,9 +659,12 @@ class Role:
     def fire_mate(self, params):
         num = params[0]
 
-        self.relieve_mates_duty([num])
-        del self.mates[num]
-        print('now mates:', len(self.mates))
+        if num == 0:
+            pass
+        else:
+            self.relieve_mates_duty([num])
+            del self.mates[num]
+            print('now mates:', len(self.mates))
 
     # market
     def get_buy_price_modifier(self):
