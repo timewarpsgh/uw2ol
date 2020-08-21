@@ -874,6 +874,7 @@ class MenuClickHandlerForPort():
         self.job_house = JobHouse(game)
         self.church = Church(game)
         self.palace = Palace(game)
+        self.bank = Bank(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -947,10 +948,11 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_bank(self):
         dict = {
-            'Deposit': test,
-            'Withdraw': test,
-            'Borrow': test,
-            'Repay': test,
+            'Check Balance': self.bank.check_balance,
+            'Deposit': self.bank.deposit,
+            'Withdraw': self.bank.withdraw,
+            'Borrow': self.bank.borrow,
+            'Repay': self.bank.repay,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1555,6 +1557,44 @@ class Palace:
     def gold_aid(self):
         self.game.building_text = "We'd like to help, but doing so " \
                                   "might be detrimental to the value you're trying to prove."
+
+class Bank:
+    def __init__(self, game):
+        self.game = game
+
+    def check_balance(self):
+        balance = self.game.my_role.bank_gold
+        self.game.building_text = f"Your current balance is {balance}."
+
+    def deposit(self):
+        self.game.building_text = "Dear customer, How much would you like to deposit?"
+        self.game.button_click_handler.make_input_boxes('deposit_gold', ['amount'])
+
+    def withdraw(self):
+        self.game.building_text = "Dear customer, How much would you like to withdraw from your account?"
+        self.game.button_click_handler.make_input_boxes('withdraw_gold', ['amount'])
+
+    def borrow(self):
+        # can borrow
+        if self.game.my_role.bank_gold <= 0:
+            max_credit = self.game.my_role.get_max_credit()
+            self.game.building_text = f"Yes. We're happy to lend you up to {max_credit} gold coins." \
+                                      f"Kindly remind you, your current balance is {self.game.my_role.bank_gold}."
+            self.game.button_click_handler.make_input_boxes('borrow', ['amount'])
+
+        # still have in bank gold
+        else:
+            self.game.building_text = "It seems you still have some left in your account."
+
+    def repay(self):
+        # can repay
+        if self.game.my_role.bank_gold < 0:
+            self.game.building_text = f"How much would you like to repay your debt?"
+            self.game.button_click_handler.make_input_boxes('repay', ['amount'])
+
+        # no need to repay
+        else:
+            self.game.building_text = "Oh. But you don't owe us anything."
 
 def target_clicked(self):
     # self is game

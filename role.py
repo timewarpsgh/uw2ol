@@ -40,6 +40,7 @@ class Role:
         self.days_spent_at_sea = 0
         self.speak_msg = ''
         self.gold = gold
+        self.bank_gold = 2000
         self.target_name = ''
         self.ships = []
         self.mates = []
@@ -835,6 +836,41 @@ class Role:
     def set_fight_quest(self):
         pass
 
+    # bank
+    def deposit_gold(self, params):
+        amount = params[0]
+
+        if amount <= self.gold:
+            self.gold -= amount
+            self.bank_gold += amount
+
+    def withdraw_gold(self, params):
+        amount = params[0]
+
+        if amount <= self.bank_gold:
+            self.bank_gold -= amount
+            self.gold += amount
+
+    def get_max_credit(self):
+        max_credit = self.mates[0].lv * 1000
+        return max_credit
+
+    def borrow(self, params):
+        amount = params[0]
+
+        if self.bank_gold <= 0:
+            if amount + abs(self.bank_gold) <= self.get_max_credit():
+                self.gold += amount
+                self.bank_gold -= amount
+
+    def repay(self, params):
+        amount = params[0]
+
+        if self.bank_gold <= 0:
+            if amount <= self.gold:
+                self.bank_gold += amount
+                self.gold -= amount
+
 class Ship:
     shooting_img = ''
 
@@ -1353,8 +1389,12 @@ if __name__ == '__main__':
     role = default_role
 
     # testing 4 steps
-    print(role.ships[0].name)
-    print(role.ships[2].name)
-    role.swap_ships([0,2])
-    print(role.ships[0].name)
-    print(role.ships[2].name)
+    print(role.gold)
+    print(role.bank_gold)
+
+    role.withdraw_gold([2000])
+    role.borrow([22])
+    # role.repay([600])
+
+    print(role.gold)
+    print(role.bank_gold)

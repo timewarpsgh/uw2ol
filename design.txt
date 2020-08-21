@@ -54,7 +54,9 @@ to do
     use of bank (ON)
         lose battle -> loose all money
 
+    port button only for DEV mode
 
+    invalid input bug
 
 
 
