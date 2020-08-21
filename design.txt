@@ -68,10 +68,10 @@ to do
             chief_navigator (OK)
             first_mate (ON)
 
-        ship 0 and mate 0 can't be sold (ON)
-        rearrange ships others -> 0
+        mate 0 can't be sold (OK)
+        swap ships (OK)
 
-
+        show gold ingots (OK)
 
 
 

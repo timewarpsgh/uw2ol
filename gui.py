@@ -487,7 +487,7 @@ class MenuClickHandlerForMates():
 
         dict = {
             'name': self.game.my_role.name,
-            ' ': " ",
+            ' ': "",
             'accountant': accountant_text,
             'first mate': first_mate_text,
             'chief navigator': chief_navigator_text,
@@ -497,7 +497,10 @@ class MenuClickHandlerForMates():
         # make text from dict
         text = ''
         for k, v in dict.items():
-            text += f'{k}:{v}<br>'
+            if v:
+                text += f'{k}:{v}<br>'
+            else:
+                text += '<br>'
 
         # get figure image
         figure_surface = figure_x_y_2_image(self.game, role.mates[0].image_x, role.mates[0].image_y)

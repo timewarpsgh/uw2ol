@@ -68,13 +68,16 @@ def draw_logged_in_state(self):
             draw_at_sea(self)
             draw_hud(self)
 
+                # at sea text
+            draw_text(self, 'At Sea', c.WINDOW_WIDTH - 100, 15)
+
                 # max days at sea
-            draw_text(self, 'Max Days', 10, c.WINDOW_HIGHT - 140)
-            draw_text(self, str(self.max_days_at_sea), 10, c.WINDOW_HIGHT - 120)
+            draw_text(self, 'Max Days', c.WINDOW_WIDTH - 100, 120)
+            draw_text(self, str(self.max_days_at_sea), c.WINDOW_WIDTH - 100, 140)
 
                 # days spent at sea
-            draw_text(self, 'Days Spent', 10, c.WINDOW_HIGHT - 100)
-            draw_text(self, str(self.days_spent_at_sea), 10, c.WINDOW_HIGHT - 80)
+            draw_text(self, 'Days Spent', c.WINDOW_WIDTH - 100, 160)
+            draw_text(self, str(self.days_spent_at_sea), c.WINDOW_WIDTH - 100, 180)
 
             # in battle
         else:
@@ -91,10 +94,20 @@ def draw_hud(self):
     self.screen_surface.blit(self.images['hud_left'], (0, 0))
     hud_left_rect = self.images['hud_left'].get_rect()
 
-        # gold
-    text = 'Gold:' + str(self.my_role.gold)
-    text_img = self.font.render(text, True, c.BLACK)
-    self.screen_surface.blit(text_img, (10, c.WINDOW_HIGHT - 50))
+        # year and time of day
+    draw_text(self, 'A.D. 1492', 10, 25)
+    draw_text(self, 'Morning', 10, 139)
+
+        # gold ingots
+    gold_ingots = int(self.my_role.gold / 10000)
+    gold_coins = self.my_role.gold - (gold_ingots * 10000)
+
+    draw_text(self, 'Gold Ingots', 10, c.WINDOW_HIGHT - 120)
+    draw_text(self, str(gold_ingots), 10, c.WINDOW_HIGHT - 120 + 20)
+
+        # gold coins
+    draw_text(self, 'Gold Coins', 10, c.WINDOW_HIGHT - 120 +40)
+    draw_text(self, str(gold_coins), 10, c.WINDOW_HIGHT - 120 + 60)
 
     # right hud
     self.screen_surface.blit(self.images['hud_right'], (c.WINDOW_WIDTH - hud_left_rect.width, 0))
