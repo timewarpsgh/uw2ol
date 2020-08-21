@@ -34,24 +34,7 @@ protocols
 to do
     think about Minimal Viable Product (ALWAYS!)
 
-    buy stuff interface (OK)
-
-    blocking bug (OK)
-
-    release (OK)
-
-    mates (ON)
-        each ship must have captain to move (OK)
-
-        hire mate (OK)
-        fire mate (OK)
-
-        assign exp to other mates (OK)
-
-
-        hire different mates from bar (OK)
-        treat (OK)
-
+    mates (OK)
         all attributes should be useful (OK)
             seamanship (OK)
             luck  (Later)
@@ -68,10 +51,8 @@ to do
             chief_navigator (OK)
             first_mate (ON)
 
-        mate 0 can't be sold (OK)
-        swap ships (OK)
-
-        show gold ingots (OK)
+    use of bank (ON)
+        lose battle -> loose all money
 
 
 

@@ -458,8 +458,21 @@ class Role:
 
             # if flag ship dead
             if target_ship_id == 0:
+                # all enemy mates relieve duty
+                enemy_role = self._get_other_role_by_name(self.enemy_name)
+                for mate in enemy_role.mates:
+                    if mate.duty in ['accountant', 'first_mate', 'chief_navigator']:
+                        mate.relieve_duty(enemy_role)
+                    else:
+                        mate.relieve_duty()
+
+                # get all enemy ships
                 self.ships.extend(enemy_ships)
                 enemy_ships.clear()
+
+                # get all enemy gold
+                self.gold += enemy_role.gold
+                enemy_role.gold = 0
                 print('battle ended. press e to exit battle.')
 
                 deferred.callback(False)
