@@ -258,7 +258,7 @@ class ButtonClickHandler():
         dict = {
             'Fleet Info': self.menu_click_handler.ships.fleet_info,
             'Ship Info': self.menu_click_handler.ships.ship_info,
-            'Rearrange': test,
+            'Swap Ships': self.menu_click_handler.ships.swap_ships,
         }
         self.make_menu(dict)
 
@@ -470,6 +470,9 @@ class MenuClickHandlerForShips():
         ship_image = self.game.images['ships'][ship.type.lower()]
         PanelWindow(pygame.Rect((59, 10), (350, 400)),
                     self.game.ui_manager, text, self.game, ship_image)
+
+    def swap_ships(self):
+        self.game.button_click_handler.make_input_boxes('swap_ships', ['from ship num', 'to ship num'])
 
 class MenuClickHandlerForMates():
     def __init__(self, game):
@@ -1009,6 +1012,12 @@ class Harbor():
                     self.connection.send('change_map', ['29'])
 
         # main
+            # mate0 must be on the flag ship
+        role = self.game.my_role
+        if role.ships[0].captain and role.name != role.ships[0].captain.name:
+            mate_speak(self.game, role.mates[0], 'I need to be on the flag ship.')
+            return
+
         if self.game.my_role.map != 'sea' and self.game.my_role.ships:
             # make sea image
             port_tile_x = hash_ports_meta_data[int(self.game.my_role.map) + 1]['x']

@@ -59,6 +59,7 @@ class Role:
         # set at client, when client first gets role from server(when got packet 'your_role_data')
         self.in_client = False
 
+    # anywhere
     def _get_other_role_by_name(self, name):
 
         # in client
@@ -76,9 +77,14 @@ class Role:
             target_role = Role.users[self.map][name].my_role
             return target_role
 
-    # anywhere
     def is_in_client_and_self(self):
         if self.GAME and self.GAME.my_role.name == self.name:
+            return True
+        else:
+            return False
+
+    def is_in_port(self):
+        if str(self.map).isdigit():
             return True
         else:
             return False
@@ -289,19 +295,23 @@ class Role:
         return max_days
 
     def set_mates_duty(self, params):
+        """as captain"""
         mate_num = params[0]
         ship_num = params[1]
 
-        mate = self.mates[mate_num]
-        ship = self.ships[ship_num]
-        mate.set_as_captain_of(ship)
+        if self.is_in_port():
+            mate = self.mates[mate_num]
+            ship = self.ships[ship_num]
+            mate.set_as_captain_of(ship)
 
     def set_mate_as_hand(self, params):
+        """one of 3 kinds of duties"""
         mate_num = params[0]
         position_name = params[1]
 
-        mate = self.mates[mate_num]
-        mate.set_as_hand(position_name, self)
+        if self.is_in_port():
+            mate = self.mates[mate_num]
+            mate.set_as_hand(position_name, self)
 
     def relieve_mates_duty(self, params):
         mate_num = params[0]
@@ -334,6 +344,14 @@ class Role:
             self.mates[0].exp -= amount
             mate = self.mates[mate_num]
             mate.get_exp(amount)
+
+    def swap_ships(self, params):
+        from_ship_num = params[0]
+        to_ship_num = params[1]
+
+        if self.is_in_port():
+            ships = self.ships
+            ships[from_ship_num], ships[to_ship_num] = ships[to_ship_num], ships[from_ship_num]
 
     # at sea
     def discover(self, params):
@@ -585,8 +603,9 @@ class Role:
     def sell_ship(self, params):
         num = params[0]
 
-        if self.ships[num]:
+        if self.ships[num] and len(self.ships) >= 2:
             self.gold += int(self.ships[num].price / 2)
+            self.ships[num].captain.relieve_duty()
             del self.ships[num]
             print('now ships:', len(self.ships))
 
@@ -1321,21 +1340,8 @@ if __name__ == '__main__':
     role = default_role
 
     # testing 4 steps
-    print(role.accountant)
-    role.set_mate_as_hand([1, 'accountant'])
-    role.set_mate_as_hand([2, 'first_mate'])
-    role.set_mate_as_hand([3, 'chief_navigator'])
-
-    print(role.accountant.name)
-    print(role.first_mate.name)
-    print(role.chief_navigator.name)
-
-    role.relieve_mates_duty([1])
-    role.relieve_mates_duty([2])
-    role.relieve_mates_duty([3])
-
-    print(role.mates[1].duty)
-
-    # print(role.accountant)
-    # print(role.first_mate.name)
-    # print(role.chief_navigator.name)
+    print(role.ships[0].name)
+    print(role.ships[2].name)
+    role.swap_ships([0,2])
+    print(role.ships[0].name)
+    print(role.ships[2].name)
