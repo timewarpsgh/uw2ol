@@ -298,7 +298,7 @@ class ButtonClickHandler():
         self.make_menu(dict)
 
     def port(self):
-        if self.game.my_role.map.isdigit():
+        if self.game.my_role.map.isdigit() and c.DEVELOPER_MODE_ON:
             dict = {
                 'Market': self.menu_click_handler.port.on_menu_click_market,
                 'Bar': self.menu_click_handler.port.on_menu_click_bar,

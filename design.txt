@@ -51,8 +51,7 @@ to do
             chief_navigator (OK)
             first_mate (ON)
 
-    use of bank (ON)
-        lose battle -> loose all money
+    use of bank (OK)
 
     port button only for DEV mode
 
