@@ -1,6 +1,7 @@
 import pygame
 import pygame_gui
 import handle_pygame_event
+from twisted.internet import reactor
 
 def handle_gui_event(self, event):
     # pass event to gui manager
@@ -73,8 +74,8 @@ def button_pressed(self, event):
             handle_pygame_event.escape(self, '')
         else:
             handle_pygame_event.escape(self, '')
-            self.button_click_handler. \
-                make_message_box("Invalid Input!")
+            reactor.callLater(0.2, self.button_click_handler. \
+                make_message_box, 'Invalid Input!')
 
 
 def selection_list_picked(self, event):

@@ -53,9 +53,9 @@ to do
 
     use of bank (OK)
 
-    port button only for DEV mode
+    port button only for DEV mode (OK)
 
-    invalid input bug
+    invalid input bug (ON)
 
 
 
