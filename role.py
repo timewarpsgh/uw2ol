@@ -5,7 +5,9 @@ from twisted.internet import reactor, task, defer
 import constants as c
 from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
 from hashes.hash_mates import hash_mates
+from hashes.hash_events import events_dict
 from port import Port
+from event import Event
 
 class Role:
     """
@@ -55,12 +57,24 @@ class Role:
         self.quest_trade = None
         self.quest_fight = None
 
+        # main quests sequence
+        self.main_events_ids = [3,2,1]
+
         self.conn = None
 
         # set at client, when client first gets role from server(when got packet 'your_role_data')
         self.in_client = False
 
     # anywhere
+    def get_pending_event(self):
+        event_id = self.main_events_ids[-1]
+        event = Event(event_id)
+        return event
+
+    def trigger_quest(self, params):
+        """when an event is triggered, delete event id"""
+        self.main_events_ids.pop()
+
     def _get_other_role_by_name(self, name):
 
         # in client
@@ -276,6 +290,10 @@ class Role:
         return port
 
     def calculate_max_days_at_sea(self):
+        # when no ship
+        if not self.ships:
+            return 1
+
         # get all supplies
         all_food = 0
         all_water = 0

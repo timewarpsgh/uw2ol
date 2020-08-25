@@ -1,9 +1,6 @@
-
-
-a = list(range(5))
+a = [1,2,3]
+a.pop()
 print(a)
 
-a[0], a[3] = a[3], a[0]
 
-print(a)
 

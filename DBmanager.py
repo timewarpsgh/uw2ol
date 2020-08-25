@@ -85,19 +85,16 @@ class Database:
                 default_role = Role(x, y, character_name)
                 Ship.ROLE = default_role
 
-                ship0 = Ship('Reagan', 'Frigate')
-                ship0.crew = 20
-                ship1 = Ship('Reagan11', 'Balsa')
-                default_role.ships.append(ship0)
-                default_role.ships.append(ship1)
+                # ship0 = Ship('Reagan', 'Frigate')
+                # ship0.crew = 20
+                # ship1 = Ship('Reagan11', 'Balsa')
+                # default_role.ships.append(ship0)
+                # default_role.ships.append(ship1)
                 mate0 = Mate(1)
                 mate0.name = character_name
-                mate1 = Mate(2)
                 default_role.mates.append(mate0)
-                default_role.mates.append(mate1)
 
-                mate0.set_as_captain_of(ship0)
-                mate1.set_as_captain_of(ship1)
+                # mate0.set_as_captain_of(ship0)
 
                 default_role.discoveries[2] = 1
 

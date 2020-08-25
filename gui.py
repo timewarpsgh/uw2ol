@@ -769,9 +769,40 @@ class MenuClickHandlerForCmds():
                 # welcome text
                 self.game.building_text = 'Welcome! What can I do for you?'
 
+                # trigger event?
+                role = self.game.my_role
+                pending_event = role.get_pending_event()
+                port = Port(map_id)
+                building = id_2_building_type[k]
+
+                if port.name == pending_event.port:
+                    if building == pending_event.building or pending_event.building == 'any':
+                        print(pending_event.dialogues)
+                        self.present_event(pending_event)
+                        self.game.change_and_send('trigger_quest', [])
+
                 return
 
         print('no building to enter')
+
+    def present_event(self, event):
+        dialogues = event.dialogues
+        figure_images = event.figure_images
+
+        # show dialogues
+        for dialogue in reversed(dialogues):
+            speaker = dialogue[0]
+            message = dialogue[1]
+
+            image_x = figure_images[speaker][0]
+            image_y = figure_images[speaker][1]
+            figure_image_speak(self.game, image_x, image_y, message)
+
+        # perform action if any
+        if event.action_to_perform:
+            protocol = event.action_to_perform[0]
+            params = event.action_to_perform[1]
+            self.game.change_and_send(protocol, params)
 
     def enter_port(self):
         self.game.change_and_send('change_map', ['port'])
@@ -1019,6 +1050,14 @@ class Harbor():
         # main
             # mate0 must be on the flag ship
         role = self.game.my_role
+        if not role.ships:
+            mate_speak(self.game, role.mates[0], "How do I sail without a ship?")
+            return
+
+        if not role.ships[0].captain:
+            mate_speak(self.game, role.mates[0], 'I need to be the captain of the flag ship.')
+            return
+
         if role.ships[0].captain and role.name != role.ships[0].captain.name:
             mate_speak(self.game, role.mates[0], 'I need to be on the flag ship.')
             return
@@ -1620,6 +1659,17 @@ def mate_speak(game, mate, message):
 
     # get figure image
     figure_surface = figure_x_y_2_image(game, mate.image_x, mate.image_y)
+
+    # make window
+    PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                game.ui_manager, text, game, figure_surface)
+
+def figure_image_speak(game, image_x, image_y, message):
+    # make text from dict
+    text = message
+
+    # get figure image
+    figure_surface = figure_x_y_2_image(game, image_x, image_y)
 
     # make window
     PanelWindow(pygame.Rect((59, 50), (350, 400)),

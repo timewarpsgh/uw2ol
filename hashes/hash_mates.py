@@ -1,19 +1,19 @@
 hash_mates = {
 
     1: {
-        'image_x': 9,
-        'image_y': 4,
-        'name': 'Afmet Glanie',
-        'nation': 'Portugal',
-        'lv': 8,
+        'image_x': 1,
+        'image_y': 1,
+        'name': 'John',
+        'nation': 'England',
+        'lv': 1,
 
         'leadership': 50,
-        'seamanship': 45,
-        'knowledge': 80,
-        'intuition': 35,
-        'courage': 60,
-        'swordplay': 60,
-        'luck': 55,
+        'seamanship': 50,
+        'knowledge': 50,
+        'intuition': 50,
+        'courage': 50,
+        'swordplay': 50,
+        'luck': 50,
 
         'accounting': 0,
         'gunnery': 0,
@@ -741,23 +741,23 @@ hash_mates = {
     },
 
     38: {
-        'image_x': 2,
+        'image_x': 16,
         'image_y': 4,
-        'name': 'Eric Hansen',
+        'name': 'Tommy Branson',
         'nation': 'Holland',
-        'lv': 3,
+        'lv': 1,
 
-        'leadership': 20,
+        'leadership': 50,
         'seamanship': 50,
-        'knowledge': 65,
-        'intuition': 60,
-        'courage': 55,
-        'swordplay': 60,
+        'knowledge': 50,
+        'intuition': 50,
+        'courage': 50,
+        'swordplay': 50,
         'luck': 50,
 
-        'accounting': 1,
-        'gunnery': 1,
-        'navigation': 0,
+        'accounting': 0,
+        'gunnery': 0,
+        'navigation': 2,
     },
 
     39: {

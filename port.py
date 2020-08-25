@@ -9,7 +9,7 @@ class Port:
     def __init__(self, map_id):
         self.id = map_id + 1
         self.economy_id = hash_ports_meta_data[self.id]['economyId']
-
+        self.name = hash_ports_meta_data[self.id]['name']
 
     def get_available_ships(self):
         available_ships = hash_region_to_ships_available[self.economy_id]
