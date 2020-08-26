@@ -772,14 +772,15 @@ class MenuClickHandlerForCmds():
                 # trigger event?
                 role = self.game.my_role
                 pending_event = role.get_pending_event()
-                port = Port(map_id)
-                building = id_2_building_type[k]
+                if pending_event:
+                    port = Port(map_id)
+                    building = id_2_building_type[k]
 
-                if port.name == pending_event.port:
-                    if building == pending_event.building or pending_event.building == 'any':
-                        print(pending_event.dialogues)
-                        self.present_event(pending_event)
-                        self.game.change_and_send('trigger_quest', [])
+                    if port.name == pending_event.port:
+                        if building == pending_event.building or pending_event.building == 'any':
+                            print(pending_event.dialogues)
+                            self.present_event(pending_event)
+                            self.game.change_and_send('trigger_quest', [])
 
                 return
 

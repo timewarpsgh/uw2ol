@@ -25,7 +25,7 @@ events_dict = {
                          "We found this letter in his wardrobe, "
                          "which must have been written in advance."
                          " Here, take it and be strong."],
-            ['I', "Thank you."],
+            ['I', "He? .... Thank you."],
             ['the letter', "Dear John, my son, when you are reading this letter," 
                         "that means I've gone to the moon to meet your"
                         " mom. Poor kid. I will no longer be able to guide you nor protect you. "
@@ -59,12 +59,158 @@ events_dict = {
             ['Tommy', "For me?"],
             ['I', "Yes. I bought a ship. Do you want to sail with me?"],
             ['Tommy', "You got a ship? Well... Why not? I've done enough bar tending."],
+            ['Tommy', "Captain... I wish to visit my teacher living in the church in Copenhagen before we embark on our jouney. "
+                      "Could you help me with that?"],
+            ['I', "Sure. Let's head to Copenhagen."],
         ],
         'figure_images': {
             'I': [1, 1],
             'Tommy': [16, 4],
         },
-        'action_to_perform':['hire_mate', [38]],
+        'action_to_perform':['hire_mate', [2]],
+    },
+
+    4: {
+        'port': 'Copenhagen',
+        'building': 'church',
+        'figure_images': {
+            'Garry': [7, 2],
+            'Lady': [4, 2],
+            'Tommy': [16, 4],
+                          },
+        'dialogues': [
+            ['Tommy', "Excuse me, is Mr. Garry still living here?"],
+            ['Lady', "Yes. But I'm afraid he's not in good condition to see anyone."],
+            ['Tommy', "I was one of his students. My name is Tommy Branson. "
+                      "Please tell him that I wish to see him."],
+            ['Lady', "Alright. Please wait for a second..."],
+            ['Lady', "Coming in."],
+            ['Tommy', "Mr. Garry, how are you?"],
+            ['Garry', "Oh, Tommy, I remember you. You were among my best students. Look how you've grown. "
+                      "How come you've never come back to see me?"],
+            ['Tommy', "I wantted to, just didn't feel successful enough to see you. "
+                      "Now I'm about to start a jouney with a friend of mine. We got a ship. "
+                      "I've just come to say hi before we leave. What's wrong with your leg, Mr. Garry?"],
+            ['Garry', "I'm not as young as when you were my student. My legs are failing as are my eyes. "
+                      "You guys got a ship? How I wish I could join you. Taught geography for my entire life... "
+                      "Famarilar with every part of the map, yet have never been outside of this little town. "],
+            ['Tommy', "We fished and examed every stream in the town, remember?  "],
+            ['Garry', "Yes, we did. Anyway, I wish you all the best. "
+                      "I look forward to seeing your discoveries via your reports. "
+                      "Don't forget to report though."],
+            ['Tommy', "I'll try my best. See you Mr. Garry."],
+                      ],
+
+    },
+
+    5: {
+        'port': 'Copenhagen',
+        'building': 'any',
+        'figure_images': {
+            'I': [1, 1],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['I', "Tommy, are you going to leave to explore the world on your own?"],
+            ['Tommy', "No, I'll stay with you. I like being with you. "
+                      "Just remember to do some exploration when you have time."],
+
+            ['I', "I promise I will. But for the moment, I guess I'm interested in the Navy draft."],
+            ['I', "Did you see the ad? It basicly says the Navy's in urgent need of personel. "
+                  "Anyone interested is encouraged to apply at the Palace in London."],
+            ['Tommy', "Sounds like a good idea. After we join the Navy, We'll be safe to explore anywhere. "
+                      "Let's move then."],
+        ],
+    },
+
+    6: {
+        'port': 'London',
+        'building': 'palace',
+        'figure_images': {
+            'I': [1, 1],
+            'Tommy': [16, 4],
+            'Officer': [14, 3],
+        },
+        'dialogues': [
+            ['I', "Sir, we heard the Navy is seeking men to join. Can we apply?"],
+            ['Officer', "You two? Sure. Fill this up..."],
+            ['Officer', "Hmm... It seems that none of you have much experience."],
+            ['Tommy', "We are hard working. Please have us."],
+            ['Officer', "I'm afraid you don't qualify to fight for England on any of our battle ships. "
+                        "But, we do have two bar tending positions at our naval base. Are you interested? "],
+            ['Tommy', "Bar tending???"],
+            ['I', "Yeah...Sir, please allow us some time to consider."],
+            ['Officer', "OK. Let me know when you are ready."],
+            ['Tommy', "Captain, I need a drink."],
+            ['I', "I understand. I also need a drink."],
+        ],
+    },
+
+    7: {
+        'port': 'London',
+        'building': 'bar',
+        'action_to_perform':['hire_mate', [3]],
+
+        'figure_images': {
+            'I': [1, 1],
+            'Tommy': [16, 4],
+            'Charlie': [15, 3],
+            'Girl': [6, 7],
+            'Guy': [8, 1],
+        },
+        'dialogues': [
+            ['I', "Hi, what's the most unexpensive drink here?"],
+            ['Girl', "un... That'll be our bear with water."],
+            ['I', "Two dozen, please."],
+            ['Girl', "Wait a second ..."],
+            ['Guy', "Hey you two. Your bear with water."],
+            ['I', "... Thank you. Where... Never mind..."],
+            ['Tommy', "I want more."],
+            ['I', "No you don't."],
+            ['Tommy', "I want more."],
+            ['I', "You are drunk man. Look at you!"],
+            ['Tommy', "No I'm not."],
+            ['Tommy', "Bar tending? Am I suppose to bar tend my whole life? I'm a born bar tender."],
+            ['Charlie', "You surely are."],
+            ['I', "Who hell are you? Quit speaking to my friend like that!"],
+            ['Charlie', "Oops... Sorry. I thought I was just thinking."],
+            ['Charlie', "I'm Charlie. Charlie Stephens."],
+            ['Charlie', "I saw you at the palace earlier. You guys also got rejected?"],
+            ['Charlie', "That idiot officer... Said I'm too old."],
+            ['I', "I think he's right. They want young men."],
+            ['Charlie', "I'm 24!"],
+            ['I', "You look like 42."],
+            ['I', "You should have told him you are 24."],
+            ['Charlie', "I did. Then he said my face's too big to fit in a crowded ship."],
+            ['I', "Charlie..."],
+            ['Charlie', "Huh?"],
+            ['I', "He's right."],
+            ['Charlie', "Idiot officer couldn't see my strength. I can punch him to death with my little finger."],
+            ['I', "I can see that. So, would you like to join us? We only have a small ship though."],
+            ['Charlie', "You are inviting me? Yes, you are inviting me. "
+                        "Dear mum, someone's inviting me! "
+                        "I've been seeking a job for a long time."],
+            ['Charlie', "I'm in."],
+            ['I', "Welcome aboard!"],
+        ],
+    },
+
+    8: {
+        'port': 'London',
+        'building': 'any',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['Charlie', "Captain, this ship's too small to fit me."],
+            ['I', "I know I know..."],
+            ['Tommy', "But we can't afford a ship any bigger than this one."],
+            ['Charlie', "Perhaps we shall sail for Venice. I heard there are many rich merchants."],
+            ['Charlie', "I'm going to punch a few to death and inherit their wealth. "],
+            ['I', "... ... Yeah. Let's head to Venice."],
+        ],
     },
 
 }

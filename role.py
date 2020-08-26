@@ -58,7 +58,8 @@ class Role:
         self.quest_fight = None
 
         # main quests sequence
-        self.main_events_ids = [3,2,1]
+        self.main_events_ids = list(range(1, len(events_dict) + 1))
+        self.main_events_ids = list(reversed(self.main_events_ids))
 
         self.conn = None
 
@@ -67,13 +68,17 @@ class Role:
 
     # anywhere
     def get_pending_event(self):
-        event_id = self.main_events_ids[-1]
-        event = Event(event_id)
-        return event
+        if self.main_events_ids:
+            event_id = self.main_events_ids[-1]
+            event = Event(event_id)
+            return event
+        else:
+            return None
 
     def trigger_quest(self, params):
         """when an event is triggered, delete event id"""
-        self.main_events_ids.pop()
+        if self.main_events_ids:
+            self.main_events_ids.pop()
 
     def _get_other_role_by_name(self, name):
 
@@ -1407,12 +1412,9 @@ if __name__ == '__main__':
     role = default_role
 
     # testing 4 steps
-    print(role.gold)
-    print(role.bank_gold)
-
-    role.withdraw_gold([2000])
-    role.borrow([22])
-    # role.repay([600])
-
-    print(role.gold)
-    print(role.bank_gold)
+    while role.main_events_ids:
+        event = role.get_pending_event()
+        for i in event.dialogues:
+            print(i)
+        print('xxxxxxxxxxx')
+        role.trigger_quest([])

@@ -1,0 +1,49 @@
+
+1 london, any building:
+    john heard his father is back, so he heads to port
+
+2 london, port:
+    john gets a letter from his father asking him to visit Tommy
+
+3 amsterdam, bar
+    tommy joins
+    asks to visit his teacher in Copenhagen church before leaving
+
+4 Copenhagen, church
+    tommy meets his teacher Garry
+    Garry asks him to travel in his stead
+
+5 Copenhagen, anywhere
+    tommy asks where to go
+    I saw an ad asking poeple to join the navy, so let's head to london palace to join
+
+6 London, palace
+    rejected and ridiculed by navy officer
+    wants to have a drink
+
+7 London, bar
+    meets a drunk named Charlie Stephens
+    charlie joins
+
+8 London, any
+    charlie suggests seeking an accountant in Venice
+
+#####################
+8 Venice, anywhere
+    Charlie suggests visiting the market here
+
+9 Venice, market
+    first meets Mark Reed
+    Tommy suggests going to inn to sleep
+
+10 Venice, inn
+    meets Mark again
+    Mark joins
+    suggests buying glass beads from Amsterdam, and sell to Africa
+
+11 Amsterdam, market
+    Mark suggests going to Mosanbic to sell glass beads
+
+12 Mosanbic, market
+    suggests next option
+

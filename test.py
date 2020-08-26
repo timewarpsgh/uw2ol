@@ -1,6 +1,10 @@
-a = [1,2,3]
-a.pop()
+a = list(range(1,4))
+a = list(reversed(a))
 print(a)
+
+
+for i in a:
+    print(i)
 
 
 

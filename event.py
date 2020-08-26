@@ -15,6 +15,7 @@ class Event:
         # figure image
         self.figure_images = dic['figure_images']
 
+        # action if any
         self.action_to_perform = None
         if 'action_to_perform' in dic:
             self.action_to_perform = dic['action_to_perform']
