@@ -34,12 +34,14 @@ Venice, anywhere
 Venice, market
     first meets Amy Clement
     Tommy suggests going to inn to sleep
-    
-#####################
+
 Venice, inn
-    meets Mark again
-    Mark joins
-    suggests buying glass beads from Amsterdam, and sell to Africa
+    meets Amy again
+    Amy joins
+
+#####################
+Venice, any
+    Amy suggests buying glass beads from Amsterdam, and sell to Africa
 
 Amsterdam, market
     Mark suggests going to Mosanbic to sell glass beads

@@ -159,8 +159,8 @@ events_dict = {
             'Guy': [8, 1],
         },
         'dialogues': [
-            ['I', "Hi, what's the most unexpensive drink here?"],
-            ['Girl', "un... That'll be our beer with water."],
+            ['I', "Hi, what's the most inexpensive drink here?"],
+            ['Girl', "in... That'll be our beer with water."],
             ['I', "Two dozen, please."],
             ['Girl', "Wait a second ..."],
             ['Guy', "Hey you two. Your beer with water."],
@@ -238,13 +238,13 @@ events_dict = {
         },
         'dialogues': [
             ['Seller', "Look, miss. You have eyes. These are the best apples you can ever find here."],
-            ['Amy', "I don't dout that. Can you give me a more reasonable price? 5 is too much."],
+            ['Amy', "I don't doubt that. Can you give me a more reasonable price? 5 is too much."],
             ['Amy', "People in my town won't be able to afford it. "
                     "I wish only to provide healthy food for everyone."],
             ['Seller', "...Alright. I'll make it 4, if you are buying 100 of them."],
             ['Amy', "That's very kind of you. I'll buy 150 if you make it 3."],
             ['Seller', "3? Are you nuts? I'd go bankrupt before you return to your store."],
-            ['Amy', "This isn't my first time here. Everyone in my town love your apples. "
+            ['Amy', "This isn't my first time here. Everyone in my town loves your apples. "
                     "I'm pretty sure the demand will continue so long as you are alive. "
                     "Even I myself eat apples daily."],
             ['Seller', "No, I can't. I have a family to raise, Miss."],
@@ -262,16 +262,40 @@ events_dict = {
     11: {
         'port': 'Venice',
         'building': 'inn',
+        'action_to_perform': ['hire_mate', [4]],
         'figure_images': {
             'I': [1, 1],
             'Charlie': [15, 3],
             'Amy': [6, 8],
             'Tommy': [16, 4],
+            'Lady': [13, 6],
         },
         'dialogues': [
-            ['Seller', "Look, Miss. You have eyes. These are the best apples you can ever find here."],
-            ['Amy', "I don't dout that. Can you give me a more reasonable price? 5 is too much."],
-
+            ['Amy', "Do you have a smaller room? "],
+            ['Lady', "I'm afraid this one's the smallest we have, miss."],
+            ['Amy', "Can I have a lower price, Lady? I'll leave early tomorrow. "
+                    "And I'll leave the room a better place. "],
+            ['Charlie', "Isn't that the miss we saw in the market?"],
+            ['I', "Yup. That's her."],
+            ['I', "Hey you! Are you not going back with your apples? "],
+            ['Amy', "Oh, you guys. Thank you again for helping negotiate the price. "
+                    "I had bad luck. My apples were gone, stolen by the wagon guy I hired " 
+                    "while I was not paying attention. "],
+            ['I', "That's unfortunate."],
+            ['Charlie', "Oh... Poor you. I'll punch the guy to death if ever meet him."],
+            ['Tommy', "You should be more careful. Things happen when you're on the road."],
+            ['I', "What's your plan? "],
+            ['Amy', "I'll just stay here for the night, and revisit the market tomorrow. "
+                    "I have some savings in the bank. "],
+            ['I', "Strong girl."],
+            ['Amy', "Just have to."],
+            ['Charlie', "Why don't you join us? We can protect you."],
+            ['I', "Yeah. Join us. We offer protection and better income. We have a ship."],
+            ['Amy', "Really? Count me in. "],
+            ['I', "We don't even know your name."],
+            ['Amy', "It's Amy Clement."],
+            ['Charlie', "Welcome Amy."],
+            ['Tommy', "Welcome. We are thrilled to have you. There aren't many girls on ships."],
         ],
     },
 
