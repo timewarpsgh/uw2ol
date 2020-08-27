@@ -160,10 +160,10 @@ events_dict = {
         },
         'dialogues': [
             ['I', "Hi, what's the most unexpensive drink here?"],
-            ['Girl', "un... That'll be our bear with water."],
+            ['Girl', "un... That'll be our beer with water."],
             ['I', "Two dozen, please."],
             ['Girl', "Wait a second ..."],
-            ['Guy', "Hey you two. Your bear with water."],
+            ['Guy', "Hey you two. Your beer with water."],
             ['I', "... Thank you. Where... Never mind..."],
             ['Tommy', "I want more."],
             ['I', "No you don't."],
@@ -210,6 +210,68 @@ events_dict = {
             ['Charlie', "Perhaps we shall sail for Venice. I heard there are many rich merchants."],
             ['Charlie', "I'm going to punch a few to death and inherit their wealth. "],
             ['I', "... ... Yeah. Let's head to Venice."],
+        ],
+    },
+
+    9: {
+        'port': 'Venice',
+        'building': 'any',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+        },
+        'dialogues': [
+            ['Charlie', "All merchants go to the market."],
+            ['I', "Right. Let's go."],
+        ],
+    },
+
+    10: {
+        'port': 'Venice',
+        'building': 'market',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Amy': [6, 8],
+            'Seller': [12, 1],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['Seller', "Look, miss. You have eyes. These are the best apples you can ever find here."],
+            ['Amy', "I don't dout that. Can you give me a more reasonable price? 5 is too much."],
+            ['Amy', "People in my town won't be able to afford it. "
+                    "I wish only to provide healthy food for everyone."],
+            ['Seller', "...Alright. I'll make it 4, if you are buying 100 of them."],
+            ['Amy', "That's very kind of you. I'll buy 150 if you make it 3."],
+            ['Seller', "3? Are you nuts? I'd go bankrupt before you return to your store."],
+            ['Amy', "This isn't my first time here. Everyone in my town love your apples. "
+                    "I'm pretty sure the demand will continue so long as you are alive. "
+                    "Even I myself eat apples daily."],
+            ['Seller', "No, I can't. I have a family to raise, Miss."],
+            ['Amy', "Your beard looks cute."],
+            ['Seller', "Don't flatter me. That dosen't work. "],
+            ['Charlie', "I'll punch you to death if that dosen't work. "],
+            ['Seller', "... Please... Don't... 3. I'll make it 3. "],
+            ['Amy', "Thank you, Sir!"],
+            ['Charlie', "My pleasure. "],
+            ['I', "You did right, Charlie. I was worried you might puch the miss."],
+            ['Tommy', "The market place's closing soon. We'd better find a place for the night."],
+        ],
+    },
+
+    11: {
+        'port': 'Venice',
+        'building': 'inn',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Amy': [6, 8],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['Seller', "Look, Miss. You have eyes. These are the best apples you can ever find here."],
+            ['Amy', "I don't dout that. Can you give me a more reasonable price? 5 is too much."],
+
         ],
     },
 

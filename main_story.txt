@@ -28,22 +28,22 @@
 8 London, any
     charlie suggests seeking an accountant in Venice
 
-#####################
-8 Venice, anywhere
+Venice, anywhere
     Charlie suggests visiting the market here
 
-9 Venice, market
-    first meets Mark Reed
+Venice, market
+    first meets Amy Clement
     Tommy suggests going to inn to sleep
-
-10 Venice, inn
+    
+#####################
+Venice, inn
     meets Mark again
     Mark joins
     suggests buying glass beads from Amsterdam, and sell to Africa
 
-11 Amsterdam, market
+Amsterdam, market
     Mark suggests going to Mosanbic to sell glass beads
 
-12 Mosanbic, market
+Mosanbic, market
     suggests next option
 
