@@ -299,6 +299,103 @@ events_dict = {
         ],
     },
 
+    12: {
+        'port': 'Venice',
+        'building': 'any',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Amy': [6, 8],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['I', "We are a working team now. But what should we do?"],
+            ['Charlie', "If we had a bigger ship, I'd vote for doing some privateering. "
+                        "I need some exercise. "],
+            ['Tommy', "Amy, you are familiar with business. Any advice? "],
+            ['Amy', "Me? I only did some small business on land. "
+                    "But I do sometimes hear people talking about profitable routes."],
+            ['Amy', "Based on our current situation, "
+                    "I'd recommend that we ship glass beads from Amsterdam to Mozambique in East Africa. "
+                    "They say glass beads are like sand in Amsterdam. "],
+
+            ['I', "Sounds like a good idea. "],
+            ['Amy', "Please make sure our ship's fully ready to trade though. "
+                    "All space should be reserved for cargo, "
+                    "and we want as few crew as possilbe so we last longer at sea. "
+                    "We might encounter piates, but they most likely won't be interested in us."],
+            ['Charlie', "+ + Oh my God. Amy is the best."],
+        ],
+    },
+
+    13: {
+        'port': 'Amsterdam',
+        'building': 'market',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Amy': [6, 8],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['Amy', "Wow... I heard they are cheap, but how could they be this cheap..."],
+            ['Tommy', "I workd nearby for a while. "
+                      "They developed technology that turns sand into glass. "
+                      "I've always wondered how they managed to do that."],
+            ['I', "We'll do this. Mozambique right?"],
+            ['Amy', "Right."],
+        ],
+    },
+
+    14: {
+        'port': 'Mozambique',
+        'building': 'market',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Amy': [6, 8],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['Charlie', "Amy, are you OK?"],
+            ['Amy', "... No, I'm not. This is insane. They are willing to pay more than 100 for glass beads. "
+                    "How much did we pay in Amsterdam? "],
+            ['I', "I forgot."],
+            ['Tommy', "I'm ... not that sensitive to numbers you know."],
+            ['Amy', "The sell price is more than 30 times the buy price."],
+            ['I', "That's bizzare..."],
+            ['Charlie', "Is it like punching 30 men to death just by myself?"],
+            ['Tommy', "30? That's too much. No ship can sail at 30 knots."],
+            ['I', "I've started to love these little guys."],
+        ],
+    },
+
+    15: {
+        'port': 'Mozambique',
+        'building': 'any',
+        'figure_images': {
+            'I': [1, 1],
+            'Charlie': [15, 3],
+            'Amy': [6, 8],
+            'Tommy': [16, 4],
+        },
+        'dialogues': [
+            ['Charlie', "We are rich now. Let's get a big ship."],
+            ['I', "Charlie, we just got out from poverty. We are no where close to rich. "
+                  "Ships are real expensive."],
+            ['Charlie', "But can we get a slightly bigger one? My face is about to revolt."],
+            ['I', "We can probably afford a slightly bigger ship."],
+            ['Amy', "Captain, I think we should start builing a fleet. "
+                    "If you want max profit, building a fleet of small ships costs less than having a large ship."],
+            ['I', "That's true."],
+            ['Tommy', "I think we are rich enough to start exploring the world. We don't need a feet to explore. "
+                      "That's going to slow up down. I wish I could report more discoveries before Mr. Garry "
+                      "completely loses his eyesight."],
+            ['I', "I understand, Tommy."],
+
+        ],
+    },
+
 }
 
 if __name__ == '__main__':

@@ -39,13 +39,14 @@ Venice, inn
     meets Amy again
     Amy joins
 
-#####################
 Venice, any
     Amy suggests buying glass beads from Amsterdam, and sell to Africa
 
 Amsterdam, market
     Mark suggests going to Mosanbic to sell glass beads
 
-Mosanbic, market
+Mozambique, market
     suggests next option
-
+#####################
+Mozambique, any
+    what to do next

@@ -58,9 +58,7 @@ to do
 
     invalid input bug (OK)
 
-    release (OK)
-
-    show lv (on)
+    release (ON)
 
     main story line (ON)
 
