@@ -60,11 +60,7 @@ to do
 
     release (OK)
 
-    talk with some people (ON)
-        hu ge (no response)
-        johan li (no response)
-        zbj programmer (talked)
-        yun cheng guo
+    show lv (on)
 
     main story line (ON)
 

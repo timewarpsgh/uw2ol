@@ -98,6 +98,10 @@ def draw_hud(self):
     draw_text(self, 'A.D. 1492', 10, 25)
     draw_text(self, 'Morning', 10, 139)
 
+        # LV
+    draw_text(self, 'Lv', 10, c.WINDOW_HIGHT - 120 - 40)
+    draw_text(self, str(self.my_role.mates[0].lv), 10, c.WINDOW_HIGHT - 120 - 20)
+
         # gold ingots
     gold_ingots = int(self.my_role.gold / 10000)
     gold_coins = self.my_role.gold - (gold_ingots * 10000)
