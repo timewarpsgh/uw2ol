@@ -1,10 +1,6 @@
-a = list(range(1,4))
-a = list(reversed(a))
-print(a)
+import tensorflow as tf
+from tensorflow import keras
 
 
-for i in a:
-    print(i)
-
-
-
+fashion_mnist = keras.datasets.fashion_mnist
+(X_train_full, y_train_full), (X_test, y_test) = fashion_mnist.load_data()

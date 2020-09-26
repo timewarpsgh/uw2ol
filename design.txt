@@ -58,11 +58,9 @@ to do
 
     invalid input bug (OK)
 
-    release (ON)
-
     main story line (ON)
 
-
+    chinese support (ON)
 
 
 
