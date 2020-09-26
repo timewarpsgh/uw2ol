@@ -107,8 +107,7 @@ Introduction to Project uw2ol(Uncharted Waters 2 Online)
     Run it
         You can run the server and multiple clients locally.
 
-        1 get python and the missing libraries(consider using a mirror if it's slow)
-        2 get MySQL
+        1 get MySQL
             create a database named py_test
             set password to dab9901025
             create a table named accounts
@@ -118,6 +117,9 @@ Introduction to Project uw2ol(Uncharted Waters 2 Online)
                 pw              char         12
                 online          tinyint      1       0
                 role            char         12
+
+        2 get python and the missing libraries(consider using a mirror if it's slow)
+            (if it misses a module named PIL, install Pillow instead)
 
         3 run server_1.py
         4 run client.pyw
