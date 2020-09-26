@@ -105,5 +105,31 @@ Introduction to Project uw2ol(Uncharted Waters 2 Online)
             main_story
                 the storyline
     Run it
+        You can run the server and multiple clients locally.
 
-        Coming soon...
+        1 get python and the missing libraries(consider using a mirror if it's slow)
+        2 get MySQL
+            create a database named py_test
+            set password to dab9901025
+            create a table named accounts
+                column name     data type    length  DEFAULT     PK?   NOT NULL?   AUTO INCR?
+                id              int          11                  T     T           T
+                name            char         12
+                pw              char         12
+                online          tinyint      1       0
+                role            char         12
+
+        3 run server_1.py
+        4 run client.pyw
+
+        now you are in.
+
+        shortcut to login:
+            if you have an account like this:
+                account 1
+                password 1
+            you can login by just pressing 1
+
+            any number from 1-9 will work
+
+
