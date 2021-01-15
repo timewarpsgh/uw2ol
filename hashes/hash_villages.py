@@ -54,7 +54,8 @@ villages_dict = {
         'x': 228,
         'latitude': '20N',
         'longitude': '112w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A round stone monument symbolizing the sun and the seasons. "
+                       "It represents the Aztec people's concept of the universe.",
     },
     13: {
         'name': 'Stone Face',
@@ -62,7 +63,7 @@ villages_dict = {
         'x': 242,
         'latitude': '15N',
         'longitude': '109w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A stone bust excavated from Tenochtitlan.",
     },
     11: {
         'name': 'Crystal Skull',
@@ -70,7 +71,8 @@ villages_dict = {
         'x': 266,
         'latitude': '13N',
         'longitude': '105w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "An elaborately sculptured crystal skull "
+                       "used for generations in rituals by tribal leaders.",
     },
     8: {
         'name': 'Jade Mask',
@@ -78,7 +80,8 @@ villages_dict = {
         'x': 280,
         'latitude': '18N',
         'longitude': '103w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A mask encrusted with small pieces of jade. "
+                       "Its eye holes give it a somewhat ominous appearance.",
     },
     7: {
         'name': 'Popol Vuh',
@@ -86,7 +89,8 @@ villages_dict = {
         'x': 310,
         'latitude': '12N',
         'longitude': '98w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A manuscript of Mayan legends, "
+                       "describing their philosophy, cosmology, and history.",
     },
     44: {
         'name': "Venus' Flytrap",
@@ -94,7 +98,9 @@ villages_dict = {
         'x': 312,
         'latitude': '33N',
         'longitude': '98w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Insect-eating plant with a jaw-shaped flower "
+                       "that bears sharp spines and secretes a sweet liquid. "
+                       "Once its jaws snap shut they won't reopen until the prey has been digested.",
     },
     87: {
         'name': 'Giant Tortoise',
@@ -102,7 +108,9 @@ villages_dict = {
         'x': 322,
         'latitude': '5S',
         'longitude': '96w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A large, slow-moving tortoise that can weigh as much as 500 pounds. "
+                       "Its domed shell sometimes grows as long as three feet "
+                       "and serves as protection for its elephant-like skin.",
     },
     43: {
         'name': 'Niagara Falls',
@@ -110,7 +118,9 @@ villages_dict = {
         'x': 336,
         'latitude': '42N',
         'longitude': '94w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A magnificent waterfall, about 158 feet high and 3010 feet wide. "
+                       "Ancient people must have thought that the edge of the earth "
+                       "looks something like this.",
     },
     46: {
         'name': 'Mammoth',
@@ -118,7 +128,8 @@ villages_dict = {
         'x': 338,
         'latitude': '88N',
         'longitude': '93w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A legendary giant elephant with "
+                       "a coat of brown wool and long tusks that curve upward.",
     },
     14: {
         'name': 'Mural of Marnalico',
@@ -126,7 +137,7 @@ villages_dict = {
         'x': 344,
         'latitude': '8N',
         'longitude': '92w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A mural of warriors and hunting gods.",
     },
     9: {
         'name': 'Guatavita Lake',
@@ -134,6 +145,8 @@ villages_dict = {
         'x': 354,
         'latitude': '11N',
         'longitude': '91w',
+        'description': "A holy place for the Muisca, who throw "
+                       "gold and emeralds into the lake when their new king ascends the throne.",
     },
     15: {
         'name': 'Stone Ball',
@@ -141,7 +154,8 @@ villages_dict = {
         'x': 382,
         'latitude': '4N',
         'longitude': '86w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A perfectly spherical stone measuring about 6.5 feet in diameter. "
+                       "Its use is unknown.",
     },
     56: {
         'name': 'Temple of the Sun',
@@ -149,7 +163,8 @@ villages_dict = {
         'x': 386,
         'latitude': '9S',
         'longitude': '85w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A pyramid-shaped shrine in the central Andes, "
+                       "with distinctive frontal stairs climbing 33 feet to the top.",
     },
     54: {
         'name': 'Terracotta Figure',
@@ -157,7 +172,9 @@ villages_dict = {
         'x': 398,
         'latitude': '1N',
         'longitude': '83w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "This large sculpture represents a legendary hero worshipped by local tribes. "
+                       "Its sculpting technique and intricate design prove "
+                       "that this area has a highly advanced culture.",
     },
     63: {
         'name': 'Gold Frog',
@@ -165,7 +182,9 @@ villages_dict = {
         'x': 398,
         'latitude': '5S',
         'longitude': '83w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A tiny frog with beautiful golden skin "
+                       "that secretes a mysterious poison. "
+                       "Locals believe that this rare frog will guide one to a legendary land of gold.",
     },
     42: {
         'name': 'Totem Pole',
@@ -173,7 +192,9 @@ villages_dict = {
         'x': 404,
         'latitude': '29N',
         'longitude': '82w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Large wooden pole carved with the designs of animals. "
+                       "It symbolizes the status of the chief, "
+                       "and is sometimes used as a sign of the tribe.",
     },
     53: {
         'name': 'Vampire Bat',
@@ -181,7 +202,9 @@ villages_dict = {
         'x': 408,
         'latitude': '48S',
         'longitude': '82w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A large bat with a 12 inch wingspan. "
+                       "It uses its sharp teeth to make a shallow wound on its prey, "
+                       "secretes a liquid to prevent the wound from closing, and feeds on its blood.",
     },
     60: {
         'name': 'Leon Penguin',
@@ -189,7 +212,8 @@ villages_dict = {
         'x': 416,
         'latitude': '55S',
         'longitude': '80w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A flightless goose-sized bird that uses its wings to swim. "
+                       "Found in large flocks, it was discovered by the Portuguese navigator, Leon Franco.",
     },
     41: {
         'name': 'Passenger Pigeon',
@@ -197,7 +221,7 @@ villages_dict = {
         'x': 432,
         'latitude': '35N',
         'longitude': '78w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A beautiful pigeon with slate blue wings and a russet breast. They migrate in large flocks every spring. People say that this species will never become extinct. (Or will it?)",
     },
     61: {
         'name': 'Archaeopteryx',
@@ -205,7 +229,9 @@ villages_dict = {
         'x': 432,
         'latitude': '7S',
         'longitude': '78w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A reptilian bird thought to be an ancestor of today's birds. "
+                       "It had four legs and was unable to fly, "
+                       "but it is believed that this bird-reptile could glide.",
     },
     66: {
         'name': 'Tarantula',
@@ -213,7 +239,7 @@ villages_dict = {
         'x': 436,
         'latitude': '11S',
         'longitude': '77w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A large hairy poisonous spider that feeds on birds and small animals.",
     },
     55: {
         'name': 'Lake Titicaca',
@@ -221,7 +247,8 @@ villages_dict = {
         'x': 436,
         'latitude': '20S',
         'longitude': '77w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "The world's highest lake at an altitude of 12,500 feet in the Andes Mountains. "
+                       "The Aztecs believe that a god lives in this lake.",
     },
     62: {
         'name': 'Balsa',
@@ -229,7 +256,8 @@ villages_dict = {
         'x': 446,
         'latitude': '2S',
         'longitude': '75w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A primitive vessel used for local inter-tribal trading. "
+                       "This raft has a grass hut mounted on top and uses a square sail.",
     },
     69: {
         'name': 'Piranha',
@@ -237,7 +265,9 @@ villages_dict = {
         'x': 460,
         'latitude': '9S',
         'longitude': '73w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "The terror of South American rivers. "
+                       "It is not uncommon for these groups of fish to devour "
+                       "people or domesticated animals that try to cross their river.",
     },
     64: {
         'name': 'Matamata',
@@ -245,7 +275,7 @@ villages_dict = {
         'x': 472,
         'latitude': '0N',
         'longitude': '71w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A spiny turtle with a large diamond-shaped head and an irregular, rugged shell.",
     },
     72: {
         'name': 'Cactus',
@@ -253,7 +283,8 @@ villages_dict = {
         'x': 474,
         'latitude': '6N',
         'longitude': '71w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Spiny, fleshy plant that grows up to 6 feet tall. "
+                       "This unique plant is well-adapted for arid climates.",
     },
     59: {
         'name': 'Anteater',
@@ -261,7 +292,10 @@ villages_dict = {
         'x': 494,
         'latitude': '25S',
         'longitude': '67w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A toothless mammal with powerful claws on its front feet "
+                       "and a long tongue that comes in handy for "
+                       "catching ants - the mainstay of its diet. "
+                       "Its long tail accounts for half of its 6 foot length.",
     },
     65: {
         'name': 'Pororoca',
@@ -269,7 +303,9 @@ villages_dict = {
         'x': 500,
         'latitude': '5S',
         'longitude': '66w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "An enormous tidal wave that occurs during the new moon in April. "
+                       "Locals say that huge waves may reach over 16 feet high and "
+                       "wash everything away from the shore.",
     },
     47: {
         'name': 'Saber-toothed Tiger',
@@ -277,7 +313,8 @@ villages_dict = {
         'x': 502,
         'latitude': '87N',
         'longitude': '66w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A large carnivorous animal about 6 feet long. "
+                       "Its enormous, blade-like upper teeth extend 7 inches below its lower jaw.",
     },
     71: {
         'name': 'Toucan',
@@ -285,7 +322,7 @@ villages_dict = {
         'x': 502,
         'latitude': '35S',
         'longitude': '66w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A loud-squawking bird with a huge, brightly colored beak. It feeds chiefly on fruit.",
     },
     70: {
         'name': 'Iguana',
@@ -293,7 +330,9 @@ villages_dict = {
         'x': 506,
         'latitude': '6N',
         'longitude': '65w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A large scaly lizard, measuring about 6 feet in length. "
+                       "The row of leathery spines on its back make it look like a fierce dinosaur, "
+                       "but it's actually a gentle creature.",
     },
     58: {
         'name': 'Clay Monster',
@@ -301,7 +340,7 @@ villages_dict = {
         'x': 520,
         'latitude': '30S',
         'longitude': '63w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A clay figure of a monster with a large head and fangs.",
     },
     68: {
         'name': 'Amazon Water Lily',
@@ -309,7 +348,9 @@ villages_dict = {
         'x': 530,
         'latitude': '4S',
         'longitude': '61w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "An aquatic plant with giant floating leaves and large flowers. "
+                       "The leaves measure over 6 feet in diameter and are so strong "
+                       "that they can bear the weight of a small child.",
     },
     67: {
         'name': 'Anaconda',
@@ -317,7 +358,9 @@ villages_dict = {
         'x': 534,
         'latitude': '8S',
         'longitude': '61w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A gigantic serpent. Adults may grow 19 feet long and weigh as much as 235 pounds. "
+                       "They are found near the water and crush their victims by "
+                       "constricting them in their coils.",
     },
     57: {
         'name': 'Giant Ground Sloth',
@@ -325,7 +368,9 @@ villages_dict = {
         'x': 536,
         'latitude': '25S',
         'longitude': '60w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A slow-moving, hairy mammal with sharp claws. "
+                       "Rumor has it this 20 feet tall creature walks upright "
+                       "and feeds on leaves and branches.",
     },
     45: {
         'name': 'Great Auk',
@@ -333,7 +378,8 @@ villages_dict = {
         'x': 728,
         'latitude': '65N',
         'longitude': '28w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A flightless bird about 30 inches long that makes its home near Greenland. "
+                       "Fishermen hunt this bird for its tasty meat.",
     },
     96: {
         'name': 'Clay Mosque',
@@ -341,7 +387,9 @@ villages_dict = {
         'x': 884,
         'latitude': '15N',
         'longitude': '2w',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Supposedly, the ruins of a golden city in the Sahara. "
+                       "Time has taken its toll, but the work of conscientious desert "
+                       "dwellers have helped preserve the ancient structure.",
     },
     48: {
         'name': 'Stonehenge',
@@ -350,7 +398,9 @@ villages_dict = {
         'latitude': '51N',
         'longitude': '2w',
         'image_position': [10,4],
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Prehistoric monument, consisting of rings of stones, "
+                       "with the outermost ring made up of large stone columns. "
+                       "Believed to have been an astronomical observatory.",
     },
     95: {
         'name': 'Ant Hill',
@@ -358,7 +408,8 @@ villages_dict = {
         'x': 914,
         'latitude': '12N',
         'longitude': '2e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "These small ant castles, in their various shapes, "
+                       "often surpass the architectural feats of man.",
     },
     92: {
         'name': 'Diggos Monument',
@@ -366,7 +417,7 @@ villages_dict = {
         'x': 948,
         'latitude': '1N',
         'longitude': '8e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Someone's monument.",
     },
     94: {
         'name': 'Quagga',
@@ -374,7 +425,9 @@ villages_dict = {
         'x': 964,
         'latitude': '12S',
         'longitude': '10e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A horse-like creature related to the zebra, "
+                       "but with no stripes on its hind portion. "
+                       "It takes its name from the sound it makes, {Kwahaha.}",
     },
     91: {
         'name': 'Armadillo',
@@ -382,7 +435,8 @@ villages_dict = {
         'x': 974,
         'latitude': '6S',
         'longitude': '12e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Animal with bony plates on its back. "
+                       "When threatened, it curls up to cover its soft unprotected abdomen.",
     },
     93: {
         'name': 'Moquele Mubembe',
@@ -390,7 +444,9 @@ villages_dict = {
         'x': 1002,
         'latitude': '1S',
         'longitude': '17e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "The locals of Lake Tele have claimed to "
+                       "have seen this dinosaur from time to time. "
+                       "It's believed to be herbivorous and about 15 feet long.",
     },
     52: {
         'name': "Diaz's Monument",
@@ -398,7 +454,8 @@ villages_dict = {
         'x': 1016,
         'latitude': '30S',
         'longitude': '19e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Stone monument at the Cape of Good Hope on the southern tip of Africa. "
+                       "It was erected by Bartholomew Diaz and remains a symbol of brave sea adventurers.",
     },
     97: {
         'name': 'Moonbow',
@@ -406,7 +463,9 @@ villages_dict = {
         'x': 1050,
         'latitude': '0S',
         'longitude': '25e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A rainbow that shines gold and white in the dark night. "
+                       "Legend says that this beautiful, mysterious vision "
+                       "brings good luck to those who see it.",
     },
     51: {
         'name': 'Big Zimbabwe',
