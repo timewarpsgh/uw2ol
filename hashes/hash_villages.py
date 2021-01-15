@@ -739,7 +739,9 @@ villages_dict = {
         'x': 1574,
         'latitude': '34N',
         'longitude': '112e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Empress Zetian Wuhou's tomb. "
+                       "A hill with a circumference of 25 miles was turned into "
+                       "this huge tomb where all her treasures are buried.",
     },
     5: {
         'name': 'Frilled Lizard',
@@ -747,7 +749,9 @@ villages_dict = {
         'x': 1582,
         'latitude': '25S',
         'longitude': '113e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A lizard with a large umbrella-like frill. "
+                       "It rises up and opens the frill to intimidate "
+                       "enemies and runs away only on its rear legs.",
     },
     6: {
         'name': 'Kangaroo',
@@ -755,7 +759,9 @@ villages_dict = {
         'x': 1596,
         'latitude': '16S',
         'longitude': '116e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Its long fat tail and powerful hind legs help this animal hip-hop along. "
+                       "The newly born infants, still small and pinkish, "
+                       "crawl into a pouch on the mother's belly and remain there during infancy.",
     },
     74: {
         'name': 'Stone Buddha',
@@ -763,7 +769,7 @@ villages_dict = {
         'x': 1608,
         'latitude': '0S',
         'longitude': '118e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A huge statue of Buddha carved out of the side of a mountain.",
     },
     75: {
         'name': 'Komodo Dragon',
@@ -771,7 +777,10 @@ villages_dict = {
         'x': 1620,
         'latitude': '5S',
         'longitude': '120e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A giant slow-moving lizard found only in secluded parts of "
+                       "Indonesia that can grow up to 10 feet long. "
+                       "It uses its long, sharp claws and jagged teeth "
+                       "to attack animals even as large as a small deer.",
     },
     83: {
         'name': 'Tree Snake',
@@ -779,7 +788,8 @@ villages_dict = {
         'x': 1630,
         'latitude': '15N',
         'longitude': '121e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A slender snake about 3 feet long. "
+                       "The name comes from the fact that it makes its home in trees.",
     },
     23: {
         'name': 'Plant Worm',
@@ -787,7 +797,8 @@ villages_dict = {
         'x': 1656,
         'latitude': '37N',
         'longitude': '126e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A strange insect which transforms itself into a fungus during the summer. "
+                       "It is highly valued in China as a tonic and an elixir.",
     },
     82: {
         'name': 'Durian',
@@ -795,7 +806,9 @@ villages_dict = {
         'x': 1658,
         'latitude': '13N',
         'longitude': '126e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A fruit that is covered with sharp needles. "
+                       "Some say that it is the most delicious of all tropical forest fruits, "
+                       "but it smells so bad that most don't dare taste it.",
     },
     3: {
         'name': 'Ayers Rock',
@@ -803,7 +816,8 @@ villages_dict = {
         'x': 1658,
         'latitude': '28S',
         'longitude': '126e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A legend says that there is a humongous red "
+                       "monolith in the center of this continent.",
     },
     90: {
         'name': 'Fruit Bat',
@@ -811,7 +825,8 @@ villages_dict = {
         'x': 1710,
         'latitude': '10N',
         'longitude': '135e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Just as the name suggests, this bat lives off of fruit. "
+                       "It is a very rare delicacy at tables throughout the area.",
     },
     78: {
         'name': 'Greater Bird of Paradise',
@@ -819,7 +834,9 @@ villages_dict = {
         'x': 1722,
         'latitude': '3S',
         'longitude': '137e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "The male of this beautiful bird has a yellow head, "
+                       "long tail and dark-green throat, "
+                       "but the female has only short feathers and is rather dull in color.",
     },
     22: {
         'name': 'Toro Ruins',
@@ -827,7 +844,9 @@ villages_dict = {
         'x': 1730,
         'latitude': '35N',
         'longitude': '138e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Ruins of farming villages dating from around 300 B.C. "
+                       "The villages had rice fields orderly divided by "
+                       "strong ridges and storehouses with elevated floors.",
     },
     21: {
         'name': 'Namahage',
@@ -835,7 +854,9 @@ villages_dict = {
         'x': 1736,
         'latitude': '39N',
         'longitude': '139e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "Fabled demons that kidnap and devour bad children. "
+                       "The legend is told in a traditional festival "
+                       "where men disguise themselves as demons to scare the town's children.",
     },
     1: {
         'name': 'Kiwi',
@@ -843,7 +864,10 @@ villages_dict = {
         'x': 1736,
         'latitude': '12S',
         'longitude': '139e',
-        'description':"""Named for its cry, this is a flightless, nocturnal bird with a small head and a long, slender bill that has nostrils near the tip. It uses its highly developed sense of smell to find its food.""",
+        'description':"Named for its cry, this is a flightless, nocturnal bird with a "
+                      "small head and a long, slender bill that has "
+                      "nostrils near the tip. It uses its highly developed "
+                      "sense of smell to find its food.",
         'image_x':1,
         'image_y':1,
     },
@@ -853,7 +877,8 @@ villages_dict = {
         'x': 1764,
         'latitude': '36S',
         'longitude': '144e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A 30 inch long nocturnal animal that feeds on small animals and carrion. "
+                       "It hides in the cracks of rocks and trees.",
     },
     2: {
         'name': 'Koala',
@@ -874,7 +899,8 @@ villages_dict = {
         'x': 1810,
         'latitude': '6N',
         'longitude': '151e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A rare snail with a beautiful shell that lives deep in the sea. "
+                       "Its shell is used as an amulet by tribal leaders and shamans in the area.",
     },
     89: {
         'name': 'Moa',
@@ -882,7 +908,9 @@ villages_dict = {
         'x': 1950,
         'latitude': '34S',
         'longitude': '175e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "An ostrich-like bird incapable of flight, "
+                       "measuring over 10 feet in height. "
+                       "Its massive and well-developed hind legs help it run very fast.",
     },
     86: {
         'name': 'Nasiped',
@@ -890,7 +918,9 @@ villages_dict = {
         'x': 1962,
         'latitude': '12S',
         'longitude': '177e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A creature rumored to resemble a mouse "
+                       "that walks upside down using its highly developed nose. "
+                       "This odd creature is probably fantastical.",
     },
     50: {
         'name': "Stellar's Sea Cow",
@@ -898,7 +928,9 @@ villages_dict = {
         'x': 1972,
         'latitude': '75N',
         'longitude': '178e',
-        'description': "A large lizard with black and yellow bead-like scales. ",
+        'description': "A large water mammal about 10 feet long. "
+                       "The head resembles a seal and its rear part has a fish-like shape. "
+                       "Locals say its meat is delicious.",
     },
 }
 
