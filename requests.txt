@@ -1,6 +1,10 @@
 travel ON
-    discoveries descriptions ON
-    images
+    discoveries descriptions OK
+    images OK
+    sail into rivers
+    some cities can't enter
+    some buildings in asia can't enter
+
 
 
 business
