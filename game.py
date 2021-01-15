@@ -184,22 +184,47 @@ class Game():
         if self.my_role:
             # my role
             my_role = self.my_role
-            if my_role.moving and my_role.can_move(my_role.direction):
-                my_role.speed_counter += 1
-                if my_role.speed_counter == my_role.speed_counter_max:
-                    my_role.move([my_role.direction])
-                    my_role.speed_counter = 0
+            if my_role.moving:
+                # can i move
+                do_move = False
+                if my_role.can_move(my_role.direction):
+                    do_move = True
+                else:
+                    for alt_direction in c.ALTERNATIVE_DIRECTIONS[my_role.direction]:
+                        if my_role.can_move(alt_direction):
+                            my_role.direction = alt_direction
+                            do_move = True
+                            continue
 
-                    # update sea image
-                    self.update_sea_image()
+                # do move
+                if do_move:
+                    my_role.speed_counter += 1
+                    if my_role.speed_counter == my_role.speed_counter_max:
+                        my_role.move([my_role.direction])
+                        my_role.speed_counter = 0
+
+                        # update sea image
+                        self.update_sea_image()
 
             # other roles
             for role in self.other_roles.values():
-                if role.moving and role.can_move(role.direction):
-                    role.speed_counter +=1
-                    if role.speed_counter == role.speed_counter_max:
-                        role.move([role.direction])
-                        role.speed_counter = 0
+                if role.moving:
+                    # can he move?
+                    do_move = False
+                    if role.can_move(role.direction):
+                        do_move = True
+                    else:
+                        for alt_direction in c.ALTERNATIVE_DIRECTIONS[role.direction]:
+                            if role.can_move(alt_direction):
+                                role.direction = alt_direction
+                                do_move = True
+                                continue
+                    # do move
+                    if do_move:
+                        role.speed_counter +=1
+                        if role.speed_counter == role.speed_counter_max:
+                            role.move([role.direction])
+                            role.speed_counter = 0
 
     def update_sea_image(self):
         if self.my_role.map == 'sea':

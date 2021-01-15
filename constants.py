@@ -45,6 +45,17 @@ RED = (255, 0, 0)
 PIXELS_COVERED_EACH_MOVE = 16
 MOVE_TIME_INVERVAL = 0.01
 DEVELOPER_MODE_ON = True
+ALTERNATIVE_DIRECTIONS = {
+    'up': ['ne', 'nw'],
+    'down': ['se', 'sw'],
+    'right': ['ne', 'se'],
+    'left': ['nw', 'sw'],
+    'ne': ['up', 'right'],
+    'nw': ['up', 'left'],
+    'se': ['right', 'down'],
+    'sw': ['down', 'left'],
+}
+
 
 # in battle
 BATTLE_TILE_SIZE = 32
