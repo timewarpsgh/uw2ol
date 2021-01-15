@@ -651,7 +651,7 @@ class MenuClickHandlerForItems():
             # make text from dict
             text = ''
             for k, v in dict.items():
-                text += f'{k}:{v}<br>'
+                text += f'{v}<br>'
 
             # get figure image
             figure_surface = discovery_x_y_2_image(discovery.image_x, discovery.image_y)
