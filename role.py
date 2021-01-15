@@ -642,7 +642,8 @@ class Role:
 
         if self.ships[num] and len(self.ships) >= 2:
             self.gold += int(self.ships[num].price / 2)
-            self.ships[num].captain.relieve_duty()
+            if self.ships[num].captain:
+                self.ships[num].captain.relieve_duty()
             del self.ships[num]
             print('now ships:', len(self.ships))
 

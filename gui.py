@@ -877,9 +877,11 @@ class MenuClickHandlerForBattle():
 
         # new menu
         dict = {}
+        index = 0
         for ship in enemy_ships:
             dict[ship.name] = [self.game.button_click_handler.menu_click_handler.\
-                ships.show_one_ship, [ship, True]]
+                ships.show_one_ship, [ship, True, index]]
+            index += 1
         self.game.button_click_handler.make_menu(dict)
 
     def set_target(self):
@@ -1454,6 +1456,7 @@ class JobHouse:
         else:
             # generate random discovery
             discovery_id = random.randint(1, 98)
+            # discovery_id = 48 (stonehenge, near london, for testing)
             discovery = Discovery(discovery_id)
 
             # make menu

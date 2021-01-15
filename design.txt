@@ -33,34 +33,7 @@ protocols
         shoot_ship          my_ship_id target_ship_id
 
 to do
-    think about Minimal Viable Product (ALWAYS!)
 
-    mates (OK)
-        all attributes should be useful (OK)
-            seamanship (OK)
-            luck  (Later)
-            knowledge (buy low) (OK)
-            intuition (sell high) (OK)
-            courage  shoot(OK)
-            swordplay engage(OK)
-
-            accounting (OK)
-            gunnery (OK)
-            navigation (OK)
-
-            accountant (OK)
-            chief_navigator (OK)
-            first_mate (ON)
-
-    use of bank (OK)
-
-    port button only for DEV mode (OK)
-
-    invalid input bug (OK)
-
-    main story line (ON)
-
-    chinese support (ON)
 
 
 

@@ -100,6 +100,15 @@ class Database:
                     default_role.ships.append(ship0)
                     mate0.set_as_captain_of(ship0)
 
+                    ship1 = Ship('Reagan1', 'Frigate')
+                    ship1.crew = 20
+                    default_role.ships.append(ship1)
+
+                    mate1 = Mate(2)
+                    mate1.name = 'Mike'
+                    default_role.mates.append(mate1)
+                    mate1.set_as_captain_of(ship1)
+
                 default_role.discoveries[2] = 1
 
                 default_role.mates[0].exp = 100
