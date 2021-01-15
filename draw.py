@@ -236,6 +236,15 @@ def ship_direction_2_rect_in_sprite_sheet(self, direction, others=False):
         elif direction == 'down':
             ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 4, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
 
+        elif direction == 'ne':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 2, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+        elif direction == 'nw':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 6, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+        elif direction == 'se':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 2, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+        elif direction == 'sw':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 6, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+
     # frame 2
     else:
         if direction == 'right':
@@ -246,6 +255,15 @@ def ship_direction_2_rect_in_sprite_sheet(self, direction, others=False):
             ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 1, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
         elif direction == 'down':
             ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 5, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+
+        elif direction == 'ne':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 3, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+        elif direction == 'nw':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 7, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+        elif direction == 'se':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 3, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
+        elif direction == 'sw':
+            ship_rect = ship_rect.move(c.SHIP_SIZE_IN_PIXEL * 7, c.SHIP_SIZE_IN_PIXEL * row_in_sprite)
 
     return ship_rect
 

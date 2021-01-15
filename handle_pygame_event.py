@@ -139,6 +139,15 @@ def other_keys_down(self, event):
     elif event.key == ord('s'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
 
+    elif event.key == ord('e'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
+    elif event.key == ord('q'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
+    elif event.key == ord('z'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'sw'])
+    elif event.key == ord('x'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'se'])
+
     # logins
     if chr(event.key).isdigit():
         self.connection.send('login', [chr(event.key), chr(event.key)])
@@ -156,7 +165,7 @@ def other_keys_down(self, event):
                 self.timer_at_sea.stop()
 
     # enter building
-    if event.key == ord('z'):
+    if event.key == ord('f'):
         self.button_click_handler.menu_click_handler.cmds.enter_building()
 
     # battle
@@ -230,7 +239,7 @@ def key_up(self, event):
     key = chr(event.key)
 
     # stop moving
-    if key in ['w', 's', 'a', 'd']:
+    if key in ['w', 's', 'a', 'd', 'e', 'q', 'z', 'x']:
         try:
             self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])
         except:

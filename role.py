@@ -214,6 +214,7 @@ class Role:
     def move(self, params):
         direction = params[0]
 
+        # basic 4 directions
         if direction == 'up':
             self.y -= c.PIXELS_COVERED_EACH_MOVE
             self.direction = 'up'
@@ -226,6 +227,23 @@ class Role:
         elif direction == 'right':
             self.x += c.PIXELS_COVERED_EACH_MOVE
             self.direction = 'right'
+        # additional 4 directions
+        elif direction == 'ne':
+            self.y -= c.PIXELS_COVERED_EACH_MOVE
+            self.x += c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'ne'
+        elif direction == 'nw':
+            self.y -= c.PIXELS_COVERED_EACH_MOVE
+            self.x -= c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'nw'
+        elif direction == 'se':
+            self.y += c.PIXELS_COVERED_EACH_MOVE
+            self.x += c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'se'
+        elif direction == 'sw':
+            self.y += c.PIXELS_COVERED_EACH_MOVE
+            self.x -= c.PIXELS_COVERED_EACH_MOVE
+            self.direction = 'sw'
 
         self.person_frame *= -1
 
@@ -244,7 +262,7 @@ class Role:
             y = int(self.x / 16)
             x = int(self.y / 16)
 
-            # directions
+            # basic 4 directions
             if direction == 'up':
                 if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
                     if self.y > 0:
@@ -272,18 +290,32 @@ class Role:
             y = int(self.x / 16)
             x = int(self.y / 16)
 
-            # directions
+            # basic 4 directions
             if direction == 'up':
-                if int(piddle[x - 1, y]) in c.WALKABLE_TILES:
+                if int(piddle[x - 1, y]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'down':
-                if int(piddle[x + 2, y]) in c.WALKABLE_TILES:
+                if int(piddle[x + 2, y]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'left':
-                if int(piddle[x + 1, y - 1]) in c.WALKABLE_TILES:
+                if int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'right':
-                if int(piddle[x + 1, y + 2]) in c.WALKABLE_TILES:
+                if int(piddle[x + 1, y + 2]) in c.SAILABLE_TILES:
+                    return True
+
+            # additional 4 directions
+            elif direction == 'ne':
+                if int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES:
+                    return True
+            elif direction == 'nw':
+                if int(piddle[x - 1, y - 1]) in c.SAILABLE_TILES:
+                    return True
+            elif direction == 'se':
+                if int(piddle[x + 1, y + 1]) in c.SAILABLE_TILES:
+                    return True
+            elif direction == 'sw':
+                if int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
                     return True
 
             # ret
