@@ -385,7 +385,7 @@ class Role:
             if self.GAME:
                 self.GAME.button_click_handler.make_message_box("Have seen this.")
         else:
-            if self.quest_discovery == discovery_id:
+            if self.quest_discovery == discovery_id or True:
                 self.discoveries[discovery_id] = 1
                 self.mates[0].exp += 100
 

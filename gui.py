@@ -828,7 +828,9 @@ class MenuClickHandlerForCmds():
         if village_id:
             self.game.change_and_send('discover', [village_id])
         else:
-            self.game.button_click_handler.make_message_box("Can't find anything.")
+            discovery_id = random.randint(0, 90)
+            self.game.change_and_send('discover', [discovery_id])
+            # self.game.button_click_handler.make_message_box("Can't find anything.")
 
 
 

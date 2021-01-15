@@ -1,4 +1,6 @@
 travel ON
+    discoveries descriptions ON
+    images
 
 
 business

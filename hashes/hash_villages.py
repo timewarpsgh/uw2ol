@@ -5,6 +5,9 @@ villages_dict = {
         'x': 128,
         'latitude': '38N',
         'longitude': '128w',
+        'description': "Ground-dwelling squirrel-like mammals 11 - 16 inches long. "
+                       "They make their home underground in a complex system of interconnecting "
+                       "burrows with many entrances.",
     },
     85: {
         'name': 'Moai',
@@ -12,6 +15,9 @@ villages_dict = {
         'x': 134,
         'latitude': '34S',
         'longitude': '127w',
+        'description': "Giant stone statues ranging from 15 to 60 feet high. "
+                       "They're carved with large faces, long ears and short bodies.",
+
     },
     40: {
         'name': 'Bison',
@@ -19,6 +25,10 @@ villages_dict = {
         'x': 168,
         'latitude': '29N',
         'longitude': '122w',
+        'description': "A large wild bull that can weigh almost a ton. "
+                       "It is hunted for both food and its hide, which can be used to make leather. "
+                       "Such great numbers roam the plains that it's hard to imagine "
+                       "them ever becoming extinct.",
     },
     49: {
         'name': 'Blue Whale',
@@ -26,6 +36,8 @@ villages_dict = {
         'x': 184,
         'latitude': '80N',
         'longitude': '119w',
+        'description': "The largest animal in the world, sometimes "
+                       "reaching a length of 30 metersand weighing over 150 tons.",
     },
     12: {
         'name': 'Mexican Beaded Lizard',
@@ -33,6 +45,8 @@ villages_dict = {
         'x': 202,
         'latitude': '25N',
         'longitude': '116w',
+        'description': "A large lizard with black and yellow bead-like scales. "
+                       "Its secret weapon is its ability to produce poison in its mouth.",
     },
     10: {
         'name': 'Monument of the Sun',
@@ -40,6 +54,7 @@ villages_dict = {
         'x': 228,
         'latitude': '20N',
         'longitude': '112w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     13: {
         'name': 'Stone Face',
@@ -47,6 +62,7 @@ villages_dict = {
         'x': 242,
         'latitude': '15N',
         'longitude': '109w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     11: {
         'name': 'Crystal Skull',
@@ -54,6 +70,7 @@ villages_dict = {
         'x': 266,
         'latitude': '13N',
         'longitude': '105w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     8: {
         'name': 'Jade Mask',
@@ -61,6 +78,7 @@ villages_dict = {
         'x': 280,
         'latitude': '18N',
         'longitude': '103w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     7: {
         'name': 'Popol Vuh',
@@ -68,6 +86,7 @@ villages_dict = {
         'x': 310,
         'latitude': '12N',
         'longitude': '98w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     44: {
         'name': "Venus' Flytrap",
@@ -75,6 +94,7 @@ villages_dict = {
         'x': 312,
         'latitude': '33N',
         'longitude': '98w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     87: {
         'name': 'Giant Tortoise',
@@ -82,6 +102,7 @@ villages_dict = {
         'x': 322,
         'latitude': '5S',
         'longitude': '96w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     43: {
         'name': 'Niagara Falls',
@@ -89,6 +110,7 @@ villages_dict = {
         'x': 336,
         'latitude': '42N',
         'longitude': '94w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     46: {
         'name': 'Mammoth',
@@ -96,6 +118,7 @@ villages_dict = {
         'x': 338,
         'latitude': '88N',
         'longitude': '93w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     14: {
         'name': 'Mural of Marnalico',
@@ -103,6 +126,7 @@ villages_dict = {
         'x': 344,
         'latitude': '8N',
         'longitude': '92w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     9: {
         'name': 'Guatavita Lake',
@@ -117,6 +141,7 @@ villages_dict = {
         'x': 382,
         'latitude': '4N',
         'longitude': '86w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     56: {
         'name': 'Temple of the Sun',
@@ -124,6 +149,7 @@ villages_dict = {
         'x': 386,
         'latitude': '9S',
         'longitude': '85w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     54: {
         'name': 'Terracotta Figure',
@@ -131,6 +157,7 @@ villages_dict = {
         'x': 398,
         'latitude': '1N',
         'longitude': '83w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     63: {
         'name': 'Gold Frog',
@@ -138,6 +165,7 @@ villages_dict = {
         'x': 398,
         'latitude': '5S',
         'longitude': '83w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     42: {
         'name': 'Totem Pole',
@@ -145,6 +173,7 @@ villages_dict = {
         'x': 404,
         'latitude': '29N',
         'longitude': '82w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     53: {
         'name': 'Vampire Bat',
@@ -152,6 +181,7 @@ villages_dict = {
         'x': 408,
         'latitude': '48S',
         'longitude': '82w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     60: {
         'name': 'Leon Penguin',
@@ -159,6 +189,7 @@ villages_dict = {
         'x': 416,
         'latitude': '55S',
         'longitude': '80w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     41: {
         'name': 'Passenger Pigeon',
@@ -166,6 +197,7 @@ villages_dict = {
         'x': 432,
         'latitude': '35N',
         'longitude': '78w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     61: {
         'name': 'Archaeopteryx',
@@ -173,6 +205,7 @@ villages_dict = {
         'x': 432,
         'latitude': '7S',
         'longitude': '78w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     66: {
         'name': 'Tarantula',
@@ -180,6 +213,7 @@ villages_dict = {
         'x': 436,
         'latitude': '11S',
         'longitude': '77w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     55: {
         'name': 'Lake Titicaca',
@@ -187,6 +221,7 @@ villages_dict = {
         'x': 436,
         'latitude': '20S',
         'longitude': '77w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     62: {
         'name': 'Balsa',
@@ -194,6 +229,7 @@ villages_dict = {
         'x': 446,
         'latitude': '2S',
         'longitude': '75w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     69: {
         'name': 'Piranha',
@@ -201,6 +237,7 @@ villages_dict = {
         'x': 460,
         'latitude': '9S',
         'longitude': '73w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     64: {
         'name': 'Matamata',
@@ -208,6 +245,7 @@ villages_dict = {
         'x': 472,
         'latitude': '0N',
         'longitude': '71w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     72: {
         'name': 'Cactus',
@@ -215,6 +253,7 @@ villages_dict = {
         'x': 474,
         'latitude': '6N',
         'longitude': '71w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     59: {
         'name': 'Anteater',
@@ -222,6 +261,7 @@ villages_dict = {
         'x': 494,
         'latitude': '25S',
         'longitude': '67w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     65: {
         'name': 'Pororoca',
@@ -229,6 +269,7 @@ villages_dict = {
         'x': 500,
         'latitude': '5S',
         'longitude': '66w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     47: {
         'name': 'Saber-toothed Tiger',
@@ -236,6 +277,7 @@ villages_dict = {
         'x': 502,
         'latitude': '87N',
         'longitude': '66w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     71: {
         'name': 'Toucan',
@@ -243,6 +285,7 @@ villages_dict = {
         'x': 502,
         'latitude': '35S',
         'longitude': '66w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     70: {
         'name': 'Iguana',
@@ -250,6 +293,7 @@ villages_dict = {
         'x': 506,
         'latitude': '6N',
         'longitude': '65w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     58: {
         'name': 'Clay Monster',
@@ -257,6 +301,7 @@ villages_dict = {
         'x': 520,
         'latitude': '30S',
         'longitude': '63w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     68: {
         'name': 'Amazon Water Lily',
@@ -264,6 +309,7 @@ villages_dict = {
         'x': 530,
         'latitude': '4S',
         'longitude': '61w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     67: {
         'name': 'Anaconda',
@@ -271,6 +317,7 @@ villages_dict = {
         'x': 534,
         'latitude': '8S',
         'longitude': '61w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     57: {
         'name': 'Giant Ground Sloth',
@@ -278,6 +325,7 @@ villages_dict = {
         'x': 536,
         'latitude': '25S',
         'longitude': '60w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     45: {
         'name': 'Great Auk',
@@ -285,6 +333,7 @@ villages_dict = {
         'x': 728,
         'latitude': '65N',
         'longitude': '28w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     96: {
         'name': 'Clay Mosque',
@@ -292,6 +341,7 @@ villages_dict = {
         'x': 884,
         'latitude': '15N',
         'longitude': '2w',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     48: {
         'name': 'Stonehenge',
@@ -300,6 +350,7 @@ villages_dict = {
         'latitude': '51N',
         'longitude': '2w',
         'image_position': [10,4],
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     95: {
         'name': 'Ant Hill',
@@ -307,6 +358,7 @@ villages_dict = {
         'x': 914,
         'latitude': '12N',
         'longitude': '2e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     92: {
         'name': 'Diggos Monument',
@@ -314,6 +366,7 @@ villages_dict = {
         'x': 948,
         'latitude': '1N',
         'longitude': '8e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     94: {
         'name': 'Quagga',
@@ -321,6 +374,7 @@ villages_dict = {
         'x': 964,
         'latitude': '12S',
         'longitude': '10e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     91: {
         'name': 'Armadillo',
@@ -328,6 +382,7 @@ villages_dict = {
         'x': 974,
         'latitude': '6S',
         'longitude': '12e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     93: {
         'name': 'Moquele Mubembe',
@@ -335,6 +390,7 @@ villages_dict = {
         'x': 1002,
         'latitude': '1S',
         'longitude': '17e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     52: {
         'name': "Diaz's Monument",
@@ -342,6 +398,7 @@ villages_dict = {
         'x': 1016,
         'latitude': '30S',
         'longitude': '19e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     97: {
         'name': 'Moonbow',
@@ -349,6 +406,7 @@ villages_dict = {
         'x': 1050,
         'latitude': '0S',
         'longitude': '25e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     51: {
         'name': 'Big Zimbabwe',
@@ -356,6 +414,7 @@ villages_dict = {
         'x': 1050,
         'latitude': '30S',
         'longitude': '25e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     31: {
         'name': 'Rosetta Stone',
@@ -363,9 +422,7 @@ villages_dict = {
         'x': 1074,
         'latitude': '30N',
         'longitude': '29e',
-        'description': """Black basalt slab bearing the same inscription in three languages- ancient
-  Egyptian hieroglyphics, a simpler ancient Egyptian writing system, and
-  Greek.""",
+        'description': """Black basalt slab bearing the same inscription in three languages- ancient Egyptian hieroglyphics, a simpler ancient Egyptian writing system, and Greek.""",
         'image_x': 16,
         'image_y': 2,
     },
@@ -375,6 +432,7 @@ villages_dict = {
         'x': 1084,
         'latitude': '27N',
         'longitude': '30e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     36: {
         'name': 'Baobab',
@@ -382,6 +440,7 @@ villages_dict = {
         'x': 1088,
         'latitude': '10N',
         'longitude': '31e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     34: {
         'name': 'Nubia Pyramid',
@@ -389,6 +448,7 @@ villages_dict = {
         'x': 1094,
         'latitude': '14N',
         'longitude': '32e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     38: {
         'name': 'Victoria Falls',
@@ -396,6 +456,7 @@ villages_dict = {
         'x': 1096,
         'latitude': '0N',
         'longitude': '32e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     33: {
         'name': 'Pteranodon',
@@ -403,6 +464,7 @@ villages_dict = {
         'x': 1102,
         'latitude': '5N',
         'longitude': '33e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     32: {
         'name': 'Crocodile',
@@ -410,6 +472,7 @@ villages_dict = {
         'x': 1106,
         'latitude': '19N',
         'longitude': '34e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     35: {
         'name': 'Tessisat Falls',
@@ -417,6 +480,7 @@ villages_dict = {
         'x': 1118,
         'latitude': '10N',
         'longitude': '36e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     30: {
         'name': 'Papyrus',
@@ -424,6 +488,7 @@ villages_dict = {
         'x': 1124,
         'latitude': '25N',
         'longitude': '37e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     16: {
         'name': 'Mandrill',
@@ -431,6 +496,7 @@ villages_dict = {
         'x': 1148,
         'latitude': '0S',
         'longitude': '41e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     27: {
         'name': 'Chameleon',
@@ -438,6 +504,7 @@ villages_dict = {
         'x': 1192,
         'latitude': '10S',
         'longitude': '48e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     29: {
         'name': 'Burning Water',
@@ -445,6 +512,7 @@ villages_dict = {
         'x': 1194,
         'latitude': '30N',
         'longitude': '49e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     28: {
         'name': 'Dodo',
@@ -452,6 +520,7 @@ villages_dict = {
         'x': 1204,
         'latitude': '20S',
         'longitude': '50e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     25: {
         'name': 'Mohenio-Daro',
@@ -459,6 +528,7 @@ villages_dict = {
         'x': 1292,
         'latitude': '25N',
         'longitude': '65e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     24: {
         'name': 'King Cobra',
@@ -466,6 +536,7 @@ villages_dict = {
         'x': 1338,
         'latitude': '18N',
         'longitude': '73e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     98: {
         'name': 'Aurora',
@@ -473,6 +544,7 @@ villages_dict = {
         'x': 1424,
         'latitude': '88N',
         'longitude': '87e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     26: {
         'name': 'Inle Lake',
@@ -480,6 +552,7 @@ villages_dict = {
         'x': 1458,
         'latitude': '14N',
         'longitude': '93e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     79: {
         'name': 'Hornbill',
@@ -487,6 +560,7 @@ villages_dict = {
         'x': 1472,
         'latitude': '7N',
         'longitude': '95e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     81: {
         'name': "Ayutthaya's Buddha",
@@ -494,6 +568,7 @@ villages_dict = {
         'x': 1486,
         'latitude': '11N',
         'longitude': '97e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     17: {
         'name': 'Panda',
@@ -502,6 +577,7 @@ villages_dict = {
         'latitude': '36N',
         'longitude': '102e',
         'image_position': [5,1],
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     80: {
         'name': 'Angkor Wat',
@@ -509,6 +585,7 @@ villages_dict = {
         'x': 1516,
         'latitude': '12N',
         'longitude': '102e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     76: {
         'name': 'Borobudur',
@@ -516,6 +593,7 @@ villages_dict = {
         'x': 1530,
         'latitude': '3S',
         'longitude': '105e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     20: {
         'name': 'Hedgehog',
@@ -523,6 +601,7 @@ villages_dict = {
         'x': 1542,
         'latitude': '38N',
         'longitude': '107e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     73: {
         'name': 'Pitcher Plant',
@@ -530,6 +609,7 @@ villages_dict = {
         'x': 1548,
         'latitude': '3N',
         'longitude': '108e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     84: {
         'name': 'Kalavinka',
@@ -537,6 +617,7 @@ villages_dict = {
         'x': 1552,
         'latitude': '22N',
         'longitude': '108e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     18: {
         'name': 'Great Wall',
@@ -545,6 +626,7 @@ villages_dict = {
         'latitude': '41N',
         'longitude': '110e',
         'image_position': [8,4],
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     77: {
         'name': 'Python',
@@ -552,6 +634,7 @@ villages_dict = {
         'x': 1566,
         'latitude': '5S',
         'longitude': '111e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     19: {
         'name': 'Qian Ling',
@@ -559,6 +642,7 @@ villages_dict = {
         'x': 1574,
         'latitude': '34N',
         'longitude': '112e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     5: {
         'name': 'Frilled Lizard',
@@ -566,6 +650,7 @@ villages_dict = {
         'x': 1582,
         'latitude': '25S',
         'longitude': '113e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     6: {
         'name': 'Kangaroo',
@@ -573,6 +658,7 @@ villages_dict = {
         'x': 1596,
         'latitude': '16S',
         'longitude': '116e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     74: {
         'name': 'Stone Buddha',
@@ -580,6 +666,7 @@ villages_dict = {
         'x': 1608,
         'latitude': '0S',
         'longitude': '118e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     75: {
         'name': 'Komodo Dragon',
@@ -587,6 +674,7 @@ villages_dict = {
         'x': 1620,
         'latitude': '5S',
         'longitude': '120e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     83: {
         'name': 'Tree Snake',
@@ -594,6 +682,7 @@ villages_dict = {
         'x': 1630,
         'latitude': '15N',
         'longitude': '121e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     23: {
         'name': 'Plant Worm',
@@ -601,6 +690,7 @@ villages_dict = {
         'x': 1656,
         'latitude': '37N',
         'longitude': '126e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     82: {
         'name': 'Durian',
@@ -608,6 +698,7 @@ villages_dict = {
         'x': 1658,
         'latitude': '13N',
         'longitude': '126e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     3: {
         'name': 'Ayers Rock',
@@ -615,6 +706,7 @@ villages_dict = {
         'x': 1658,
         'latitude': '28S',
         'longitude': '126e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     90: {
         'name': 'Fruit Bat',
@@ -622,6 +714,7 @@ villages_dict = {
         'x': 1710,
         'latitude': '10N',
         'longitude': '135e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     78: {
         'name': 'Greater Bird of Paradise',
@@ -629,6 +722,7 @@ villages_dict = {
         'x': 1722,
         'latitude': '3S',
         'longitude': '137e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     22: {
         'name': 'Toro Ruins',
@@ -636,6 +730,7 @@ villages_dict = {
         'x': 1730,
         'latitude': '35N',
         'longitude': '138e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     21: {
         'name': 'Namahage',
@@ -643,6 +738,7 @@ villages_dict = {
         'x': 1736,
         'latitude': '39N',
         'longitude': '139e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     1: {
         'name': 'Kiwi',
@@ -650,9 +746,7 @@ villages_dict = {
         'x': 1736,
         'latitude': '12S',
         'longitude': '139e',
-        'description':"""Named for its cry, this is a flightless, nocturnal bird with a small head
-and a long, slender bill that has nostrils near the tip. It uses its
-highly developed sense of smell to find its food.""",
+        'description':"""Named for its cry, this is a flightless, nocturnal bird with a small head and a long, slender bill that has nostrils near the tip. It uses its highly developed sense of smell to find its food.""",
         'image_x':1,
         'image_y':1,
     },
@@ -662,6 +756,7 @@ highly developed sense of smell to find its food.""",
         'x': 1764,
         'latitude': '36S',
         'longitude': '144e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     2: {
         'name': 'Koala',
@@ -669,9 +764,10 @@ highly developed sense of smell to find its food.""",
         'x': 1788,
         'latitude': '30S',
         'longitude': '148e',
-        'description': """A tree-dwelling marsupial mammal that only eats the leaves of the
-  eucalyptus tree. Koala young spend their first 6 months in their mother's
-  pouch, feeding on predigested eucalyptus leaves.""",
+        'description': "A tree-dwelling marsupial mammal that only eats"
+            " the leaves of the eucalyptus tree. Koala young spend "
+            "their first 6 months in their mother's pouch, "
+             "feeding on predigested eucalyptus leaves.",
         'image_x': 8,
         'image_y': 1,
     },
@@ -681,6 +777,7 @@ highly developed sense of smell to find its food.""",
         'x': 1810,
         'latitude': '6N',
         'longitude': '151e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     89: {
         'name': 'Moa',
@@ -688,6 +785,7 @@ highly developed sense of smell to find its food.""",
         'x': 1950,
         'latitude': '34S',
         'longitude': '175e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     86: {
         'name': 'Nasiped',
@@ -695,6 +793,7 @@ highly developed sense of smell to find its food.""",
         'x': 1962,
         'latitude': '12S',
         'longitude': '177e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
     50: {
         'name': "Stellar's Sea Cow",
@@ -702,6 +801,7 @@ highly developed sense of smell to find its food.""",
         'x': 1972,
         'latitude': '75N',
         'longitude': '178e',
+        'description': "A large lizard with black and yellow bead-like scales. ",
     },
 }
 
