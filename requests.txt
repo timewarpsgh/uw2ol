@@ -1,14 +1,8 @@
 travel ON
-    discoveries descriptions OK
-    images OK
-    sail into rivers OK
-    some cities can't enter OK
-    some buildings in asia can't enter OK
 
-    from left edge of map to right edge of map OK
-    north pole and south pole edge issues ON
-        south OK
-        north ON
+    east and west edges ON
+    north pole and south pole edge issues OK
+
 
     enter special ports ON
         near panama
