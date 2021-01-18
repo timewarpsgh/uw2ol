@@ -105,8 +105,8 @@ class MapMaker():
     def set_world_piddle(self):
         """world map(sea) matrix"""
         # columns and rows
-        COLUMNS = 12 * 2 * 30 * 3;
-        ROWS = 12 * 2 * 45;
+        COLUMNS = c.WORLD_MAP_COLUMNS;
+        ROWS = c.WORLD_MAP_ROWS;
 
         # get piddle from txt
         num_array = ''

@@ -233,4 +233,8 @@ class Game():
 
             if abs(my_tile_x - self.map_maker.x_tile) >= 12 or abs(my_tile_y - self.map_maker.y_tile) >= 12:
                 print("out of box! time to draw new map")
-                self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y)
+                if self.my_role.y <= c.WORLD_MAP_MAX_Y_TO_DRAW_NEW_PARTIAL_WORLD_MAP and \
+                        self.my_role.y >= c.WORLD_MAP_MIN_Y_TO_DRAW_NEW_PARTIAL_WORLD_MAP:
+                    if self.my_role.x >= c.WORLD_MAP_MIN_X_TO_DRAW_NEW_PARTIAL_WORLD_MAP and \
+                            self.my_role.x <= c.WORLD_MAP_MAX_X_TO_DRAW_NEW_PARTIAL_WORLD_MAP:
+                        self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y)

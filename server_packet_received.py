@@ -77,6 +77,7 @@ def change_map(self, message_obj):
 
         fleet_speed = self.my_role.get_fleet_speed([])
         self.my_role.set_speed([str(fleet_speed)])
+        self.my_role.set_speed([str(20)])
 
     # to port
     elif target_map.isdigit():
