@@ -245,8 +245,17 @@ class Role:
             self.x -= c.PIXELS_COVERED_EACH_MOVE
             self.direction = 'sw'
 
+        # change image
         self.person_frame *= -1
 
+        # east and west edge detection
+        if self.map == 'sea':
+            if self.x < 160:
+                self.x = c.WORLD_MAP_X_LENGTH -160
+            if self.x > c.WORLD_MAP_X_LENGTH - 160:
+                self.x = 160
+
+        # prints
         print("now x:", self.x)
         print("new y:", self.y)
         print("new direction:", self.direction)
