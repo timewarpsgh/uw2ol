@@ -2,7 +2,7 @@ travel ON
     discoveries descriptions OK
     images OK
     sail into rivers OK
-    some cities can't enter 
+    some cities can't enter
     some buildings in asia can't enter ON
 
 

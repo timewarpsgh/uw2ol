@@ -264,9 +264,18 @@ class Role:
 
             # basic 4 directions
             if direction == 'up':
-                if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
-                    if self.y > 0:
-                        return True
+                
+                # not in asia
+                if int(self.map) < 94:
+                    if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
+                        if self.y > 0:
+                            return True
+                # in asia
+                else:
+                    if piddle[x, y] in c.WALKABLE_TILES_FOR_ASIA and piddle[x, y + 1] in c.WALKABLE_TILES_FOR_ASIA:
+                        if self.y > 0:
+                            return True
+
             elif direction == 'down':
                 if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
                     if self.y < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
