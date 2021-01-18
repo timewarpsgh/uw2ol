@@ -1,11 +1,10 @@
 travel ON
     north pole and south pole edge issues OK
 
-    east and west edges ON
-
     enter special ports ON
         near panama
 
+    discovery only possible near villages ON
 
 
 business
