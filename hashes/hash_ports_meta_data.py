@@ -6006,12 +6006,14 @@ hash_ports_meta_data = {
 	  'name': 'Hekla',
 	  'x': 784,
 	  'y': 210,
+      'economyId':0,
 	  'buildings': {
 		4: {
 		  'x': 62,
 		  'y': 54,
 		},
 	  },
+		'tileset': 3,
 	},
 	102: {
 	  'name': 'Narvik',

@@ -81,12 +81,22 @@ def change_map(self, message_obj):
 
     # to port
     elif target_map.isdigit():
-        self.my_role.x = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
-        self.my_role.y = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
+        # normal ports
+        if int(target_map) <= 99:
 
-        self.my_role.set_speed(['20'])
+            self.my_role.x = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
+            self.my_role.y = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
-        print("changed to", self.my_role.x, self.my_role.y)
+            self.my_role.set_speed(['20'])
+
+            print("changed to", self.my_role.x, self.my_role.y)
+
+        # supply ports
+        else:
+            self.my_role.x = hash_ports_meta_data[101]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
+            self.my_role.y = hash_ports_meta_data[101]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
+
+            self.my_role.set_speed(['20'])
 
     # change users() state
     del self.factory.users[now_map][self.my_role.name]

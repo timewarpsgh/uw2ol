@@ -118,23 +118,31 @@ def draw_hud(self):
 
         # if in port
     if self.my_role.map.isdigit():
-            # port name
-        port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
-        draw_text(self, port_name, c.WINDOW_WIDTH - 100, 5)
 
-        economy_id = hash_ports_meta_data[int(self.my_role.map) + 1]['economyId']
-        region_name = hash_ports_meta_data['markets'][economy_id]
-        draw_text(self, region_name, c.WINDOW_WIDTH - 100, 20)
+        # if normal ports
+        if int(self.my_role.map) <= 99:
+            # port name
+            port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
+            draw_text(self, port_name, c.WINDOW_WIDTH - 100, 5)
+
+            economy_id = hash_ports_meta_data[int(self.my_role.map) + 1]['economyId']
+            region_name = hash_ports_meta_data['markets'][economy_id]
+            draw_text(self, region_name, c.WINDOW_WIDTH - 100, 20)
 
             # index
-        economy_index = hash_ports_meta_data[int(self.my_role.map) + 1]['economy']
-        industry_index = hash_ports_meta_data[int(self.my_role.map) + 1]['industry']
+            economy_index = hash_ports_meta_data[int(self.my_role.map) + 1]['economy']
+            industry_index = hash_ports_meta_data[int(self.my_role.map) + 1]['industry']
 
-        draw_text(self, 'Economy', c.WINDOW_WIDTH - 100, 80)
-        draw_text(self, str(economy_index), c.WINDOW_WIDTH - 100, 100)
+            draw_text(self, 'Economy', c.WINDOW_WIDTH - 100, 80)
+            draw_text(self, str(economy_index), c.WINDOW_WIDTH - 100, 100)
 
-        draw_text(self, 'Industry', c.WINDOW_WIDTH - 100, 120)
-        draw_text(self, str(industry_index), c.WINDOW_WIDTH - 100, 140)
+            draw_text(self, 'Industry', c.WINDOW_WIDTH - 100, 120)
+            draw_text(self, str(industry_index), c.WINDOW_WIDTH - 100, 140)
+
+        # supply ports
+        else:
+            port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
+            draw_text(self, port_name, c.WINDOW_WIDTH - 100, 5)
 
         # at sea
     else:

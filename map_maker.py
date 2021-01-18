@@ -10,6 +10,12 @@ class MapMaker():
 
     def make_port_piddle_and_map(self, port_index):
         """make a port's tile matrix and image"""
+        # normal and supply ports
+        if port_index <= 99:
+            pass
+        else:
+            port_index = 100
+
         # make piddle
         port_piddle = self.make_port_piddle(port_index)
 

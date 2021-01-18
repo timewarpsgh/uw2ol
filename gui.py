@@ -739,6 +739,10 @@ class MenuClickHandlerForCmds():
 
         # get building id to board positions dict
         map_id = int(self.game.my_role.map)
+
+        if map_id >= 100:
+            map_id = 100
+
         dict = hash_ports_meta_data[map_id+1]['buildings']
 
         for k, v in dict.items():
