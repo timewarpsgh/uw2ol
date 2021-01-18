@@ -264,7 +264,7 @@ class Role:
 
             # basic 4 directions
             if direction == 'up':
-                
+
                 # not in asia
                 if int(self.map) < 94:
                     if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:

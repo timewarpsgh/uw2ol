@@ -160,7 +160,7 @@ def other_keys_down(self, event):
     elif event.key == ord('m'):
         if not self.my_role.map.isdigit():
             port_id = get_nearby_port_index(self)
-            if port_id:
+            if port_id or port_id == 0:
                 self.connection.send('change_map', [str(port_id)])
                 self.timer_at_sea.stop()
 
