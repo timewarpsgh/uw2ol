@@ -8,7 +8,7 @@ import constants as c
 from port import Port
 from role import Mate
 from role import Ship
-from discovery import Discovery
+from role import Discovery
 from hashes import hash_villages
 
 import handle_pygame_event

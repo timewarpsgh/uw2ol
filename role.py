@@ -4,6 +4,7 @@ from threading import Timer
 from twisted.internet import reactor, task, defer
 import constants as c
 from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
+from hashes.hash_villages import villages_dict
 from hashes.hash_mates import hash_mates
 from hashes.hash_events import events_dict
 from port import Port
@@ -1422,6 +1423,35 @@ class Mate:
             value = getattr(self, attribute_name)
             value += 1
             setattr(self, attribute_name, value)
+
+class Discovery:
+    def __init__(self, discovery_id):
+        # get dic
+        dic = villages_dict[discovery_id]
+
+        # assign attributes
+        self.name = dic['name']
+        self.x = dic['x']
+        self.y = dic['y']
+        self.latitude = dic['latitude']
+        self.longitude = dic['longitude']
+
+        # not yet all done
+
+            # defaults
+        self.description = 'discovery description'
+        self.image_x = random.randint(1, 16)
+        self.image_y = random.randint(1, 5)
+
+            # if have set
+        if 'description' in dic:
+            self.description = dic['description']
+        if 'image_x' in dic:
+            self.image_x = dic['image_x']
+        if 'image_y' in dic:
+            self.image_y = dic['image_y']
+
+
 
 class Cargo:
     def __init__(self, name, count):
