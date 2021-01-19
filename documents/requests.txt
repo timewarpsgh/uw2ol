@@ -1,6 +1,10 @@
 travel ON
-    refactor ON
+
+
     finding treasure ON
+        show items OK
+        add items
+        remove items
 
 
 

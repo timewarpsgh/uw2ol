@@ -10,10 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 # import from common(dir)
 import constants as c
-from role import Port
-from role import Mate
-from role import Ship
-from role import Discovery
+from role import Port, Mate, Ship, Discovery, Item
 from hashes import hash_villages
 
 import handle_pygame_event
@@ -639,9 +636,13 @@ class MenuClickHandlerForItems():
         self.game = game
 
     def on_menu_click_items(self):
-        dict = {
-            f'Gold {self.game.my_role.gold}': test
-        }
+        items_dict = self.game.my_role.bag.container
+
+        dict = {}
+        for k in items_dict.keys():
+            item = Item(k)
+            dict[f'{item.name} {items_dict[k]}'] = test
+
         self.game.button_click_handler.make_menu(dict)
 
     def on_menu_click_discoveries(self):

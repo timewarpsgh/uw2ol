@@ -7,6 +7,7 @@ from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
 from hashes.hash_villages import villages_dict
 from hashes.hash_mates import hash_mates
 from hashes.hash_events import events_dict
+from hashes.hash_items import hash_items
 
 # for port
 from hashes.hash_ports_meta_data import hash_ports_meta_data
@@ -67,7 +68,7 @@ class Role:
         self.ships = []
         self.mates = []
         self.discoveries = {}
-        self.items = {}
+        self.bag = Bag()
 
         # main events sequence
         self.main_events_ids = list(range(1, len(events_dict) + 1))
@@ -1474,6 +1475,49 @@ class Event:
         self.action_to_perform = None
         if 'action_to_perform' in dic:
             self.action_to_perform = dic['action_to_perform']
+
+
+class Bag:
+    """owned by role, contains a list of item_ids"""
+    def __init__(self):
+        self.container = {
+            2:1,
+            3:5,
+        }
+
+    def add_item(self, item_id):
+        if self.get_all_items_count() < 20:
+            if item_id in self.container:
+                self.container[item_id] += 1
+            else:
+                self.container[item_id] = 1
+        else:
+            print('max 20 items!')
+
+    def remove_item(self, item_id):
+        self.container[item_id] -= 1
+        if self.container[item_id] == 0:
+            del self.container[item_id]
+
+
+    def get_all_items_count(self):
+        count = 0
+
+        for k in self.container.keys():
+            count += self.container[k]
+
+        return count
+
+    def get_all_items_dict(self):
+        return self.container
+
+
+class Item:
+    """items  inside bag"""
+    def __init__(self, id):
+        self.name = hash_items[id]['name']
+        self.price = hash_items[id]['price']
+
 
 class Port:
     """read only. holds a port's special items(ships, goods, items)"""
