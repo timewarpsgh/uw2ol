@@ -921,6 +921,7 @@ class MenuClickHandlerForPort():
         self.church = Church(game)
         self.palace = Palace(game)
         self.bank = Bank(game)
+        self.item_shop = ItemShop(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -1004,8 +1005,8 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_item_shop(self):
         dict = {
-            'Buy': test,
-            'Sell': test,
+            'Buy': self.item_shop.buy,
+            'Sell': self.item_shop.sell,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1099,13 +1100,7 @@ class Harbor():
 
             # lose menu
             if len(self.game.menu_stack) >= 1:
-                handle_pygame_event.escape(self.game, '')
-                reactor.callLater(0.1, handle_pygame_event.escape, self.game, '')
-                # menu_to_kill = self.game.menu_stack[-1]
-                # menu_to_kill.kill()
-                # handle_pygame_event.escape(self.game, '')
-                # handle_pygame_event.escape(self.game, '')
-            # handle_pygame_event.escape(self.game, '')
+                escape_twice(self.game)
 
     def load_supply(self):
         dict = {
@@ -1650,6 +1645,40 @@ class Bank:
         # no need to repay
         else:
             self.game.building_text = "Oh. But you don't owe us anything."
+
+
+class ItemShop:
+    def __init__(self, game):
+        self.game = game
+
+    def buy(self):
+        pass
+
+    def sell(self):
+        items_dict = self.game.my_role.bag.container
+
+        dict = {}
+        for k in items_dict.keys():
+            item = Item(k)
+            dict[f'{item.name} {items_dict[k]}'] = [self.item_name_clicked, k]
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def item_name_clicked(self, item_id):
+        dict = {
+            'OK': [self.sell_item, item_id],
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def sell_item(self, item_id):
+        self.game.change_and_send('sell_item', [item_id])
+        escape_twice(self.game)
+        reactor.callLater(0.2, self.sell)
+
+
+def escape_twice(game):
+    handle_pygame_event.escape(game, '')
+    reactor.callLater(0.1, handle_pygame_event.escape, game, '')
 
 def target_clicked(self):
     # self is game

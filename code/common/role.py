@@ -965,6 +965,15 @@ class Role:
                 self.bank_gold += amount
                 self.gold -= amount
 
+    # item shop
+    def sell_item(self, params):
+        item_id = params[0]
+
+        if item_id in self.bag.get_all_items_dict():
+            self.bag.remove_item(item_id)
+            item = Item(item_id)
+            self.gold += int(item.price / 2)
+
 class Ship:
     shooting_img = ''
 
