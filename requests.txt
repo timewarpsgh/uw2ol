@@ -1,7 +1,7 @@
 travel ON
+    refactor ON
+    finding treasure ON
 
-    enter supply ports ON
-        near panama
 
 
 

@@ -47,6 +47,7 @@ class Role:
         self.ships = []
         self.mates = []
         self.discoveries = {}
+        self.items = {}
 
         self.accountant = None
         self.first_mate = None
