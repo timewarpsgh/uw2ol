@@ -8,7 +8,7 @@ from hashes.hash_villages import villages_dict
 from hashes.hash_mates import hash_mates
 from hashes.hash_events import events_dict
 from port import Port
-from event import Event
+
 
 class Role:
     """
@@ -1451,7 +1451,24 @@ class Discovery:
         if 'image_y' in dic:
             self.image_y = dic['image_y']
 
+class Event:
+    def __init__(self, id):
+        dic = events_dict[id]
 
+        # place where the event is triggered
+        self.port = dic['port']
+        self.building = dic['building']
+
+        # sequences of dialogues
+        self.dialogues = dic['dialogues']
+
+        # figure image
+        self.figure_images = dic['figure_images']
+
+        # action if any
+        self.action_to_perform = None
+        if 'action_to_perform' in dic:
+            self.action_to_perform = dic['action_to_perform']
 
 class Cargo:
     def __init__(self, name, count):
