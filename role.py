@@ -1506,23 +1506,6 @@ class Port:
         sell_price = hash_markets_price_details[self.economy_id][commodity_name][1]
         return sell_price
 
-class Cargo:
-    def __init__(self, name, count):
-        self.name = name
-        self.count = count
-
-
-# contains role and other visual client side stuff (only exists in client)
-class Player:
-    ship_in_battle_img = None
-
-    def __init__(self, role):
-        self.role = role
-        self.role_img = None
-        self.name_img = None
-        self.speak_img = None
-        self.logged_in = False
-
 
 if __name__ == '__main__':
     # new role
