@@ -453,6 +453,12 @@ class Role:
                 self.discoveries[discovery_id] = 1
                 self.mates[0].exp += 100
 
+                # give random item
+                rand_seed_num = self.x + self.y + discovery_id
+                random.seed(rand_seed_num)
+                item_id = random.choice(range(1,len(hash_items) + 1))
+                self.bag.add_item(item_id)
+
                 if self.GAME:
                     self.GAME.button_click_handler.make_message_box("We found something!")
             else:

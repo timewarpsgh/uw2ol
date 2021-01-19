@@ -3,7 +3,7 @@ travel ON
 
     finding treasure ON
         show items OK
-        add items
+        add items ON
         remove items
 
 
