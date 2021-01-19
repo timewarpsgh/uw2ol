@@ -7,7 +7,12 @@ from hashes.hash_ship_name_to_attributes import hash_ship_name_to_attributes
 from hashes.hash_villages import villages_dict
 from hashes.hash_mates import hash_mates
 from hashes.hash_events import events_dict
-from port import Port
+
+# for port
+from hashes.hash_ports_meta_data import hash_ports_meta_data
+from hashes.hash_region_to_ships_available import hash_region_to_ships_available
+from hashes.hash_markets_price_details import hash_markets_price_details
+from hashes.hash_special_goods import hash_special_goods
 
 
 class Role:
@@ -64,7 +69,7 @@ class Role:
         self.discoveries = {}
         self.items = {}
 
-        # main quests sequence
+        # main events sequence
         self.main_events_ids = list(range(1, len(events_dict) + 1))
         self.main_events_ids = list(reversed(self.main_events_ids))
 
@@ -1469,6 +1474,37 @@ class Event:
         self.action_to_perform = None
         if 'action_to_perform' in dic:
             self.action_to_perform = dic['action_to_perform']
+
+class Port:
+    """read only. holds a port's special items(ships, goods, items)"""
+
+    def __init__(self, map_id):
+        self.id = map_id + 1
+        self.economy_id = hash_ports_meta_data[self.id]['economyId']
+        self.name = hash_ports_meta_data[self.id]['name']
+
+    def get_available_ships(self):
+        available_ships = hash_region_to_ships_available[self.economy_id]
+        return available_ships
+
+    def get_availbale_goods_dict(self):
+        # normal goods
+        available_goods_dict = hash_markets_price_details[self.economy_id]['Available_items']
+
+        # special goods
+        specialty_name = hash_special_goods[self.id]['specialty']
+        buy_price = hash_special_goods[self.id]['price']
+        available_goods_dict[specialty_name] = [buy_price, 0]
+
+        return available_goods_dict
+
+    def get_commodity_buy_price(self, commodity_name):
+        buy_price = self.get_availbale_goods_dict()[commodity_name][0]
+        return buy_price
+
+    def get_commodity_sell_price(self, commodity_name):
+        sell_price = hash_markets_price_details[self.economy_id][commodity_name][1]
+        return sell_price
 
 class Cargo:
     def __init__(self, name, count):

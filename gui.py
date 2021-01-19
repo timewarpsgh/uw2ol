@@ -5,7 +5,7 @@ from twisted.internet import reactor, task
 import random
 
 import constants as c
-from port import Port
+from role import Port
 from role import Mate
 from role import Ship
 from role import Discovery

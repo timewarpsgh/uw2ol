@@ -85,8 +85,8 @@ def quit(self, event):
     # when in game
     if self.my_role:
         if self.my_role.map.isdigit():
-            pygame.quit()
             reactor.stop()
+            pygame.quit()
             sys.exit()
         else:
             self.button_click_handler. \
