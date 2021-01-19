@@ -24,6 +24,8 @@ class Role:
     GAME = None
 
     def __init__(self, x, y, name, gold=2000):
+
+        # basics
         self.x = x
         self.y = y
         self.direction = None
@@ -44,11 +46,8 @@ class Role:
         self.gold = gold
         self.bank_gold = 2000
         self.target_name = ''
-        self.ships = []
-        self.mates = []
-        self.discoveries = {}
-        self.items = {}
 
+        # assistants
         self.accountant = None
         self.first_mate = None
         self.chief_navigator = None
@@ -58,10 +57,17 @@ class Role:
         self.quest_trade = None
         self.quest_fight = None
 
+        # other classes i contain
+        self.ships = []
+        self.mates = []
+        self.discoveries = {}
+        self.items = {}
+
         # main quests sequence
         self.main_events_ids = list(range(1, len(events_dict) + 1))
         self.main_events_ids = list(reversed(self.main_events_ids))
 
+        # conn
         self.conn = None
 
         # set at client, when client first gets role from server(when got packet 'your_role_data')
