@@ -7,7 +7,9 @@ travel ON
         remove items OK
 
         show items sell price OK
-        show items sell image ON
+        show items sell image OK
+
+        item descriptions ON
 
         items uses
 

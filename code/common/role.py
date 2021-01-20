@@ -1538,6 +1538,11 @@ class Item:
         if 'image' in hash_items[id]:
             self.image = hash_items[id]['image']
 
+        # description
+        self.description = 'description'
+        if 'description' in  hash_items[id]:
+            self.description = hash_items[id]['description']
+
 
 class Port:
     """read only. holds a port's special items(ships, goods, items)"""

@@ -1749,7 +1749,7 @@ def show_one_item(params):
     # dict
     dict = {
         'name': item.name,
-        # 'description': item.description,
+        'description': item.description,
     }
 
     # make text from dict
