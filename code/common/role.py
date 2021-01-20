@@ -978,6 +978,15 @@ class Role:
             item = Item(item_id)
             self.gold += int(item.price / 2)
 
+    def buy_item(self, params):
+        item_id = params[0]
+        count = params[1]
+
+        now_port = Port(int(self.map))
+        if item_id in now_port.get_available_items_ids_for_sale():
+            self.bag.add_multiple_items(item_id, count)
+
+
 class Ship:
     shooting_img = ''
 
@@ -1506,11 +1515,20 @@ class Bag:
         }
 
     def add_item(self, item_id):
-        if self.get_all_items_count() < 20:
+        if self.get_all_items_count() < c.MAX_ITEMS_IN_BAG:
             if item_id in self.container:
                 self.container[item_id] += 1
             else:
                 self.container[item_id] = 1
+        else:
+            print('max 20 items!')
+
+    def add_multiple_items(self, item_id, count):
+        if (self.get_all_items_count() + count) <= c.MAX_ITEMS_IN_BAG:
+            if item_id in self.container:
+                self.container[item_id] += count
+            else:
+                self.container[item_id] = count
         else:
             print('max 20 items!')
 
@@ -1580,6 +1598,9 @@ class Port:
         sell_price = hash_markets_price_details[self.economy_id][commodity_name][1]
         return sell_price
 
+    def get_available_items_ids_for_sale(self):
+        id_list = hash_ports_meta_data[self.id]['itemShop']['regular']
+        return id_list
 
 if __name__ == '__main__':
     # new role

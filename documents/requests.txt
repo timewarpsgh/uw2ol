@@ -3,7 +3,9 @@ travel ON
     finding treasure ON
 
         items uses ON
-            tax-free permit ON
+            tax-free permit OK
+            buy items ON
+
             consumables
             equipments
 

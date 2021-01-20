@@ -1651,7 +1651,7 @@ class ItemShop:
         self.game = game
 
     def buy(self):
-        pass
+        self.game.change_and_send('buy_item', [10, 2])
 
     def sell(self):
         items_dict = self.game.my_role.bag.container
