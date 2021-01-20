@@ -8,7 +8,9 @@ travel ON
         add items OK
         remove items OK
 
+        show items sell price
 
+        items uses
 
 
 business
