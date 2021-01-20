@@ -1,17 +1,11 @@
 travel ON
 
-
     finding treasure ON
-        show items OK
-        add items OK
-        remove items OK
 
-        show items sell price OK
-        show items sell image OK
-
-        item descriptions ON
-
-        items uses
+        items uses ON
+            travel
+            trade
+            battle
 
 
 business

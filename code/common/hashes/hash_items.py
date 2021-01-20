@@ -389,6 +389,13 @@ hash_items = {
             'image': [16, 8],
             'description': "A box full of shiny treasures."
 		},
+
+        55: {
+            'name': 'Diamond Ring',
+            'price': 30000,
+            'image': [3, 8],
+            'description': "A ring with a large diamond on it."
+        }
 }
 
 
