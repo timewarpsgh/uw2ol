@@ -636,43 +636,12 @@ class MenuClickHandlerForItems():
         self.game = game
 
     def on_menu_click_items(self):
-
-        def show_one_item(item):
-            # dict
-            dict = {
-                'name': item.name,
-                # 'description': item.description,
-            }
-
-            # make text from dict
-            text = ''
-            for k, v in dict.items():
-                text += f'{v}<br>'
-
-            # get figure image
-            figure_surface = item_x_y_2_image(item.image[0], item.image[1])
-
-            # make window
-            PanelWindow(pygame.Rect((59, 50), (350, 400)),
-                        self.game.ui_manager, text, self.game, figure_surface)
-
-        def item_x_y_2_image(x, y):
-            discoveries_and_items_images = self.game.images['discoveries_and_items']
-            discovery_surface = pygame.Surface((c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE))
-            x_coord = -c.ITEMS_IMAGE_SIZE * (x - 1)
-            y_coord = -c.ITEMS_IMAGE_SIZE * (y - 1)
-            rect = pygame.Rect(x_coord, y_coord, c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE)
-            discovery_surface.blit(discoveries_and_items_images, rect)
-
-            return discovery_surface
-
-        # main
         items_dict = self.game.my_role.bag.container
 
         dict = {}
         for k in items_dict.keys():
             item = Item(k)
-            dict[f'{item.name} {items_dict[k]}'] = [show_one_item, item]
+            dict[f'{item.name} {items_dict[k]}'] = [show_one_item, [self, item]]
 
         self.game.button_click_handler.make_menu(dict)
 
@@ -691,21 +660,11 @@ class MenuClickHandlerForItems():
                 text += f'{v}<br>'
 
             # get figure image
-            figure_surface = discovery_x_y_2_image(discovery.image_x, discovery.image_y)
+            figure_surface = item_x_y_2_image(self.game, discovery.image_x, discovery.image_y)
 
             # make window
             PanelWindow(pygame.Rect((59, 50), (350, 400)),
                         self.game.ui_manager, text, self.game, figure_surface)
-
-        def discovery_x_y_2_image(x, y):
-            discoveries_and_items_images = self.game.images['discoveries_and_items']
-            discovery_surface = pygame.Surface((c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE))
-            x_coord = -c.ITEMS_IMAGE_SIZE * (x - 1)
-            y_coord = -c.ITEMS_IMAGE_SIZE * (y - 1)
-            rect = pygame.Rect(x_coord, y_coord, c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE)
-            discovery_surface.blit(discoveries_and_items_images, rect)
-
-            return discovery_surface
 
         # do
         my_discoveries = self.game.my_role.discoveries
@@ -1697,11 +1656,13 @@ class ItemShop:
         self.game.button_click_handler.make_menu(dict)
 
     def item_name_clicked(self, item_id):
-
         # building speak
         item = Item(item_id)
         sell_price = int(item.price / 2)
         self.game.building_text = f'{item.name}? I can pay {sell_price}.'
+
+        # show item image
+        show_one_item([self, item])
 
         # show menu
         dict = {
@@ -1712,8 +1673,8 @@ class ItemShop:
     def sell_item(self, item_id):
         # sell and escape
         self.game.change_and_send('sell_item', [item_id])
-        escape_twice(self.game)
-        reactor.callLater(0.2, self.sell)
+        escape_thrice(self.game)
+        reactor.callLater(0.3, self.sell)
 
         # building speak
         self.game.building_text = 'Thank you!'
@@ -1722,6 +1683,11 @@ class ItemShop:
 def escape_twice(game):
     handle_pygame_event.escape(game, '')
     reactor.callLater(0.1, handle_pygame_event.escape, game, '')
+
+def escape_thrice(game):
+    handle_pygame_event.escape(game, '')
+    reactor.callLater(0.1, handle_pygame_event.escape, game, '')
+    reactor.callLater(0.2, handle_pygame_event.escape, game, '')
 
 def target_clicked(self):
     # self is game
@@ -1740,6 +1706,17 @@ def figure_x_y_2_image(game, x=8, y=8):
     figure_surface.blit(figures_image, rect)
 
     return figure_surface
+
+
+def item_x_y_2_image(game, x, y):
+    discoveries_and_items_images = game.images['discoveries_and_items']
+    discovery_surface = pygame.Surface((c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE))
+    x_coord = -c.ITEMS_IMAGE_SIZE * (x - 1)
+    y_coord = -c.ITEMS_IMAGE_SIZE * (y - 1)
+    rect = pygame.Rect(x_coord, y_coord, c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE)
+    discovery_surface.blit(discoveries_and_items_images, rect)
+
+    return discovery_surface
 
 def mate_speak(game, mate, message):
     # make text from dict
@@ -1762,3 +1739,27 @@ def figure_image_speak(game, image_x, image_y, message):
     # make window
     PanelWindow(pygame.Rect((59, 50), (350, 400)),
                 game.ui_manager, text, game, figure_surface)
+
+
+def show_one_item(params):
+    # accepts a list
+    self = params[0]
+    item = params[1]
+
+    # dict
+    dict = {
+        'name': item.name,
+        # 'description': item.description,
+    }
+
+    # make text from dict
+    text = ''
+    for k, v in dict.items():
+        text += f'{v}<br>'
+
+    # get figure image
+    figure_surface = item_x_y_2_image(self.game, item.image[0], item.image[1])
+
+    # make window
+    PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                self.game.ui_manager, text, self.game, figure_surface)

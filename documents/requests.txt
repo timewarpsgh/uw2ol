@@ -6,7 +6,7 @@ travel ON
         add items OK
         remove items OK
 
-        show items sell price ON
+        show items sell price OK
         show items sell image ON
 
         items uses
