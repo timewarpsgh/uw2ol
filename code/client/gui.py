@@ -636,12 +636,43 @@ class MenuClickHandlerForItems():
         self.game = game
 
     def on_menu_click_items(self):
+
+        def show_one_item(item):
+            # dict
+            dict = {
+                'name': item.name,
+                # 'description': item.description,
+            }
+
+            # make text from dict
+            text = ''
+            for k, v in dict.items():
+                text += f'{v}<br>'
+
+            # get figure image
+            figure_surface = item_x_y_2_image(item.image_x, item.image_y)
+
+            # make window
+            PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                        self.game.ui_manager, text, self.game, figure_surface)
+
+        def item_x_y_2_image(x, y):
+            discoveries_and_items_images = self.game.images['discoveries_and_items']
+            discovery_surface = pygame.Surface((c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE))
+            x_coord = -c.ITEMS_IMAGE_SIZE * (x - 1)
+            y_coord = -c.ITEMS_IMAGE_SIZE * (y - 1)
+            rect = pygame.Rect(x_coord, y_coord, c.ITEMS_IMAGE_SIZE, c.ITEMS_IMAGE_SIZE)
+            discovery_surface.blit(discoveries_and_items_images, rect)
+
+            return discovery_surface
+
+        # main
         items_dict = self.game.my_role.bag.container
 
         dict = {}
         for k in items_dict.keys():
             item = Item(k)
-            dict[f'{item.name} {items_dict[k]}'] = test
+            dict[f'{item.name} {items_dict[k]}'] = [show_one_item, item]
 
         self.game.button_click_handler.make_menu(dict)
 
