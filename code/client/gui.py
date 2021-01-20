@@ -1152,7 +1152,15 @@ class Market():
         buy_price_modifier = role.get_buy_price_modifier()
         buy_price = int(buy_price * buy_price_modifier)
 
-        self.game.building_text = f"You look like a good partner. I can sell this for {buy_price}."
+        # if have permit
+        if c.TAX_FREE_PERMIT_ID in role.bag.get_all_items_dict():
+            self.game.building_text = f"Since you have a tax free permit, the price would be {buy_price}."
+        else:
+            buy_price = int(buy_price * 1.2)
+            self.game.building_text = f"As you don't a tax free permit, a 20% tax is applied to the price. " \
+                                      f"So it would be {buy_price}."
+
+        # i or my accountant speaks
         mate = None
         if role.accountant:
             mate = role.accountant

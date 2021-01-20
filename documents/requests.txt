@@ -3,8 +3,13 @@ travel ON
     finding treasure ON
 
         items uses ON
-            travel
+            tax-free permit ON
+            consumables
+            equipments
+
+
             trade
+            travel
             battle
 
 

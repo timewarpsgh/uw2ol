@@ -834,8 +834,12 @@ class Role:
                 buy_price_modifier = self.get_buy_price_modifier()
                 unit_price = int(unit_price * buy_price_modifier)
 
-
-                self.gold -= count * unit_price
+                # has tax permit
+                if c.TAX_FREE_PERMIT_ID in self.bag.get_all_items_dict():
+                    self.gold -= count * unit_price
+                    self.bag.remove_item(c.TAX_FREE_PERMIT_ID)
+                else:
+                    self.gold -= int(count * unit_price * 1.2)
 
                 print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
                 print(self.name, "gold:", self.gold)
@@ -1498,6 +1502,7 @@ class Bag:
         self.container = {
             2:1,
             3:5,
+            10:2,
         }
 
     def add_item(self, item_id):
