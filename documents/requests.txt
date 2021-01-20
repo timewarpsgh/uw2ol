@@ -3,12 +3,11 @@ travel ON
 
     finding treasure ON
         show items OK
-            items images ON
-
         add items OK
         remove items OK
 
-        show items sell price
+        show items sell price ON
+        show items sell image ON
 
         items uses
 

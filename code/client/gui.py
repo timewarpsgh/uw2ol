@@ -865,13 +865,14 @@ class MenuClickHandlerForCmds():
 
             return None
 
+        # main
         village_id = get_nearby_village_index()
         if village_id:
             self.game.change_and_send('discover', [village_id])
         else:
-            # discovery_id = random.randint(0, 90)
-            # self.game.change_and_send('discover', [discovery_id])
-            self.game.button_click_handler.make_message_box("Can't find anything.")
+            discovery_id = random.randint(0, 90)
+            self.game.change_and_send('discover', [discovery_id])
+            # self.game.button_click_handler.make_message_box("Can't find anything.")
 
 
 
@@ -1696,15 +1697,26 @@ class ItemShop:
         self.game.button_click_handler.make_menu(dict)
 
     def item_name_clicked(self, item_id):
+
+        # building speak
+        item = Item(item_id)
+        sell_price = int(item.price / 2)
+        self.game.building_text = f'{item.name}? I can pay {sell_price}.'
+
+        # show menu
         dict = {
             'OK': [self.sell_item, item_id],
         }
         self.game.button_click_handler.make_menu(dict)
 
     def sell_item(self, item_id):
+        # sell and escape
         self.game.change_and_send('sell_item', [item_id])
         escape_twice(self.game)
         reactor.callLater(0.2, self.sell)
+
+        # building speak
+        self.game.building_text = 'Thank you!'
 
 
 def escape_twice(game):
