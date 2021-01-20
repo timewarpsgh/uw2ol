@@ -1534,14 +1534,9 @@ class Item:
         self.price = hash_items[id]['price']
 
         # image x, y
-        self.image_x = 1
-        self.image_y = 1
-
-        if 'image_x' in hash_items[id]:
-            self.image_x = hash_items[id]['image_x']
-        if 'image_y' in hash_items[id]:
-            self.image_y = hash_items[id]['image_y']
-
+        self.image = [1, 1]
+        if 'image' in hash_items[id]:
+            self.image = hash_items[id]['image']
 
 
 class Port:

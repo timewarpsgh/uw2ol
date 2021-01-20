@@ -650,7 +650,7 @@ class MenuClickHandlerForItems():
                 text += f'{v}<br>'
 
             # get figure image
-            figure_surface = item_x_y_2_image(item.image_x, item.image_y)
+            figure_surface = item_x_y_2_image(item.image[0], item.image[1])
 
             # make window
             PanelWindow(pygame.Rect((59, 50), (350, 400)),
