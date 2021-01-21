@@ -3,17 +3,21 @@ hash_items = {
 		###### consumables #####
 		1:  {
             'name': 'Balm',
-            'price': 1000,
+            'price': 6000,
             'image': [12, 7],
-            'description': "A perfumed oil believed to calm storms."
+            'description': "A perfumed oil believed to calm storms.",
+            'effects': 9,
+            'effects_description': 'Use: max days at sea increased by 9.',
 		},
 		2:  {
             'name': 'Lime Juice',
-            'price': 1000,
+            'price': 1500,
             'image': [13, 7],
             'description': "A great remedy for scurvy, "
                            "the disease of poor nutrition "
-                           "that often troubles a crew during long voyages."
+                           "that often troubles a crew during long voyages.",
+            'effects': 6,
+            'effects_description': 'Use: max days at sea increased by 6.',
 		},	
 		3:  {
             'name': 'Rat Poison',
@@ -21,7 +25,9 @@ hash_items = {
             'image': [11, 7],
             'description': "A poison to get rid of rats on a ship. "
                            "Those pesky animals will feast on your precious food if you "
-                           "don't have a way to get rid of them."
+                           "don't have a way to get rid of them.",
+            'effects': 3,
+            'effects_description': 'Use: max days at sea increased by 3.',
 		},	
 	
 		###### tools #####

@@ -211,8 +211,7 @@ def other_keys_down(self, event):
             self.timer.stop()
 
         if event.key == ord('t'):
-            a = self.ui_manager.get_window_stack()
-            print(len(a))
+            self.change_and_send('consume_potion', [1])
 
 def get_nearby_port_index(self):
     # get x and y in tile position

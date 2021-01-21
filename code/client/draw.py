@@ -79,7 +79,10 @@ def draw_logged_in_state(self):
 
                 # max days at sea
             draw_text(self, 'Max Days', c.WINDOW_WIDTH - 100, 120)
-            draw_text(self, str(self.max_days_at_sea), c.WINDOW_WIDTH - 100, 140)
+            if self.my_role.additioanl_days_at_sea:
+                draw_text(self, str(self.max_days_at_sea) + '*', c.WINDOW_WIDTH - 100, 140)
+            else:
+                draw_text(self, str(self.max_days_at_sea), c.WINDOW_WIDTH - 100, 140)
 
                 # days spent at sea
             draw_text(self, 'Days Spent', c.WINDOW_WIDTH - 100, 160)

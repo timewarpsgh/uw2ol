@@ -99,6 +99,9 @@ def change_map(self, message_obj):
 
             self.my_role.set_speed(['20'])
 
+        # set additional days at sea to 0 (can use potions again)
+        self.my_role.additioanl_days_at_sea = 0
+
     # change users() state
     del self.factory.users[now_map][self.my_role.name]
     self.factory.users[target_map][self.my_role.name] = self

@@ -49,6 +49,7 @@ class Role:
         self.your_turn_in_battle = True
         self.max_days_at_sea = 0
         self.days_spent_at_sea = 0
+        self.additioanl_days_at_sea = 0
         self.speak_msg = ''
         self.gold = gold
         self.bank_gold = 2000
@@ -507,6 +508,18 @@ class Role:
         self.map = 'sea'
         target_role = self._get_other_role_by_name(self.target_name)
         target_role.map = 'sea'
+
+    def consume_potion(self, params):
+        potion_id = params[0]
+
+        if self.additioanl_days_at_sea == 0:
+            if potion_id in self.bag.get_all_items_dict():
+                self.bag.remove_item(potion_id)
+                item = Item(potion_id)
+                self.additioanl_days_at_sea = item.effects
+
+                if self.is_in_client_and_self():
+                    self.GAME.max_days_at_sea += item.effects
 
     # in battle
     def move_ship(self, params):
@@ -1512,7 +1525,8 @@ class Bag:
     """owned by role, contains a list of item_ids"""
     def __init__(self):
         self.container = {
-            2:1,
+            1:3,
+            2:2,
             3:5,
             10:2,
         }
@@ -1539,9 +1553,10 @@ class Bag:
             return False
 
     def remove_item(self, item_id):
-        self.container[item_id] -= 1
-        if self.container[item_id] == 0:
-            del self.container[item_id]
+        if item_id in self.container:
+            self.container[item_id] -= 1
+            if self.container[item_id] == 0:
+                del self.container[item_id]
 
 
     def get_all_items_count(self):
@@ -1571,6 +1586,14 @@ class Item:
         self.description = 'description'
         if 'description' in  hash_items[id]:
             self.description = hash_items[id]['description']
+
+        # effects
+        if 'effects' in hash_items[id]:
+            self.effects = hash_items[id]['effects']
+
+        # effects_description
+        if 'effects_description' in hash_items[id]:
+            self.effects_description = hash_items[id]['effects_description']
 
 
 class Port:

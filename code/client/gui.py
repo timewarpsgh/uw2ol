@@ -1790,6 +1790,8 @@ def show_one_item(params):
         'name': item.name,
         'description': item.description,
     }
+    if hasattr(item, 'effects_description'):
+        dict['effects_description'] = item.effects_description
 
     # make text from dict
     text = ''
