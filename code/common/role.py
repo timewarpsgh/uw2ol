@@ -70,6 +70,7 @@ class Role:
         self.mates = []
         self.discoveries = {}
         self.bag = Bag()
+        self.body = Body()
 
         # main events sequence
         self.main_events_ids = list(range(1, len(events_dict) + 1))
@@ -1568,6 +1569,27 @@ class Bag:
         return count
 
     def get_all_items_dict(self):
+        return self.container
+
+class Body:
+    """where equipments reside"""
+    def __init__(self):
+        self.container = {
+            'weapon': None,
+            'armor': None,
+            'instrument': None,
+            'telescope': None,
+            'watch': None,
+            'pet': None,
+        }
+
+    def equip(self, item):
+        pass
+
+    def unequip(self, item):
+        pass
+
+    def get_all_equipments_dict(self):
         return self.container
 
 
