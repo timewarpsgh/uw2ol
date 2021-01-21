@@ -197,6 +197,29 @@ class Role:
         else:
             return 1
 
+    def equip(self, params):
+        item_id = params[0]
+
+        item = Item(item_id)
+
+        # slot has equipment
+        if self.body.container[item.type]:
+            on_equipment_id = self.body.container[item.type]
+            self.bag.add_item(on_equipment_id)
+            self.bag.remove_item(item_id)
+            self.body.equip(item)
+
+        # empty slot
+        else:
+            self.body.equip(item)
+            self.bag.remove_item(item_id)
+
+    def unequip(self, params):
+        item_id = params[0]
+
+        item = Item(item_id)
+        self.body.unequip(item)
+        self.bag.add_item(item_id)
 
     # in port
     def start_move(self, params):
@@ -1530,6 +1553,17 @@ class Bag:
             2:2,
             3:5,
             10:2,
+
+            6:1,
+            7:1,
+            8:1,
+            9:1,
+
+            32:1,
+            33:1,
+
+            38:1,
+            39:1,
         }
 
     def add_item(self, item_id):
@@ -1584,10 +1618,10 @@ class Body:
         }
 
     def equip(self, item):
-        pass
+        self.container[item.type] = item.id
 
     def unequip(self, item):
-        pass
+        self.container[item.type] = None
 
     def get_all_equipments_dict(self):
         return self.container
@@ -1686,10 +1720,64 @@ if __name__ == '__main__':
     # nickname
     role = default_role
 
-    # testing 4 steps
-    while role.main_events_ids:
-        event = role.get_pending_event()
-        for i in event.dialogues:
-            print(i)
-        print('xxxxxxxxxxx')
-        role.trigger_quest([])
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([6])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([7])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([8])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([9])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([32])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([38])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([39])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.equip([33])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.unequip([33])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.unequip([39])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+    role.unequip([6])
+
+    print(role.bag.container)
+    print(role.body.container)
+
+
+
+
