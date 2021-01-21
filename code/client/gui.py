@@ -1158,7 +1158,7 @@ class Market():
             self.game.building_text = f"Since you have a tax free permit, the price would be {buy_price}."
         else:
             buy_price = int(buy_price * 1.2)
-            self.game.building_text = f"As you don't a tax free permit, a 20% tax is applied to the price. " \
+            self.game.building_text = f"As you don't have a tax free permit, a 20% tax is applied to the price. " \
                                       f"So it would be {buy_price}."
 
         # i or my accountant speaks
