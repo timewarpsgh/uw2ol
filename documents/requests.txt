@@ -4,7 +4,7 @@ travel ON
 
         items uses ON
             tax-free permit OK
-            buy items ON
+            buy items OK
 
             consumables
             equipments

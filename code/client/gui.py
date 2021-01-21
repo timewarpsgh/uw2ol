@@ -17,6 +17,7 @@ import handle_pygame_event
 
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import id_2_building_type
+from hashes.hash_items import hash_items
 
 def test():
     print('testing')
@@ -1651,7 +1652,37 @@ class ItemShop:
         self.game = game
 
     def buy(self):
-        self.game.change_and_send('buy_item', [10, 2])
+        # get available items ids
+        port = Port(int(self.game.my_role.map))
+        items_ids = port.get_available_items_ids_for_sale()
+
+        # make dict
+        dict = {}
+        for id in items_ids:
+            if id in hash_items:
+                item = Item(id)
+                dict[item.name] = [self.buy_item_name_clicked, id]
+
+        # show dict
+        self.game.button_click_handler.make_menu(dict)
+
+    def buy_item_name_clicked(self, item_id):
+        # building speak
+        item = Item(item_id)
+        self.game.building_text = f'{item.name}? I charge {item.price} for this.'
+
+        # show item image
+        show_one_item([self, item])
+
+        # show menu
+        dict = {
+            'OK': [self.buy_item, item_id],
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def buy_item(self, item_id):
+        self.game.button_click_handler. \
+            make_input_boxes('buy_items', ['item_id', 'count'], [str(item_id)])
 
     def sell(self):
         items_dict = self.game.my_role.bag.container

@@ -978,13 +978,16 @@ class Role:
             item = Item(item_id)
             self.gold += int(item.price / 2)
 
-    def buy_item(self, params):
+    def buy_items(self, params):
         item_id = params[0]
         count = params[1]
 
         now_port = Port(int(self.map))
         if item_id in now_port.get_available_items_ids_for_sale():
-            self.bag.add_multiple_items(item_id, count)
+            total_charge = Item(item_id).price * count
+            if self.gold >= total_charge:
+                if self.bag.add_multiple_items(item_id, count):
+                    self.gold -= total_charge
 
 
 class Ship:
@@ -1527,10 +1530,13 @@ class Bag:
         if (self.get_all_items_count() + count) <= c.MAX_ITEMS_IN_BAG:
             if item_id in self.container:
                 self.container[item_id] += count
+                return True
             else:
                 self.container[item_id] = count
+                return True
         else:
             print('max 20 items!')
+            return False
 
     def remove_item(self, item_id):
         self.container[item_id] -= 1
