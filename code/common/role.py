@@ -1574,6 +1574,7 @@ class Bag:
 class Item:
     """items  inside bag"""
     def __init__(self, id):
+        self.id = id
         self.name = hash_items[id]['name']
         self.price = hash_items[id]['price']
 
@@ -1594,6 +1595,10 @@ class Item:
         # effects_description
         if 'effects_description' in hash_items[id]:
             self.effects_description = hash_items[id]['effects_description']
+
+        # type
+        if 'type' in hash_items[id]:
+            self.type = hash_items[id]['type']
 
 
 class Port:

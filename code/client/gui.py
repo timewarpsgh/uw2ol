@@ -642,12 +642,32 @@ class MenuClickHandlerForItems():
         dict = {}
         for k in items_dict.keys():
             item = Item(k)
-            dict[f'{item.name} {items_dict[k]}'] = [show_one_item, [self, item]]
+            dict[f'{item.name} {items_dict[k]}'] = [self._item_name_clicked, item]
 
         self.game.button_click_handler.make_menu(dict)
 
+    def _item_name_clicked(self, item):
+        # show item's info
+        show_one_item([self, item])
+
+        # menu for item use
+        if hasattr(item, 'type'):
+            dict = {}
+            if item.type == 'consumable':
+                dict['Use'] = [self._use_item_clicked, item]
+            elif item.type == 'equipment':
+                dict['Equip'] = test
+
+            self.game.button_click_handler.make_menu(dict)
+
+    def _use_item_clicked(self, item):
+        self.game.change_and_send('consume_potion', [item.id])
+        escape_thrice(self.game)
+        reactor.callLater(0.3, self.on_menu_click_items)
+
     def on_menu_click_discoveries(self):
 
+        # sub
         def show_one_discovery(discovery):
             # dict
             dict = {

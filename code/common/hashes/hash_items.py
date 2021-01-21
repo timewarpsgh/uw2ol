@@ -8,6 +8,7 @@ hash_items = {
             'description': "A perfumed oil believed to calm storms.",
             'effects': 9,
             'effects_description': 'Use: max days at sea increased by 9.',
+            'type': 'consumable',
 		},
 		2:  {
             'name': 'Lime Juice',
@@ -18,6 +19,7 @@ hash_items = {
                            "that often troubles a crew during long voyages.",
             'effects': 6,
             'effects_description': 'Use: max days at sea increased by 6.',
+            'type': 'consumable',
 		},	
 		3:  {
             'name': 'Rat Poison',
@@ -28,6 +30,7 @@ hash_items = {
                            "don't have a way to get rid of them.",
             'effects': 3,
             'effects_description': 'Use: max days at sea increased by 3.',
+            'type': 'consumable',
 		},	
 	
 		###### tools #####
