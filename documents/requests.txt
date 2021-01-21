@@ -4,8 +4,10 @@ travel ON
 
         items uses ON
             tax-free permit OK
-            consumables
-            equipments
+            consumables OK
+
+            equipments ON
+
 
 
             trade
