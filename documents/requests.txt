@@ -8,6 +8,10 @@ travel ON
 
             equipments ON
 
+                equip OK
+
+                show equipments ON
+
 
 
             trade

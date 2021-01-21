@@ -274,6 +274,7 @@ class ButtonClickHandler():
 
     def on_button_click_items(self):
         dict = {
+            'Equipments': self.menu_click_handler.items.on_menu_click_equipments,
             'Items': self.menu_click_handler.items.on_menu_click_items,
             'Discoveries': self.menu_click_handler.items.on_menu_click_discoveries,
             'Diary': self.menu_click_handler.items.diary,
@@ -636,6 +637,34 @@ class MenuClickHandlerForItems():
     def __init__(self, game):
         self.game = game
 
+    def on_menu_click_equipments(self):
+        equipments_dict = self.game.my_role.body.container
+
+        dict = {}
+        for k in equipments_dict.keys():
+            item_id = equipments_dict[k]
+            if item_id == None:
+                dict[f'{k}: {item_id}'] = test
+            else:
+                item = Item(item_id)
+                dict[f'{k}: {item.name}'] = [self._unequip_item_name_clicked, item]
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def _unequip_item_name_clicked(self, item):
+        # show item's info
+        show_one_item([self, item])
+
+        # menu for item use
+        dict = {}
+        dict['Unequip'] = [self._unequip_item_clicked, item]
+        self.game.button_click_handler.make_menu(dict)
+
+    def _unequip_item_clicked(self, item):
+        self.game.change_and_send('unequip', [item.id])
+        escape_thrice(self.game)
+        reactor.callLater(0.3, self.on_menu_click_equipments)
+
     def on_menu_click_items(self):
         items_dict = self.game.my_role.bag.container
 
@@ -655,13 +684,18 @@ class MenuClickHandlerForItems():
             dict = {}
             if item.type == 'consumable':
                 dict['Use'] = [self._use_item_clicked, item]
-            elif item.type == 'equipment':
-                dict['Equip'] = test
+            elif item.type in self.game.my_role.body.container:
+                dict['Equip'] = [self._equip_item_clicked, item]
 
             self.game.button_click_handler.make_menu(dict)
 
     def _use_item_clicked(self, item):
         self.game.change_and_send('consume_potion', [item.id])
+        escape_thrice(self.game)
+        reactor.callLater(0.3, self.on_menu_click_items)
+
+    def _equip_item_clicked(self, item):
+        self.game.change_and_send('equip', [item.id])
         escape_thrice(self.game)
         reactor.callLater(0.3, self.on_menu_click_items)
 
