@@ -138,23 +138,6 @@ class Role:
             if self.map.isdigit():
                 break
 
-    def _count_max_days_at_sea(self):
-
-        total_crew = 0
-        total_water = 0
-        total_food = 0
-
-        for ship in self.ships:
-            total_crew += ship.crew
-            total_water += ship.supplies['Water']
-            total_food += ship.supplies['Food']
-
-        total_supply = min(total_food, total_water)
-        max_days_at_sea = int(total_supply / (total_crew * SUPPLY_CONSUMPTION_PER_DAY_PER_PERSON))
-
-        print("max days at sea:", max_days_at_sea)
-        return max_days_at_sea
-
     def speak(self, params):
         msg = params[0]
         self.speak_msg = msg
@@ -403,6 +386,12 @@ class Role:
 
         # calculate max days
         max_days = int(all_supply / (all_crew * c.SUPPLY_CONSUMPTION_PER_PERSON))
+
+        # equipments
+        if self.body.container['pet']:
+            max_days += 2
+        if self.body.container['watch']:
+            max_days += 2
 
         # ret
         return max_days

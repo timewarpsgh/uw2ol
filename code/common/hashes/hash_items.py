@@ -7,7 +7,7 @@ hash_items = {
             'image': [12, 7],
             'description': "A perfumed oil believed to calm storms.",
             'effects': 9,
-            'effects_description': 'Use: max days at sea increased by 9.',
+            'effects_description': 'Use: +9 max days at sea.',
             'type': 'consumable',
 		},
 		2:  {
@@ -18,7 +18,7 @@ hash_items = {
                            "the disease of poor nutrition "
                            "that often troubles a crew during long voyages.",
             'effects': 6,
-            'effects_description': 'Use: max days at sea increased by 6.',
+            'effects_description': 'Use: +6 max days at sea.',
             'type': 'consumable',
 		},	
 		3:  {
@@ -29,7 +29,7 @@ hash_items = {
                            "Those pesky animals will feast on your precious food if you "
                            "don't have a way to get rid of them.",
             'effects': 3,
-            'effects_description': 'Use: max days at sea increased by 3.',
+            'effects_description': 'Use: +3 max days at sea.',
             'type': 'consumable',
 		},	
 	
@@ -63,7 +63,8 @@ hash_items = {
             'price': 2000,
             'image': [8, 7],
             'description': "A handy portable watch. With it, you'll always know the correct time.",
-           'type': 'watch',
+            'type': 'watch',
+            'effects_description': 'Equip: +2 max days at sea.',
 		},
 		8:  {
             'name': 'Telescope',
@@ -80,7 +81,7 @@ hash_items = {
             'image': [10, 7],
             'description': "Not only does a cat make a nice pet, but it'll keep your ship rat-free!",
             'type': 'pet',
-
+            'effects_description': 'Equip: +2 max days at sea.',
 		},
 	
 		###### permits #####
