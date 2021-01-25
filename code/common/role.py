@@ -1350,11 +1350,11 @@ class Ship:
         if enemy_role.body.container['armor']:
             item_id = enemy_role.body.container['armor']
             item = Item(item_id)
-            percent = (100 - item_id.effects) / 100
+            percent = (100 - item.effects) / 100
             self_damage = int(self_damage * percent)
 
-        if self_damage < 0:
-            self_damage = 0
+        if self_damage <= 5:
+            self_damage = 5
 
         ship.crew -= self_damage
 
@@ -1383,8 +1383,8 @@ class Ship:
             percent = (100 - item.effects) / 100
             enemy_damage = int(enemy_damage * percent)
 
-        if enemy_damage < 0:
-            enemy_damage = 0
+        if enemy_damage <= 5:
+            enemy_damage = 5
 
         self.crew -= enemy_damage
 
