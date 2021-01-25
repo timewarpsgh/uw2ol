@@ -1027,6 +1027,7 @@ class Role:
 
 
 class Ship:
+    ROLE = None
     shooting_img = ''
 
     def __init__(self, name, type):
@@ -1277,19 +1278,38 @@ class Ship:
         self.state = 'shooting'
         reactor.callLater(1, self._clear_shooting_state, ship)
 
-        # change values
+        # damage based on attributes
         damage = 0
             # if no first mate
         if not self.captain.first_mate:
-            damage = c.SHOOT_DAMAGE * int((self.max_guns + int(self.captain.courage / 2) + self.captain.gunnery * 20) / 10)
+            damage = c.SHOOT_DAMAGE * int((self.max_guns + int(self.captain.swordplay / 2) + self.captain.gunnery * 20) / 10)
             # if have first mate
         else:
             damage = c.SHOOT_DAMAGE * int(
-                (self.max_guns + int(self.captain.first_mate.courage / 2) + self.captain.first_mate.gunnery * 20) / 10)
+                (self.max_guns + int(self.captain.first_mate.swordplay / 2) + self.captain.first_mate.gunnery * 20) / 10)
+
+        # damage based on equipments
+
+            # add damage
+        if self.ROLE.body.container['weapon']:
+            percent = (100 + 80) / 100
+            damage = int(damage * percent)
+
+            # mitigate damage
+        enemy_name = self.ROLE.enemy_name
+        enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
+        if enemy_role.body.container['armor']:
+            percent = (100 - 30) / 100
+            damage = int(damage * percent)
+
+        # do damage
+        if damage < 0:
+            damage = 0
+
         ship.now_hp -= damage
         ship.damage_got = str(damage)
 
-        # no negative values
+        # no negative hp
         if ship.now_hp < 0:
             ship.now_hp = 0
 
@@ -1303,6 +1323,7 @@ class Ship:
         reactor.callLater(1, self._clear_state, ship)
 
         # change values
+
             # self engage
         self_damage_ratio = 0
         if not self.captain.first_mate:
@@ -1311,8 +1332,22 @@ class Ship:
             self_damage_ratio = (self.captain.first_mate.swordplay + self.captain.first_mate.gunnery * 20) / 100
 
         self_damage = int(c.ENGAGE_DAMAGE * self.crew * self_damage_ratio / 3)
-        if self_damage <= 5:
-            self_damage = 5
+
+                # damage based on equipments
+        if self.ROLE.body.container['weapon']:
+            percent = (100 + 80) / 100
+            self_damage = int(self_damage * percent)
+
+                # mitigate damage
+        enemy_name = self.ROLE.enemy_name
+        enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
+        if enemy_role.body.container['armor']:
+            percent = (100 - 30) / 100
+            self_damage = int(self_damage * percent)
+
+        if self_damage < 0:
+            self_damage = 0
+
         ship.crew -= self_damage
 
             # enemy engage
@@ -1323,8 +1358,22 @@ class Ship:
             enemy_damage_ratio = (ship.captain.first_mate.swordplay + ship.captain.first_mate.gunnery * 20) / 100
 
         enemy_damage = int(c.ENGAGE_DAMAGE * ship.crew * enemy_damage_ratio / 3)
-        if enemy_damage <= 5:
-            enemy_damage = 5
+
+                # damage based on equipments
+        enemy_name = self.ROLE.enemy_name
+        enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
+        if enemy_role.body.container['weapon']:
+            percent = (100 + 80) / 100
+            enemy_damage = int(enemy_damage * percent)
+
+                # mitigate damage
+        if self.ROLE.body.container['armor']:
+            percent = (100 - 30) / 100
+            enemy_damage = int(enemy_damage * percent)
+
+        if enemy_damage < 0:
+            enemy_damage = 0
+
         self.crew -= enemy_damage
 
         # self.damage_got = str(c.ENGAGE_DAMAGE)
@@ -1426,6 +1475,7 @@ class Mate:
     def __init__(self, id):
         mate_dict = hash_mates[id]
 
+        # basics
         self.name = mate_dict['name']
         self.nation = mate_dict['nation']
 
@@ -1439,6 +1489,7 @@ class Mate:
 
         self.points = 0
 
+        # attributes
         self.leadership = mate_dict['leadership']
 
         self.seamanship = mate_dict['seamanship']
@@ -1448,10 +1499,12 @@ class Mate:
         self.courage = mate_dict['courage']
         self.swordplay = mate_dict['swordplay']
 
+        # skills
         self.accounting = mate_dict['accounting']
         self.gunnery = mate_dict['gunnery']
         self.navigation = mate_dict['navigation']
 
+        # assistants
         self.accountant = None
         self.first_mate = None
         self.chief_navigator = None

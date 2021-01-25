@@ -19,8 +19,13 @@ travel ON
                     telescope  1 speed  OK
                     instrument 1,2,3 speed  OK
 
-                    weapon swordplay
-                    armor courage
+                    weapon swordplay ON
+                        +/- percents
+                        attack
+                            shoot
+                            engage
+                    armor courage ON
+                        defense
 
 
 
