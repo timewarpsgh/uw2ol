@@ -1,8 +1,10 @@
 travel ON
 
-    ports days and nights ON
+    ports days and nights OK
 
+    at sea days and nights ON
 
+    GUI sell items show bag load ON
 
             trade
             travel

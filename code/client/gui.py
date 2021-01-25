@@ -667,13 +667,14 @@ class MenuClickHandlerForItems():
         reactor.callLater(0.3, self.on_menu_click_equipments)
 
     def on_menu_click_items(self):
-        items_dict = self.game.my_role.bag.container
-
+        # show bag load (e.g: 8/10)
         dict = {}
         now_items_count = self.game.my_role.bag.get_all_items_count()
         now_bag_load = str(now_items_count) + '/' + str(c.MAX_ITEMS_IN_BAG)
         dict[now_bag_load] = test
 
+        # show items
+        items_dict = self.game.my_role.bag.container
         for k in items_dict.keys():
             item = Item(k)
             dict[f'{item.name} {items_dict[k]}'] = [self._item_name_clicked, item]
@@ -1751,9 +1752,14 @@ class ItemShop:
             make_input_boxes('buy_items', ['item_id', 'count'], [str(item_id)])
 
     def sell(self):
-        items_dict = self.game.my_role.bag.container
-
+        # show bag load (e.g: 8/10)
         dict = {}
+        now_items_count = self.game.my_role.bag.get_all_items_count()
+        now_bag_load = str(now_items_count) + '/' + str(c.MAX_ITEMS_IN_BAG)
+        dict[now_bag_load] = test
+
+        # show items
+        items_dict = self.game.my_role.bag.container
         for k in items_dict.keys():
             item = Item(k)
             dict[f'{item.name} {items_dict[k]}'] = [self.item_name_clicked, k]
