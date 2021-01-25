@@ -2,7 +2,8 @@ travel ON
 
     finding treasure ON
         items uses OK
-        show treasure and items found ON
+        show treasure and items found OK
+        show bag capacity ON
 
 
             trade

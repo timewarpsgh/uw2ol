@@ -252,10 +252,11 @@ class ButtonClickHandler():
         print(len(self.game.buttons.keys()))
 
     def make_message_box(self, text):
-        MessageWindow(pygame.Rect((200, 50),
-                                  (350, 350)),
-                      self.ui_manager,
-                      text, self.game)
+        if self.game.my_role.is_in_client_and_self():
+            MessageWindow(pygame.Rect((200, 50),
+                                      (350, 350)),
+                          self.ui_manager,
+                          text, self.game)
 
     def on_button_click_ships(self):
         dict = {
@@ -669,6 +670,10 @@ class MenuClickHandlerForItems():
         items_dict = self.game.my_role.bag.container
 
         dict = {}
+        now_items_count = self.game.my_role.bag.get_all_items_count()
+        now_bag_load = str(now_items_count) + '/' + str(c.MAX_ITEMS_IN_BAG)
+        dict[now_bag_load] = test
+
         for k in items_dict.keys():
             item = Item(k)
             dict[f'{item.name} {items_dict[k]}'] = [self._item_name_clicked, item]

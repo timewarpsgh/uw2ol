@@ -69,7 +69,7 @@ class Role:
         self.ships = []
         self.mates = []
         self.discoveries = {}
-        self.bag = Bag()
+        self.bag = Bag(self)
         self.body = Body()
 
         # main events sequence
@@ -1613,7 +1613,8 @@ class Event:
 
 class Bag:
     """owned by role, contains a list of item_ids"""
-    def __init__(self):
+    def __init__(self, role):
+        self.role = role
         self.container = {
             1:3,
             2:2,
@@ -1641,7 +1642,8 @@ class Bag:
             else:
                 self.container[item_id] = 1
         else:
-            print('max 20 items!')
+            print('max capacity reached!')
+
 
     def add_multiple_items(self, item_id, count):
         if (self.get_all_items_count() + count) <= c.MAX_ITEMS_IN_BAG:
@@ -1652,7 +1654,7 @@ class Bag:
                 self.container[item_id] = count
                 return True
         else:
-            print('max 20 items!')
+            print('max capacity reached!')
             return False
 
     def remove_item(self, item_id):
