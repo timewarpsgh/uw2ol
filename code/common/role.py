@@ -470,7 +470,7 @@ class Role:
         # discovery_id = random.randint(0, 10)
         discovery_id = params[0]
         if discovery_id in self.discoveries:
-            if self.GAME:
+            if self.is_in_client_and_self():
                 self.GAME.button_click_handler.make_message_box("Have seen this.")
         else:
             if self.quest_discovery == discovery_id or True:
@@ -483,10 +483,12 @@ class Role:
                 item_id = random.choice(range(1,len(hash_items) + 1))
                 self.bag.add_item(item_id)
 
-                if self.GAME:
-                    self.GAME.button_click_handler.make_message_box("We found something!")
+                if self.is_in_client_and_self():
+                    discovery = Discovery(discovery_id)
+                    item = Item(item_id)
+                    self.GAME.button_click_handler.make_message_box(f'We found {discovery.name} and {item.name}!')
             else:
-                if self.GAME:
+                if self.is_in_client_and_self():
                     self.GAME.button_click_handler.make_message_box("Can't find anything.")
 
     def enter_battle_with(self, params):

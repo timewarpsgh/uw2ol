@@ -55,7 +55,7 @@ ALTERNATIVE_DIRECTIONS = {
     'se': ['right', 'down'],
     'sw': ['down', 'left'],
 }
-MAX_ITEMS_IN_BAG = 20
+MAX_ITEMS_IN_BAG = 40
 
 # in battle
 BATTLE_TILE_SIZE = 32

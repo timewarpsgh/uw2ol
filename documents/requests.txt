@@ -1,32 +1,8 @@
 travel ON
 
     finding treasure ON
-
-        items uses ON
-            tax-free permit OK
-            consumables OK
-
-            equipments ON
-
-                equip OK
-
-                show equipments OK
-
-                equipment effects ON
-                    cat 2 days OK
-                    watch 2 days OK
-
-                    telescope  1 speed  OK
-                    instrument 1,2,3 speed  OK
-
-                    weapon swordplay ON
-                        +/- percents
-                        attack
-                            shoot
-                            engage
-                    armor courage ON
-                        defense
-
+        items uses OK
+        show treasure and items found ON
 
 
             trade
