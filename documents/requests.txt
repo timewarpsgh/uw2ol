@@ -13,11 +13,11 @@ travel ON
                 show equipments OK
 
                 equipment effects ON
-                    cat 2 days
-                    watch 2 days
+                    cat 2 days OK
+                    watch 2 days OK
 
-                    telescope  1 speed
-                    instrument 1,2,3 speed
+                    telescope  1 speed  OK
+                    instrument 1,2,3 speed  OK
 
                     weapon swordplay
                     armor courage

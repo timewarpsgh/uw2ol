@@ -41,6 +41,8 @@ hash_items = {
             'description': "A low precision instrument use for celestial navigation. "
                            "It measures longitude and latitude.",
             'type': 'instrument',
+            'effects': 1,
+            'effects_description': 'Equip: +1 fleet speed.',
 		},	
 		5:  {
             'name': 'Sextant',
@@ -49,6 +51,8 @@ hash_items = {
             'description': "A high precision instrument used for celestial navigation. "
                            "It measures longitude and latitude.",
            'type': 'instrument',
+            'effects': 2,
+            'effects_description': 'Equip: +2 fleet speed.',
 		},
 		6:  {
             'name': 'Theodolite',
@@ -57,6 +61,8 @@ hash_items = {
             'description': "The most precise and reliable instrument used for celestial navigation. "
                            "It measures longitude and latitude.",
             'type': 'instrument',
+            'effects': 3,
+            'effects_description': 'Equip: +3 fleet speed.',
 		},
 		7:  {
             'name': 'Pocket Watch',
@@ -73,6 +79,7 @@ hash_items = {
             'description': "An optical instrument that will help you "
                            "find distant objects and ports at sea.",
             'type': 'telescope',
+            'effects_description': 'Equip: +1 fleet speed.',
 
 		},
 		9:  {

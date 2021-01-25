@@ -162,6 +162,7 @@ class Role:
     def get_fleet_speed(self, params):
         # have ships
         if self.ships:
+            # get fleet speed
             speed_list = []
             index = 0
             for ship in self.ships:
@@ -174,6 +175,15 @@ class Role:
                 index += 1
 
             fleet_speed = min(speed_list)
+
+            # modifiers
+            if self.body.container['telescope']:
+                fleet_speed += 1
+            if self.body.container['instrument']:
+                item_id = self.body.container['instrument']
+                item = Item(item_id)
+                fleet_speed += item.effects
+
             return fleet_speed
 
         # no ship
@@ -1543,6 +1553,8 @@ class Bag:
             3:5,
             10:2,
 
+            4:1,
+            5:1,
             6:1,
             7:1,
             8:1,

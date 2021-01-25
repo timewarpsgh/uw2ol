@@ -1,2 +1,5 @@
-if (1+2) < 5:
-    print('yup')
+a = hash('hello')
+print(a)
+
+b = hash('hello')
+print(b)
