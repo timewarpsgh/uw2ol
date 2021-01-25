@@ -9,12 +9,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import pygame
+import random
 
 class MapMaker():
     def __init__(self):
         pass
 
-    def make_port_piddle_and_map(self, port_index):
+    def make_port_piddle_and_map(self, port_index, time_of_day='random'):
         """make a port's tile matrix and image"""
         # normal and supply ports
         if port_index <= 99:
@@ -26,7 +27,7 @@ class MapMaker():
         port_piddle = self.make_port_piddle(port_index)
 
         # make map
-        port_map_pil_img = self.make_port_map(port_piddle, port_index)
+        port_map_pil_img = self.make_port_map(port_piddle, port_index, time_of_day)
         mode = port_map_pil_img.mode
         size = port_map_pil_img.size
         data = port_map_pil_img.tobytes()
@@ -53,14 +54,20 @@ class MapMaker():
 
             return piddle
 
-    def make_port_map(self, port_piddle, port_index):
+    def make_port_map(self, port_piddle, port_index, time_of_day):
         """make port image"""
         # port_id to port_chip_file_num
         port_tile_set = 2 * hash_ports_meta_data[port_index+1]['tileset']
         port_chip_file_num = str(port_tile_set).zfill(3)
 
         # read img
-        img = Image.open(f"../../assets/images/ports/PORTCHIP.{port_chip_file_num}  dawn.png")
+        file_name = ''
+        if time_of_day == 'random':
+            file_name = random.choice(c.TIME_OF_DAY_OPTIONS)
+        else:
+            file_name = time_of_day
+
+        img = Image.open(f"../../assets/images/ports/PORTCHIP.{port_chip_file_num}  {file_name}.png")
         CHIP_TILES_COUNT = 16
 
         # cut to tiles

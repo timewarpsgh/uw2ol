@@ -99,7 +99,7 @@ def change_map(self, message_obj):
 
             self.my_role.set_speed(['20'])
 
-        # set additional days at sea to 0 (can use potions again)
+        # set additional days at sea to 0 (so that potions can be used again)
         self.my_role.additioanl_days_at_sea = 0
 
     # change users() state

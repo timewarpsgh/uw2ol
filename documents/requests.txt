@@ -1,6 +1,7 @@
 travel ON
 
-    special buildings ON
+    ports days and nights ON
+
 
 
             trade
