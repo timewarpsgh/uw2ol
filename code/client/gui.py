@@ -812,7 +812,7 @@ class MenuClickHandlerForCmds():
                     5:self.game.button_click_handler.menu_click_handler.port.on_menu_click_inn,
                     6: self.game.button_click_handler.menu_click_handler.port.on_menu_click_palace,
                     7:self.game.button_click_handler.menu_click_handler.port.on_menu_click_job_house,
-                    8:test,
+                    8:self.game.button_click_handler.menu_click_handler.port.on_menu_click_msc,
                     9:self.game.button_click_handler.menu_click_handler.port.on_menu_click_bank,
                     10:self.game.button_click_handler.menu_click_handler.port.on_menu_click_item_shop,
                     11:self.game.button_click_handler.menu_click_handler.port.on_menu_click_church,
@@ -1043,6 +1043,13 @@ class MenuClickHandlerForPort():
             'Country Info': self.job_house.contry_info,
         }
         self.game.button_click_handler.make_menu(dict)
+
+    def on_menu_click_msc(self):
+        dict = {
+            'Exit': test,
+        }
+        self.game.button_click_handler.make_menu(dict)
+
 
     def on_menu_click_bank(self):
         dict = {

@@ -1,9 +1,6 @@
 travel ON
 
-    finding treasure ON
-        items uses OK
-        show treasure and items found OK
-        show bag capacity ON
+    special buildings ON
 
 
             trade
