@@ -240,8 +240,18 @@ hash_items = {
 		},
 		
 		
-	###### Armor ######	
+	###### Armor ######
 	32:  {
+        'name': 'Leather Armor',
+        'price': 1000,
+        'image': [1, 7],
+        'description': "A relatively inexpensive armor "
+                       "made of leather that has been hardened with animal grease.",
+        'type': 'armor',
+        'effects': 5,
+        'effects_description': 'Equip: +5% damage reduction.',
+	},
+	33:  {
         'name': 'Chain Mail',
         'price': 2000,
         'image': [2,7],
@@ -249,14 +259,8 @@ hash_items = {
                        "While it allows the wearer ease of movement, "
                        "it doesn't offer the best protection.",
         'type': 'armor',
-	},	
-	33:  {
-        'name': 'Leather Armor',
-        'price': 1000,
-        'image': [1, 7],
-        'description': "A relatively inexpensive armor "
-                       "made of leather that has been hardened with animal grease.",
-        'type': 'armor',
+        'effects': 10,
+        'effects_description': 'Equip: +10% damage reduction.',
 	},
 	34:  {
         'name': 'Half Plate',
@@ -267,6 +271,8 @@ hash_items = {
                        "An improvement of plate armor, "
                        "it's designed for more active naval combats.",
         'type': 'armor',
+        'effects': 15,
+        'effects_description': 'Equip: +15% damage reduction.',
 	},		
 	35:  {
         'name': 'Plate Mail',
@@ -276,8 +282,20 @@ hash_items = {
                        "this armor is formed by a combination of plate and mail. "
                        "It offers better protection than Half Plate Armor.",
         'type': 'armor',
-	},		
+        'effects': 20,
+        'effects_description': 'Equip: +20% damage reduction.',
+	},
 	36:  {
+        'name': "Errol's Plate",
+        'price': 300000,
+        'image': [4, 7],
+        'description': "Half plate armor made by the famous Copenhagen armorer, Errol. "
+                       "It provides greater protection than plate mail armor.",
+        'type': 'armor',
+        'effects': 40,
+        'effects_description': 'Equip: +40% damage reduction.',
+	},
+	37:  {
         'name': 'Crusader Armor (*)',
         'price': 600000,
         'image': [4, 7],
@@ -285,15 +303,10 @@ hash_items = {
                        "Montaguinus made-to-order for Affonso, "
                        "the founding king of Portugal.",
         'type': 'armor',
+        'effects': 80,
+        'effects_description': 'Equip: +80% damage reduction.',
 	},	
-	37:  {
-        'name': "Errol's Plate",
-        'price': 300000,
-        'image': [4, 7],
-        'description': "Half plate armor made by the famous Copenhagen armorer, Errol. "
-                       "It provides greater protection than plate mail armor.",
-        'type': 'armor',
-	},	
+
 		
 	###### Weapon ######
 		###### Curved Sword ######
@@ -305,6 +318,9 @@ hash_items = {
                            "It's less effective in an attack than a Saber, "
                            "but its low price makes it popular.",
             'type': 'weapon',
+            'effects': 5,
+            'effects_description': 'Equip: +5% damage.',
+
 		},
 		39:  {
             'name': 'Scimitar',
@@ -314,6 +330,8 @@ hash_items = {
                            "A great weapon for attacking, "
                            "it's mainly used by Arabs and Persians.",
             'type': 'weapon',
+            'effects': 25,
+            'effects_description': 'Equip: +25% damage.',
 		},
 		40:  {
             'name': 'Japanese Sword',
@@ -322,6 +340,8 @@ hash_items = {
             'description': "A very sharp sword made in Japan. "
                            "It's especially effective for lashing attacks.",
             'type': 'weapon',
+            'effects': 35,
+            'effects_description': 'Equip: +35% damage.',
 		},
 		41:  {
             'name': 'Saber',
@@ -330,6 +350,8 @@ hash_items = {
             'description': "A curved single-edged cavalry sword that is more "
                            "effective for lashing than for thrusting.",
             'type': 'weapon',
+            'effects': 15,
+            'effects_description': 'Equip: +15% damage.',
 		},
 		42:  {
             'name': 'Magic Muramasa(*)',
@@ -338,6 +360,8 @@ hash_items = {
             'description': "A treasured sword made in the 15th century by a famous "
                            "Japanese sword smith, Muramasa.",
             'type': 'weapon',
+            'effects': 80,
+            'effects_description': 'Equip: +80% damage.',
 		},
 		43:  {
             'name': "Siva's Sword(*)",
@@ -346,6 +370,8 @@ hash_items = {
             'description': "A legendary sword that's believed to confine the "
                            "power of Siva, the Hindu god of destruction. A powerful lashing weapon.",
             'type': 'weapon',
+            'effects': 60,
+            'effects_description': 'Equip: +60% damage.',
 		},
 
 		###### Fencing Sword ######
@@ -356,6 +382,8 @@ hash_items = {
             'description': "A long decorative sword with wavy edges. "
                            "Its offensive capability is superior to both the Rapier and the Estock.",
             'type': 'weapon',
+            'effects': 30,
+            'effects_description': 'Equip: +30% damage.',
 		},
 		45:  {
             'name': 'Rapier',
@@ -364,6 +392,8 @@ hash_items = {
             'description': "A light, slender, two-edged sword used only for thrusting. "
                            "It came into use after guns made armor obsolete.",
             'type': 'weapon',
+            'effects': 15,
+            'effects_description': 'Equip: +15% damage.',
 		},
 		46:  {
             'name': 'Epee',
@@ -373,6 +403,8 @@ hash_items = {
                            "used only for thrusting in dueling. "
                            "It's not very effective when it comes to attacking.",
             'type': 'weapon',
+            'effects': 10,
+            'effects_description': 'Equip: +10% damage.',
 		},
 		47:  {
             'name': 'Estock',
@@ -381,6 +413,8 @@ hash_items = {
             'description': "A sword developed to pierce the armor of a mounyed enemy. "
                            "It has higher attack rate than a rapier.",
             'type': 'weapon',
+            'effects': 20,
+            'effects_description': 'Equip: +20% damage.',
 		},
 		48:  {
             'name': 'Crusader Sword (*)',
@@ -389,6 +423,8 @@ hash_items = {
             'description': "A special sword with razor-like sharpness made by "
                            "the renowned swordsmith, Michelangelo.",
             'type': 'weapon',
+            'effects': 80,
+            'effects_description': 'Equip: +80% damage.',
 		},
 		
 		###### Heavy Sword ######
@@ -398,6 +434,8 @@ hash_items = {
             'image': [6, 6],
             'description': "A heavy, curved sword that historically has been used by sailors.",
             'type': 'weapon',
+            'effects': 8,
+            'effects_description': 'Equip: +8% damage.',
 		},
 		50:  {
             'name': 'Broad Sword',
@@ -406,6 +444,8 @@ hash_items = {
             'description': "A sword with a wide, straight, single-edged blade. "
                            "It's especially effective for striking.",
             'type': 'weapon',
+            'effects': 18,
+            'effects_description': 'Equip: +18% damage.',
 		},
 		51:  {
             'name': 'Blue Crescent(*)',
@@ -414,6 +454,8 @@ hash_items = {
             'description': "A unique Chinese sword with a wide crescent-shaped blade. "
                            "It's quite good for attacking, especially striking.",
             'type': 'weapon',
+            'effects': 40,
+            'effects_description': 'Equip: +40% damage.',
 		},
 		52:  {
             'name': 'Claymore',
@@ -422,6 +464,8 @@ hash_items = {
             'description': "A large two-handed sword from Scotland that may weigh up to 10 pounds. "
                            "It's quite effective for striking.",
             'type': 'weapon',
+            'effects': 30,
+            'effects_description': 'Equip: +30% damage.',
 		},
 		53:  {
             'name': 'Golden Dragon(*)',
@@ -429,6 +473,8 @@ hash_items = {
             'image': [16, 6],
             'description': "A unique Chinese sword with wide blade. It's quite effective for striking.",
             'type': 'weapon',
+            'effects': 30,
+            'effects_description': 'Equip: +30% damage.',
 		},
 
 		# treasure
@@ -449,7 +495,12 @@ hash_items = {
 
 
 if __name__ == '__main__':
-	# for i in range(1, 53):
-	# 	print(i)
-	# 	print(hash_items[i])
-    print(len(hash_items))
+    prices = {}
+    for i in range(38, 54):
+        p = hash_items[i]['price']
+        name = hash_items[i]['name']
+        prices[name] = p
+
+    d = dict(sorted(prices.items(), key=lambda item: item[1]))
+    print(d)
+

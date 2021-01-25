@@ -1292,14 +1292,18 @@ class Ship:
 
             # add damage
         if self.ROLE.body.container['weapon']:
-            percent = (100 + 80) / 100
+            item_id = self.ROLE.body.container['weapon']
+            item = Item(item_id)
+            percent = (100 + item.effects) / 100
             damage = int(damage * percent)
 
             # mitigate damage
         enemy_name = self.ROLE.enemy_name
         enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
         if enemy_role.body.container['armor']:
-            percent = (100 - 30) / 100
+            item_id = enemy_role.body.container['armor']
+            item = Item(item_id)
+            percent = (100 - item.effects) / 100
             damage = int(damage * percent)
 
         # do damage
@@ -1335,14 +1339,18 @@ class Ship:
 
                 # damage based on equipments
         if self.ROLE.body.container['weapon']:
-            percent = (100 + 80) / 100
+            item_id = self.ROLE.body.container['weapon']
+            item = Item(item_id)
+            percent = (100 + item.effects) / 100
             self_damage = int(self_damage * percent)
 
                 # mitigate damage
         enemy_name = self.ROLE.enemy_name
         enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
         if enemy_role.body.container['armor']:
-            percent = (100 - 30) / 100
+            item_id = enemy_role.body.container['armor']
+            item = Item(item_id)
+            percent = (100 - item_id.effects) / 100
             self_damage = int(self_damage * percent)
 
         if self_damage < 0:
@@ -1363,12 +1371,16 @@ class Ship:
         enemy_name = self.ROLE.enemy_name
         enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
         if enemy_role.body.container['weapon']:
-            percent = (100 + 80) / 100
+            item_id = enemy_role.body.container['weapon']
+            item = Item(item_id)
+            percent = (100 + item.effects) / 100
             enemy_damage = int(enemy_damage * percent)
 
                 # mitigate damage
         if self.ROLE.body.container['armor']:
-            percent = (100 - 30) / 100
+            item_id = self.ROLE.body.container['armor']
+            item = Item(item_id)
+            percent = (100 - item.effects) / 100
             enemy_damage = int(enemy_damage * percent)
 
         if enemy_damage < 0:
@@ -1614,10 +1626,10 @@ class Bag:
             9:1,
 
             32:1,
-            33:1,
+            37:1,
 
             38:1,
-            39:1,
+            48:1,
         }
 
     def add_item(self, item_id):
