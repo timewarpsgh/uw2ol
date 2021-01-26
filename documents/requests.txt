@@ -1,11 +1,11 @@
 travel
     port npc
     fleet npc
+    sailing consumes food and water(other way!)
 
 trade ON
-
     ships
-        buy ship ON
+    ship info hight
 
 
 fight

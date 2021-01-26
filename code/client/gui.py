@@ -462,13 +462,14 @@ class MenuClickHandlerForShips():
         # if no target selected
         if not target:
             # supply
-            dict['supplies'] = f"  F {ship.supplies['Food']} W {ship.supplies['Water']}" \
-                               f" L {ship.supplies['Lumber']} S {ship.supplies['Shot']}"
+            dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']}" \
+                               f" L{ship.supplies['Lumber']} S{ship.supplies['Shot']} "
 
             # cargo
             cargoes_dict = ship.cargoes
             for cargo_name, count in cargoes_dict.items():
-                dict[cargo_name] = count
+                dict['supplies'] +=  cargo_name + ':' + str(count)
+                # dict[cargo_name] = count
 
         # make text from dict
         text = ''
@@ -480,7 +481,8 @@ class MenuClickHandlerForShips():
 
         # make window
         ship_image = self.game.images['ships'][ship.type.lower()]
-        PanelWindow(pygame.Rect((59, 10), (350, 400)),
+        print('!!!!!!!!!!!!!')
+        PanelWindow(pygame.Rect((59, 12), (350, 400)),
                     self.game.ui_manager, text, self.game, ship_image)
 
     def swap_ships(self):
