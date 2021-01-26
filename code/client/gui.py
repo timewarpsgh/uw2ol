@@ -1143,7 +1143,9 @@ class Harbor():
             port_tile_y = hash_ports_meta_data[int(self.game.my_role.map) + 1]['y']
             print(port_tile_x, port_tile_y)
 
-            self.game.images['sea'] = self.game.map_maker.make_partial_world_map(port_tile_x, port_tile_y)
+            self.game.time_of_day_index = 1
+            time_of_day = c.TIME_OF_DAY_OPTIONS[self.game.time_of_day_index]
+            self.game.images['sea'] = self.game.map_maker.make_partial_world_map(port_tile_x, port_tile_y, time_of_day)
 
             # send
             self.game.connection.send('change_map', ['sea'])

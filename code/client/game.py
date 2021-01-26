@@ -61,7 +61,9 @@ class Game():
         self.all_roles = {}
         Role.GAME = self
 
+        # local data
         self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
+        self.time_of_day_index = 0
 
         # load assets
         self.font = None
@@ -241,4 +243,13 @@ class Game():
                         self.my_role.y >= c.WORLD_MAP_MIN_Y_TO_DRAW_NEW_PARTIAL_WORLD_MAP:
                     if self.my_role.x >= c.WORLD_MAP_MIN_X_TO_DRAW_NEW_PARTIAL_WORLD_MAP and \
                             self.my_role.x <= c.WORLD_MAP_MAX_X_TO_DRAW_NEW_PARTIAL_WORLD_MAP:
-                        self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y)
+
+                        # get time_of_day
+                        if (self.time_of_day_index + 1) >= len(c.TIME_OF_DAY_OPTIONS):
+                            self.time_of_day_index = 0
+                        else:
+                            self.time_of_day_index += 1
+                        time_of_day = c.TIME_OF_DAY_OPTIONS[self.time_of_day_index]
+
+                        # make sea image
+                        self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y, time_of_day)

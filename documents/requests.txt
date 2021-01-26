@@ -2,6 +2,7 @@ travel ON
 
     ports days and nights OK
     at sea days and nights ON
+        sequential change ON
     python pygame blit
 
 
