@@ -109,16 +109,18 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
         self.game.active_input_boxes.clear()
 
         # for each param
+        text_box_list = []
         input_box_list = []
         line_distance = 40
-        for i, name in enumerate(params_names_list):
 
+        for i, name in enumerate(params_names_list):
             # text box
-            pygame_gui.elements.UITextBox(html_text=name,
+            text_box = pygame_gui.elements.UITextBox(html_text=name,
                                           relative_rect=pygame.Rect(0, 0 + line_distance*i, 120, 40),
                                           manager=ui_manager,
                                           wrap_to_height=True,
                                           container=self)
+            text_box_list.append(text_box)
 
             # input box
             input_box = pygame_gui.elements.UITextEntryLine(
@@ -137,6 +139,8 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
             index = 0
             for value in values_list:
                 input_box_list[index].set_text(value)
+                input_box_list[index].kill()
+                text_box_list[index].kill()
                 index +=1
 
         # get dict
@@ -1278,7 +1282,7 @@ class Market():
                 # sell button
                 def sell(cargo_name):
                     self.game.button_click_handler. \
-                        make_input_boxes('sell_cargo', ['cargo name', 'count', 'ship num'], [cargo_name, '', str(index)])
+                        make_input_boxes('sell_cargo', ['cargo name', 'ship num', 'count'], [cargo_name, str(index)])
 
                 dict = {
                     'Sell': [sell, cargo_name]

@@ -1,16 +1,14 @@
-travel ON
+travel
+    port npc
+    fleet npc
 
-    ports days and nights OK
-    at sea days and nights ON
-        sequential change ON
-    python pygame blit
+trade ON
 
-
-            trade
-            travel
-            battle
-
-
-business
+    goods
+        buy GUI
+        sell GUI
+    items
+        buy GUI don't show id ON
+    ships
 
 fight

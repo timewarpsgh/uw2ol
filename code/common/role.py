@@ -884,8 +884,8 @@ class Role:
 
     def sell_cargo(self, params):
         cargo_name = params[0]
-        count = params[1]
-        from_which_ship = params[2]
+        from_which_ship = params[1]
+        count = params[2]
 
         ship = self.ships[from_which_ship]
 
