@@ -101,25 +101,30 @@ class MapMaker():
         return port_img
 
     def set_world_map_tiles(self):
-        # read img
-        img = Image.open(f"../../assets/images/world_map/w_map regular tileset.png")
+        # init dict
+        self.world_map_tiles = {}
 
-        # cut to tiles
-        world_map_tiles = ['']
-        for k in range(8):
-            for i in range(16):
-                left = i * c.PIXELS_COVERED_EACH_MOVE
-                upper = k * c.PIXELS_COVERED_EACH_MOVE
-                width = height = c.PIXELS_COVERED_EACH_MOVE
-                right = left + width
-                lower = upper + height
+        # each time option
+        for time_option in c.TIME_OF_DAY_OPTIONS:
+            # read img
+            img = Image.open(f"../../assets/images/world_map/{time_option}.png")
 
-                region = (left, upper, right, lower)
-                img_cropped = img.crop(region)
-                world_map_tiles.append(img_cropped)
+            # cut to tiles
+            world_map_tiles = ['']
+            for k in range(8):
+                for i in range(16):
+                    left = i * c.PIXELS_COVERED_EACH_MOVE
+                    upper = k * c.PIXELS_COVERED_EACH_MOVE
+                    width = height = c.PIXELS_COVERED_EACH_MOVE
+                    right = left + width
+                    lower = upper + height
 
-        # set
-        self.world_map_tiles = world_map_tiles
+                    region = (left, upper, right, lower)
+                    img_cropped = img.crop(region)
+                    world_map_tiles.append(img_cropped)
+
+            # set
+            self.world_map_tiles[time_option] = world_map_tiles
 
     def set_world_piddle(self):
         """world map(sea) matrix"""
@@ -139,7 +144,7 @@ class MapMaker():
         # set
         self.world_map_piddle = piddle
 
-    def make_partial_world_map(self, x_tile, y_tile):
+    def make_partial_world_map(self, x_tile, y_tile, time_of_day='random'):
         """a small rectangular part of the world map.
             can be used after setting world_map_tiles and world_map_piddle.
         """
@@ -155,12 +160,19 @@ class MapMaker():
         print(sea_piddle.shape)
 
         # small piddle to image
+        tiles = []
+        if time_of_day == 'random':
+            random_time = random.choice(c.TIME_OF_DAY_OPTIONS)
+            tiles = self.world_map_tiles[random_time]
+        else:
+            tiles = self.world_map_tiles[time_of_day]
+
         for r in range(ROWS):
             for i in range(COLUMNS):
                 left = i * c.PIXELS_COVERED_EACH_MOVE
                 upper = r * c.PIXELS_COVERED_EACH_MOVE
                 position = (left, upper)
-                img = self.world_map_tiles[int(sea_piddle[r, i])]
+                img = tiles[int(sea_piddle[r, i])]
                 sea_img.paste(img, position)
 
         # PIL image to pygame image
@@ -184,5 +196,5 @@ if __name__ == '__main__':
     map_maker = MapMaker()
     map_maker.set_world_map_tiles()
     map_maker.set_world_piddle()
-    map_maker.make_partial_world_map(900, 262)
+    # map_maker.make_partial_world_map(900, 262)
 

@@ -41,7 +41,15 @@ def draw_logged_in_state(self):
               - self.screen_surface_rect.centery + self.my_role.y
               - self.map_maker.y_tile * c.PIXELS_COVERED_EACH_MOVE)
 
+        # dim_count = 1
+        # self.images['sea'].fill((dim_count, dim_count, dim_count),
+        #                                         special_flags=pygame.BLEND_RGB_SUB)
+
         self.screen_surface.blit(self.images['sea'], (x, y))
+
+        # brighten = 100
+        # self.images['sea'].fill((brighten, brighten, brighten),
+        #                         special_flags=pygame.BLEND_RGB_ADD)
 
         # in battle
     else:

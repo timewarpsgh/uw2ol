@@ -1,10 +1,9 @@
 travel ON
 
     ports days and nights OK
-
     at sea days and nights ON
+    python pygame blit
 
-    GUI sell items show bag load ON
 
             trade
             travel
