@@ -447,23 +447,23 @@ class MenuClickHandlerForShips():
             speed = ship.get_speed()
 
         dict = {
-            'name': f'{ship.name}   type:{ship.type}',
-            'captain': f'{captain_name}',
+            'name': f'{ship.name}  type:{ship.type}  captain:{captain_name}',
+            '1': '',
+            'tacking': f'{ship.tacking}  power:{ship.power}  speed:{speed} knots',
             'durability': f'{ship.now_hp}/{ship.max_hp}',
-            'tacking': f'{ship.tacking}    power:{ship.power}',
-            'speed': f'{speed} knots',
+            '2': '',
             'capacity': f'{ship.capacity}',
             'max_guns': f'{ship.max_guns}',
-            'min_crew/max_crew': f'{ship.min_crew}/{ship.max_crew}',
-            'useful_capacity': f'{ship.useful_capacity}',
-            'crew': f'{ship.crew}',
+            'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
+            '3': '',
+            'affective_capacity': f'{ship.useful_capacity}',
         }
 
         # if no target selected
         if not target:
             # supply
-            dict['supplies'] = f"  F:{ship.supplies['Food']} W:{ship.supplies['Water']}" \
-                               f" L:{ship.supplies['Lumber']} S:{ship.supplies['Shot']}"
+            dict['supplies'] = f"  F {ship.supplies['Food']} W {ship.supplies['Water']}" \
+                               f" L {ship.supplies['Lumber']} S {ship.supplies['Shot']}"
 
             # cargo
             cargoes_dict = ship.cargoes
@@ -473,7 +473,10 @@ class MenuClickHandlerForShips():
         # make text from dict
         text = ''
         for k, v in dict.items():
-            text += f'{k}:{v}<br>'
+            if k.isdigit():
+                text += f'<br>'
+            else:
+                text += f'{k}:{v}<br>'
 
         # make window
         ship_image = self.game.images['ships'][ship.type.lower()]

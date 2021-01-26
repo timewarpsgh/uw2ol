@@ -10,5 +10,7 @@ trade ON
     items
         buy GUI don't show id ON
     ships
+        buy ship
+        show each ship's free load
 
 fight
