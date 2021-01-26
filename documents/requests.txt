@@ -1,11 +1,14 @@
-travel
-    port npc
-    fleet npc
-    sailing consumes food and water(other way!)
 
-trade ON
-    ships
-    ship info hight
+by function
+    travel
+        port npc
+        fleet npc
+        days at sea cost gold ON
+    trade ON
+
+    fight
 
 
-fight
+by structure
+    buildings
+    buttons on interface

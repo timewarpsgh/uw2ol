@@ -66,6 +66,11 @@ def change_map(self, message_obj):
     now_map = self.my_role.map
     target_map = message_obj[0]
 
+    # if days at sea is sent as a param
+    days_spent_at_sea = 0
+    if len(message_obj) > 1:
+        days_spent_at_sea = message_obj[1]
+
     # change my map and position
     self.my_role.map = target_map
 
@@ -82,6 +87,13 @@ def change_map(self, message_obj):
 
     # to port
     elif target_map.isdigit():
+        # cost gold based on days at sea and crew count()
+        if days_spent_at_sea > 0:
+            total_crew = self.my_role._get_total_crew()
+            total_cost = int(days_spent_at_sea * total_crew *
+                             c.SUPPLY_CONSUMPTION_PER_PERSON * c.SUPPLY_UNIT_COST)
+            self.my_role.gold -= total_cost
+
         # normal ports
         if int(target_map) <= 99:
 

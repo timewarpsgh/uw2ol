@@ -166,7 +166,7 @@ def other_keys_down(self, event):
         if not self.my_role.map.isdigit():
             port_id = get_nearby_port_index(self)
             if port_id or port_id == 0:
-                self.connection.send('change_map', [str(port_id)])
+                self.connection.send('change_map', [str(port_id), self.days_spent_at_sea])
                 self.timer_at_sea.stop()
 
     # enter building

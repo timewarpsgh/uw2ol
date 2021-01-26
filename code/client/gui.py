@@ -469,7 +469,6 @@ class MenuClickHandlerForShips():
             cargoes_dict = ship.cargoes
             for cargo_name, count in cargoes_dict.items():
                 dict['supplies'] +=  cargo_name + ':' + str(count)
-                # dict[cargo_name] = count
 
         # make text from dict
         text = ''
@@ -481,7 +480,6 @@ class MenuClickHandlerForShips():
 
         # make window
         ship_image = self.game.images['ships'][ship.type.lower()]
-        print('!!!!!!!!!!!!!')
         PanelWindow(pygame.Rect((59, 12), (350, 400)),
                     self.game.ui_manager, text, self.game, ship_image)
 

@@ -64,6 +64,7 @@ class Game():
         # local data
         self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
         self.time_of_day_index = 0
+        self.days_spent_at_sea = 0
 
         # load assets
         self.font = None

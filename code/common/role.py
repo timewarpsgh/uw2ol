@@ -48,7 +48,6 @@ class Role:
         self.battle_timer = 0
         self.your_turn_in_battle = True
         self.max_days_at_sea = 0
-        self.days_spent_at_sea = 0
         self.additioanl_days_at_sea = 0
         self.speak_msg = ''
         self.gold = gold
@@ -125,19 +124,6 @@ class Role:
         else:
             return False
 
-    def _check_days_at_sea_timer(self):
-        while True:
-            time.sleep(3)
-            self.days_spent_at_sea += 1
-
-            if self.days_spent_at_sea > self.max_days_at_sea:
-                self.map = 'port'
-                print('your fleet starved to death!')
-                break
-
-            if self.map.isdigit():
-                break
-
     def speak(self, params):
         msg = params[0]
         self.speak_msg = msg
@@ -189,6 +175,12 @@ class Role:
         # no ship
         else:
             return 1
+
+    def _get_total_crew(self):
+        total_crew = 0
+        for ship in self.ships:
+            total_crew += ship.crew
+        return total_crew
 
     def equip(self, params):
         item_id = params[0]
