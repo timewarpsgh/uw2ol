@@ -729,8 +729,8 @@ class Role:
 
     # ship yard
     def buy_ship(self, params):
-        name = params[0]
-        type = params[1]
+        type = params[0]
+        name = params[1]
 
         port = self.get_port()
         # if port has this ship

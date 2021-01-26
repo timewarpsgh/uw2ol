@@ -4,14 +4,8 @@ travel
 
 trade ON
 
-    goods
-        buy GUI
-        sell GUI
-    items
-        buy GUI don't show id ON
     ships
-        buy ship
+        buy ship ON
 
-    mate info adjustment ON
 
 fight

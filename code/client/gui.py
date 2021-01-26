@@ -1414,30 +1414,6 @@ class DryDock():
                                   "It takes too much time and resource. Just grab a used one."
 
     def used_ship(self):
-        dict = {
-            'view':self.view_used_ship,
-            'buy':self.buy_used_ship,
-        }
-
-        self.game.button_click_handler.make_menu(dict)
-
-
-    def view_used_ship(self):
-        # prepare dict
-        dict = {}
-
-            # available ships
-        my_map_id = int(self.game.my_role.map)
-        port = Port(my_map_id)
-        ships_list = port.get_available_ships()
-
-        for ship_type in ships_list:
-            dict[ship_type] = [self.show_used_ship, [ship_type]]
-
-        # make menu
-        self.game.button_click_handler.make_menu(dict)
-
-    def buy_used_ship(self):
         # prepare dict
         dict = {}
 
@@ -1447,16 +1423,26 @@ class DryDock():
         ships_list = port.get_available_ships()
 
         for ship_type in ships_list:
-            dict[ship_type] = [self.do_buy_ship, ship_type]
+            dict[ship_type] = [self._ship_name_clicked, ship_type]
 
         # make menu
         self.game.button_click_handler.make_menu(dict)
 
-    def do_buy_ship(self, type):
-        self.game.button_click_handler. \
-            make_input_boxes('buy_ship', ['name', 'type'], ['', type])
+    def _ship_name_clicked(self, ship_type):
+        # show ship info
+        self._show_used_ship([ship_type])
 
-    def show_used_ship(self, params):
+        # show menu
+        dict = {
+            'OK': [self._do_buy_ship, ship_type]
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def _do_buy_ship(self, type):
+        self.game.button_click_handler. \
+            make_input_boxes('buy_ship', ['type', 'name'], [type])
+
+    def _show_used_ship(self, params):
         # get param
         ship_type = params[0]
 
