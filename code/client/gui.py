@@ -543,14 +543,16 @@ class MenuClickHandlerForMates():
                 duty_name = 'captain of ' + mate.duty.name
 
         dict = {
-            'name': mate.name,
-            'nation': mate.nation,
+            'name': f"{mate.name} nation:{mate.nation}",
             'duty': duty_name,
+            '1': '',
             'lv': f"{mate.lv} exp:{mate.exp} points:{mate.points}",
+            '2': '',
             'leadership': mate.leadership,
             'seamanship': f"{mate.seamanship} luck:{mate.luck}",
             'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
             'courage': f"{mate.courage} swordplay:{mate.swordplay}",
+            '3': '',
             'accounting': mate.accounting,
             'gunnery': mate.gunnery,
             'navigation': mate.navigation,
@@ -559,13 +561,16 @@ class MenuClickHandlerForMates():
         # make text from dict
         text = ''
         for k, v in dict.items():
-            text += f'{k}:{v}<br>'
+            if k.isdigit():
+                text += f'<br>'
+            else:
+                text += f'{k}:{v}<br>'
 
         # get figure image
         figure_surface = figure_x_y_2_image(self.game ,mate.image_x, mate.image_y)
 
         # make window
-        PanelWindow(pygame.Rect((59, 50), (350, 400)),
+        PanelWindow(pygame.Rect((59, 12), (350, 400)),
                     self.game.ui_manager, text, self.game, figure_surface)
 
         # make actions menu
