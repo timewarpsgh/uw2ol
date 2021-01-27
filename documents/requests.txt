@@ -2,8 +2,8 @@
 by function
     travel
         port npc ON
-            static ON
-            dynamic
+            static OK
+            dynamic OK
         fleet npc
     trade
 

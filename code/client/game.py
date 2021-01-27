@@ -75,9 +75,13 @@ class Game():
         self.building_text = ''
 
         # NPCS
+            # static
         self.dog = None
         self.old_man = None
         self.agent = None
+            # dynamic
+        self.man = None
+        self.woman = None
 
     def load_assets(self):
         # maps

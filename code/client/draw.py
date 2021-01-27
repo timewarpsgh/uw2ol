@@ -171,13 +171,18 @@ def draw_text(self, text, x, y, color=c.BLACK):
     self.screen_surface.blit(text_img, (x, y))
 
 def draw_in_port(self):
-    # draw static npcs
+    # draw npcs
+        # static
     if self.dog:
         self.dog.draw()
     if self.old_man:
         self.old_man.draw()
     if self.agent:
         self.agent.draw()
+        # dynamic
+    if self.man:
+        self.man.draw()
+
 
     # draw my role
 
