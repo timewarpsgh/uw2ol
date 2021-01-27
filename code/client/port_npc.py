@@ -102,19 +102,65 @@ class DynamicNpc:
 
     def _move(self, direction):
         if direction == 'n':
-            self.y -= c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'n'
+            if self._can_move('n'):
+                self.y -= c.PIXELS_COVERED_EACH_MOVE
+                self.direction = 'n'
+                self.now_frame *= -1
         elif direction == 's':
-            self.y += c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 's'
+            if self._can_move('s'):
+                self.y += c.PIXELS_COVERED_EACH_MOVE
+                self.direction = 's'
+                self.now_frame *= -1
         elif direction == 'w':
-            self.x -= c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'w'
+            if self._can_move('w'):
+                self.x -= c.PIXELS_COVERED_EACH_MOVE
+                self.direction = 'w'
+                self.now_frame *= -1
         elif direction == 'e':
-            self.x += c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'e'
+            if self._can_move('e'):
+                self.x += c.PIXELS_COVERED_EACH_MOVE
+                self.direction = 'e'
+                self.now_frame *= -1
 
-        self.now_frame *= -1
+    def _can_move(self, direction):
+        """similar to role.can_move"""
+        # get piddle
+        piddle = self.game.port_piddle
+
+        # perl piddle and python numpy(2d array) are different
+        y = int(self.x / 16)
+        x = int(self.y / 16)
+
+        # basic 4 directions
+        if direction == 'n':
+
+            # not in asia
+            if self.game.my_role.is_in_port():
+                if int(self.game.my_role.map) < 94:
+                    if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
+                        if self.y > 0:
+                            return True
+                # in asia
+                else:
+                    if piddle[x, y] in c.WALKABLE_TILES_FOR_ASIA and piddle[x, y + 1] in c.WALKABLE_TILES_FOR_ASIA:
+                        if self.y > 0:
+                            return True
+            else:
+                return False
+
+        elif direction == 's':
+            if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
+                if self.y < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
+                    return True
+        elif direction == 'w':
+            if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
+                return True
+        elif direction == 'e':
+            if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
+                return True
+
+        # ret
+        return False
 
     def _random_move(self):
         chosen_direction = random.choice(self.direction_options)
@@ -165,6 +211,11 @@ class Woman(DynamicNpc):
             'w':[14, 15],
         }
 
+def init_dynamic_npcs(game, port_id):
+    game.man = Man(game, port_id)
+    game.man.start_looping_random_move()
+    game.woman = Woman(game, port_id)
+    game.woman.start_looping_random_move()
 
 if __name__ == '__main__':
     pass

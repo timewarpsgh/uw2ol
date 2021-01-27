@@ -1150,6 +1150,10 @@ class Harbor():
             return
 
         if self.game.my_role.map != 'sea' and self.game.my_role.ships:
+            # delete dynamic npcs
+            self.game.man = None
+            self.game.woman = None
+
             # make sea image
             port_tile_x = hash_ports_meta_data[int(self.game.my_role.map) + 1]['x']
             port_tile_y = hash_ports_meta_data[int(self.game.my_role.map) + 1]['y']

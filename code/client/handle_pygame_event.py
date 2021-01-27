@@ -10,8 +10,8 @@ import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import gui
 from pygame_gui._constants import UI_WINDOW_CLOSE
-from port_npc import Dog, OldMan, Agent, init_static_npcs, Man, Woman
-
+from port_npc import Dog, OldMan, Agent, Man, Woman
+import port_npc
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -173,11 +173,8 @@ def other_keys_down(self, event):
 
                 # make npcs
                 if port_id < 100:
-                    init_static_npcs(self, port_id)
-                    self.man = Man(self, port_id)
-                    self.man.start_looping_random_move()
-                    self.woman = Woman(self, port_id)
-                    self.woman.start_looping_random_move()
+                    port_npc.init_static_npcs(self, port_id)
+                    port_npc.init_dynamic_npcs(self, port_id)
                 else:
                     self.dog = None
                     self.old_man = None

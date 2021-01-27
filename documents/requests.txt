@@ -1,11 +1,10 @@
 
 by function
     travel
-        port npc ON
+        port npc
             static OK
             dynamic
-                man OK
-                woman ON
+                npc collisions ON
         fleet npc
     trade
 
