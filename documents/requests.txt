@@ -4,7 +4,8 @@ by function
         port npc
             static OK
             dynamic
-                npc collisions ON
+                npc collisions OK
+                npc boundry ON
         fleet npc
     trade
 

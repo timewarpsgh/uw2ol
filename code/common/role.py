@@ -326,8 +326,9 @@ class Role:
                 if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
                     return True
             elif direction == 'right':
-                if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
-                    return True
+                if self.x < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
+                    if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
+                        return True
 
             # ret
             return False

@@ -133,31 +133,33 @@ class DynamicNpc:
 
         # basic 4 directions
         if direction == 'n':
-
-            # not in asia
-            if self.game.my_role.is_in_port():
-                if int(self.game.my_role.map) < 94:
-                    if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
-                        if self.y > 0:
-                            return True
-                # in asia
+            if self.y > c.PIXELS_COVERED_EACH_MOVE * 3:
+                # not in asia
+                if self.game.my_role.is_in_port():
+                    if int(self.game.my_role.map) < 94:
+                        if piddle[x, y] in c.WALKABLE_TILES and piddle[x, y + 1] in c.WALKABLE_TILES:
+                            if self.y > 0:
+                                return True
+                    # in asia
+                    else:
+                        if piddle[x, y] in c.WALKABLE_TILES_FOR_ASIA and piddle[x, y + 1] in c.WALKABLE_TILES_FOR_ASIA:
+                            if self.y > 0:
+                                return True
                 else:
-                    if piddle[x, y] in c.WALKABLE_TILES_FOR_ASIA and piddle[x, y + 1] in c.WALKABLE_TILES_FOR_ASIA:
-                        if self.y > 0:
-                            return True
-            else:
-                return False
+                    return False
 
         elif direction == 's':
-            if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
-                if self.y < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
+            if self.y < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
+                if piddle[x + 2, y] in c.WALKABLE_TILES and piddle[x + 2, y + 1] in c.WALKABLE_TILES:
                     return True
         elif direction == 'w':
-            if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
-                return True
+            if self.x > c.PIXELS_COVERED_EACH_MOVE * 3:
+                if piddle[x + 1, y - 1] in c.WALKABLE_TILES:
+                    return True
         elif direction == 'e':
-            if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
-                return True
+            if self.x < c.PIXELS_COVERED_EACH_MOVE * (c.PORT_TILES_COUNT - 3):
+                if piddle[x + 1, y + 2] in c.WALKABLE_TILES:
+                    return True
 
         # ret
         return False
