@@ -3,8 +3,8 @@ by function
     travel
         port npc
         fleet npc
-        days at sea cost gold ON
-    trade ON
+    trade
+        some ports have 0 items? ON
 
     fight
 

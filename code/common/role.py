@@ -1738,7 +1738,8 @@ class Port:
         # special goods
         specialty_name = hash_special_goods[self.id]['specialty']
         buy_price = hash_special_goods[self.id]['price']
-        available_goods_dict[specialty_name] = [buy_price, 0]
+        if specialty_name != '0':
+            available_goods_dict[specialty_name] = [buy_price, 0]
 
         return available_goods_dict
 
