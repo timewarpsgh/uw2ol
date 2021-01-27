@@ -176,12 +176,15 @@ def other_keys_down(self, event):
                     init_static_npcs(self, port_id)
                     self.man = Man(self, port_id)
                     self.man.start_looping_random_move()
+                    self.woman = Woman(self, port_id)
+                    self.woman.start_looping_random_move()
                 else:
                     self.dog = None
                     self.old_man = None
                     self.agent = None
 
                     self.man = None
+                    self.woman = None
 
     # enter building
     if event.key == ord('f'):

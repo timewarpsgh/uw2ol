@@ -3,7 +3,9 @@ by function
     travel
         port npc ON
             static OK
-            dynamic OK
+            dynamic
+                man OK
+                woman ON
         fleet npc
     trade
 

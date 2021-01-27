@@ -182,7 +182,8 @@ def draw_in_port(self):
         # dynamic
     if self.man:
         self.man.draw()
-
+    if self.woman:
+        self.woman.draw()
 
     # draw my role
 

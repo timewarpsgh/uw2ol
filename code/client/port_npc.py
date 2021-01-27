@@ -155,9 +155,16 @@ class Man(DynamicNpc):
         }
 
 class Woman(DynamicNpc):
-    def __init__(self):
-        super(Woman, self).__init__()
-        pass
+    def __init__(self, game, port_id):
+        super(Woman, self).__init__(game, port_id,
+                                    building_id=c.AGENT_BUILDING_ID)
+        self.frames = {
+            'n':[8, 9],
+            'e': [10, 11],
+            's':[12, 13],
+            'w':[14, 15],
+        }
+
 
 if __name__ == '__main__':
     pass
