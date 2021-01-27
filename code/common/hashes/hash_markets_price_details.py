@@ -397,7 +397,7 @@ hash_markets_price_details = {
             'Flax'          : [ 35, 15 ],
             'Linen Cloth' : [ 45, 17 ],
             'Amber'         : [ 220, 90 ],
-            'Gold'          : [ 700, 300 ],
+            'Gold'          : [ 1000, 300 ],
         },
         # 'Spice'           : {
             'Clove'    : [ 0, 45 ],
