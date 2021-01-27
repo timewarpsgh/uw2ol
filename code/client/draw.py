@@ -171,6 +171,10 @@ def draw_text(self, text, x, y, color=c.BLACK):
     self.screen_surface.blit(text_img, (x, y))
 
 def draw_in_port(self):
+    # draw static npcs
+    if self.dog:
+        self.dog.draw()
+
     # draw my role
 
         # image
@@ -294,7 +298,6 @@ def ship_direction_2_rect_in_sprite_sheet(self, direction, others=False):
 
 def person_direction_2_rect_in_sprite_sheet(self, direction, frame):
     person_rect = self.images['person_in_port'].get_rect()
-
     # frame 1
     if frame == 1:
         if direction == 'right':

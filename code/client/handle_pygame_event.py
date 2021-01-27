@@ -10,6 +10,8 @@ import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import gui
 from pygame_gui._constants import UI_WINDOW_CLOSE
+from port_npc import Dog
+
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -168,6 +170,9 @@ def other_keys_down(self, event):
             if port_id or port_id == 0:
                 self.connection.send('change_map', [str(port_id), self.days_spent_at_sea])
                 self.timer_at_sea.stop()
+
+                # make npcs
+                self.dog = Dog(self, port_id)
 
     # enter building
     if event.key == ord('f'):

@@ -1,10 +1,13 @@
 
 by function
     travel
-        port npc
+        port npc ON
+            static ON
+            dynamic
         fleet npc
     trade
-        
+
+
 
     fight
 

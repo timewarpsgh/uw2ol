@@ -19,6 +19,8 @@ import gui
 import handle_pygame_event
 import handle_gui_event
 import client_packet_received
+from port_npc import Dog
+
 
 from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type
@@ -71,6 +73,8 @@ class Game():
         self.images = {}
         self.load_assets()
         self.building_text = ''
+
+        self.dog = None
 
     def load_assets(self):
         # maps
