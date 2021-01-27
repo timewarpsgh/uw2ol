@@ -174,6 +174,10 @@ def draw_in_port(self):
     # draw static npcs
     if self.dog:
         self.dog.draw()
+    if self.old_man:
+        self.old_man.draw()
+    if self.agent:
+        self.agent.draw()
 
     # draw my role
 

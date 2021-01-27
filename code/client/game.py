@@ -74,7 +74,10 @@ class Game():
         self.load_assets()
         self.building_text = ''
 
+        # NPCS
         self.dog = None
+        self.old_man = None
+        self.agent = None
 
     def load_assets(self):
         # maps

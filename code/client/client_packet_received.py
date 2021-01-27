@@ -5,6 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # import from common(dir)
 from role import Role, Ship, Mate
 from twisted.internet.task import LoopingCall
+from port_npc import init_static_npcs
 import handle_pygame_event
 import constants as c
 
@@ -60,6 +61,9 @@ def your_role_data_and_others(self, message_obj):
     if my_role.map.isdigit():
         port_index = int(my_role.map)
         self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+
+        if port_index < 100:
+            init_static_npcs(self, port_index)
 
     # other roles
     other_roles = message_obj[1]

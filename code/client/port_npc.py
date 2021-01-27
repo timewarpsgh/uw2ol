@@ -8,40 +8,69 @@ from hashes.hash_ports_meta_data import hash_ports_meta_data
 
 
 class StaticNpc:
-    def __init__(self, game):
+    def __init__(self, game, port_id, building_id, frame_1_index, frame_2_index):
+        # parent
         self.game = game
-        self.x = 1
-        self.y = 1
-        self.frame = -1
 
-    def update(self):
-        """change frame from -1 to 1"""
-        self.frame *= -1
+        # position
+        self.x = (hash_ports_meta_data[(port_id + 1)]['buildings']
+                  [building_id]['x'] + 1) * c.PIXELS_COVERED_EACH_MOVE
+        self.y = (hash_ports_meta_data[(port_id + 1)]['buildings']
+                  [building_id]['y'] + 1) * c.PIXELS_COVERED_EACH_MOVE
 
+        # image
+        self.frame_1_index = frame_1_index
+        self.frame_2_index = frame_2_index
+        self.rect = self.game.images['person_in_port'].get_rect()
+        self.tile_set = self.game.images['person_tileset']
+
+    def draw(self):
+        person_rect = self.rect
+
+        # choose frame
+        if self.game.ship_frame == 1:
+            person_rect = person_rect.move(c.PERSON_SIZE_IN_PIXEL * self.frame_1_index, 0)
+        else:
+            person_rect = person_rect.move(c.PERSON_SIZE_IN_PIXEL * self.frame_2_index, 0)
+
+        # choose location
+        x = self.game.screen_surface_rect.centerx - self.game.my_role.x + self.x
+        y = self.game.screen_surface_rect.centery - self.game.my_role.y + self.y
+
+        # draw
+        self.game.screen_surface.blit(self.tile_set, (x, y), person_rect)
 
 class Dog(StaticNpc):
     """at the entrance of bars"""
     def __init__(self, game, port_id):
-        super(Dog, self).__init__(game)
-        self.x = hash_ports_meta_data[port_id]['buildings'][2]['x'] * c.PIXELS_COVERED_EACH_MOVE
-        self.y = hash_ports_meta_data[port_id]['buildings'][2]['y'] * c.PIXELS_COVERED_EACH_MOVE
-
-    def draw(self):
-        dog_x_position_in_tile_set = 28
-        person_rect = self.game.images['person_in_port'].get_rect()
-        person_rect = person_rect.move(c.PERSON_SIZE_IN_PIXEL * dog_x_position_in_tile_set, 0)
-
-        self.game.screen_surface.blit(self.game.images['person_tileset'], self.game.screen_surface_rect.center, person_rect)
+        super(Dog, self).__init__(game, port_id,
+                                  building_id=c.DOG_BUILDING_ID,
+                                  frame_1_index=c.DOG_FRAME_1_INDEX,
+                                  frame_2_index=c.DOG_FRAME_2_INDEX)
 
 
 class OldMan(StaticNpc):
-    def __init__(self):
-        pass
+    """at the entrance of inn"""
+    def __init__(self, game, port_id):
+        super(OldMan, self).__init__(game, port_id,
+                                  building_id=c.OLD_MAN_BUILDING_ID,
+                                  frame_1_index=c.OLD_MAN_FRAME_1_ID,
+                                  frame_2_index=c.OLD_MAN_FRAME_2_ID)
 
 
 class Agent(StaticNpc):
-    def __init__(self):
-        pass
+    """at the entrance of market"""
+    def __init__(self, game, port_id):
+        super(Agent, self).__init__(game, port_id,
+                                  building_id=c.AGENT_BUILDING_ID,
+                                  frame_1_index=c.AGENT_FRAME_1_ID,
+                                  frame_2_index=c.AGENT_FRAME_2_ID)
+
+def init_static_npcs(game, port_id):
+    game.dog = Dog(game, port_id)
+    game.old_man = OldMan(game, port_id)
+    game.agent = Agent(game, port_id)
+
 
 
 class DynamicNpc:
@@ -50,8 +79,3 @@ class DynamicNpc:
 
 
 if __name__ == '__main__':
-    npc = Dog()
-    npc.update()
-    npc.update()
-    print(npc.frame)
-    print(npc.x)

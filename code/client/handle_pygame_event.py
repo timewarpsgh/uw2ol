@@ -10,7 +10,7 @@ import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import gui
 from pygame_gui._constants import UI_WINDOW_CLOSE
-from port_npc import Dog
+from port_npc import Dog, OldMan, Agent, init_static_npcs
 
 
 EVENT_MOVE = pygame.USEREVENT + 1
@@ -172,7 +172,12 @@ def other_keys_down(self, event):
                 self.timer_at_sea.stop()
 
                 # make npcs
-                self.dog = Dog(self, port_id)
+                if port_id < 100:
+                    init_static_npcs(self, port_id)
+                else:
+                    self.dog = None
+                    self.old_man = None
+                    self.agent = None
 
     # enter building
     if event.key == ord('f'):

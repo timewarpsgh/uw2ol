@@ -124,6 +124,15 @@ class Role:
         else:
             return False
 
+    def is_in_supply_port(self):
+        if self.is_in_port():
+            if int(self.map) >= 100:
+                return True
+            else:
+                return False
+        else:
+            return False
+
     def speak(self, params):
         msg = params[0]
         self.speak_msg = msg
