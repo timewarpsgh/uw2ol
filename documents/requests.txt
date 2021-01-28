@@ -4,10 +4,7 @@ by function
         port npc OK
 
         sea npc ON
-            dummy ships
-            when battle make fleet
-            search online 1st ON
-            simple client (no gui) ON
+            loop move ON
 
     trade
 

@@ -12,7 +12,6 @@ from role import Role, Ship, Mate
 from map_maker import MapMaker
 from translator import Translator
 
-
 # code relocated to these files
 import draw
 import gui
@@ -48,14 +47,24 @@ class Game():
         # login
         reactor.callLater(1, self.login)
         reactor.callLater(2, self.sail)
+        reactor.callLater(3, self.start_moving)
 
-
+    # controls
     def login(self):
         self.connection.send('login', ['2', '2'])
 
     def sail(self):
         self.connection.send('change_map', ['sea'])
 
+    def start_moving(self):
+        self.timer = task.LoopingCall(self.move)
+        self.timer.start(1)
+
+    def move(self):
+        self.change_and_send('move', ['up'])
+        reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
+
+    # essentials
     def get_connection(self, obj):
         """get protocol object to access network functions"""
         self.connection = obj
