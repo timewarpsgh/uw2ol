@@ -51,11 +51,15 @@ class Game():
         self.timer.start(1)
 
     def move(self):
-        # move
+        # at sea
         if self.my_role.is_at_sea():
             self.change_and_send('move', ['up'])
             reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
-        if self.my_role.map == 'battle':
+
+        # in battle
+        elif not self.my_role.is_in_port():
+            print("in battle")
+            print(self.my_role.your_turn_in_battle)
             if self.my_role.your_turn_in_battle:
                 self.change_and_send('all_ships_operate', [])
 

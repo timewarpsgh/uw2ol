@@ -5,7 +5,7 @@ by function
 
         sea npc ON
             loop move OK
-            enter battle ON
+            auto battle OK
             two npcs
             npc route 1
 

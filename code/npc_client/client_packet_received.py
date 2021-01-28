@@ -108,7 +108,7 @@ def roles_in_new_map(self, message_obj):
     # if in port
     elif self.my_role.map.isdigit():
         port_index = int(self.my_role.map)
-        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+        # self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
 
 def roles_disappeared(self, message_obj):
     names_of_roles_that_disappeared = message_obj
