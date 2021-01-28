@@ -6,8 +6,11 @@ by function
         sea npc ON
             loop move OK
             auto battle OK
+            many npcs OK
+            many npcs using not processes ON
+
+
             npc lost reaction
-            two npcs ON
             npc route 1
 
     trade

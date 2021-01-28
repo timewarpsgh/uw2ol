@@ -182,7 +182,7 @@ class ClientProcess(Process):
 
 if __name__ == "__main__":
     # Create new threads
-    for i in range(2, 9):
+    for i in range(3, 9):
         p = ClientProcess(str(i), str(i))
         p.start()
 
