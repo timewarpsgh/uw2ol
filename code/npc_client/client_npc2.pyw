@@ -181,14 +181,9 @@ class ClientProcess(Process):
 
 
 if __name__ == "__main__":
-    main('3', '3')
-
     # Create new threads
-    # p1 = ClientProcess('2', '2')
-    # p2 = ClientProcess('3', '3')
-    # p3 = ClientProcess('4', '4')
+    for i in range(2, 9):
+        p = ClientProcess(str(i), str(i))
+        p.start()
 
-    # Start new Threads
-    # p1.start()
-    # p2.start()
-    # p3.start()
+

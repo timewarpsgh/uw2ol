@@ -1,5 +1,6 @@
 import pygame
 import pygame_gui
+import random
 from twisted.internet import reactor, task
 
 # add relative directory to python_path
@@ -58,8 +59,11 @@ class Game():
     def move(self):
         # at sea
         if self.my_role.is_at_sea():
-            self.change_and_send('move', ['up'])
-            reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
+            random_direction = random.choice(['up', 'down', 'right', 'left'])
+            self.change_and_send('move', [random_direction])
+
+            # self.change_and_send('move', ['up'])
+            # reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
 
         # in battle
         elif not self.my_role.is_in_port():
