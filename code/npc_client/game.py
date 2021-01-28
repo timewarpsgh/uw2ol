@@ -50,25 +50,29 @@ class Game():
         self.connection.send('login', [self.ac, self.psw])
 
     def sail(self):
-        self.connection.send('change_map', ['sea'])
+        if self.my_role:
+            self.connection.send('change_map', ['sea'])
+        else:
+            reactor.callLater(1, self.sail)
 
     def start_moving(self):
         self.timer = task.LoopingCall(self.move)
         self.timer.start(1)
 
     def move(self):
-        # at sea
-        if self.my_role.is_at_sea():
-            random_direction = random.choice(['up', 'down', 'right', 'left'])
-            self.change_and_send('move', [random_direction])
+        if self.my_role:
+            # at sea
+            if self.my_role.is_at_sea():
+                random_direction = random.choice(['up', 'down', 'right', 'left'])
+                self.change_and_send('move', [random_direction])
 
-            # self.change_and_send('move', ['up'])
-            # reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
+                # self.change_and_send('move', ['up'])
+                # reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
 
-        # in battle
-        elif not self.my_role.is_in_port():
-            if self.my_role.your_turn_in_battle:
-                self.change_and_send('all_ships_operate', [])
+            # in battle
+            elif not self.my_role.is_in_port():
+                if self.my_role.your_turn_in_battle:
+                    self.change_and_send('all_ships_operate', [])
 
 
     # essentials

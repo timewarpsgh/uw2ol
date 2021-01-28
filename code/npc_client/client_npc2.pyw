@@ -1,8 +1,11 @@
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import reactor, threads, defer
 
+import time
+
 # 1 process for 1 client
 from multiprocessing import Process
+import threading
 
 # add relative directory to python_path
 import sys, os
@@ -39,8 +42,8 @@ class Echo(Protocol):
         self.dataBuffer = bytes()
 
         print('connected')
-        d = get_user_input()
-        d.addCallback(self.send_and_get_next_input)
+        # d = get_user_input()
+        # d.addCallback(self.send_and_get_next_input)
 
     def send_and_get_next_input(self, user_input):
         # parse user input
@@ -180,10 +183,25 @@ class ClientProcess(Process):
         main(self.ac, self.psw)
 
 
+class ClientThread (threading.Thread):
+    def __init__(self, ac, psw):
+        threading.Thread.__init__(self)
+        self.ac = ac
+        self.psw = psw
+
+    def run(self):
+        main(self.ac, self.psw)
+
 if __name__ == "__main__":
     # Create new threads
-    for i in range(3, 9):
+    for i in range(2, 12):
         p = ClientProcess(str(i), str(i))
         p.start()
+        time.sleep(0.5)
 
-
+    # def gogo():
+    #     for i in range(6, 12):
+    #         p = ClientProcess(str(i), str(i))
+    #         p.start()
+    #
+    # reactor.callLater(3, gogo)
