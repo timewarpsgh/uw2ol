@@ -133,6 +133,12 @@ class Role:
         else:
             return False
 
+    def is_at_sea(self):
+        if self.map == 'sea':
+            return True
+        else:
+            return False
+
     def speak(self, params):
         msg = params[0]
         self.speak_msg = msg

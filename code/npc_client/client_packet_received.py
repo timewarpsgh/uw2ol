@@ -5,8 +5,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # import from common(dir)
 from role import Role, Ship, Mate
 from twisted.internet.task import LoopingCall
-import port_npc
-import handle_pygame_event
 import constants as c
 
 def process_packet(self, pck_type, message_obj):

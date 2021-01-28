@@ -9,19 +9,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # import from common(dir)
 import constants as c
 from role import Role, Ship, Mate
-from map_maker import MapMaker
-from translator import Translator
 
 # code relocated to these files
-import draw
-import gui
-import handle_pygame_event
-import handle_gui_event
 import client_packet_received
-from port_npc import Dog
-
-
-from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type
 
 def test():
@@ -61,8 +51,14 @@ class Game():
         self.timer.start(1)
 
     def move(self):
-        self.change_and_send('move', ['up'])
-        reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
+        # move
+        if self.my_role.is_at_sea():
+            self.change_and_send('move', ['up'])
+            reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
+        if self.my_role.map == 'battle':
+            if self.my_role.your_turn_in_battle:
+                self.change_and_send('all_ships_operate', [])
+
 
     # essentials
     def get_connection(self, obj):

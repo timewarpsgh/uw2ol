@@ -4,7 +4,10 @@ by function
         port npc OK
 
         sea npc ON
-            loop move ON
+            loop move OK
+            enter battle ON
+            two npcs
+            npc route 1
 
     trade
 
