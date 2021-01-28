@@ -19,7 +19,12 @@ def test():
 
 
 class Game():
-    def __init__(self):
+    def __init__(self, ac, psw):
+        # ac and psw
+        self.ac = ac
+        self.psw = psw
+
+        # some stuff
         self.movement = None
         self.connection = None
 
@@ -34,14 +39,14 @@ class Game():
         self.time_of_day_index = 0
         self.days_spent_at_sea = 0
 
-        # login
+        # action sequence
         reactor.callLater(1, self.login)
         reactor.callLater(2, self.sail)
         reactor.callLater(3, self.start_moving)
 
     # controls
     def login(self):
-        self.connection.send('login', ['2', '2'])
+        self.connection.send('login', [self.ac, self.psw])
 
     def sail(self):
         self.connection.send('change_map', ['sea'])
@@ -58,8 +63,6 @@ class Game():
 
         # in battle
         elif not self.my_role.is_in_port():
-            print("in battle")
-            print(self.my_role.your_turn_in_battle)
             if self.my_role.your_turn_in_battle:
                 self.change_and_send('all_ships_operate', [])
 

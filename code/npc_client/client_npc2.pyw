@@ -1,6 +1,9 @@
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import reactor, threads, defer
 
+# 1 process for 1 client
+from multiprocessing import Process
+
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
@@ -138,14 +141,15 @@ class EchoClientFactory(ClientFactory):
         self.game.button_click_handler. \
             make_message_box("Failed to connect! The server isn't working. Please exit.")
 
-def main():
+
+def main(ac, psw):
     # print?
     if c.DAEMON_MODE:
         f = open(os.devnull, 'w')
         sys.stdout = f
 
     # init game and schedule game loop
-    game1 = Game('2', '2')
+    game = Game(ac, psw)
 
     # remote or local connection
     host = None
@@ -159,29 +163,30 @@ def main():
 
     # pass game to factory and run reactor
     try:
-        reactor.connectTCP(host, port, EchoClientFactory(game1))
-        reactor.callLater(1, run_another_client)
-
+        reactor.connectTCP(host, port, EchoClientFactory(game))
     except:
         print("can't connect to server.")
     else:
         reactor.run()
 
 
-def run_another_client():
-    # remote or local connection
-    host = None
-    port = None
-    if c.REMOTE_ON:
-        host = c.REMOTE_HOST
-        port = c.REMOTE_PORT
-    else:
-        host = c.HOST
-        port = c.PORT
+class ClientProcess(Process):
+    def __init__(self, ac, psw):
+        Process.__init__(self)
+        self.ac = ac
+        self.psw = psw
 
-    # run
-    game2 = Game('3', '3')
-    reactor.connectTCP(host, port, EchoClientFactory(game2))
+    def run(self):
+        main(self.ac, self.psw)
+
 
 if __name__ == "__main__":
-    main()
+    # Create new threads
+    p1 = ClientProcess('2', '2')
+    p2 = ClientProcess('3', '3')
+    p3 = ClientProcess('4', '4')
+
+    # Start new Threads
+    p1.start()
+    p2.start()
+    p3.start()
