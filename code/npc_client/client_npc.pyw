@@ -160,28 +160,12 @@ def main():
     # pass game to factory and run reactor
     try:
         reactor.connectTCP(host, port, EchoClientFactory(game1))
-        reactor.callLater(1, run_another_client)
 
     except:
         print("can't connect to server.")
     else:
         reactor.run()
 
-
-def run_another_client():
-    # remote or local connection
-    host = None
-    port = None
-    if c.REMOTE_ON:
-        host = c.REMOTE_HOST
-        port = c.REMOTE_PORT
-    else:
-        host = c.HOST
-        port = c.PORT
-
-    # run
-    game2 = Game('3', '3')
-    reactor.connectTCP(host, port, EchoClientFactory(game2))
 
 if __name__ == "__main__":
     main()
