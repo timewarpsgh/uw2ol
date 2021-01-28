@@ -9,6 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 from protocol import MyProtocol
 from DBmanager import Database
 from role import Role
+from npc_fleet import NpcFleet
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
@@ -292,7 +293,7 @@ def on_get_character_data_got_result(self, role):
             if name != role.name:
                 conn.send('new_role', role)
 
-        # send to client other_roles
+        # send to client his role and other_roles
         other_roles = []
         for name, conn in self.factory.users[role.map].items():
             if name != role.name:

@@ -1,12 +1,14 @@
 
 by function
     travel
-        port npc
-            static OK
-            dynamic
-                npc collisions OK
-                npc boundry ON
-        fleet npc
+        port npc OK
+
+        sea npc ON
+            dummy ships
+            when battle make fleet
+            search online 1st ON
+            simple client (no gui) ON
+
     trade
 
 

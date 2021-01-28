@@ -9,6 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 from protocol import MyProtocol
 from DBmanager import Database
 from role import Role
+from npc_fleet import NpcFleet
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
@@ -138,12 +139,12 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
-        # users at sea map
+        # users(roles) at sea map
         self.users = {
             'sea':{},
         }
 
-        # users in ports
+        # users(roles) in ports
         for i in range(131):
             self.users[str(i)] = {}
 
