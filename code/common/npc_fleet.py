@@ -1,27 +1,12 @@
 from role import Role, Ship, Mate
 
 
-class NpcFleet(Role):
-    """npc ships at sea"""
-    def __init__(self, name):
-        super(NpcFleet, self).__init__(16, 16, name)
+def init_npcs():
+    npcs = {}
+    npc_count = 150 #max is 150 atm due to max protocol size
+    for i in range(1,npc_count):
+        npc = Role(14400, 4208, str(i))
+        npc.map = 'sea'
+        npcs[str(i)] = npc
 
-
-if __name__ == '__main__':
-    npc = NpcFleet('npc1')
-
-    # add ships
-    ship0 = Ship('Reagan', 'Frigate')
-    ship1 = Ship('Reagan11', 'Balsa')
-
-    npc.ships.append(ship0)
-    npc.ships.append(ship1)
-
-    # add mates
-    mate0 = Mate(1)
-    mate1 = Mate(2)
-
-    npc.mates.append(mate0)
-    npc.mates.append(mate1)
-
-
+    return npcs

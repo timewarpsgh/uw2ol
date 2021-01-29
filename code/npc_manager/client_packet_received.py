@@ -6,6 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 from role import Role, Ship, Mate
 from twisted.internet.task import LoopingCall
 import constants as c
+import npc_fleet
 
 def process_packet(self, pck_type, message_obj):
     # method not in role (in this file)
@@ -158,7 +159,4 @@ def target_too_far(self, message_obj):
 ############### your npcs from server
 
 def your_npcs(self, message_obj):
-    npcs_dict = message_obj[0]
-    self.npcs = npcs_dict
-    print('got npcs')
-    print(self.npcs)
+    self.npcs = npc_fleet.init_npcs()

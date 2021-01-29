@@ -4,10 +4,12 @@ by function
         port npc OK
 
         sea npc ON
-            NpcManager OK
-            move npcs to sea ON
             always initial position bug OK
+            200 npcs OK
+            exit battle issue ON
 
+
+            battle with npc
 
             npc lost reaction
             npc route 1

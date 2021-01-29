@@ -9,11 +9,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 from protocol import MyProtocol
 from DBmanager import Database
 from role import Role
-from npc_fleet import NpcFleet
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
-
+import npc_fleet
 
 def process_packet(self, pck_type, message_obj):
     """ self is Echo Protocol
@@ -264,11 +263,7 @@ def exit_battle(self, message_obj):
 # packets from NpcManager
 def npc_login(self, message_obj):
     # make npcs
-    self.npcs = {}
-    for i in range(1,15):
-        npc = Role(14400, 4208, str(i))
-        npc.map = 'sea'
-        self.npcs[str(i)] = npc
+    self.npcs = npc_fleet.init_npcs()
 
     # store npcs dict in a map
     self.factory.users['sea']['npcs'] = self
@@ -276,7 +271,7 @@ def npc_login(self, message_obj):
     Role.users = self.factory.users
 
     # send to client his roles
-    self.send('your_npcs', [self.npcs])
+    self.send('your_npcs', [])
 
 def npc_move(self, message_obj):
     func_name = 'move'

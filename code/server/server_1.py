@@ -9,7 +9,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 from protocol import MyProtocol
 from DBmanager import Database
 from role import Role
-from npc_fleet import NpcFleet
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
