@@ -21,6 +21,10 @@ class Echo(Protocol):
         # each connection knows the factory
         self.factory = factory
 
+        # either client or npc_manager(has many npcs)
+        self.my_role = None
+        self.npcs = None
+
     def connectionMade(self):
         # init data buffer
         self.dataBuffer = bytes()
@@ -118,9 +122,24 @@ class Echo(Protocol):
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
         """send packet to all clients in same map"""
-        for name, conn in self.factory.users[self.my_role.map].items():
-            if name != self.my_role.name:
-                conn.send(protocol_name, content_obj)
+
+        # normal client conn
+        if self.my_role:
+            for name, conn in self.factory.users[self.my_role.map].items():
+                if name == 'npcs':
+                    pass
+                elif name != self.my_role.name:
+                    conn.send(protocol_name, content_obj)
+
+        # npc_manager conn
+        elif self.npcs:
+            npc_name = content_obj[-1]
+            npc_map = self.npcs[npc_name].map
+            for name, conn in self.factory.users[npc_map].items():
+                if name == 'npcs':
+                    pass
+                else:
+                    conn.send(protocol_name, content_obj)
 
     ###################### callbacks  ###########################
     ###################### need self when using deffered.addCallBack  ###########################

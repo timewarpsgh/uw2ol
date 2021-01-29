@@ -122,17 +122,26 @@ def change_map(self, message_obj):
     # send roles_in_new_map to my client
     roles_in_new_map = {}
     for name, conn in self.factory.users[target_map].items():
-        roles_in_new_map[name] = conn.my_role
+        if name == 'npcs':
+            for npc_name, npc in self.factory.users[target_map][name].npcs.items():
+                roles_in_new_map[npc_name] = npc
+        else:
+            roles_in_new_map[name] = conn.my_role
 
     self.send('roles_in_new_map', roles_in_new_map)
 
     # send disappear message to other roles in my previous map
     for name, conn in self.factory.users[now_map].items():
-        conn.send('role_disappeared', self.my_role.name)
+        if name == 'npcs':
+            pass
+        else:
+            conn.send('role_disappeared', self.my_role.name)
 
     # send new_role to other roles in my current map
     for name, conn in self.factory.users[target_map].items():
-        if name != self.my_role.name:
+        if name == 'npcs':
+            pass
+        elif name != self.my_role.name:
             conn.send('new_role', self.my_role)
 
 def try_to_fight_with(self, message_obj):
@@ -252,6 +261,35 @@ def exit_battle(self, message_obj):
 
     # if someone lost
 
+# packets from NpcManager
+def npc_login(self, message_obj):
+    # make npcs
+    self.npcs = {}
+    for i in range(1,5):
+        npc = Role(16, 16, str(i))
+        self.npcs[str(i)] = npc
+
+    # store npcs dict in a map
+    self.factory.users['29']['npcs'] = self
+
+    Role.users = self.factory.users
+
+    # send to client his roles
+    self.send('your_npcs', [self.npcs])
+
+def npc_move(self, message_obj):
+    func_name = 'move'
+    npc_name = message_obj[0]
+    direction = message_obj[1]
+
+    # change state in server
+    self.npcs[npc_name].move(direction)
+
+    # broadcast to other clients
+    params_list = [direction]
+    params_list.append(npc_name)
+    self.send_to_other_clients(func_name, params_list)
+
 ####################### call backs ###########################
 def on_create_character_got_result(self, is_ok):
     if is_ok:
@@ -296,7 +334,10 @@ def on_get_character_data_got_result(self, role):
         # send to client his role and other_roles
         other_roles = []
         for name, conn in self.factory.users[role.map].items():
-            if name != role.name:
+            if name == 'npcs':
+                for name, npc in conn.npcs.items():
+                    other_roles.append(npc)
+            elif name != role.name:
                 other_roles.append(conn.my_role)
 
         self.send('your_role_data_and_others', [role, other_roles])
