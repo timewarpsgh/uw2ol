@@ -8,6 +8,7 @@ by function
             auto battle OK
             many npcs OK
             many npcs using not processes ON
+                twisted test ?
 
 
             npc lost reaction

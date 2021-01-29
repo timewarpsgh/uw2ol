@@ -165,12 +165,12 @@ def main(ac, psw):
         port = c.PORT
 
     # pass game to factory and run reactor
-    try:
-        reactor.connectTCP(host, port, EchoClientFactory(game))
-    except:
-        print("can't connect to server.")
-    else:
-        reactor.run()
+    # try:
+    reactor.connectTCP(host, port, EchoClientFactory(game))
+    # except:
+    #     print("can't connect to server.")
+    # else:
+    reactor.run()
 
 
 class ClientProcess(Process):
@@ -182,7 +182,7 @@ class ClientProcess(Process):
     def run(self):
         main(self.ac, self.psw)
 
-
+# not used
 class ClientThread (threading.Thread):
     def __init__(self, ac, psw):
         threading.Thread.__init__(self)
@@ -193,15 +193,10 @@ class ClientThread (threading.Thread):
         main(self.ac, self.psw)
 
 if __name__ == "__main__":
-    # Create new threads
+    # start clients
     for i in range(2, 12):
         p = ClientProcess(str(i), str(i))
         p.start()
-        time.sleep(0.5)
+        time.sleep(1)
 
-    # def gogo():
-    #     for i in range(6, 12):
-    #         p = ClientProcess(str(i), str(i))
-    #         p.start()
-    #
-    # reactor.callLater(3, gogo)
+
