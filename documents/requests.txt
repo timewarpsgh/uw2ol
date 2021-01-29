@@ -6,6 +6,9 @@ by function
         sea npc ON
             always initial position bug OK
             200 npcs OK
+
+            two clients battle OK
+
             exit battle issue ON
 
 

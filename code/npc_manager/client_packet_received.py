@@ -112,9 +112,10 @@ def roles_in_new_map(self, message_obj):
         # self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
 
 def roles_disappeared(self, message_obj):
-    names_of_roles_that_disappeared = message_obj
-    for name in names_of_roles_that_disappeared:
-        del self.other_roles[name]
+    pass
+    # names_of_roles_that_disappeared = message_obj
+    # for name in names_of_roles_that_disappeared:
+    #     del self.other_roles[name]
 
 
 # enter battle responses

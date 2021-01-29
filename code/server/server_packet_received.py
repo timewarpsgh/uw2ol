@@ -244,7 +244,11 @@ def exit_battle(self, message_obj):
     # send roles_in_new_map to my client and enemy client
     roles_in_new_map = {}
     for name, conn in self.factory.users['sea'].items():
-        roles_in_new_map[name] = conn.my_role
+        if name == 'npcs':
+            for npc_name, npc in self.factory.users['sea'][name].npcs.items():
+                roles_in_new_map[npc_name] = npc
+        else:
+            roles_in_new_map[name] = conn.my_role
 
     self.send('roles_in_new_map', roles_in_new_map)
     enemy_conn.send('roles_in_new_map', roles_in_new_map)
@@ -255,7 +259,7 @@ def exit_battle(self, message_obj):
     new_roles_from_battle[enemy_role.name] = enemy_role
 
     for name, conn in self.factory.users['sea'].items():
-        if name != enemy_name and name != self.my_role.name:
+        if name != enemy_name and name != self.my_role.name and name != 'npcs':
             conn.send('new_roles_from_battle', new_roles_from_battle)
 
     # if someone lost
