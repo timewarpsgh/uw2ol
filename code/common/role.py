@@ -537,10 +537,10 @@ class Role:
             # sleep 1s
             time.sleep(1)
 
-    def _exit_battle(self):
-        self.map = 'sea'
-        target_role = self._get_other_role_by_name(self.target_name)
-        target_role.map = 'sea'
+    # def _exit_battle(self):
+    #     self.map = 'sea'
+    #     target_role = self._get_other_role_by_name(self.target_name)
+    #     target_role.map = 'sea'
 
     def consume_potion(self, params):
         potion_id = params[0]

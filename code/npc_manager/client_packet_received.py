@@ -93,23 +93,24 @@ def role_disappeared(self, message_obj):
 
 # change map response
 def roles_in_new_map(self, message_obj):
-    roles_in_new_map = message_obj
-    self.my_role = roles_in_new_map[self.my_role.name]
-    del roles_in_new_map[self.my_role.name]
-    self.other_roles = roles_in_new_map
-
-    print("now my map:", self.my_role.map)
-
-    # if at sea
-    if self.my_role.map == 'sea':
-        # if just lost from battle
-        if not self.my_role.ships:
-            self.connection.send('change_map', ['29'])
-
-    # if in port
-    elif self.my_role.map.isdigit():
-        port_index = int(self.my_role.map)
-        # self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+    pass
+    # roles_in_new_map = message_obj
+    # self.my_role = roles_in_new_map[self.my_role.name]
+    # del roles_in_new_map[self.my_role.name]
+    # self.other_roles = roles_in_new_map
+    #
+    # print("now my map:", self.my_role.map)
+    #
+    # # if at sea
+    # if self.my_role.map == 'sea':
+    #     # if just lost from battle
+    #     if not self.my_role.ships:
+    #         self.connection.send('change_map', ['29'])
+    #
+    # # if in port
+    # elif self.my_role.map.isdigit():
+    #     port_index = int(self.my_role.map)
+    #     # self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
 
 def roles_disappeared(self, message_obj):
     pass
@@ -123,29 +124,14 @@ def roles_in_battle_map(self, message_obj):
     """in battle now"""
     roles_in_battle_map = message_obj
     self.other_roles = {}
-    for name, role in roles_in_battle_map.items():
-        if name == self.my_role.name:
-            self.my_role = role
-        else:
-            self.other_roles[name] = role
-
-        # set game and in client to role
-        role.in_client = True
-
-    # start battle timer
-    self.battle_timer = LoopingCall(_check_battle_timer, self)
-    self.battle_timer.start(1)
-
-def _check_battle_timer(self):
-    if self.my_role.map == 'sea':
-        self.battle_timer.stop()
-    else:
-        if self.my_role.your_turn_in_battle:
-            self.think_time_in_battle -= 1
-            print(self.think_time_in_battle)
-            if self.think_time_in_battle <= 0:
-                self.change_and_send('all_ships_operate', [])
-                self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
+    # for name, role in roles_in_battle_map.items():
+    #     if name == self.my_role.name:
+    #         self.my_role = role
+    #     else:
+    #         self.other_roles[name] = role
+    #
+    #     # set game and in client to role
+    #     role.in_client = True
 
 def new_roles_from_battle(self, message_obj):
     new_roles_from_battle = message_obj

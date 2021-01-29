@@ -144,7 +144,7 @@ def change_map(self, message_obj):
             conn.send('new_role', self.my_role)
 
 def try_to_fight_with(self, message_obj):
-    # if target in same map
+    # if target is player
     if message_obj[0] in self.factory.users[self.my_role.map]:
         # gets
         enemy_name = message_obj[0]
@@ -220,49 +220,173 @@ def try_to_fight_with(self, message_obj):
         else:
             self.send('target_too_far')
 
-def exit_battle(self, message_obj):
-    # if no loser
+    # if target is npc
+    else:
+        # gets
+        enemy_name = message_obj[0]
+        enemy_role = self.factory.users[self.my_role.map]['npcs'].npcs[enemy_name]
+        my_role = self.my_role
 
-    # gets
-    enemy_name = self.my_role.enemy_name
-    enemy_conn = self.factory.users[self.my_role.map][enemy_name]
-    enemy_role = enemy_conn.my_role
-    my_role = self.my_role
-    my_previous_map = self.my_role.map
+        # sets
+        my_role.enemy_name = enemy_name
+        enemy_role.enemy_name = my_role.name
 
-    # sets
-    my_role.map = 'sea'
-    enemy_role.map = 'sea'
+        # can fight
+        if 1:
+            '''both enter battle map'''
+            print('can go battle!')
 
-    # change users dict state
-    del self.factory.users[my_previous_map]
-    print(self.factory.users)
+            # store my previous map
+            my_previous_map = self.my_role.map
 
-    self.factory.users['sea'][my_role.name] = self
-    self.factory.users['sea'][enemy_role.name] = enemy_conn
+            # change my map and enemy map
+            my_name = self.my_role.name
+            battle_map_name = 'battle_' + my_name
+            self.my_role.map = battle_map_name
+            enemy_role.map = battle_map_name
 
-    # send roles_in_new_map to my client and enemy client
-    roles_in_new_map = {}
-    for name, conn in self.factory.users['sea'].items():
-        if name == 'npcs':
-            for npc_name, npc in self.factory.users['sea'][name].npcs.items():
-                roles_in_new_map[npc_name] = npc
+            self.my_role.your_turn_in_battle = True
+            enemy_role.your_turn_in_battle = False
+
+            # change users dict state
+            del self.factory.users[my_previous_map][my_name]
+            del self.factory.users[my_previous_map]['npcs'].npcs[enemy_role.name]
+
+            self.factory.users[battle_map_name] = {}
+            self.factory.users[battle_map_name][my_name] = my_role
+            self.factory.users[battle_map_name][enemy_role.name] = enemy_role
+
+            # send roles_in_new_map to my client and enemy client
+            roles_in_new_map = {}
+            for name, role in self.factory.users[battle_map_name].items():
+                roles_in_new_map[name] = role
+
+            # init all ships positions in battle
+            for role in roles_in_new_map.values():
+                # my role
+                if role.name == my_name:
+                    y_index = 1
+                    for ship in role.ships:
+                        ship.x = 1
+                        ship.y = y_index
+                        ship.direction = role.direction
+                        y_index += 1
+                # enemy role
+                else:
+                    y_index = 1
+                    for ship in role.ships:
+                        ship.x = 6
+                        ship.y = y_index
+                        ship.direction = role.direction
+                        y_index += 1
+
+            self.send('roles_in_battle_map', roles_in_new_map)
+            enemy_conn = self.factory.users['sea']['npcs']
+            enemy_conn.send('roles_in_battle_map', roles_in_new_map)
+
+            # send disappear message to other roles in my previous map
+            names_of_roles_that_disappeared = []
+            names_of_roles_that_disappeared.append(self.my_role.name)
+            names_of_roles_that_disappeared.append(enemy_role.name)
+
+            for name, conn in self.factory.users[my_previous_map].items():
+                if name != 'npcs':
+                    conn.send('roles_disappeared', names_of_roles_that_disappeared)
+
+        # can't
         else:
-            roles_in_new_map[name] = conn.my_role
+            self.send('target_too_far')
 
-    self.send('roles_in_new_map', roles_in_new_map)
-    enemy_conn.send('roles_in_new_map', roles_in_new_map)
+def exit_battle(self, message_obj):
 
-    # send new role message to other roles in new map
-    new_roles_from_battle = {}
-    new_roles_from_battle[self.my_role.name] = self.my_role
-    new_roles_from_battle[enemy_role.name] = enemy_role
+    # if enemy is player
+    if not str(self.my_role.enemy_name).isdigit():
+        # if no loser
+        # gets
+        enemy_name = self.my_role.enemy_name
+        enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+        enemy_role = enemy_conn.my_role
+        my_role = self.my_role
+        my_previous_map = self.my_role.map
 
-    for name, conn in self.factory.users['sea'].items():
-        if name != enemy_name and name != self.my_role.name and name != 'npcs':
-            conn.send('new_roles_from_battle', new_roles_from_battle)
+        # sets
+        my_role.map = 'sea'
+        enemy_role.map = 'sea'
 
-    # if someone lost
+        # change users dict state
+        del self.factory.users[my_previous_map]
+        print(self.factory.users)
+
+        self.factory.users['sea'][my_role.name] = self
+        self.factory.users['sea'][enemy_role.name] = enemy_conn
+
+        # send roles_in_new_map to my client and enemy client
+        roles_in_new_map = {}
+        for name, conn in self.factory.users['sea'].items():
+            if name == 'npcs':
+                for npc_name, npc in self.factory.users['sea'][name].npcs.items():
+                    roles_in_new_map[npc_name] = npc
+            else:
+                roles_in_new_map[name] = conn.my_role
+
+        self.send('roles_in_new_map', roles_in_new_map)
+        enemy_conn.send('roles_in_new_map', roles_in_new_map)
+
+        # send new role message to other roles in new map
+        new_roles_from_battle = {}
+        new_roles_from_battle[self.my_role.name] = self.my_role
+        new_roles_from_battle[enemy_role.name] = enemy_role
+
+        for name, conn in self.factory.users['sea'].items():
+            if name != enemy_name and name != self.my_role.name and name != 'npcs':
+                conn.send('new_roles_from_battle', new_roles_from_battle)
+
+        # if someone lost
+
+    # if enemy is npc
+    else:
+        # if no loser
+
+        # gets
+        enemy_name = self.my_role.enemy_name
+        enemy_role = self.factory.users[self.my_role.map][enemy_name]
+        my_role = self.my_role
+        my_previous_map = self.my_role.map
+
+        # sets
+        my_role.map = 'sea'
+        enemy_role.map = 'sea'
+
+        # change users dict state
+        del self.factory.users[my_previous_map]
+        print(self.factory.users)
+
+        self.factory.users['sea'][my_role.name] = self
+        self.factory.users['sea']['npcs'].npcs[enemy_role.name] = enemy_role
+
+        # send roles_in_new_map to my client and enemy client
+        roles_in_new_map = {}
+        for name, conn in self.factory.users['sea'].items():
+            if name == 'npcs':
+                for npc_name, npc in self.factory.users['sea'][name].npcs.items():
+                    roles_in_new_map[npc_name] = npc
+            else:
+                roles_in_new_map[name] = conn.my_role
+
+        self.send('roles_in_new_map', roles_in_new_map)
+        enemy_conn = self.factory.users['sea']['npcs']
+        enemy_conn.send('roles_in_new_map', roles_in_new_map)
+
+        # send new role message to other roles in new map
+        new_roles_from_battle = {}
+        new_roles_from_battle[self.my_role.name] = self.my_role
+        new_roles_from_battle[enemy_role.name] = enemy_role
+
+        for name, conn in self.factory.users['sea'].items():
+            if name != enemy_name and name != self.my_role.name and name != 'npcs':
+                conn.send('new_roles_from_battle', new_roles_from_battle)
+
+        # if someone lost
 
 # packets from NpcManager
 def npc_login(self, message_obj):
@@ -282,13 +406,14 @@ def npc_move(self, message_obj):
     npc_name = message_obj[0]
     direction = message_obj[1]
 
-    # change state in server
-    self.npcs[npc_name].move([direction])
+    if npc_name in self.npcs:
+        # change state in server
+        self.npcs[npc_name].move([direction])
 
-    # broadcast to other clients
-    params_list = [direction]
-    params_list.append(npc_name)
-    self.send_to_other_clients(func_name, params_list)
+        # broadcast to other clients
+        params_list = [direction]
+        params_list.append(npc_name)
+        self.send_to_other_clients(func_name, params_list)
 
 ####################### call backs ###########################
 def on_create_character_got_result(self, is_ok):
