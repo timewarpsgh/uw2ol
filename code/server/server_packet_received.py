@@ -265,12 +265,13 @@ def exit_battle(self, message_obj):
 def npc_login(self, message_obj):
     # make npcs
     self.npcs = {}
-    for i in range(1,5):
-        npc = Role(16, 16, str(i))
+    for i in range(1,15):
+        npc = Role(14400, 4208, str(i))
+        npc.map = 'sea'
         self.npcs[str(i)] = npc
 
     # store npcs dict in a map
-    self.factory.users['29']['npcs'] = self
+    self.factory.users['sea']['npcs'] = self
 
     Role.users = self.factory.users
 
@@ -283,7 +284,7 @@ def npc_move(self, message_obj):
     direction = message_obj[1]
 
     # change state in server
-    self.npcs[npc_name].move(direction)
+    self.npcs[npc_name].move([direction])
 
     # broadcast to other clients
     params_list = [direction]

@@ -55,15 +55,6 @@ class Game():
                 random_direction = random.choice(['up', 'down', 'right', 'left'])
                 self.npc_change_and_send('move', [name, random_direction])
 
-                # self.change_and_send('move', ['up'])
-                # reactor.callLater(0.5, self.change_and_send, 'move', ['down'])
-
-            # # in battle
-            # elif not self.my_role.is_in_port():
-            #     if self.my_role.your_turn_in_battle:
-            #         self.npc_change_and_send('all_ships_operate', [])
-
-
     # essentials
     def get_connection(self, obj):
         """get protocol object to access network functions"""
@@ -79,7 +70,7 @@ class Game():
         if self.npcs:
             try:
                 func = getattr(self.npcs[npc_name], protocol_name)
-                func(params_list)
+                func([params_list[1]])
             except:
                 print('invalid input!')
                 return False

@@ -4,12 +4,9 @@ by function
         port npc OK
 
         sea npc ON
-            loop move OK
-            auto battle OK
-            many npcs OK
-            many npcs using not processes ON
-
-            NpcManager ON
+            NpcManager OK
+            move npcs to sea ON
+            always initial position bug OK
 
 
             npc lost reaction
