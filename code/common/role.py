@@ -39,7 +39,7 @@ class Role:
         # basics
         self.x = x
         self.y = y
-        self.direction = None
+        self.direction = 'up'
         self.moving = False
         self.speed = 20
         self.speed_counter = 0
@@ -129,6 +129,12 @@ class Role:
         else:
             return False
 
+    def is_in_server(self):
+        if not self.GAME:
+            return True
+        else:
+            return False
+
     def is_in_port(self):
         if str(self.map).isdigit():
             return True
@@ -146,6 +152,12 @@ class Role:
 
     def is_at_sea(self):
         if self.map == 'sea':
+            return True
+        else:
+            return False
+
+    def is_npc(self):
+        if str(self.name).isdigit():
             return True
         else:
             return False
@@ -629,8 +641,16 @@ class Role:
                 # if enemy is npc
                 if str(enemy_role.name).isdigit():
                     # npc rebirth
-                    if not self.GAME:
+                    if self.is_in_server():
                         Role.users['sea']['npcs'].npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
+
+                # if i am npc and enemy is player
+                if self.is_npc() and not enemy_role.is_npc():
+                    if self.is_in_server():
+                        new_role = init_one_default_npc(self.name)
+                        new_role.x = self.x
+                        new_role.y = self.y
+                        Role.users['sea']['npcs'].npcs[self.name] = new_role
 
                 deferred.callback(False)
                 # return deferred
@@ -1900,7 +1920,7 @@ def exit_battle(self, message_obj):
         new_roles_from_battle = {}
         new_roles_from_battle[self.my_role.name] = self.my_role
         if enemy_role.ships:
-            new_roles_from_battle[enemy_role.name] = enemy_role
+            new_roles_from_battle[enemy_role.name] = self.factory.users['sea']['npcs'].npcs[enemy_role.name]
         else:
             new_roles_from_battle[enemy_role.name] = self.factory.users['sea']['npcs'].npcs[enemy_role.name]
 
