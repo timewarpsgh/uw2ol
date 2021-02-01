@@ -15,6 +15,10 @@ from hashes.hash_region_to_ships_available import hash_region_to_ships_available
 from hashes.hash_markets_price_details import hash_markets_price_details
 from hashes.hash_special_goods import hash_special_goods
 
+# add relative directory to python_path
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'server'))
+
 
 class Role:
     """
@@ -743,10 +747,14 @@ class Role:
                     reactor.callLater(1, self._change_turn)
         # won battle
         else:
-            # exit
+            # player won
             if Role.GAME and Role.GAME.my_role.ships:
                 reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
+            # server controled npc won
+            if not Role.GAME:
+                enemy_conn = Role.users[self.map][self.enemy_name]
+                exit_battle(enemy_conn, '')
 
     # ship yard
     def buy_ship(self, params):
@@ -1793,7 +1801,7 @@ def init_one_default_npc(name):
     # add mate and ship
     mate0 = Mate(1)
     ship0 = Ship('Reagan', 'Frigate')
-    ship0.crew = 5
+    ship0.crew = 20
     npc.ships.append(ship0)
     mate0.set_as_captain_of(ship0)
     npc.mates.append(mate0)
@@ -1807,6 +1815,97 @@ def init_one_default_npc(name):
 
     # ret
     return npc
+
+def exit_battle(self, message_obj):
+
+    # if enemy is player
+    if not str(self.my_role.enemy_name).isdigit():
+        # if no loser
+        # gets
+        enemy_name = self.my_role.enemy_name
+        enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+        enemy_role = enemy_conn.my_role
+        my_role = self.my_role
+        my_previous_map = self.my_role.map
+
+        # sets
+        my_role.map = 'sea'
+        enemy_role.map = 'sea'
+
+        # change users dict state
+        del self.factory.users[my_previous_map]
+        print(self.factory.users)
+
+        self.factory.users['sea'][my_role.name] = self
+        self.factory.users['sea'][enemy_role.name] = enemy_conn
+
+        # send roles_in_new_map to my client and enemy client
+        roles_in_new_map = {}
+        for name, conn in self.factory.users['sea'].items():
+            if name == 'npcs':
+                for npc_name, npc in self.factory.users['sea'][name].npcs.items():
+                    roles_in_new_map[npc_name] = npc
+            else:
+                roles_in_new_map[name] = conn.my_role
+
+        self.send('roles_in_new_map', roles_in_new_map)
+        enemy_conn.send('roles_in_new_map', roles_in_new_map)
+
+        # send new role message to other roles in new map
+        new_roles_from_battle = {}
+        new_roles_from_battle[self.my_role.name] = self.my_role
+        new_roles_from_battle[enemy_role.name] = enemy_role
+
+        for name, conn in self.factory.users['sea'].items():
+            if name != enemy_name and name != self.my_role.name and name != 'npcs':
+                conn.send('new_roles_from_battle', new_roles_from_battle)
+
+        # if someone lost
+
+    # if enemy is npc
+    else:
+        # if no loser
+
+        # gets
+        enemy_name = self.my_role.enemy_name
+        # enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+        enemy_role = self.factory.users[self.my_role.map][enemy_name]
+        my_role = self.my_role
+        my_previous_map = self.my_role.map
+
+        # sets
+        my_role.map = 'sea'
+        enemy_role.map = 'sea'
+
+        # change users dict state
+        del self.factory.users[my_previous_map]
+        print(self.factory.users)
+
+        self.factory.users['sea'][my_role.name] = self
+
+        # send roles_in_new_map to my client and enemy client
+        roles_in_new_map = {}
+        for name, conn in self.factory.users['sea'].items():
+            if name == 'npcs':
+                for npc_name, npc in self.factory.users['sea'][name].npcs.items():
+                    roles_in_new_map[npc_name] = npc
+            else:
+                roles_in_new_map[name] = conn.my_role
+
+        self.send('roles_in_new_map', roles_in_new_map)
+        # enemy_conn.send('roles_in_new_map', roles_in_new_map)
+
+        # send new role message to other roles in new map
+        new_roles_from_battle = {}
+        new_roles_from_battle[self.my_role.name] = self.my_role
+        if enemy_role.ships:
+            new_roles_from_battle[enemy_role.name] = enemy_role
+        else:
+            new_roles_from_battle[enemy_role.name] = self.factory.users['sea']['npcs'].npcs[enemy_role.name]
+
+        for name, conn in self.factory.users['sea'].items():
+            if name != enemy_name and name != self.my_role.name and name != 'npcs':
+                conn.send('new_roles_from_battle', new_roles_from_battle)
 
 
 if __name__ == '__main__':

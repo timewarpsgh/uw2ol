@@ -10,11 +10,13 @@ by function
                     PvP OK
                     PvE Win ON
                         P won E OK
-                        other player needs to see npc reborn
+                        other player needs to see npc reborn OK
 
-                        E won P
+                    PvE Lose OK
 
-                    PvE Lose ON
+                    code refactor(exit battle) ON
+
+                    PvE lose, npc goes back to normal states
 
 
 

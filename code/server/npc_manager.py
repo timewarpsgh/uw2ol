@@ -14,7 +14,7 @@ class NpcManager:
 
     def _init_npcs(self):
         npcs = {}
-        npc_count = 5  # max is 150 atm due to max protocol size
+        npc_count = 10  # max is 150 atm due to max protocol size
         for i in range(1, (npc_count + 1)):
             # store in dict
             npcs[str(i)] = init_one_default_npc(str(i))
@@ -49,11 +49,12 @@ class NpcManager:
         # send to players
         else:
             # tell players in same map('sea')
-            for name, conn in self.users[broadcast_map].items():
-                if name == 'npcs' or str(name).isdigit():
-                    pass
-                else:
-                    conn.send(protocol_name, params_list)
+            if broadcast_map in self.users:
+                for name, conn in self.users[broadcast_map].items():
+                    if name == 'npcs' or str(name).isdigit():
+                        pass
+                    else:
+                        conn.send(protocol_name, params_list)
 
 
 
