@@ -383,7 +383,10 @@ def exit_battle(self, message_obj):
         # send new role message to other roles in new map
         new_roles_from_battle = {}
         new_roles_from_battle[self.my_role.name] = self.my_role
-        new_roles_from_battle[enemy_role.name] = enemy_role
+        if enemy_role.ships:
+            new_roles_from_battle[enemy_role.name] = enemy_role
+        else:
+            new_roles_from_battle[enemy_role.name] = self.factory.users['sea']['npcs'].npcs[enemy_role.name]
 
         for name, conn in self.factory.users['sea'].items():
             if name != enemy_name and name != self.my_role.name and name != 'npcs':
