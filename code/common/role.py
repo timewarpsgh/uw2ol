@@ -772,7 +772,7 @@ class Role:
                 reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
             # server controled npc won
-            if not Role.GAME:
+            if self.is_in_server() and self.is_npc():
                 enemy_conn = Role.users[self.map][self.enemy_name]
                 exit_battle(enemy_conn, '')
 
