@@ -1931,89 +1931,9 @@ def exit_battle(self, message_obj):
 
 if __name__ == '__main__':
     # new role
-    default_role = Role(1, 1, 'alex')
+    alex = init_one_default_npc('alex')
+    print(alex.name)
 
-    # add ships
-    ship0 = Ship('Reagan', 'Frigate')
-    ship1 = Ship('Reagan11', 'Balsa')
-    ship2 = Ship('Reagan22', 'Balsa')
-    ship3 = Ship('Reagan33', 'Balsa')
-    default_role.ships.append(ship0)
-    default_role.ships.append(ship1)
-    default_role.ships.append(ship2)
-    default_role.ships.append(ship3)
-
-    # add mates
-    mate0 = Mate(1)
-    mate1 = Mate(2)
-    mate2 = Mate(3)
-    mate3 = Mate(4)
-
-    default_role.mates.append(mate0)
-    default_role.mates.append(mate1)
-    default_role.mates.append(mate2)
-    default_role.mates.append(mate3)
-
-    # nickname
-    role = default_role
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([6])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([7])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([8])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([9])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([32])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([38])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([39])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.equip([33])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.unequip([33])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.unequip([39])
-
-    print(role.bag.container)
-    print(role.body.container)
-
-    role.unequip([6])
-
-    print(role.bag.container)
-    print(role.body.container)
 
 
 
