@@ -1817,6 +1817,7 @@ def init_one_default_npc(name):
     return npc
 
 def exit_battle(self, message_obj):
+    """self is server echo"""
 
     # if enemy is player
     if not str(self.my_role.enemy_name).isdigit():

@@ -14,7 +14,7 @@ by function
 
                     PvE Lose OK
 
-                    code refactor(exit battle) ON
+                    code refactor(exit battle) OK
 
                     PvE lose, npc goes back to normal states
 
