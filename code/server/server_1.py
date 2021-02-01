@@ -1,5 +1,5 @@
 from twisted.internet.protocol import Protocol, Factory
-from twisted.internet import reactor, threads, defer
+from twisted.internet import reactor, threads, defer, task
 
 # add relative directory to python_path
 import sys, os
@@ -12,7 +12,7 @@ from role import Role
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
-
+from npc_manager import NpcManager
 
 class Echo(Protocol):
     def __init__(self, factory):
@@ -33,17 +33,19 @@ class Echo(Protocol):
     def connectionLost(self, reason):
         print("connection lost!")
 
-        # get current map
-        my_map = str(self.my_role.map)
+        if self.my_role:
 
-        # if not in battle
-        if my_map.isdigit() or my_map == 'sea':
-            pass
-        # if in battle
-        else:
-            server_packet_received.exit_battle(self, '')
+            # get current map
+            my_map = str(self.my_role.map)
 
-        self.log_role_out()
+            # if not in battle
+            if my_map.isdigit() or my_map == 'sea':
+                pass
+            # if in battle
+            else:
+                server_packet_received.exit_battle(self, '')
+
+            self.log_role_out()
 
     def log_role_out(self):
         # set online to false
@@ -157,14 +159,20 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
-        # users(roles) at sea map
+        # users(roles) at sea map, including players and npcs
         self.users = {
-            'sea':{},
+            'sea': {},
         }
+        npc_manager = NpcManager(self.users)
+        self.users['sea']['npcs'] = npc_manager
 
         # users(roles) in ports
         for i in range(131):
             self.users[str(i)] = {}
+
+        # npc control loop
+        looping_task = task.LoopingCall(npc_manager.update)
+        looping_task.start(1)
 
         # db
         self.db = Database()

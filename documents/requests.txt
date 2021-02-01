@@ -1,17 +1,28 @@
 
 by function
     travel
-        port npc OK
-
         sea npc ON
             always initial position bug OK
             200 npcs OK
             two clients battle OK
 
-            battle with npc ON !!!
+            battle with npc ON
+                enter OK
+                exit  OK
+                battle with npc ON
+                    player operate OK
+                    npc operate ON
+
+                move npc_manager into server ON
+
+
+
+
+
 
             npc lost reaction
             npc route 1
+            package can be too big(int too long)
 
     trade
 

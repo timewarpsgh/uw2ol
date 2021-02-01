@@ -52,8 +52,12 @@ class Game():
     def move(self):
         if self.npcs:
             for name, npc in self.npcs.items():
-                random_direction = random.choice(['up', 'down', 'right', 'left'])
-                self.npc_change_and_send('move', [name, random_direction])
+                if npc.map == 'sea':
+                    random_direction = random.choice(['up', 'down', 'right', 'left'])
+                    self.npc_change_and_send('move', [name, random_direction])
+                elif npc.map == 'battle':
+                    if npc.your_turn_in_battle:
+                        self.npc_change_and_send('all_ships_opreate', [])
 
     # essentials
     def get_connection(self, obj):
@@ -79,10 +83,6 @@ class Game():
                 self.connection.send(protocol_name, params_list)
                 return True
 
-        # when not logged in
-        # else:
-        #     params_list_in_str = [str(i) for i in params_list]
-        #     self.connection.send(protocol_name, params_list_in_str)
-        #     return True
+
 
 

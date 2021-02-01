@@ -109,8 +109,15 @@ class Role:
 
         # in server
         else:
-            target_role = Role.users[self.map][name].my_role
-            return target_role
+            # npc
+            if str(name).isdigit():
+                target_role = Role.users[self.map][name].npcs[name]
+                return target_role
+
+            # player
+            else:
+                target_role = Role.users[self.map][name].my_role
+                return target_role
 
     def is_in_client_and_self(self):
         if self.GAME and self.GAME.my_role.name == self.name:
