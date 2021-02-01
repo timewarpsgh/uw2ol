@@ -129,7 +129,7 @@ class Echo(Protocol):
             for name, conn in self.factory.users[self.my_role.map].items():
                 if name == 'npcs':
                     pass
-                elif name != self.my_role.name:
+                elif name != self.my_role.name and not str(name).isdigit():
                     conn.send(protocol_name, content_obj)
 
         # npc_manager conn

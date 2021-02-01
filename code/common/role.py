@@ -111,7 +111,7 @@ class Role:
         else:
             # npc
             if str(name).isdigit():
-                target_role = Role.users[self.map][name].npcs[name]
+                target_role = Role.users[self.map][name]
                 return target_role
 
             # player
@@ -302,9 +302,9 @@ class Role:
                 self.x = 160
 
         # prints
-        print("now x:", self.x)
-        print("new y:", self.y)
-        print("new direction:", self.direction)
+        # print("now x:", self.x)
+        # print("new y:", self.y)
+        # print("new direction:", self.direction)
 
     def can_move(self, direction):
         # in port

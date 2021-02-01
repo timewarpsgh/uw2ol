@@ -13,7 +13,19 @@ by function
                     player operate OK
                     npc operate ON
 
-                move npc_manager into server ON
+                move npc_manager into server OK
+
+                player battle with npc ON
+                    enter battle OK
+                    exit battle OK
+                    all ships operate OK
+
+                    PvP ON
+
+
+
+
+                player battle with player ON
 
 
 

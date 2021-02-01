@@ -225,7 +225,7 @@ def try_to_fight_with(self, message_obj):
         # gets
         enemy_name = message_obj[0]
         enemy_role = self.factory.users[self.my_role.map]['npcs'].npcs[enemy_name]
-        enemy_conn = self.factory.users[self.my_role.map]['npcs']
+        # enemy_conn = self.factory.users[self.my_role.map]['npcs']
         my_role = self.my_role
 
         # sets
@@ -255,7 +255,7 @@ def try_to_fight_with(self, message_obj):
 
             self.factory.users[battle_map_name] = {}
             self.factory.users[battle_map_name][my_name] = self
-            self.factory.users[battle_map_name][enemy_role.name] = enemy_conn
+            self.factory.users[battle_map_name][enemy_role.name] = enemy_role
 
             # send roles_in_new_map to my client and enemy client
             roles_in_new_map = {}
@@ -283,7 +283,7 @@ def try_to_fight_with(self, message_obj):
                         y_index += 1
 
             self.send('roles_in_battle_map', roles_in_new_map)
-            enemy_conn.send('roles_in_battle_map', roles_in_new_map)
+            # enemy_conn.send('roles_in_battle_map', roles_in_new_map)
 
             # send disappear message to other roles in my previous map
             names_of_roles_that_disappeared = []
@@ -350,8 +350,8 @@ def exit_battle(self, message_obj):
 
         # gets
         enemy_name = self.my_role.enemy_name
-        enemy_conn = self.factory.users[self.my_role.map][enemy_name]
-        enemy_role = enemy_conn.npcs[enemy_name]
+        # enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+        enemy_role = self.factory.users[self.my_role.map][enemy_name]
         my_role = self.my_role
         my_previous_map = self.my_role.map
 
@@ -375,7 +375,7 @@ def exit_battle(self, message_obj):
                 roles_in_new_map[name] = conn.my_role
 
         self.send('roles_in_new_map', roles_in_new_map)
-        enemy_conn.send('roles_in_new_map', roles_in_new_map)
+        # enemy_conn.send('roles_in_new_map', roles_in_new_map)
 
         # send new role message to other roles in new map
         new_roles_from_battle = {}

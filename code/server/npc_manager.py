@@ -42,13 +42,17 @@ class NpcManager:
     def update(self):
         """called each second"""
         for name, npc in self.npcs.items():
+            # at sea
             if npc.map == 'sea':
                 random_direction = random.choice(['up', 'down', 'right', 'left'])
-                self.npc_change_and_send('move', [random_direction, name])
+                self.npc_change_and_send('move', [random_direction, name], npc.map)
 
+            # in battle
+            else:
+                if npc.your_turn_in_battle:
+                    self.npc_change_and_send('all_ships_operate', [random_direction, name], npc.map)
 
-
-    def npc_change_and_send(self, protocol_name, params_list):
+    def npc_change_and_send(self, protocol_name, params_list, broadcast_map):
         """change local state and send cmd to clients"""
         npc_name = params_list[-1]
 
@@ -63,8 +67,8 @@ class NpcManager:
         # send to players
         else:
             # tell players in same map('sea')
-            for name, conn in self.users['sea'].items():
-                if name == 'npcs':
+            for name, conn in self.users[broadcast_map].items():
+                if name == 'npcs' or str(name).isdigit():
                     pass
                 else:
                     conn.send(protocol_name, params_list)
