@@ -20,7 +20,9 @@ by function
                     exit battle OK
                     all ships operate OK
 
-                    PvP ON
+                    PvP OK
+                    PvE Win ON
+                    PvE Lose ON
 
 
 

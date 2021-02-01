@@ -214,7 +214,10 @@ def try_to_fight_with(self, message_obj):
             names_of_roles_that_disappeared.append(enemy_role.name)
 
             for name, conn in self.factory.users[my_previous_map].items():
-                conn.send('roles_disappeared', names_of_roles_that_disappeared)
+                if name == 'npcs':
+                    pass
+                else:
+                    conn.send('roles_disappeared', names_of_roles_that_disappeared)
 
         # can't
         else:
