@@ -1,6 +1,12 @@
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import reactor, threads, defer
 
+import time
+
+# 1 process for 1 client
+from multiprocessing import Process
+import threading
+
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
@@ -36,8 +42,8 @@ class Echo(Protocol):
         self.dataBuffer = bytes()
 
         print('connected')
-        d = get_user_input()
-        d.addCallback(self.send_and_get_next_input)
+        # d = get_user_input()
+        # d.addCallback(self.send_and_get_next_input)
 
     def send_and_get_next_input(self, user_input):
         # parse user input
@@ -138,14 +144,15 @@ class EchoClientFactory(ClientFactory):
         self.game.button_click_handler. \
             make_message_box("Failed to connect! The server isn't working. Please exit.")
 
-def main():
+
+def main(ac, psw):
     # print?
     if c.DAEMON_MODE:
         f = open(os.devnull, 'w')
         sys.stdout = f
 
     # init game and schedule game loop
-    game1 = Game('2', '2')
+    game = Game(ac, psw)
 
     # remote or local connection
     host = None
@@ -158,14 +165,38 @@ def main():
         port = c.PORT
 
     # pass game to factory and run reactor
-    try:
-        reactor.connectTCP(host, port, EchoClientFactory(game1))
+    # try:
+    reactor.connectTCP(host, port, EchoClientFactory(game))
+    # except:
+    #     print("can't connect to server.")
+    # else:
+    reactor.run()
 
-    except:
-        print("can't connect to server.")
-    else:
-        reactor.run()
 
+class ClientProcess(Process):
+    def __init__(self, ac, psw):
+        Process.__init__(self)
+        self.ac = ac
+        self.psw = psw
+
+    def run(self):
+        main(self.ac, self.psw)
+
+# not used
+class ClientThread (threading.Thread):
+    def __init__(self, ac, psw):
+        threading.Thread.__init__(self)
+        self.ac = ac
+        self.psw = psw
+
+    def run(self):
+        main(self.ac, self.psw)
 
 if __name__ == "__main__":
-    main()
+    # start clients
+    for i in range(2, 12):
+        p = ClientProcess(str(i), str(i))
+        p.start()
+        time.sleep(1)
+
+

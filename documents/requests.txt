@@ -3,34 +3,12 @@ by function
     travel
         sea npc ON
 
-            battle with npc ON
-
-                player battle with npc ON
-
-                    PvP OK
-                    PvE Win ON
-                        P won E OK
-                        other player needs to see npc reborn OK
-
-                    PvE Lose OK
-
-                    code refactor(exit battle) OK
-
-                    PvE lose, npc goes back to normal states OK
+            refactor code(npc battle) ON
 
 
+            npc route 1 ON
 
-
-                player battle with player OK
-
-
-
-
-
-
-            npc lost reaction
-            npc route 1
-            package can be too big(int too long)
+            npc routes
 
     trade
 

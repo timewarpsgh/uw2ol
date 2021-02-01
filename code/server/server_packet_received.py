@@ -13,7 +13,7 @@ import role
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
-import npc_fleet
+
 
 def process_packet(self, pck_type, message_obj):
     """ self is Echo Protocol
@@ -305,32 +305,6 @@ def try_to_fight_with(self, message_obj):
 def exit_battle(self, message_obj):
     role.exit_battle(self, message_obj)
 
-# packets from NpcManager
-def npc_login(self, message_obj):
-    # make npcs
-    self.npcs = npc_fleet.init_npcs()
-
-    # store npcs dict in a map
-    self.factory.users['sea']['npcs'] = self
-
-    Role.users = self.factory.users
-
-    # send to client his roles
-    self.send('your_npcs', [])
-
-def npc_move(self, message_obj):
-    func_name = 'move'
-    npc_name = message_obj[0]
-    direction = message_obj[1]
-
-    if npc_name in self.npcs:
-        # change state in server
-        self.npcs[npc_name].move([direction])
-
-        # broadcast to other clients
-        params_list = [direction]
-        params_list.append(npc_name)
-        self.send_to_other_clients(func_name, params_list)
 
 ####################### call backs ###########################
 def on_create_character_got_result(self, is_ok):
