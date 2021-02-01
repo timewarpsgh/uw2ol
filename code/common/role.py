@@ -622,6 +622,12 @@ class Role:
                 enemy_role.gold = 0
                 print('battle ended. press e to exit battle.')
 
+                # if enemy is npc
+                if str(enemy_role.name).isdigit():
+                    # npc rebirth
+                    if not self.GAME:
+                        Role.users['sea']['npcs'].npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
+
                 deferred.callback(False)
                 # return deferred
             else:
@@ -1777,6 +1783,31 @@ class Port:
     def get_available_items_ids_for_sale(self):
         id_list = hash_ports_meta_data[self.id]['itemShop']['regular']
         return id_list
+
+
+def init_one_default_npc(name):
+    # now role
+    npc = Role(14400, 4208, name)
+    npc.map = 'sea'
+
+    # add mate and ship
+    mate0 = Mate(1)
+    ship0 = Ship('Reagan', 'Frigate')
+    ship0.crew = 5
+    npc.ships.append(ship0)
+    mate0.set_as_captain_of(ship0)
+    npc.mates.append(mate0)
+
+    mate1 = Mate(2)
+    ship1 = Ship('Reagan1', 'Frigate')
+    ship1.crew = 20
+    npc.ships.append(ship1)
+    mate1.set_as_captain_of(ship1)
+    npc.mates.append(mate1)
+
+    # ret
+    return npc
+
 
 if __name__ == '__main__':
     # new role

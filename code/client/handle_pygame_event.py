@@ -47,17 +47,18 @@ def handle_pygame_event(self, event):
         # left button
         if event.button == 1:
             if self.other_roles_rects:
-                # set target
-                for name, rect in self.other_roles_rects.items():
-                    if rect.collidepoint(event.pos):
-                        self.my_role.enemy_name = name
-                        print('target set to:', name)
-                        return
+                if self.my_role.map == 'sea' or self.my_role.map.isdigit():
+                    # set target
+                    for name, rect in self.other_roles_rects.items():
+                        if rect.collidepoint(event.pos):
+                            self.my_role.enemy_name = name
+                            print('target set to:', name)
+                            return
 
-                # clear target
-                # if self.menu_stack == 0:
-                #     if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
-                #         self.my_role.enemy_name = ''
+                    # clear target
+                    # if self.menu_stack == 0:
+                    #     if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
+                    #         self.my_role.enemy_name = ''
 
         # right button
         elif event.button == 3:

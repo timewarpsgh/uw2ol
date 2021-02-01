@@ -2,26 +2,18 @@
 by function
     travel
         sea npc ON
-            always initial position bug OK
-            200 npcs OK
-            two clients battle OK
 
             battle with npc ON
-                enter OK
-                exit  OK
-                battle with npc ON
-                    player operate OK
-                    npc operate ON
-
-                move npc_manager into server OK
 
                 player battle with npc ON
-                    enter battle OK
-                    exit battle OK
-                    all ships operate OK
 
                     PvP OK
                     PvE Win ON
+                        P won E OK
+                        other player needs to see npc reborn
+
+                        E won P
+
                     PvE Lose ON
 
 
