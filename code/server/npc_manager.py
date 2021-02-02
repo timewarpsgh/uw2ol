@@ -34,6 +34,34 @@ class NpcManager:
                 if npc.your_turn_in_battle:
                     self._npc_change_and_send('all_ships_operate', [name], npc.map)
 
+    def _let_one_npc_move_along_path(self, npc, path):
+        npc.point_in_path_id += 1
+        next_point = path.list_of_points[npc.point_in_path_id]
+
+        next_x = next_point[0]
+        next_y = next_point[1]
+        now_x = npc.x
+        now_y = npc.y
+
+        direction = None
+        # up
+        if next_y < now_y and next_x == now_x:
+            direction = 'up'
+
+        # down
+        elif next_y > now_y and next_x == now_x:
+            direction = 'down'
+
+        # left
+        elif next_y == now_y and next_x < now_x:
+            direction = 'left'
+
+        # right
+        elif next_y == now_y and next_x > now_x:
+            direction = 'right'
+
+        # other 4 directions
+
     def _npc_change_and_send(self, protocol_name, params_list, broadcast_map):
         """change local state and send cmd to clients"""
         npc_name = params_list[-1]

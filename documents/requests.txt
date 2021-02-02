@@ -2,15 +2,16 @@
 by function
     travel
         sea npc ON
-
             refactor code(npc battle) OK
             refactor role.exit_battle OK
-
             refactor change_map OK
 
             npc route 1 ON
+            continue _let_one_npc_move_along_path ON
 
             npc routes
+
+            load world map from pickle
 
     trade
 

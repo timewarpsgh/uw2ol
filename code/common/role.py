@@ -14,6 +14,8 @@ from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.hash_region_to_ships_available import hash_region_to_ships_available
 from hashes.hash_markets_price_details import hash_markets_price_details
 from hashes.hash_special_goods import hash_special_goods
+from hashes.hash_paths import hash_paths
+
 
 # add relative directory to python_path
 import sys, os
@@ -57,6 +59,10 @@ class Role:
         self.gold = gold
         self.bank_gold = 2000
         self.target_name = ''
+
+        # point in path id (only for npc)
+        if self.name.isdigit():
+            self.point_in_path_id = 0
 
         # assistants
         self.accountant = None
@@ -1820,6 +1826,23 @@ class Port:
         return id_list
 
 
+class Path:
+    """read only. holds path from one port to another"""
+
+    def __init__(self, start_port_id, end_port_id):
+        self.list_of_points = hash_paths[start_port_id][end_port_id]
+        self.point_id = 0
+
+    def get_next_point(self):
+        if (self.point_id + 1) == len(self.list_of_points):
+            pass
+        else:
+            self.point_id += 1
+
+        point = self.list_of_points[self.point_id]
+
+        return point
+
 def init_one_default_npc(name):
     # now role
     npc = Role(14400, 4208, name)
@@ -1936,6 +1959,7 @@ if __name__ == '__main__':
     # new role
     alex = init_one_default_npc('alex')
     print(alex.name)
+    alex.gold += 1
 
 
 
