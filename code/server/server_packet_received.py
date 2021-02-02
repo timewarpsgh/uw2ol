@@ -67,53 +67,17 @@ def change_map(self, message_obj):
     now_map = self.my_role.map
     target_map = message_obj[0]
 
-    # if days at sea is sent as a param
-    days_spent_at_sea = 0
-    if len(message_obj) > 1:
-        days_spent_at_sea = message_obj[1]
-
     # change my map and position
     self.my_role.map = target_map
-
     print("map changed to:", self.my_role.map)
 
     # to sea
     if target_map == 'sea':
-        self.my_role.x = hash_ports_meta_data[int(now_map) + 1]['x'] * c.PIXELS_COVERED_EACH_MOVE
-        self.my_role.y = hash_ports_meta_data[int(now_map) + 1]['y'] * c.PIXELS_COVERED_EACH_MOVE
-
-        fleet_speed = self.my_role.get_fleet_speed([])
-        self.my_role.set_speed([str(fleet_speed)])
-        self.my_role.set_speed([str(40)])
+        _change_map_to_sea(self, now_map)
 
     # to port
     elif target_map.isdigit():
-        # cost gold based on days at sea and crew count()
-        if days_spent_at_sea > 0:
-            total_crew = self.my_role._get_total_crew()
-            total_cost = int(days_spent_at_sea * total_crew *
-                             c.SUPPLY_CONSUMPTION_PER_PERSON * c.SUPPLY_UNIT_COST)
-            self.my_role.gold -= total_cost
-
-        # normal ports
-        if int(target_map) <= 99:
-
-            self.my_role.x = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
-            self.my_role.y = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
-
-            self.my_role.set_speed(['20'])
-
-            print("changed to", self.my_role.x, self.my_role.y)
-
-        # supply ports
-        else:
-            self.my_role.x = hash_ports_meta_data[101]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
-            self.my_role.y = hash_ports_meta_data[101]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
-
-            self.my_role.set_speed(['20'])
-
-        # set additional days at sea to 0 (so that potions can be used again)
-        self.my_role.additioanl_days_at_sea = 0
+        _change_map_to_port(self, target_map, message_obj)
 
     # change users() state
     del self.factory.users[now_map][self.my_role.name]
@@ -143,6 +107,43 @@ def change_map(self, message_obj):
             pass
         elif name != self.my_role.name:
             conn.send('new_role', self.my_role)
+
+def _change_map_to_sea(self, now_map):
+    self.my_role.x = hash_ports_meta_data[int(now_map) + 1]['x'] * c.PIXELS_COVERED_EACH_MOVE
+    self.my_role.y = hash_ports_meta_data[int(now_map) + 1]['y'] * c.PIXELS_COVERED_EACH_MOVE
+
+    fleet_speed = self.my_role.get_fleet_speed([])
+    self.my_role.set_speed([str(fleet_speed)])
+    self.my_role.set_speed([str(40)])
+
+def _change_map_to_port(self, target_map, message_obj):
+    # if days at sea is sent as a param
+    days_spent_at_sea = 0
+    if len(message_obj) > 1:
+        days_spent_at_sea = message_obj[1]
+
+    # cost gold based on days at sea and crew count()
+    if days_spent_at_sea > 0:
+        total_crew = self.my_role._get_total_crew()
+        total_cost = int(days_spent_at_sea * total_crew *
+                         c.SUPPLY_CONSUMPTION_PER_PERSON * c.SUPPLY_UNIT_COST)
+        self.my_role.gold -= total_cost
+
+    # normal ports
+    if int(target_map) <= 99:
+        self.my_role.x = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
+        self.my_role.y = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
+        self.my_role.set_speed(['20'])
+        print("changed to", self.my_role.x, self.my_role.y)
+
+    # supply ports
+    else:
+        self.my_role.x = hash_ports_meta_data[101]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
+        self.my_role.y = hash_ports_meta_data[101]['buildings'][4]['y'] * c.PIXELS_COVERED_EACH_MOVE
+        self.my_role.set_speed(['20'])
+
+    # set additional days at sea to 0 (so that potions can be used again)
+    self.my_role.additioanl_days_at_sea = 0
 
 def try_to_fight_with(self, message_obj):
     """enter battle with someone"""

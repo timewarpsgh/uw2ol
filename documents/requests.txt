@@ -6,7 +6,7 @@ by function
             refactor code(npc battle) OK
             refactor role.exit_battle OK
 
-            refactor change_map ON
+            refactor change_map OK
 
             npc route 1 ON
 
