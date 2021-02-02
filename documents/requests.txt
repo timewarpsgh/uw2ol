@@ -3,9 +3,10 @@ by function
     travel
         sea npc ON
 
-            refactor code(npc battle) ON
-            refactor role.exit_battle
+            refactor code(npc battle) OK
+            refactor role.exit_battle OK
 
+            refactor change_map ON
 
             npc route 1 ON
 

@@ -145,162 +145,169 @@ def change_map(self, message_obj):
             conn.send('new_role', self.my_role)
 
 def try_to_fight_with(self, message_obj):
+    """enter battle with someone"""
     # if target is player
     if message_obj[0] in self.factory.users[self.my_role.map]:
-        # gets
-        enemy_name = message_obj[0]
-        enemy_conn = self.factory.users[self.my_role.map][enemy_name]
-        enemy_role = enemy_conn.my_role
-        my_role = self.my_role
-
-        # sets
-        my_role.enemy_name = enemy_name
-        enemy_role.enemy_name = my_role.name
-
-        # can fight
-        if 1:
-            '''both enter battle map'''
-            print('can go battle!')
-
-            # store my previous map
-            my_previous_map = self.my_role.map
-
-            # change my map and enemy map
-            my_name = self.my_role.name
-            battle_map_name = 'battle_' + my_name
-            self.my_role.map = battle_map_name
-            enemy_role.map = battle_map_name
-
-            self.my_role.your_turn_in_battle = True
-            enemy_role.your_turn_in_battle = False
-
-            # change users dict state
-            del self.factory.users[my_previous_map][my_name]
-            del self.factory.users[my_previous_map][enemy_role.name]
-
-            self.factory.users[battle_map_name] = {}
-            self.factory.users[battle_map_name][my_name] = self
-            self.factory.users[battle_map_name][enemy_role.name] = enemy_conn
-
-            # send roles_in_new_map to my client and enemy client
-            roles_in_new_map = {}
-            for name, conn in self.factory.users[battle_map_name].items():
-                roles_in_new_map[name] = conn.my_role
-
-            # init all ships positions in battle
-            for role in roles_in_new_map.values():
-                # my role
-                if role.name == my_name:
-                    y_index = 1
-                    for ship in role.ships:
-                        ship.x = 1
-                        ship.y = y_index
-                        ship.direction = role.direction
-                        y_index += 1
-                # enemy role
-                else:
-                    y_index = 1
-                    for ship in role.ships:
-                        ship.x = 6
-                        ship.y = y_index
-                        ship.direction = role.direction
-                        y_index += 1
-
-            self.send('roles_in_battle_map', roles_in_new_map)
-            enemy_conn.send('roles_in_battle_map', roles_in_new_map)
-
-            # send disappear message to other roles in my previous map
-            names_of_roles_that_disappeared = []
-            names_of_roles_that_disappeared.append(self.my_role.name)
-            names_of_roles_that_disappeared.append(enemy_role.name)
-
-            for name, conn in self.factory.users[my_previous_map].items():
-                if name == 'npcs':
-                    pass
-                else:
-                    conn.send('roles_disappeared', names_of_roles_that_disappeared)
-
-        # can't
-        else:
-            self.send('target_too_far')
-
+        _try_to_fight_with_player(self, message_obj)
     # if target is npc
     else:
-        # gets
-        enemy_name = message_obj[0]
-        enemy_role = self.factory.users[self.my_role.map]['npcs'].npcs[enemy_name]
-        # enemy_conn = self.factory.users[self.my_role.map]['npcs']
-        my_role = self.my_role
+        _try_to_fight_with_npc(self, message_obj)
 
-        # sets
-        my_role.enemy_name = enemy_name
-        enemy_role.enemy_name = my_role.name
+def _try_to_fight_with_player(self, message_obj):
+    # gets
+    enemy_name = message_obj[0]
+    enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+    enemy_role = enemy_conn.my_role
+    my_role = self.my_role
 
-        # can fight
-        if 1:
-            '''both enter battle map'''
-            print('can go battle!')
+    # sets
+    my_role.enemy_name = enemy_name
+    enemy_role.enemy_name = my_role.name
 
-            # store my previous map
-            my_previous_map = self.my_role.map
+    # can fight
+    if 1:
+        '''both enter battle map'''
+        print('can go battle!')
 
-            # change my map and enemy map
-            my_name = self.my_role.name
-            battle_map_name = 'battle_' + my_name
-            self.my_role.map = battle_map_name
-            enemy_role.map = battle_map_name
+        # store my previous map
+        my_previous_map = self.my_role.map
 
-            self.my_role.your_turn_in_battle = True
-            enemy_role.your_turn_in_battle = False
+        # change my map and enemy map
+        my_name = self.my_role.name
+        battle_map_name = 'battle_' + my_name
+        self.my_role.map = battle_map_name
+        enemy_role.map = battle_map_name
 
-            # change users dict state
-            del self.factory.users[my_previous_map][my_name]
-            # del self.factory.users[my_previous_map]['npcs'].npcs[enemy_role.name]
+        self.my_role.your_turn_in_battle = True
+        enemy_role.your_turn_in_battle = False
 
-            self.factory.users[battle_map_name] = {}
-            self.factory.users[battle_map_name][my_name] = self
-            self.factory.users[battle_map_name][enemy_role.name] = enemy_role
+        # change users dict state
+        del self.factory.users[my_previous_map][my_name]
+        del self.factory.users[my_previous_map][enemy_role.name]
 
-            # send roles_in_new_map to my client and enemy client
-            roles_in_new_map = {}
+        self.factory.users[battle_map_name] = {}
+        self.factory.users[battle_map_name][my_name] = self
+        self.factory.users[battle_map_name][enemy_role.name] = enemy_conn
 
-            roles_in_new_map[my_name] = my_role
-            roles_in_new_map[enemy_name] = enemy_role
+        # send roles_in_new_map to my client and enemy client
+        roles_in_new_map = {}
+        for name, conn in self.factory.users[battle_map_name].items():
+            roles_in_new_map[name] = conn.my_role
 
-            # init all ships positions in battle
-            for role in roles_in_new_map.values():
-                # my role
-                if role.name == my_name:
-                    y_index = 1
-                    for ship in role.ships:
-                        ship.x = 1
-                        ship.y = y_index
-                        ship.direction = role.direction
-                        y_index += 1
-                # enemy role
-                else:
-                    y_index = 1
-                    for ship in role.ships:
-                        ship.x = 6
-                        ship.y = y_index
-                        ship.direction = role.direction
-                        y_index += 1
+        # init all ships positions in battle
+        for role in roles_in_new_map.values():
+            # my role
+            if role.name == my_name:
+                y_index = 1
+                for ship in role.ships:
+                    ship.x = 1
+                    ship.y = y_index
+                    ship.direction = role.direction
+                    y_index += 1
+            # enemy role
+            else:
+                y_index = 1
+                for ship in role.ships:
+                    ship.x = 6
+                    ship.y = y_index
+                    ship.direction = role.direction
+                    y_index += 1
 
-            self.send('roles_in_battle_map', roles_in_new_map)
-            # enemy_conn.send('roles_in_battle_map', roles_in_new_map)
+        self.send('roles_in_battle_map', roles_in_new_map)
+        enemy_conn.send('roles_in_battle_map', roles_in_new_map)
 
-            # send disappear message to other roles in my previous map
-            names_of_roles_that_disappeared = []
-            names_of_roles_that_disappeared.append(self.my_role.name)
-            names_of_roles_that_disappeared.append(enemy_role.name)
+        # send disappear message to other roles in my previous map
+        names_of_roles_that_disappeared = []
+        names_of_roles_that_disappeared.append(self.my_role.name)
+        names_of_roles_that_disappeared.append(enemy_role.name)
 
-            for name, conn in self.factory.users[my_previous_map].items():
-                if name != 'npcs':
-                    conn.send('roles_disappeared', names_of_roles_that_disappeared)
+        for name, conn in self.factory.users[my_previous_map].items():
+            if name == 'npcs':
+                pass
+            else:
+                conn.send('roles_disappeared', names_of_roles_that_disappeared)
 
-        # can't
-        else:
-            self.send('target_too_far')
+    # can't
+    else:
+        self.send('target_too_far')
+
+def _try_to_fight_with_npc(self, message_obj):
+    # gets
+    enemy_name = message_obj[0]
+    enemy_role = self.factory.users[self.my_role.map]['npcs'].npcs[enemy_name]
+    # enemy_conn = self.factory.users[self.my_role.map]['npcs']
+    my_role = self.my_role
+
+    # sets
+    my_role.enemy_name = enemy_name
+    enemy_role.enemy_name = my_role.name
+
+    # can fight
+    if 1:
+        '''both enter battle map'''
+        print('can go battle!')
+
+        # store my previous map
+        my_previous_map = self.my_role.map
+
+        # change my map and enemy map
+        my_name = self.my_role.name
+        battle_map_name = 'battle_' + my_name
+        self.my_role.map = battle_map_name
+        enemy_role.map = battle_map_name
+
+        self.my_role.your_turn_in_battle = True
+        enemy_role.your_turn_in_battle = False
+
+        # change users dict state
+        del self.factory.users[my_previous_map][my_name]
+        # del self.factory.users[my_previous_map]['npcs'].npcs[enemy_role.name]
+
+        self.factory.users[battle_map_name] = {}
+        self.factory.users[battle_map_name][my_name] = self
+        self.factory.users[battle_map_name][enemy_role.name] = enemy_role
+
+        # send roles_in_new_map to my client and enemy client
+        roles_in_new_map = {}
+
+        roles_in_new_map[my_name] = my_role
+        roles_in_new_map[enemy_name] = enemy_role
+
+        # init all ships positions in battle
+        for role in roles_in_new_map.values():
+            # my role
+            if role.name == my_name:
+                y_index = 1
+                for ship in role.ships:
+                    ship.x = 1
+                    ship.y = y_index
+                    ship.direction = role.direction
+                    y_index += 1
+            # enemy role
+            else:
+                y_index = 1
+                for ship in role.ships:
+                    ship.x = 6
+                    ship.y = y_index
+                    ship.direction = role.direction
+                    y_index += 1
+
+        self.send('roles_in_battle_map', roles_in_new_map)
+        # enemy_conn.send('roles_in_battle_map', roles_in_new_map)
+
+        # send disappear message to other roles in my previous map
+        names_of_roles_that_disappeared = []
+        names_of_roles_that_disappeared.append(self.my_role.name)
+        names_of_roles_that_disappeared.append(enemy_role.name)
+
+        for name, conn in self.factory.users[my_previous_map].items():
+            if name != 'npcs':
+                conn.send('roles_disappeared', names_of_roles_that_disappeared)
+
+    # can't
+    else:
+        self.send('target_too_far')
+
 
 def exit_battle(self, message_obj):
     role.exit_battle(self, message_obj)
