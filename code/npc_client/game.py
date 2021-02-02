@@ -15,9 +15,6 @@ from role import Role, Ship, Mate
 import client_packet_received
 from hashes.look_up_tables import id_2_building_type
 
-def test():
-    print('testing')
-
 
 class Game():
     def __init__(self, ac, psw):

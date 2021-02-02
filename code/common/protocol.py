@@ -86,13 +86,3 @@ class MyProtocol:
         bytes_pck_length = bytearray(len(self.bs).to_bytes(4, byteorder='little'))
         return bytes_pck_length + self.bs
 
-
-class Person:
-    def __init__(self, name, item):
-        self.name = name
-        self.item = item
-
-class Item:
-    def __init__(self, count):
-        self.count = count
-

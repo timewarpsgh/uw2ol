@@ -4,6 +4,7 @@ by function
         sea npc ON
 
             refactor code(npc battle) ON
+            refactor role.exit_battle
 
 
             npc route 1 ON

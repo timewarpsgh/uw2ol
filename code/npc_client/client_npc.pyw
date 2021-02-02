@@ -182,19 +182,10 @@ class ClientProcess(Process):
     def run(self):
         main(self.ac, self.psw)
 
-# not used
-class ClientThread (threading.Thread):
-    def __init__(self, ac, psw):
-        threading.Thread.__init__(self)
-        self.ac = ac
-        self.psw = psw
-
-    def run(self):
-        main(self.ac, self.psw)
 
 if __name__ == "__main__":
     # start clients
-    for i in range(2, 12):
+    for i in range(2, 4):
         p = ClientProcess(str(i), str(i))
         p.start()
         time.sleep(1)
