@@ -64,7 +64,7 @@ class Role:
         if self.name.isdigit():
             self.point_in_path_id = 0
             self.out_ward = True
-            self.start_port_id = random.choice([30, 1])
+            self.start_port_id = random.choice(list(hash_paths.keys()))
             self.end_port_id = None
 
         # assistants

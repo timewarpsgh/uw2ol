@@ -2,24 +2,40 @@
 by function
     travel
         sea npc ON
-            npc chooses random path at point 0 OK
-            a few more paths OK
-            fight npc in path OK
+
+            local routes from OK
+                amsterdam
+                seville
+                genoa
+                istanbul
+
+            longer routes from
+                london
+                    america
+                    gossip with npc (where r u going?)
+                    west africa
+                    east africa
+                    india
+                    asia
 
 
-            npc routes from lisbon OK
-            port tile collision for player ON
+                amsterdam
 
-            more npc routes from lisbon OK
+                lisbon
+                seville
 
-            port npcs positions wrong (lisbon)
+                genoa
+                istanbul
 
-            load world map from pickle
+
+
+
+
 
             broadcast to nearby players only
 
             can't sail from Belgrade
-
+            port npcs positions wrong (lisbon)
     trade
 
 
