@@ -62,13 +62,13 @@ if __name__ == '__main__':
 
     # find
     print('~~~~~~~~~ from seville')
-    for i in range(1, 28):
-        finder.find_path(dict['seville'], i)
+    for i in range(43, 58):
+        finder.find_path(dict['london'], i)
 
-    print('~~~~~~~~~ from genoa')
-    for i in range(1, 28):
-        finder.find_path(dict['genoa'], i)
-
-    print('~~~~~~~~~ from istanbul')
-    for i in range(1, 28):
-        finder.find_path(dict['istanbul'], i)
+    # print('~~~~~~~~~ from genoa')
+    # for i in range(1, 28):
+    #     finder.find_path(dict['genoa'], i)
+    #
+    # print('~~~~~~~~~ from istanbul')
+    # for i in range(1, 28):
+    #     finder.find_path(dict['istanbul'], i)

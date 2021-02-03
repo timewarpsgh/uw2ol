@@ -373,6 +373,7 @@ class MenuClickHandler():
         self.port = MenuClickHandlerForPort(game)  # has a few buildings
         self.battle = MenuClickHandlerForBattle(game)
         self.login = MenuClickHandlerForLogin(game)
+        self.target = MenuClickHandlerForTarget(game)
 
 class MenuClickHandlerForShips():
     def __init__(self, game):
@@ -1097,6 +1098,24 @@ class MenuClickHandlerForPort():
         }
         self.game.button_click_handler.make_menu(dict)
 
+class MenuClickHandlerForTarget():
+    def __init__(self, game):
+        self.game = game
+
+    def view_fleet(self):
+        self.game.button_click_handler.menu_click_handler.ships.fleet_info(True)
+
+    def view_ships(self):
+        self.game.button_click_handler.menu_click_handler.ships.ship_info(True)
+
+    def gossip(self):
+        enemy_name = self.game.my_role.enemy_name
+        enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
+        target_mate = enemy_role.mates[0]
+        destination_port = Port((enemy_role.end_port_id - 1))
+        message = f"I'm captain {target_mate.name} from {target_mate.nation}. We are heading to {destination_port.name}."
+        mate_speak(self.game, target_mate, message)
+
 
 class Harbor():
     """menu options under building port"""
@@ -1805,10 +1824,11 @@ def escape_thrice(game):
     reactor.callLater(0.2, handle_pygame_event.escape, game, '')
 
 def target_clicked(self):
-    # self is game
+    # self is game [self.button_click_handler.menu_click_handler.ships.fleet_info, True],
     dict = {
-        'View Fleet': [self.button_click_handler.menu_click_handler.ships.fleet_info, True],
-        'View Ships': [self.button_click_handler.menu_click_handler.ships.ship_info, True],
+        'View Fleet': self.button_click_handler.menu_click_handler.target.view_fleet,
+        'View Ships': self.button_click_handler.menu_click_handler.target.view_ships,
+        'Gossip': self.button_click_handler.menu_click_handler.target.gossip,
     }
     self.button_click_handler.make_menu(dict)
 

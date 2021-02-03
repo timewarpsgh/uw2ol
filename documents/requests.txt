@@ -3,15 +3,9 @@ by function
     travel
         sea npc ON
 
-            local routes from OK
-                amsterdam
-                seville
-                genoa
-                istanbul
-
             longer routes from
                 london
-                    america
+                    america ON
                     gossip with npc (where r u going?)
                     west africa
                     east africa
