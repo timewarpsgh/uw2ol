@@ -8,8 +8,8 @@ by function
 
             npc route 1 OK
 
-            npc route collison  ON
-                remake map_0_1_matrix ON
+            npc route collison  OK
+                remake map_0_1_matrix OK
 
 
             npc routes

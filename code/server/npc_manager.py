@@ -26,7 +26,7 @@ class NpcManager:
         for name, npc in self.npcs.items():
             # at sea
             if npc.map == 'sea':
-                path = Path(30, 33)
+                path = Path(30, 31)
                 self._let_one_npc_move_along_path(npc, path)
             # in battle
             else:

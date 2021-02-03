@@ -1,5 +1,6 @@
 from map_maker import MapMaker
 import numpy
+import pickle
 
 # add relative directory to python_path
 import sys, os
@@ -16,11 +17,10 @@ matrix = map_maker.world_map_piddle
 matrix = matrix.astype('int')
 
 size = 5
-x = 900
-y = 262
+x = 960
+y = 244
 
 print(matrix[(y-size):(y+size), (x-size):(x+size)])
-
 
 
 list_2d = matrix.tolist()
@@ -57,5 +57,7 @@ for collumn in range(0,c.WORLD_MAP_COLUMNS):
 
 new_matrix = numpy.array(list_2d)
 
-print(new_matrix[(y-size):(y+size), (x-size):(x+size)])
+pickle.dump(new_matrix, open('map_0_1_matrix', "wb"))
+
+# print(new_matrix[(y-size):(y+size), (x-size):(x+size)])
 
