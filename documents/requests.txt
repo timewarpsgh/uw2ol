@@ -9,7 +9,9 @@ by function
             npc route 1 OK
 
             npc route collison  OK
-                remake map_0_1_matrix OK
+
+            npc move back along path OK
+
 
 
             npc routes

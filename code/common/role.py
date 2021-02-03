@@ -63,6 +63,7 @@ class Role:
         # point in path id (only for npc)
         if self.name.isdigit():
             self.point_in_path_id = 0
+            self.out_ward = True
 
         # assistants
         self.accountant = None

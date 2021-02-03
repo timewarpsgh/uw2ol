@@ -26,7 +26,7 @@ class NpcManager:
         for name, npc in self.npcs.items():
             # at sea
             if npc.map == 'sea':
-                path = Path(30, 31)
+                path = Path(30, 33)
                 self._let_one_npc_move_along_path(npc, path)
             # in battle
             else:
@@ -38,15 +38,30 @@ class NpcManager:
         self._npc_change_and_send('move', [random_direction, npc.name], npc.map)
 
     def _let_one_npc_move_along_path(self, npc, path):
-        npc.point_in_path_id += 1
-        next_point = path.list_of_points[npc.point_in_path_id]
+        # decide out or back
+        if npc.point_in_path_id == 0:
+            npc.out_ward = True
+        elif (npc.point_in_path_id + 1) == len(path.list_of_points):
+            npc.out_ward = False
 
+        # change index
+        if npc.out_ward:
+            npc.point_in_path_id += 1
+        else:
+            npc.point_in_path_id -= 1
+
+        # get next point and move to it
+        next_point = path.list_of_points[npc.point_in_path_id]
         next_x = next_point[0]
         next_y = next_point[1]
+        self._move_to_next_point(npc, next_x, next_y)
+
+    def _move_to_next_point(self, npc, next_x, next_y):
+        ## get now position
         now_x = int(npc.x / c.PIXELS_COVERED_EACH_MOVE)
         now_y = int(npc.y / c.PIXELS_COVERED_EACH_MOVE)
 
-        ##### get direction
+        ## get direction
         direction = None
         # up
         if next_y < now_y and next_x == now_x:
