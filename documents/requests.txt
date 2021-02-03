@@ -16,7 +16,11 @@ by function
 
             a few more paths OK
 
-            fight npc in path ON
+            fight npc in path OK
+                enter OK
+                exit OK
+                win OK
+                lose OK
 
 
             npc routes

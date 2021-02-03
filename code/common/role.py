@@ -664,8 +664,14 @@ class Role:
                 if self.is_npc() and not enemy_role.is_npc():
                     if self.is_in_server():
                         new_role = init_one_default_npc(self.name)
+
                         new_role.x = self.x
                         new_role.y = self.y
+                        new_role.point_in_path_id = self.point_in_path_id
+                        new_role.out_ward = self.out_ward
+                        new_role.start_port_id = self.start_port_id
+                        new_role.end_port_id = self.end_port_id
+
                         Role.users['sea']['npcs'].npcs[self.name] = new_role
 
                 deferred.callback(False)
