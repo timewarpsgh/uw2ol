@@ -84,6 +84,9 @@ ITEMS_IMAGE_SIZE = 49
 # map data
 WALKABLE_TILES = set(range(1, 40))
 SAILABLE_TILES = set(range(1, 31))
+for i in range(117, 125):
+    SAILABLE_TILES.add(i)
+
 WALKABLE_TILES_FOR_ASIA = set(range(1, 47))
 PARTIAL_WORLD_MAP_TILES = 73
 PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION = 36
@@ -119,3 +122,7 @@ AGENT_BUILDING_ID = 1
 
 # special ids
 TAX_FREE_PERMIT_ID = 10
+
+
+if __name__ == '__main__':
+    print(SAILABLE_TILES)

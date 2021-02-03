@@ -61,7 +61,9 @@ if __name__ == '__main__':
     }
 
     # find
-    for i in range(4, 9):
+    for i in range(2, 4):
+        finder.find_path(dict['lisbon'], i)
+    for i in range(9, 28):
         finder.find_path(dict['lisbon'], i)
 
 

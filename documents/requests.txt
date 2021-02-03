@@ -8,12 +8,17 @@ by function
 
 
             npc routes from lisbon OK
+            port tile collision for player ON
+
+            more npc routes from lisbon OK
 
             port npcs positions wrong (lisbon)
 
             load world map from pickle
 
             broadcast to nearby players only
+
+            can't sail from Belgrade
 
     trade
 
