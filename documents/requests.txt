@@ -9,6 +9,8 @@ by function
             npc route 1 ON
             continue _let_one_npc_move_along_path ON
 
+            collision adjustment
+
             npc routes
 
             load world map from pickle

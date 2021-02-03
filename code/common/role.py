@@ -386,30 +386,30 @@ class Role:
 
             # basic 4 directions
             if direction == 'up':
-                if int(piddle[x - 1, y]) in c.SAILABLE_TILES:
+                if int(piddle[x - 1, y]) in c.SAILABLE_TILES and int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'down':
-                if int(piddle[x + 2, y]) in c.SAILABLE_TILES:
+                if int(piddle[x + 2, y]) in c.SAILABLE_TILES: #int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y + 2]) in c.SAILABLE_TILES and int(piddle[x, y + 2]) in c.SAILABLE_TILES
                     return True
             elif direction == 'left':
-                if int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
+                if int(piddle[x, y - 1]) in c.SAILABLE_TILES and int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'right':
-                if int(piddle[x + 1, y + 2]) in c.SAILABLE_TILES:
+                if int(piddle[x, y + 2]) in c.SAILABLE_TILES and int(piddle[x + 1, y + 2]) in c.SAILABLE_TILES:
                     return True
 
             # additional 4 directions
             elif direction == 'ne':
-                if int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES:
+                if int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y + 2]) in c.SAILABLE_TILES and int(piddle[x, y + 2]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'nw':
-                if int(piddle[x - 1, y - 1]) in c.SAILABLE_TILES:
+                if int(piddle[x, y - 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y - 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'se':
-                if int(piddle[x + 1, y + 1]) in c.SAILABLE_TILES:
+                if int(piddle[x + 1, y + 2]) in c.SAILABLE_TILES and int(piddle[x + 2, y + 2]) in c.SAILABLE_TILES and int(piddle[x + 2, y + 1]) in c.SAILABLE_TILES:
                     return True
             elif direction == 'sw':
-                if int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
+                if int(piddle[x + 2, y]) in c.SAILABLE_TILES and int(piddle[x + 2, y - 1]) in c.SAILABLE_TILES and int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
                     return True
 
             # ret

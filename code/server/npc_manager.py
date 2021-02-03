@@ -4,8 +4,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import random
 
-from role import Role, Ship, Mate, init_one_default_npc
-
+from role import Role, Ship, Mate, init_one_default_npc, Path
+import constants as c
 
 class NpcManager:
     def __init__(self, users):
@@ -14,7 +14,7 @@ class NpcManager:
 
     def _init_npcs(self):
         npcs = {}
-        npc_count = 10  # max is 150 atm due to max protocol size
+        npc_count = 2  # max is 150 atm due to max protocol size
         for i in range(1, (npc_count + 1)):
             # store in dict
             npcs[str(i)] = init_one_default_npc(str(i))
@@ -26,13 +26,16 @@ class NpcManager:
         for name, npc in self.npcs.items():
             # at sea
             if npc.map == 'sea':
-                random_direction = random.choice(['up', 'down', 'right', 'left'])
-                self._npc_change_and_send('move', [random_direction, name], npc.map)
-
+                path = Path(30, 33)
+                self._let_one_npc_move_along_path(npc, path)
             # in battle
             else:
                 if npc.your_turn_in_battle:
                     self._npc_change_and_send('all_ships_operate', [name], npc.map)
+
+    def _random_move(self, npc):
+        random_direction = random.choice(['up', 'down', 'right', 'left'])
+        self._npc_change_and_send('move', [random_direction, npc.name], npc.map)
 
     def _let_one_npc_move_along_path(self, npc, path):
         npc.point_in_path_id += 1
@@ -40,9 +43,10 @@ class NpcManager:
 
         next_x = next_point[0]
         next_y = next_point[1]
-        now_x = npc.x
-        now_y = npc.y
+        now_x = int(npc.x / c.PIXELS_COVERED_EACH_MOVE)
+        now_y = int(npc.y / c.PIXELS_COVERED_EACH_MOVE)
 
+        ##### get direction
         direction = None
         # up
         if next_y < now_y and next_x == now_x:
@@ -60,7 +64,20 @@ class NpcManager:
         elif next_y == now_y and next_x > now_x:
             direction = 'right'
 
-        # other 4 directions
+        # ne
+        elif next_y < now_y and next_x > now_x:
+            direction = 'ne'
+        # nw
+        elif next_y < now_y and next_x < now_x:
+            direction = 'nw'
+        # se
+        elif next_y > now_y and next_x > now_x:
+            direction = 'se'
+        # sw
+        elif next_y > now_y and next_x < now_x:
+            direction = 'sw'
+
+        self._npc_change_and_send('move', [direction, npc.name], npc.map)
 
     def _npc_change_and_send(self, protocol_name, params_list, broadcast_map):
         """change local state and send cmd to clients"""
