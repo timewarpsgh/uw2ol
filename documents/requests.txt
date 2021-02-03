@@ -6,10 +6,11 @@ by function
             refactor role.exit_battle OK
             refactor change_map OK
 
-            npc route 1 ON
-            continue _let_one_npc_move_along_path ON
+            npc route 1 OK
 
-            collision adjustment
+            npc route collison  ON
+                remake map_0_1_matrix ON
+
 
             npc routes
 
