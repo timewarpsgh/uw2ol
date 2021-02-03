@@ -15,7 +15,7 @@ from hashes.hash_region_to_ships_available import hash_region_to_ships_available
 from hashes.hash_markets_price_details import hash_markets_price_details
 from hashes.hash_special_goods import hash_special_goods
 from hashes.hash_paths import hash_paths
-
+from hashes.look_up_tables import capital_2_port_id
 
 # add relative directory to python_path
 import sys, os
@@ -1857,10 +1857,6 @@ class Path:
 def init_one_default_npc(name):
     # now role
     npc = Role(14400, 4208, name)
-    port = Port((npc.start_port_id - 1))
-    npc.x = port.x
-    npc.y = port.y
-    npc.map = 'sea'
 
     # add mate and ship
     mate0 = Mate(1)
@@ -1876,6 +1872,33 @@ def init_one_default_npc(name):
     npc.ships.append(ship1)
     mate1.set_as_captain_of(ship1)
     npc.mates.append(mate1)
+
+    # diff based on nation
+    if int(name) <= (c.FLEET_COUNT_PER_NATION * 1):
+        npc.mates[0].nation = 'England'
+        npc.start_port_id = capital_2_port_id['london']
+    elif int(name) <= (c.FLEET_COUNT_PER_NATION * 2):
+        npc.mates[0].nation = 'Holland'
+        npc.start_port_id = capital_2_port_id['amsterdam']
+    elif int(name) <= (c.FLEET_COUNT_PER_NATION * 3):
+        npc.mates[0].nation = 'Portugal'
+        npc.start_port_id = capital_2_port_id['lisbon']
+    elif int(name) <= (c.FLEET_COUNT_PER_NATION * 4):
+        npc.mates[0].nation = 'Spain'
+        npc.start_port_id = capital_2_port_id['seville']
+    elif int(name) <= (c.FLEET_COUNT_PER_NATION * 5):
+        npc.mates[0].nation = 'Italy'
+        npc.start_port_id = capital_2_port_id['genoa']
+    elif int(name) <= (c.FLEET_COUNT_PER_NATION * 6):
+        npc.mates[0].nation = 'Turkey'
+        npc.start_port_id = capital_2_port_id['istanbul']
+
+
+    port = Port((npc.start_port_id - 1))
+    npc.x = port.x
+    npc.y = port.y
+    npc.map = 'sea'
+
 
     # ret
     return npc

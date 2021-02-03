@@ -12,3 +12,14 @@ id_2_building_type = {
     11: 'church',
     12: 'fortune_house',
 }
+
+capital_2_port_id = {
+    'london': 30,
+    'amsterdam': 34,
+
+    'lisbon': 1,
+    'seville': 2,
+
+    'genoa': 9,
+    'istanbul': 3,
+}

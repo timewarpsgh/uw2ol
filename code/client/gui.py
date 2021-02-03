@@ -1112,7 +1112,11 @@ class MenuClickHandlerForTarget():
         enemy_name = self.game.my_role.enemy_name
         enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
         target_mate = enemy_role.mates[0]
-        destination_port = Port((enemy_role.end_port_id - 1))
+        destination_port = None
+        if enemy_role.out_ward:
+            destination_port = Port((enemy_role.end_port_id - 1))
+        else:
+            destination_port = Port((enemy_role.start_port_id - 1))
         message = f"I'm captain {target_mate.name} from {target_mate.nation}. We are heading to {destination_port.name}."
         mate_speak(self.game, target_mate, message)
 
