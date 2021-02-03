@@ -43,7 +43,6 @@ class NpcManager:
         if npc.point_in_path_id == 0:
             # init start and end
             npc.out_ward = True
-            npc.start_port_id = 30
             npc.end_port_id = random.choice(list(hash_paths[npc.start_port_id].keys()))
             path = Path(npc.start_port_id, npc.end_port_id)
         else:

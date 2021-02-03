@@ -49,7 +49,7 @@ class Role:
         self.person_frame = -1
         self.name = name
         self.enemy_name = None
-        self.map = '29'
+        self.map = random.choice(['29', '0'])
         self.in_building_type = None
         self.battle_timer = 0
         self.your_turn_in_battle = True
@@ -64,7 +64,7 @@ class Role:
         if self.name.isdigit():
             self.point_in_path_id = 0
             self.out_ward = True
-            self.start_port_id = None
+            self.start_port_id = random.choice([30, 1])
             self.end_port_id = None
 
         # assistants
@@ -1805,6 +1805,8 @@ class Port:
         self.id = map_id + 1
         self.economy_id = hash_ports_meta_data[self.id]['economyId']
         self.name = hash_ports_meta_data[self.id]['name']
+        self.x = hash_ports_meta_data[self.id]['x'] * c.PIXELS_COVERED_EACH_MOVE
+        self.y = hash_ports_meta_data[self.id]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
     def get_available_ships(self):
         available_ships = hash_region_to_ships_available[self.economy_id]
@@ -1855,6 +1857,9 @@ class Path:
 def init_one_default_npc(name):
     # now role
     npc = Role(14400, 4208, name)
+    port = Port((npc.start_port_id - 1))
+    npc.x = port.x
+    npc.y = port.y
     npc.map = 'sea'
 
     # add mate and ship

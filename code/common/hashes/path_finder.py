@@ -46,7 +46,22 @@ class PathFinder:
 if __name__ == '__main__':
     finder = PathFinder()
 
-    for i in range(31, 34):
-        finder.find_path(30, i)
+    # med: 1-27, northern europe: 28-42, america: 43-57, west_africa: 58-66, east_africa: 67-72
+
+    # dict
+    dict = {
+        'london': 30,
+        'amsterdam': 34,
+
+        'lisbon': 1,
+        'seville': 2,
+
+        'genoa': 9,
+        'istanbul': 3,
+    }
+
+    # find
+    for i in range(4, 9):
+        finder.find_path(dict['lisbon'], i)
 
 

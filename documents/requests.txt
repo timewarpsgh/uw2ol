@@ -2,30 +2,18 @@
 by function
     travel
         sea npc ON
-            refactor code(npc battle) OK
-            refactor role.exit_battle OK
-            refactor change_map OK
-
-            npc route 1 OK
-
-            npc route collison  OK
-
-            npc move back along path OK
-
             npc chooses random path at point 0 OK
-
             a few more paths OK
-
             fight npc in path OK
-                enter OK
-                exit OK
-                win OK
-                lose OK
 
 
-            npc routes
+            npc routes from lisbon OK
+
+            port npcs positions wrong (lisbon)
 
             load world map from pickle
+
+            broadcast to nearby players only
 
     trade
 
