@@ -5,6 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import random
 
 from role import Role, Ship, Mate, init_one_default_npc, Path
+from hashes.hash_paths import hash_paths
 import constants as c
 
 class NpcManager:
@@ -14,7 +15,7 @@ class NpcManager:
 
     def _init_npcs(self):
         npcs = {}
-        npc_count = 2  # max is 150 atm due to max protocol size
+        npc_count = 5  # max is 150 atm due to max protocol size
         for i in range(1, (npc_count + 1)):
             # store in dict
             npcs[str(i)] = init_one_default_npc(str(i))
@@ -26,8 +27,7 @@ class NpcManager:
         for name, npc in self.npcs.items():
             # at sea
             if npc.map == 'sea':
-                path = Path(30, 33)
-                self._let_one_npc_move_along_path(npc, path)
+                self._let_one_npc_move_along_path(npc)
             # in battle
             else:
                 if npc.your_turn_in_battle:
@@ -37,12 +37,20 @@ class NpcManager:
         random_direction = random.choice(['up', 'down', 'right', 'left'])
         self._npc_change_and_send('move', [random_direction, npc.name], npc.map)
 
-    def _let_one_npc_move_along_path(self, npc, path):
-        # decide out or back
+    def _let_one_npc_move_along_path(self, npc):
+        # get path and direction
+        path = None
         if npc.point_in_path_id == 0:
+            # init start and end
             npc.out_ward = True
-        elif (npc.point_in_path_id + 1) == len(path.list_of_points):
-            npc.out_ward = False
+            npc.start_port_id = 30
+            npc.end_port_id = random.choice(list(hash_paths[npc.start_port_id].keys()))
+            path = Path(npc.start_port_id, npc.end_port_id)
+        else:
+            # get path from start and end ids
+            path = Path(npc.start_port_id, npc.end_port_id)
+            if (npc.point_in_path_id + 1) == len(path.list_of_points):
+                npc.out_ward = False
 
         # change index
         if npc.out_ward:
@@ -57,38 +65,28 @@ class NpcManager:
         self._move_to_next_point(npc, next_x, next_y)
 
     def _move_to_next_point(self, npc, next_x, next_y):
-        ## get now position
+        # get now position
         now_x = int(npc.x / c.PIXELS_COVERED_EACH_MOVE)
         now_y = int(npc.y / c.PIXELS_COVERED_EACH_MOVE)
 
-        ## get direction
+        # get direction
         direction = None
-        # up
+
         if next_y < now_y and next_x == now_x:
             direction = 'up'
-
-        # down
         elif next_y > now_y and next_x == now_x:
             direction = 'down'
-
-        # left
         elif next_y == now_y and next_x < now_x:
             direction = 'left'
-
-        # right
         elif next_y == now_y and next_x > now_x:
             direction = 'right'
 
-        # ne
         elif next_y < now_y and next_x > now_x:
             direction = 'ne'
-        # nw
         elif next_y < now_y and next_x < now_x:
             direction = 'nw'
-        # se
         elif next_y > now_y and next_x > now_x:
             direction = 'se'
-        # sw
         elif next_y > now_y and next_x < now_x:
             direction = 'sw'
 

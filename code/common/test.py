@@ -1,3 +1,8 @@
-for x in range(0,10):
-    for y in range(0,10):
-        pass
+dict = {
+    1:1,
+    2:2
+}
+
+keys = dict.keys()
+a = list(keys)
+print(a)

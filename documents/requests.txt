@@ -12,6 +12,9 @@ by function
 
             npc move back along path OK
 
+            npc chooses random path at point 0 OK
+
+
 
 
             npc routes

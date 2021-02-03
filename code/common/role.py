@@ -64,6 +64,8 @@ class Role:
         if self.name.isdigit():
             self.point_in_path_id = 0
             self.out_ward = True
+            self.start_port_id = None
+            self.end_port_id = None
 
         # assistants
         self.accountant = None
