@@ -37,8 +37,8 @@ class PathFinder:
         end = grid.node(end_x, end_y)
         path, runs = self.finder.find_path(start, end, grid)
 
-        print('operations:', runs, 'path length:', len(path))
-        print('from port ', str(start_port_id))
+        # print('operations:', runs, 'path length:', len(path))
+        # print('from port ', str(start_port_id))
         print(end_port_id, ': ', path, ',')
         return path
 
@@ -46,7 +46,7 @@ class PathFinder:
 if __name__ == '__main__':
     finder = PathFinder()
 
-    finder.find_path(30, 31)
-    finder.find_path(30, 32)
-    finder.find_path(30, 33)
+    for i in range(31, 34):
+        finder.find_path(30, i)
+
 

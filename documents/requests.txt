@@ -14,7 +14,9 @@ by function
 
             npc chooses random path at point 0 OK
 
+            a few more paths OK
 
+            fight npc in path ON
 
 
             npc routes
