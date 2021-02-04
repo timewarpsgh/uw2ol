@@ -1868,15 +1868,15 @@ def init_one_default_npc(name):
     npc = Role(14400, 4208, name)
 
     # add mate and ship
-    mate0 = Mate(1)
-    ship0 = Ship('Reagan', 'Frigate')
+    mate0 = Mate(int(name))
+    ship0 = Ship('0', 'Frigate')
     ship0.crew = 20
     npc.ships.append(ship0)
     mate0.set_as_captain_of(ship0)
     npc.mates.append(mate0)
 
-    mate1 = Mate(2)
-    ship1 = Ship('Reagan1', 'Frigate')
+    mate1 = Mate(int(name))
+    ship1 = Ship('1', 'Frigate')
     ship1.crew = 20
     npc.ships.append(ship1)
     mate1.set_as_captain_of(ship1)

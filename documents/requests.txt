@@ -7,8 +7,10 @@ by function
                 london
                     america OK
                     6 fleets for each nation OK
-
                     gossip with npc (where r u going?) bug OK
+                    each npc has different image OK
+
+
 
 
                     west africa
