@@ -1,3 +1,2 @@
-num = 1
-if num % 6 == 1:
-    print(1)
+for i in range(10):
+    print(i)

@@ -15,7 +15,7 @@ class NpcManager:
 
     def _init_npcs(self):
         npcs = {}
-        npc_count = 1000  # max is 150 atm due to max protocol size
+        npc_count = 10  # max is 150 atm due to max protocol size
         for i in range(1, (npc_count + 1)):
             # store in dict
             npcs[str(i)] = init_one_default_npc(str(i))

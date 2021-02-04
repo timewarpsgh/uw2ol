@@ -5,15 +5,65 @@ by function
 
             longer routes from
                 london
-                    america OK
-                    6 fleets for each nation OK
-                    gossip with npc (where r u going?) bug OK
-                    each npc has different image OK
 
-                    different types of npcs OK
+                    broadcast to nearby players only ON
+                        9 grids algorithm
 
-                    only draw nearby players OK
-                    broadcast to nearby players only
+                        ######## pVe
+                        player sees npcs
+                            one map has many grids
+                            one grid has many roles
+                            visible_grids has 9 grids
+
+                            ######## at sea
+                            at sea
+
+                                on enter sea
+                                    npcs are in grids
+
+                                    when player enters sea, put player in grid
+                                    p gets visible_grids
+                                    p gets npcs(and other ps) in visible_grids
+
+                                on leave(to port)
+                                    players are in grids
+
+                                    when player enters port, put player in grid
+                                    p gets visible_grids
+                                    p gets other players in visible_grids
+
+
+                                on move
+                                    move within center grid
+                                        pass
+                                    move across grid (8 directions)
+                                        tell server grid change
+                                            remove role from pre_grid
+                                            add role to next_grid
+                                        server tell player
+                                            new roles in new grids(3)
+                                            disappeared roles in old grids(3)
+
+                            ######## in battle
+                            in battle
+
+                        ######## pVp
+                        player sees player
+                            login
+
+                            move
+                                in my grid
+                                cross my grid
+
+                            sail
+
+                            enter port
+
+                            battle with
+
+
+
+
 
 
                     west africa
