@@ -1887,9 +1887,10 @@ def init_one_default_npc(name):
         npc.mates.append(mate0)
         mate1 = Mate(int(name))
         npc.mates.append(mate1)
-        for i in range(1, 9):
-            mate = Mate(1)
-            npc.mates.append(mate)
+
+    for i in range(1, 9):
+        mate = Mate(1)
+        npc.mates.append(mate)
 
     # test 10 ships
     for i in range(0, 10):

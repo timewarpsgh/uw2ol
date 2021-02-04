@@ -12,7 +12,9 @@ by function
 
                     different types of npcs OK
 
+                    only draw nearby players OK
                     broadcast to nearby players only
+
 
                     west africa
                     east africa

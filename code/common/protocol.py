@@ -1,7 +1,7 @@
 # 如果不理解该类的设计，请参考这篇文章：https://blog.csdn.net/qq_39687901/article/details/81541967
 
 import pickle
-
+import constants as c
 
 class MyProtocol:
     """
@@ -50,11 +50,11 @@ class MyProtocol:
     def get_obj(self):
         try:
             # get length
-            length = int.from_bytes(self.bs[:2], byteorder='little')
+            length = int.from_bytes(self.bs[:c.OBJECT_SIZE], byteorder='little')
             # get content
-            ret = self.bs[2:length + 2]
+            ret = self.bs[c.OBJECT_SIZE:length + c.OBJECT_SIZE]
             # cut bs
-            self.bs = self.bs[2 + length:]
+            self.bs = self.bs[c.OBJECT_SIZE + length:]
 
             ret = bytes(ret)
             ret = pickle.loads(ret)
@@ -75,7 +75,7 @@ class MyProtocol:
     def add_obj(self, val):
         val = pickle.dumps(val)
         bytes_val = bytearray(val)
-        bytes_length = bytearray(len(bytes_val).to_bytes(2, byteorder='little'))
+        bytes_length = bytearray(len(bytes_val).to_bytes(c.OBJECT_SIZE, byteorder='little'))
         self.bs += (bytes_length + bytes_val)
 
     # heads

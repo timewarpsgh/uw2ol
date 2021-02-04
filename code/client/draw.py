@@ -236,25 +236,30 @@ def draw_at_sea(self):
     # draw other roles
     self.other_roles_rects = {}
     for role in self.other_roles.values():
-        # image
-        direction = role.direction
-        ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction, others=True)
+        # only draw nearby ones
+        delta_x = abs(self.my_role.x - role.x)
+        delta_y = abs(self.my_role.y - role.y)
 
-        x = self.screen_surface_rect.centerx - self.my_role.x + role.x
-        y = self.screen_surface_rect.centery - self.my_role.y + role.y
+        if delta_x <= 16 * c.PIXELS_COVERED_EACH_MOVE and delta_y <= 16 * c.PIXELS_COVERED_EACH_MOVE:
+            # image
+            direction = role.direction
+            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, direction, others=True)
 
-        self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
+            x = self.screen_surface_rect.centerx - self.my_role.x + role.x
+            y = self.screen_surface_rect.centery - self.my_role.y + role.y
 
-        # set image rect
-        image_rect = pygame.Rect(x, y, c.SHIP_SIZE_IN_PIXEL, c.SHIP_SIZE_IN_PIXEL)
-        self.other_roles_rects[role.name] = image_rect
+            self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
 
-        # name
-        draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
+            # set image rect
+            image_rect = pygame.Rect(x, y, c.SHIP_SIZE_IN_PIXEL, c.SHIP_SIZE_IN_PIXEL)
+            self.other_roles_rects[role.name] = image_rect
 
-        # target sign
-        if self.my_role.enemy_name and role.name == self.my_role.enemy_name:
-            draw_text(self, '[+]', x, -30 + y, c.YELLOW)
+            # name
+            draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
+
+            # target sign
+            if self.my_role.enemy_name and role.name == self.my_role.enemy_name:
+                draw_text(self, '[+]', x, -30 + y, c.YELLOW)
 
 def ship_direction_2_rect_in_sprite_sheet(self, direction, others=False):
     ship_rect = self.images['ship_at_sea'].get_rect()
