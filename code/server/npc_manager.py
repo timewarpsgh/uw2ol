@@ -15,7 +15,7 @@ class NpcManager:
 
     def _init_npcs(self):
         npcs = {}
-        npc_count = 36  # max is 150 atm due to max protocol size
+        npc_count = 30  # max is 150 atm due to max protocol size
         for i in range(1, (npc_count + 1)):
             # store in dict
             npcs[str(i)] = init_one_default_npc(str(i))
@@ -27,7 +27,8 @@ class NpcManager:
         for name, npc in self.npcs.items():
             # at sea
             if npc.map == 'sea':
-                self._let_one_npc_move_along_path(npc)
+                self._random_move(npc)
+                # self._let_one_npc_move_along_path(npc)
             # in battle
             else:
                 if npc.your_turn_in_battle:

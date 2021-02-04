@@ -12,7 +12,7 @@ by function
 
                     different types of npcs OK
 
-
+                    broadcast to nearby players only
 
                     west africa
                     east africa
