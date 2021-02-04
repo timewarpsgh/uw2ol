@@ -10,6 +10,7 @@ by function
                     gossip with npc (where r u going?) bug OK
                     each npc has different image OK
 
+                    different types of npcs OK
 
 
 

@@ -1117,7 +1117,8 @@ class MenuClickHandlerForTarget():
             destination_port = Port((enemy_role.end_port_id - 1))
         else:
             destination_port = Port((enemy_role.start_port_id - 1))
-        message = f"I'm captain {target_mate.name} from {target_mate.nation}. We are heading to {destination_port.name}."
+        fleet_type = enemy_role.get_npc_fleet_type()
+        message = f"I'm {target_mate.name} directing a {fleet_type} fleet from {target_mate.nation}. We are heading to {destination_port.name}."
         mate_speak(self.game, target_mate, message)
 
 

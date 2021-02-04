@@ -171,6 +171,15 @@ class Role:
         else:
             return False
 
+    def get_npc_fleet_type(self):
+        fleet_sequence = int(self.name) % c.FLEET_COUNT_PER_NATION
+        if fleet_sequence == 0 or fleet_sequence == 1:
+            return 'merchant'
+        elif fleet_sequence == 2 or fleet_sequence == 3:
+            return 'convoy'
+        elif fleet_sequence == 4 or fleet_sequence == 5:
+            return 'battle'
+
     def is_enemy_npc(self):
         enemy_role = self._get_other_role_by_name(self.enemy_name)
         if enemy_role.is_npc():
@@ -1869,18 +1878,50 @@ def init_one_default_npc(name):
 
     # add mate and ship
     mate0 = Mate(int(name))
-    ship0 = Ship('0', 'Frigate')
-    ship0.crew = 20
-    npc.ships.append(ship0)
-    mate0.set_as_captain_of(ship0)
     npc.mates.append(mate0)
-
     mate1 = Mate(int(name))
-    ship1 = Ship('1', 'Frigate')
-    ship1.crew = 20
-    npc.ships.append(ship1)
-    mate1.set_as_captain_of(ship1)
     npc.mates.append(mate1)
+
+    # merchant
+    fleet_sequence = int(name) % c.FLEET_COUNT_PER_NATION
+    if fleet_sequence == 0 or fleet_sequence == 1:
+        ship0 = Ship('0', 'Nao')
+        ship0.crew = 25
+        ship0.add_cargo('Gold', 200)
+        npc.ships.append(ship0)
+        mate0.set_as_captain_of(ship0)
+
+        ship1 = Ship('1', 'Nao')
+        ship1.crew = 25
+        ship1.add_cargo('Gold', 200)
+        npc.ships.append(ship1)
+        mate1.set_as_captain_of(ship1)
+
+    # convoy
+    elif fleet_sequence == 2 or fleet_sequence == 3:
+        ship0 = Ship('0', 'Galleon')
+        ship0.crew = 200
+        npc.ships.append(ship0)
+        mate0.set_as_captain_of(ship0)
+
+        ship1 = Ship('1', 'Nao')
+        ship1.crew = 25
+        ship1.add_cargo('Gold', 200)
+        npc.ships.append(ship1)
+        mate1.set_as_captain_of(ship1)
+
+    # battle
+    elif fleet_sequence == 4 or fleet_sequence == 5:
+        ship0 = Ship('0', 'Galleon')
+        ship0.crew = 200
+        npc.ships.append(ship0)
+        mate0.set_as_captain_of(ship0)
+
+        ship1 = Ship('1', 'Galleon')
+        ship1.crew = 200
+        npc.ships.append(ship1)
+        mate1.set_as_captain_of(ship1)
+
 
     # diff based on nation
     if int(name) <= (c.FLEET_COUNT_PER_NATION * 1):

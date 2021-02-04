@@ -1,8 +1,3 @@
-dict = {
-    1:1,
-    2:2
-}
-
-keys = dict.keys()
-a = list(keys)
-print(a)
+num = 1
+if num % 6 == 1:
+    print(1)
