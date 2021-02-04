@@ -288,6 +288,15 @@ class Role:
 
         # self.move_timer.stop()
 
+    def start_moving_out(self, params):
+        """npc only"""
+        end_port_id = params[0]
+        self.out_ward = True
+        self.end_port_id = end_port_id
+
+    def start_moving_back(self, params):
+        """npc only"""
+        self.out_ward = False
 
     def move(self, params):
         direction = params[0]

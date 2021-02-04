@@ -44,13 +44,15 @@ class NpcManager:
             # init start and end
             npc.out_ward = True
             npc.end_port_id = random.choice(list(hash_paths[npc.start_port_id].keys()))
+            self._npc_change_and_send('start_moving_out', [npc.end_port_id, npc.name], npc.map)
+
             path = Path(npc.start_port_id, npc.end_port_id)
         else:
             # get path from start and end ids
             path = Path(npc.start_port_id, npc.end_port_id)
             if (npc.point_in_path_id + 1) == len(path.list_of_points):
                 npc.out_ward = False
-
+                self._npc_change_and_send('start_moving_back', [npc.name], npc.map)
         # change index
         if npc.out_ward:
             npc.point_in_path_id += 1
@@ -113,8 +115,15 @@ class NpcManager:
                     else:
                         conn.send(protocol_name, params_list)
 
-
-
+    def _npc_send_to_players(self, protocol_name, params_list, broadcast_map):
+        npc_name = params_list[-1]
+        # tell players in same map('sea')
+        if broadcast_map in self.users:
+            for name, conn in self.users[broadcast_map].items():
+                if name == 'npcs' or str(name).isdigit():
+                    pass
+                else:
+                    conn.send(protocol_name, params_list)
 if __name__ == '__main__':
     manager = NpcManager()
     print(len(manager.npcs))

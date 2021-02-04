@@ -84,8 +84,8 @@ ITEMS_IMAGE_SIZE = 49
 # map data
 WALKABLE_TILES = set(range(1, 40))
 SAILABLE_TILES = set(range(1, 31))
-for i in range(117, 125):
-    SAILABLE_TILES.add(i)
+# for i in range(117, 125):
+#     SAILABLE_TILES.add(i)
 
 WALKABLE_TILES_FOR_ASIA = set(range(1, 47))
 PARTIAL_WORLD_MAP_TILES = 73

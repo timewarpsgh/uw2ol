@@ -8,7 +8,7 @@ by function
                     america OK
                     6 fleets for each nation OK
 
-                    gossip with npc (where r u going?) bug ON
+                    gossip with npc (where r u going?) bug OK
 
 
                     west africa
