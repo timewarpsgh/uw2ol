@@ -35,6 +35,12 @@ class Map:
 
         self.total_num_of_grids = None
 
+    def is_grid_id_valid(self, grid_id):
+        if grid_id >= 0 and grid_id < self.total_num_of_grids:
+            return True
+        else:
+            return False
+
     def get_grid_by_id(self, grid_id):
         return self.grids[grid_id]
 
@@ -65,7 +71,7 @@ class Map:
         nearby_ids = []
         possible_ids = [mid_left_id, mid_id, mid_right_id, up_left_id, up_mid_id, up_right_id, bot_left_id, bot_mid_id, bot_right_id]
         for id in possible_ids:
-            if id >= 0 and id < self.total_num_of_grids:
+            if self.is_grid_id_valid(id):
                 nearby_ids.append(id)
 
         return nearby_ids
@@ -89,6 +95,73 @@ class Map:
         del dic[player.name]
 
         return dic
+
+    def _possible_grid_ids_2_real_grids(self, possible_grid_ids):
+        # get ids
+        grid_ids = []
+        for id in possible_grid_ids:
+            if self.is_grid_id_valid(id):
+                grid_ids.append(id)
+
+        # get grids
+        grids = []
+        for id in grid_ids:
+            grid = self.get_grid_by_id[id]
+            grids.append(grid)
+
+        return grids
+
+    def get_new_and_delete_grids_after_movement(self, new_grid_id, direction):
+        # up
+        if direction == 'up':
+            # new
+            new_mid_grid_id = new_grid_id - port_map.x_grid_count
+            new_left_grid_id = new_mid_grid_id - 1
+            new_right_grid_id = new_mid_grid_id + 1
+
+            possible_new_grid_ids = [new_left_grid_id, new_mid_grid_id, new_right_grid_id]
+            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
+
+            # delete
+            delete_mid_grid_id = new_grid_id + (port_map.x_grid_count * 2)
+            delete_left_grid_id = delete_mid_grid_id - 1
+            delete_right_grid_id = delete_mid_grid_id + 1
+
+            possible_delete_grid_ids = [delete_left_grid_id, delete_mid_grid_id, delete_right_grid_id]
+            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
+
+            # ret
+            return new_grids, delete_grids
+
+        # down
+        elif direction == 'down':
+            # new
+            new_mid_grid_id = new_grid_id + port_map.x_grid_count
+            new_left_grid_id = new_mid_grid_id - 1
+            new_right_grid_id = new_mid_grid_id + 1
+
+            possible_new_grid_ids = [new_left_grid_id, new_mid_grid_id, new_right_grid_id]
+            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
+
+            # delete
+            delete_mid_grid_id = new_grid_id - (port_map.x_grid_count * 2)
+            delete_left_grid_id = delete_mid_grid_id - 1
+            delete_right_grid_id = delete_mid_grid_id + 1
+
+            possible_delete_grid_ids = [delete_left_grid_id, delete_mid_grid_id, delete_right_grid_id]
+            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
+
+            # ret
+            return new_grids, delete_grids
+
+        elif direction == 'right':
+            pass
+        elif direction == 'left':
+            pass
+
+        # 4 more directions
+        elif direction == 'ne':
+            pass
 
     def add_player_conn(self, player_conn):
         role = player_conn.my_role

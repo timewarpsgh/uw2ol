@@ -64,9 +64,22 @@ def login(self, message_obj):
 
 def grid_change(self, messgage_obj):
     new_grid_id = messgage_obj[0]
+    direction = messgage_obj[1]
+
+    # change my grid
     map_id = int(self.my_role.map)
     port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
     port_map.move_player_conn_to_new_grid(self, new_grid_id)
+
+
+
+        # tell client new roles and disappeared roles
+
+
+        # tell roles in new girds someone appeared
+
+        # tell roles in delete grids someone disappeared
+
 
 def change_map(self, message_obj):
     # get now_map and target_map

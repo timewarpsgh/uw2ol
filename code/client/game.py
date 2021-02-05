@@ -231,7 +231,7 @@ class Game():
                         if now_grid_id != my_role.grid_id:
                             my_role.grid_id = now_grid_id
                             print(f"grid change to {now_grid_id}!!!!!!")
-                            self.connection.send('grid_change', [now_grid_id])
+                            self.connection.send('grid_change', [now_grid_id, my_role.direction])
 
                         my_role.speed_counter = 0
 

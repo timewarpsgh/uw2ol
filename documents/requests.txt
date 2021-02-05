@@ -55,6 +55,8 @@ by function
                             move ON
                                 in my grid OK
                                 cross my grid ON
+                                    basic OK
+                                    others see me cross grid ON
 
                             sail
 
