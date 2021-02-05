@@ -57,7 +57,7 @@ by function
                                 cross my grid ON
                                     basic OK
                                     others see me cross grid OK
-
+                                    4 additional directions OK
 
                             sail
 

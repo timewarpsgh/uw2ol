@@ -195,7 +195,100 @@ class Map:
 
         # 4 more directions
         elif direction == 'ne':
-            pass
+            # new
+            new_grid_1 = new_grid_id - self.x_grid_count - 1
+            new_grid_2 = new_grid_id - self.x_grid_count
+            new_grid_3 = new_grid_id - self.x_grid_count + 1
+            new_grid_4 = new_grid_id + 1
+            new_grid_5 = new_grid_4 + self.x_grid_count
+
+            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
+            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
+
+            # delete
+            delete_grid_1 = new_grid_id - 2
+            delete_grid_2 = delete_grid_1 + self.x_grid_count
+            delete_grid_3 = delete_grid_2 + self.x_grid_count
+            delete_grid_4 = delete_grid_3 + 1
+            delete_grid_5 = delete_grid_4 + 1
+
+            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
+            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
+
+            # ret
+            return new_grids, delete_grids
+
+        elif direction == 'nw':
+            # new
+            new_grid_1 = new_grid_id - 1 + self.x_grid_count
+            new_grid_2 = new_grid_1 - self.x_grid_count
+            new_grid_3 = new_grid_2 - self.x_grid_count
+            new_grid_4 = new_grid_3 + 1
+            new_grid_5 = new_grid_4 + 1
+
+            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
+            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
+
+            # delete
+            delete_grid_1 = new_grid_id + (2 * self.x_grid_count)
+            delete_grid_2 = delete_grid_1 + 1
+            delete_grid_3 = delete_grid_2 + 1
+            delete_grid_4 = delete_grid_3 - self.x_grid_count
+            delete_grid_5 = delete_grid_4 - self.x_grid_count
+
+            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
+            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
+
+            # ret
+            return new_grids, delete_grids
+
+        elif direction == 'se':
+            # new
+            new_grid_1 = new_grid_id - 1 + self.x_grid_count
+            new_grid_2 = new_grid_1 + 1
+            new_grid_3 = new_grid_2 + 1
+            new_grid_4 = new_grid_3 - self.x_grid_count
+            new_grid_5 = new_grid_4 - self.x_grid_count
+
+            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
+            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
+
+            # delete
+            delete_grid_1 = new_grid_id - 2
+            delete_grid_2 = delete_grid_1 - self.x_grid_count
+            delete_grid_3 = delete_grid_2 - self.x_grid_count
+            delete_grid_4 = delete_grid_3 + 1
+            delete_grid_5 = delete_grid_4 + 1
+
+            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
+            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
+
+            # ret
+            return new_grids, delete_grids
+
+        elif direction == 'sw':
+            # new
+            new_grid_1 = new_grid_id - 1 - self.x_grid_count
+            new_grid_2 = new_grid_1 + self.x_grid_count
+            new_grid_3 = new_grid_2 + self.x_grid_count
+            new_grid_4 = new_grid_3 + 1
+            new_grid_5 = new_grid_4 + 1
+
+            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
+            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
+
+            # delete
+            delete_grid_1 = new_grid_id - (2 * self.x_grid_count)
+            delete_grid_2 = delete_grid_1 + 1
+            delete_grid_3 = delete_grid_2 + 1
+            delete_grid_4 = delete_grid_3 + self.x_grid_count
+            delete_grid_5 = delete_grid_4 + self.x_grid_count
+
+            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
+            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
+
+            # ret
+            return new_grids, delete_grids
 
     def add_player_conn(self, player_conn):
         role = player_conn.my_role
