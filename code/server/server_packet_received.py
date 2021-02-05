@@ -62,6 +62,12 @@ def login(self, message_obj):
     d = threads.deferToThread(self.factory.db.login, account, password)
     d.addCallback(self.on_login_got_result)
 
+def grid_change(self, messgage_obj):
+    new_grid_id = messgage_obj[0]
+    map_id = int(self.my_role.map)
+    port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
+    port_map.move_player_conn_to_new_grid(self, new_grid_id)
+
 def change_map(self, message_obj):
     # get now_map and target_map
     now_map = self.my_role.map
@@ -347,22 +353,20 @@ def on_get_character_data_got_result(self, role):
     if role != False:
         # store role here and in users
         self.my_role = role
-        self.factory.users[role.map][role.name] = self
-        Role.users = self.factory.users
+        map_id = role.get_map_id()
+        port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
+        port_map.add_player_conn(self)
 
-        # tell other clients in same map of new role
-        for name, conn in self.factory.users[role.map].items():
-            if name != role.name:
-                conn.send('new_role', role)
+        # tell other clients nearby of new role
+        nearby_players = port_map.get_nearby_players_by_player(role)
+        for name, conn in nearby_players.items():
+            conn.send('new_role', role)
 
-        # send to client his role and other_roles
+        # send to client his role and other_roles nearby
         other_roles = []
-        for name, conn in self.factory.users[role.map].items():
-            if name == 'npcs':
-                for name, npc in conn.npcs.items():
-                    other_roles.append(npc)
-            elif name != role.name:
-                other_roles.append(conn.my_role)
+        nearby_players = port_map.get_nearby_players_by_player(role)
+        for name, conn in nearby_players.items():
+            other_roles.append(conn.my_role)
 
         self.send('your_role_data_and_others', [role, other_roles])
 

@@ -171,6 +171,14 @@ class Role:
         else:
             return False
 
+    def get_map_id(self):
+        return int(self.map)
+
+    def get_x_and_y_tile_position(self):
+        x_tile_pos = int(self.x / c.PIXELS_COVERED_EACH_MOVE)
+        y_tile_pos = int(self.y / c.PIXELS_COVERED_EACH_MOVE)
+        return x_tile_pos, y_tile_pos
+
     def get_npc_fleet_type(self):
         fleet_sequence = int(self.name) % c.FLEET_COUNT_PER_NATION
         if fleet_sequence == 0 or fleet_sequence == 1:

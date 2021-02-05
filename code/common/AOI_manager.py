@@ -1,3 +1,7 @@
+# add relative directory to python_path
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
+
 import constants as c
 
 
@@ -5,6 +9,13 @@ class Grid:
     """a grid holds a dict of roles """
     def __init__(self):
         self.roles = {}
+
+    def add(self, player_conn):
+        name = player_conn.my_role.name
+        self.roles[name] = player_conn
+
+    def remove(self, name):
+        del self.roles[name]
 
 class Map:
     """a map holds a list of grids"""
@@ -24,11 +35,79 @@ class Map:
 
         self.total_num_of_grids = None
 
+    def get_grid_by_id(self, grid_id):
+        return self.grids[grid_id]
+
     def get_grid_id_by_x_and_y_tile_position(self, x_tile_pos, y_tile_pos):
         grid_x_pos = int(x_tile_pos / self.grid_tile_count)
         grid_y_pos = int(y_tile_pos / self.grid_tile_count)
         grid_id = grid_y_pos * self.x_grid_count + grid_x_pos
         return grid_id
+
+    def get_nearby_grids_by_grid_id(self, grid_id):
+        """9 girds normaly"""
+        # mid line
+        mid_left_id = grid_id - 1
+        mid_id = grid_id
+        mid_right_id = grid_id + 1
+
+        # up line
+        up_left_id = mid_left_id - self.x_grid_count
+        up_mid_id = mid_id - self.x_grid_count
+        up_right_id = mid_right_id - self.x_grid_count
+
+        # bottom line
+        bot_left_id = mid_left_id + self.x_grid_count
+        bot_mid_id = mid_id + self.x_grid_count
+        bot_right_id = mid_right_id + self.x_grid_count
+
+        # possible ids
+        nearby_ids = []
+        possible_ids = [mid_left_id, mid_id, mid_right_id, up_left_id, up_mid_id, up_right_id, bot_left_id, bot_mid_id, bot_right_id]
+        for id in possible_ids:
+            if id >= 0 and id < self.total_num_of_grids:
+                nearby_ids.append(id)
+
+        return nearby_ids
+
+    def get_nearby_players_by_player(self, player):
+        # get nearby grid ids
+        nearby_grid_ids  = self.get_nearby_grids_by_grid_id(player.grid_id)
+
+        # get nearby grids
+        grids = []
+        for id in nearby_grid_ids:
+            grid = self.get_grid_by_id(id)
+            grids.append(grid)
+
+        # get all players in these grids
+        dic = {}
+        for grid in grids:
+            grid_dic = grid.roles
+            dic =  {**dic, **grid_dic}
+
+        del dic[player.name]
+
+        return dic
+
+    def add_player_conn(self, player_conn):
+        role = player_conn.my_role
+        x_tile_pos, y_tile_pos = role.get_x_and_y_tile_position()
+        grid_id = self.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+        grid = self.grids[grid_id]
+        grid.add(player_conn)
+        role.grid_id = grid_id
+
+    def move_player_conn_to_new_grid(self, player_conn, new_grid_id):
+        # delete from prev grid
+        player = player_conn.my_role
+        grid = self.get_grid_by_id(player.grid_id)
+        grid.remove(player.name)
+
+        # add to new grid
+        new_grid = self.get_grid_by_id(new_grid_id)
+        new_grid.add(player_conn)
+        player.grid_id = new_grid_id
 
 class PortMap(Map):
     def __init__(self):

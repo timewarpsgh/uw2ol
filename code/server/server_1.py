@@ -13,6 +13,7 @@ import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
 from npc_manager import NpcManager
+from AOI_manager import AOIManager
 
 class Echo(Protocol):
     def __init__(self, factory):
@@ -122,25 +123,13 @@ class Echo(Protocol):
         print("transport just wrote:", protocol_name, content_obj)
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
-        """send packet to all clients in same map"""
+        """send packet to nearby players"""
+        map_id = self.my_role.get_map_id()
+        port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
+        nearby_players = port_map.get_nearby_players_by_player(self.my_role)
+        for name, conn in nearby_players.items():
+            conn.send(protocol_name, content_obj)
 
-        # normal client conn
-        if self.my_role:
-            for name, conn in self.factory.users[self.my_role.map].items():
-                if name == 'npcs':
-                    pass
-                elif name != self.my_role.name and not str(name).isdigit():
-                    conn.send(protocol_name, content_obj)
-
-        # npc_manager conn
-        elif self.npcs:
-            npc_name = content_obj[-1]
-            npc_map = self.npcs[npc_name].map
-            for name, conn in self.factory.users[npc_map].items():
-                if name == 'npcs':
-                    pass
-                else:
-                    conn.send(protocol_name, content_obj)
 
     ###################### callbacks  ###########################
     ###################### need self when using deffered.addCallBack  ###########################
@@ -159,20 +148,22 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
-        # users(roles) at sea map, including players and npcs
-        self.users = {
-            'sea': {},
-        }
-        npc_manager = NpcManager(self.users)
-        self.users['sea']['npcs'] = npc_manager
+        self.aoi_manager = AOIManager()
 
-        # users(roles) in ports
-        for i in range(131):
-            self.users[str(i)] = {}
-
-        # npc control loop
-        looping_task = task.LoopingCall(npc_manager.update)
-        looping_task.start(0.5)
+        # # users(roles) at sea map, including players and npcs
+        # self.users = {
+        #     'sea': {},
+        # }
+        # npc_manager = NpcManager(self.users)
+        # self.users['sea']['npcs'] = npc_manager
+        #
+        # # users(roles) in ports
+        # for i in range(131):
+        #     self.users[str(i)] = {}
+        #
+        # # npc control loop
+        # looping_task = task.LoopingCall(npc_manager.update)
+        # looping_task.start(0.5)
 
         # db
         self.db = Database()

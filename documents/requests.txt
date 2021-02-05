@@ -49,11 +49,12 @@ by function
 
                         ######## pVp
                         player sees player
-                            login
+                            login OK
 
-                            move
-                                in my grid
-                                cross my grid
+
+                            move ON
+                                in my grid OK
+                                cross my grid ON
 
                             sail
 

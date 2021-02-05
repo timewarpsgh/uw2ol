@@ -21,6 +21,7 @@ import handle_gui_event
 import client_packet_received
 from port_npc import Dog
 
+from AOI_manager import PortMap, SeaMap
 
 from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type
@@ -82,6 +83,10 @@ class Game():
             # dynamic
         self.man = None
         self.woman = None
+
+        # port_map and sea_map only for grid change detection
+        self.port_map = PortMap()
+        self.sea_map = SeaMap()
 
     def load_assets(self):
         # maps
@@ -219,6 +224,15 @@ class Game():
                     my_role.speed_counter += 1
                     if my_role.speed_counter == my_role.speed_counter_max:
                         my_role.move([my_role.direction])
+
+                        # grid change?
+                        x_tile_pos, y_tile_pos = my_role.get_x_and_y_tile_position()
+                        now_grid_id = self.port_map.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+                        if now_grid_id != my_role.grid_id:
+                            my_role.grid_id = now_grid_id
+                            print(f"grid change to {now_grid_id}!!!!!!")
+                            self.connection.send('grid_change', [now_grid_id])
+
                         my_role.speed_counter = 0
 
                         # update sea image
