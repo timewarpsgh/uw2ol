@@ -124,9 +124,8 @@ class Echo(Protocol):
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
         """send packet to nearby players"""
-        map_id = self.my_role.get_map_id()
-        port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
-        nearby_players = port_map.get_nearby_players_by_player(self.my_role)
+        map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+        nearby_players = map.get_nearby_players_by_player(self.my_role)
         for name, conn in nearby_players.items():
             conn.send(protocol_name, content_obj)
 

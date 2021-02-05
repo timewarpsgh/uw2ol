@@ -67,12 +67,11 @@ def grid_change(self, messgage_obj):
     direction = messgage_obj[1]
 
     # change my grid
-    map_id = int(self.my_role.map)
-    port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
-    port_map.move_player_conn_to_new_grid(self, new_grid_id)
+    map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+    map.move_player_conn_to_new_grid(self, new_grid_id)
 
     # get new and delete grids
-    new_grids, delete_grids = port_map.get_new_and_delete_grids_after_movement(new_grid_id, direction)
+    new_grids, delete_grids = map.get_new_and_delete_grids_after_movement(new_grid_id, direction)
 
     # for me
 
@@ -111,10 +110,6 @@ def change_map(self, message_obj):
     now_map = self.my_role.map
     target_map = message_obj[0]
 
-    # change my map and position
-    self.my_role.map = target_map
-    print("map changed to:", self.my_role.map)
-
     # to sea
     if target_map == 'sea':
         _change_map_to_sea(self, now_map)
@@ -124,33 +119,33 @@ def change_map(self, message_obj):
         _change_map_to_port(self, target_map, message_obj)
 
     # change users() state
-    del self.factory.users[now_map][self.my_role.name]
-    self.factory.users[target_map][self.my_role.name] = self
+    prev_map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+    nearby_players_in_old_map = prev_map.get_nearby_players_by_player(self.my_role)
+
+    self.my_role.map = target_map
+    print("map changed to:", self.my_role.map)
+    next_map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+
+    prev_map.remove_player(self.my_role)
+    next_map.add_player_conn(self)
 
     # send roles_in_new_map to my client
     roles_in_new_map = {}
-    for name, conn in self.factory.users[target_map].items():
-        if name == 'npcs':
-            for npc_name, npc in self.factory.users[target_map][name].npcs.items():
-                roles_in_new_map[npc_name] = npc
-        else:
-            roles_in_new_map[name] = conn.my_role
+    nearby_players_in_new_map = next_map.get_nearby_players_by_player(self.my_role)
+    for name, conn in nearby_players_in_new_map.items():
+        roles_in_new_map[name] = conn.my_role
+
+    roles_in_new_map[self.my_role.name] = self.my_role
 
     self.send('roles_in_new_map', roles_in_new_map)
 
     # send disappear message to other roles in my previous map
-    for name, conn in self.factory.users[now_map].items():
-        if name == 'npcs':
-            pass
-        else:
-            conn.send('role_disappeared', self.my_role.name)
+    for name, conn in nearby_players_in_old_map.items():
+        conn.send('role_disappeared', self.my_role.name)
 
     # send new_role to other roles in my current map
-    for name, conn in self.factory.users[target_map].items():
-        if name == 'npcs':
-            pass
-        elif name != self.my_role.name:
-            conn.send('new_role', self.my_role)
+    for name, conn in nearby_players_in_new_map.items():
+        conn.send('new_role', self.my_role)
 
 def _change_map_to_sea(self, now_map):
     self.my_role.x = hash_ports_meta_data[int(now_map) + 1]['x'] * c.PIXELS_COVERED_EACH_MOVE
@@ -392,17 +387,17 @@ def on_get_character_data_got_result(self, role):
         # store role here and in users
         self.my_role = role
         map_id = role.get_map_id()
-        port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
-        port_map.add_player_conn(self)
+        map = self.factory.aoi_manager.get_map_by_player(role)
+        map.add_player_conn(self)
 
         # tell other clients nearby of new role
-        nearby_players = port_map.get_nearby_players_by_player(role)
+        nearby_players = map.get_nearby_players_by_player(role)
         for name, conn in nearby_players.items():
             conn.send('new_role', role)
 
         # send to client his role and other_roles nearby
         other_roles = []
-        nearby_players = port_map.get_nearby_players_by_player(role)
+        nearby_players = map.get_nearby_players_by_player(role)
         for name, conn in nearby_players.items():
             other_roles.append(conn.my_role)
 

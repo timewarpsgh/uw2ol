@@ -59,7 +59,11 @@ by function
                                     others see me cross grid OK
                                     4 additional directions OK
 
-                            sail
+                            sail OK
+
+                            sail 4 additional directions issue ON
+
+
 
                             enter port
 

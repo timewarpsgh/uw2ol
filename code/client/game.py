@@ -227,7 +227,13 @@ class Game():
 
                         # grid change?
                         x_tile_pos, y_tile_pos = my_role.get_x_and_y_tile_position()
-                        now_grid_id = self.port_map.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+
+                        now_grid_id = None
+                        if my_role.map == 'sea':
+                            now_grid_id = self.sea_map.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+                        elif my_role.is_in_port():
+                            now_grid_id = self.port_map.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+
                         if now_grid_id != my_role.grid_id:
                             my_role.grid_id = now_grid_id
                             print(f"grid change to {now_grid_id}!!!!!!")

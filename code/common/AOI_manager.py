@@ -309,6 +309,10 @@ class Map:
         new_grid.add(player_conn)
         player.grid_id = new_grid_id
 
+    def remove_player(self, player):
+        grid = self.get_grid_by_id(player.grid_id)
+        grid.remove(player.name)
+
 class PortMap(Map):
     def __init__(self):
         Map.__init__(self)
@@ -368,14 +372,22 @@ class AOIManager:
     def get_port_map_by_id(self, map_id):
         return self.ports[map_id]
 
-    def get_battle_map_player_name(self, name):
+    def get_battle_map_by_player_name(self, name):
         return self.battle_fields[name]
+
+    def get_map_by_player(self, player):
+        if player.map == 'sea':
+            return self.sea
+        elif player.is_in_port():
+            return self.get_port_map_by_id(int(player.map))
+        else:
+            return self.get_battle_map_by_player_name(player.map)
 
 if __name__ == '__main__':
     aoi_manager = AOIManager()
     sea_map = aoi_manager.get_sea_map()
     port_map = aoi_manager.get_port_map_by_id(0)
-    battle_map = aoi_manager.get_battle_map_player_name('alex')
+    battle_map = aoi_manager.get_battle_map_by_player_name('alex')
 
     print(port_map.grids[64])
 
