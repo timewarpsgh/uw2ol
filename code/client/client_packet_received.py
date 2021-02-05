@@ -113,9 +113,15 @@ def roles_in_new_map(self, message_obj):
         self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
 
 def roles_disappeared(self, message_obj):
+    """in delete grids"""
     names_of_roles_that_disappeared = message_obj
     for name in names_of_roles_that_disappeared:
         del self.other_roles[name]
+
+def roles_appeared(self, message_obj):
+    """in new grids"""
+    roles_appeared = message_obj
+    self.other_roles = {**self.other_roles, **roles_appeared}
 
 
 # enter battle responses

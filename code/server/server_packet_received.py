@@ -71,15 +71,40 @@ def grid_change(self, messgage_obj):
     port_map = self.factory.aoi_manager.get_port_map_by_id(map_id)
     port_map.move_player_conn_to_new_grid(self, new_grid_id)
 
+    # get new and delete grids
+    new_grids, delete_grids = port_map.get_new_and_delete_grids_after_movement(new_grid_id, direction)
 
+    # for me
 
-        # tell client new roles and disappeared roles
+        # tell client new roles in new grids
+    roles_appeared = {}
+    for grid in new_grids:
+        for name, conn in grid.roles.items():
+            roles_appeared[name] = conn.my_role
 
+    if roles_appeared:
+        self.send('roles_appeared', roles_appeared)
 
-        # tell roles in new girds someone appeared
+        # disappeared roles in delete grids
+    names_of_roles_that_disappeared = []
+    for grid in delete_grids:
+        for name, conn in grid.roles.items():
+            names_of_roles_that_disappeared.append(name)
+
+    if names_of_roles_that_disappeared:
+        self.send('roles_disappeared', names_of_roles_that_disappeared)
+
+    # for others
 
         # tell roles in delete grids someone disappeared
+    for grid in delete_grids:
+        for name, conn in grid.roles.items():
+            conn.send('role_disappeared', self.my_role.name)
 
+        # tell roles in new girds someone appeared
+    for grid in new_grids:
+        for name, conn in grid.roles.items():
+            conn.send('new_role', self.my_role)
 
 def change_map(self, message_obj):
     # get now_map and target_map

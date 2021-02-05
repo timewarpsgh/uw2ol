@@ -56,7 +56,8 @@ by function
                                 in my grid OK
                                 cross my grid ON
                                     basic OK
-                                    others see me cross grid ON
+                                    others see me cross grid OK
+
 
                             sail
 
