@@ -1,2 +1,2 @@
-for i in range(10):
-    print(i)
+a = 10 / 4
+print(int(a))
