@@ -121,7 +121,7 @@ AGENT_BUILDING_ID = 1
 
 # sea npcs
 FLEET_COUNT_PER_NATION = 6
-
+NATION_COUNT = 6
 
 # special ids
 TAX_FREE_PERMIT_ID = 10

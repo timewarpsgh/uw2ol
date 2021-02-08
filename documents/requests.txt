@@ -12,7 +12,7 @@ by function
                         ######## pVe
                             see OK
 
-                            move ON
+                            move OK
                                 rand OK
                                 path OK
 

@@ -1905,7 +1905,7 @@ def init_one_default_npc(name):
         npc.mates[i].set_as_captain_of(ship)
 
     # # merchant
-    # fleet_sequence = int(name) % c.FLEET_COUNT_PER_NATION
+    fleet_sequence = int(name) % c.FLEET_COUNT_PER_NATION
     # if fleet_sequence == 0 or fleet_sequence == 1:
     #     ship0 = Ship('0', 'Nao')
     #     ship0.crew = 25
@@ -1946,29 +1946,29 @@ def init_one_default_npc(name):
 
 
     # diff based on nation
-    # if int(name) <= (c.FLEET_COUNT_PER_NATION * 1):
-    #     npc.mates[0].nation = 'England'
-    #     npc.start_port_id = capital_2_port_id['london']
-    # elif int(name) <= (c.FLEET_COUNT_PER_NATION * 2):
-    #     npc.mates[0].nation = 'Holland'
-    #     npc.start_port_id = capital_2_port_id['amsterdam']
-    # elif int(name) <= (c.FLEET_COUNT_PER_NATION * 3):
-    #     npc.mates[0].nation = 'Portugal'
-    #     npc.start_port_id = capital_2_port_id['lisbon']
-    # elif int(name) <= (c.FLEET_COUNT_PER_NATION * 4):
-    #     npc.mates[0].nation = 'Spain'
-    #     npc.start_port_id = capital_2_port_id['seville']
-    # elif int(name) <= (c.FLEET_COUNT_PER_NATION * 5):
-    #     npc.mates[0].nation = 'Italy'
-    #     npc.start_port_id = capital_2_port_id['genoa']
-    # elif int(name) <= (c.FLEET_COUNT_PER_NATION * 6):
-    #     npc.mates[0].nation = 'Turkey'
-    #     npc.start_port_id = capital_2_port_id['istanbul']
-    # else:
+    nation_sequence = int(name) % c.NATION_COUNT
+    if nation_sequence == 0:
+        npc.mates[0].nation = 'England'
+        npc.start_port_id = capital_2_port_id['london']
+    elif nation_sequence == 1:
+        npc.mates[0].nation = 'Holland'
+        npc.start_port_id = capital_2_port_id['amsterdam']
+    elif nation_sequence == 2:
+        npc.mates[0].nation = 'Portugal'
+        npc.start_port_id = capital_2_port_id['lisbon']
+    elif nation_sequence == 3:
+        npc.mates[0].nation = 'Spain'
+        npc.start_port_id = capital_2_port_id['seville']
+    elif nation_sequence == 4:
+        npc.mates[0].nation = 'Italy'
+        npc.start_port_id = capital_2_port_id['genoa']
+    elif nation_sequence == 5:
+        npc.mates[0].nation = 'Turkey'
+        npc.start_port_id = capital_2_port_id['istanbul']
 
     # test all england
-    npc.mates[0].nation = 'England'
-    npc.start_port_id = capital_2_port_id['london']
+    # npc.mates[0].nation = 'England'
+    # npc.start_port_id = capital_2_port_id['london']
 
     port = Port((npc.start_port_id - 1))
     npc.x = port.x
