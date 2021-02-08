@@ -155,26 +155,14 @@ class EchoFactory(Factory):
         Role.AOI_MANAGER = self.aoi_manager
 
         # npcs
-        npc_manager = NpcManager()
+        self.npc_manager = NpcManager(self.aoi_manager)
         sea_map = self.aoi_manager.get_sea_map()
-        for name, npc in npc_manager.get_all_npcs().items():
+        for name, npc in self.npc_manager.get_all_npcs().items():
             sea_map.add_npc(npc)
 
-
-        # # users(roles) at sea map, including players and npcs
-        # self.users = {
-        #     'sea': {},
-        # }
-        # npc_manager = NpcManager(self.users)
-        # self.users['sea']['npcs'] = npc_manager
-        #
-        # # users(roles) in ports
-        # for i in range(131):
-        #     self.users[str(i)] = {}
-        #
-        # # npc control loop
-        # looping_task = task.LoopingCall(npc_manager.update)
-        # looping_task.start(0.5)
+        # npc control loop
+        looping_task = task.LoopingCall(self.npc_manager.update)
+        looping_task.start(0.5)
 
         # db
         self.db = Database()

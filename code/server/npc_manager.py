@@ -9,7 +9,8 @@ from hashes.hash_paths import hash_paths
 import constants as c
 
 class NpcManager:
-    def __init__(self):
+    def __init__(self, aoi_manager):
+        self.aoi_manager = aoi_manager
         self.npcs = self._init_npcs()
 
     def _init_npcs(self):
@@ -23,6 +24,9 @@ class NpcManager:
 
     def get_all_npcs(self):
         return self.npcs
+
+    def get_npc_by_name(self, name):
+        return self.npcs[name]
 
     def update(self):
         """called each second"""
@@ -100,9 +104,11 @@ class NpcManager:
         """change local state and send cmd to clients"""
         npc_name = params_list[-1]
 
+        npc = self.get_npc_by_name(npc_name)
+
         # local change
         try:
-            func = getattr(self.npcs[npc_name], protocol_name)
+            func = getattr(npc, protocol_name)
             func([params_list[0]])
         except:
             print('invalid input!')
@@ -111,12 +117,13 @@ class NpcManager:
         # send to players
         else:
             # tell players in same map('sea')
-            if broadcast_map in self.users:
-                for name, conn in self.users[broadcast_map].items():
-                    if name == 'npcs' or str(name).isdigit():
-                        pass
-                    else:
-                        conn.send(protocol_name, params_list)
+            npc_map = self.aoi_manager.get_map_by_player(npc)
+            nearby_players = npc_map.get_nearby_players_by_player(npc)
+            for name, conn in nearby_players.items():
+                if name.isdigit():
+                    pass
+                else:
+                    conn.send(protocol_name, params_list)
 
     def _npc_send_to_players(self, protocol_name, params_list, broadcast_map):
         npc_name = params_list[-1]

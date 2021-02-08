@@ -12,12 +12,10 @@ by function
                         ######## pVe
                             see OK
 
-                            move
-                                in my grid
-                                cross my grid
-                                    basic
-                                    others see me cross grid
-                                    4 additional directions
+                            move ON
+                                rand OK
+                                path
+
                             battle
 
 
