@@ -90,7 +90,8 @@ def logout(self, message_obj):
 # someone changed map
 def role_disappeared(self, message_obj):
     name_of_role_that_disappeared = message_obj
-    del self.other_roles[name_of_role_that_disappeared]
+    if name_of_role_that_disappeared in self.other_roles:
+        del self.other_roles[name_of_role_that_disappeared]
 
 # change map response
 def roles_in_new_map(self, message_obj):
@@ -116,7 +117,8 @@ def roles_disappeared(self, message_obj):
     """in delete grids"""
     names_of_roles_that_disappeared = message_obj
     for name in names_of_roles_that_disappeared:
-        del self.other_roles[name]
+        if name in self.other_roles:
+            del self.other_roles[name]
 
 def roles_appeared(self, message_obj):
     """in new grids"""

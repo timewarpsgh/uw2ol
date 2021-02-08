@@ -197,9 +197,9 @@ class Map:
         elif direction == 'ne':
             # new
             new_grid_1 = new_grid_id - self.x_grid_count - 1
-            new_grid_2 = new_grid_id - self.x_grid_count
-            new_grid_3 = new_grid_id - self.x_grid_count + 1
-            new_grid_4 = new_grid_id + 1
+            new_grid_2 = new_grid_1 + 1
+            new_grid_3 = new_grid_2 + 1
+            new_grid_4 = new_grid_3 + self.x_grid_count
             new_grid_5 = new_grid_4 + self.x_grid_count
 
             possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]

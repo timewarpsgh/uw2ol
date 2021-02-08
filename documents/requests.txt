@@ -61,7 +61,7 @@ by function
 
                             sail OK
 
-                            sail 4 additional directions issue ON
+                            sail 4 additional directions issue OK
 
 
 
