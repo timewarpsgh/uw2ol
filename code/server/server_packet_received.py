@@ -79,7 +79,10 @@ def grid_change(self, messgage_obj):
     roles_appeared = {}
     for grid in new_grids:
         for name, conn in grid.roles.items():
-            roles_appeared[name] = conn.my_role
+            if name.isdigit():
+                roles_appeared[name] = conn
+            else:
+                roles_appeared[name] = conn.my_role
 
     if roles_appeared:
         self.send('roles_appeared', roles_appeared)
@@ -98,12 +101,18 @@ def grid_change(self, messgage_obj):
         # tell roles in delete grids someone disappeared
     for grid in delete_grids:
         for name, conn in grid.roles.items():
-            conn.send('role_disappeared', self.my_role.name)
+            if name.isdigit():
+                pass
+            else:
+                conn.send('role_disappeared', self.my_role.name)
 
         # tell roles in new girds someone appeared
     for grid in new_grids:
         for name, conn in grid.roles.items():
-            conn.send('new_role', self.my_role)
+            if name.isdigit():
+                pass
+            else:
+                conn.send('new_role', self.my_role)
 
 def change_map(self, message_obj):
     # get now_map and target_map
@@ -133,7 +142,10 @@ def change_map(self, message_obj):
     roles_in_new_map = {}
     nearby_players_in_new_map = next_map.get_nearby_players_by_player(self.my_role)
     for name, conn in nearby_players_in_new_map.items():
-        roles_in_new_map[name] = conn.my_role
+        if name.isdigit():
+            roles_in_new_map[name] = conn
+        else:
+            roles_in_new_map[name] = conn.my_role
 
     roles_in_new_map[self.my_role.name] = self.my_role
 
@@ -141,11 +153,17 @@ def change_map(self, message_obj):
 
     # send disappear message to other roles in my previous map
     for name, conn in nearby_players_in_old_map.items():
-        conn.send('role_disappeared', self.my_role.name)
+        if name.isdigit():
+            pass
+        else:
+            conn.send('role_disappeared', self.my_role.name)
 
     # send new_role to other roles in my current map
     for name, conn in nearby_players_in_new_map.items():
-        conn.send('new_role', self.my_role)
+        if name.isdigit():
+            pass
+        else:
+            conn.send('new_role', self.my_role)
 
 def _change_map_to_sea(self, now_map):
     self.my_role.x = hash_ports_meta_data[int(now_map) + 1]['x'] * c.PIXELS_COVERED_EACH_MOVE

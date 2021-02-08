@@ -17,6 +17,12 @@ class Grid:
     def remove(self, name):
         del self.roles[name]
 
+    def add_npc(self, npc):
+        self.roles[npc.name] = npc
+
+    def remove_npc(self, npc):
+        del self.roles[npc.name]
+
 class Map:
     """a map holds a list of grids"""
     def __init__(self):
@@ -312,6 +318,13 @@ class Map:
     def remove_player(self, player):
         grid = self.get_grid_by_id(player.grid_id)
         grid.remove(player.name)
+
+    def add_npc(self, npc):
+        x_tile_pos, y_tile_pos = npc.get_x_and_y_tile_position()
+        grid_id = self.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+        grid = self.grids[grid_id]
+        grid.add_npc(npc)
+        npc.grid_id = grid_id
 
 class PortMap(Map):
     def __init__(self):

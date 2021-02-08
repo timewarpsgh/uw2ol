@@ -127,7 +127,10 @@ class Echo(Protocol):
         map = self.factory.aoi_manager.get_map_by_player(self.my_role)
         nearby_players = map.get_nearby_players_by_player(self.my_role)
         for name, conn in nearby_players.items():
-            conn.send(protocol_name, content_obj)
+            if name.isdigit():
+                pass
+            else:
+                conn.send(protocol_name, content_obj)
 
 
     ###################### callbacks  ###########################
@@ -147,8 +150,16 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
+        # aoi
         self.aoi_manager = AOIManager()
         Role.AOI_MANAGER = self.aoi_manager
+
+        # npcs
+        npc_manager = NpcManager()
+        sea_map = self.aoi_manager.get_sea_map()
+        for name, npc in npc_manager.get_all_npcs().items():
+            sea_map.add_npc(npc)
+
 
         # # users(roles) at sea map, including players and npcs
         # self.users = {

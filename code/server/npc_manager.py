@@ -9,9 +9,8 @@ from hashes.hash_paths import hash_paths
 import constants as c
 
 class NpcManager:
-    def __init__(self, users):
+    def __init__(self):
         self.npcs = self._init_npcs()
-        self.users = users
 
     def _init_npcs(self):
         npcs = {}
@@ -21,6 +20,9 @@ class NpcManager:
             npcs[str(i)] = init_one_default_npc(str(i))
 
         return npcs
+
+    def get_all_npcs(self):
+        return self.npcs
 
     def update(self):
         """called each second"""
