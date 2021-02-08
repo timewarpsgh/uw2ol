@@ -148,6 +148,7 @@ class Echo(Protocol):
 class EchoFactory(Factory):
     def __init__(self):
         self.aoi_manager = AOIManager()
+        Role.AOI_MANAGER = self.aoi_manager
 
         # # users(roles) at sea map, including players and npcs
         # self.users = {

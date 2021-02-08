@@ -65,7 +65,7 @@ by function
                             battle ON
                                 enter OK
                                 exit OK
-                                all ships operate ON
+                                all ships operate OK
 
 
 

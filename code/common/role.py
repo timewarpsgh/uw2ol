@@ -31,7 +31,7 @@ class Role:
     """
 
     # in server
-    users = None
+    AOI_MANAGER = None
 
     # in client
     GAME = None
@@ -129,7 +129,9 @@ class Role:
 
             # player
             else:
-                target_role = Role.users[self.map][name].my_role
+                my_map = Role.AOI_MANAGER.get_map_by_player(self)
+                nearby_players = my_map.get_nearby_players_by_player(self)
+                target_role = nearby_players[name].my_role
                 return target_role
 
     def is_in_client_and_self(self):

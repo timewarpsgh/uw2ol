@@ -42,8 +42,8 @@ class Echo(Protocol):
         self.dataBuffer = bytes()
 
         print('connected')
-        # d = get_user_input()
-        # d.addCallback(self.send_and_get_next_input)
+        d = get_user_input()
+        d.addCallback(self.send_and_get_next_input)
 
     def send_and_get_next_input(self, user_input):
         # parse user input
@@ -185,9 +185,10 @@ class ClientProcess(Process):
 
 if __name__ == "__main__":
     # start clients
-    for i in range(2, 3):
-        p = ClientProcess(str(i), str(i))
-        p.start()
-        time.sleep(1)
+    # for i in range(2, 3):
+    #     p = ClientProcess(str(i), str(i))
+    #     p.start()
+    #     time.sleep(1)
 
-
+    # start one client
+    main('2', '2')

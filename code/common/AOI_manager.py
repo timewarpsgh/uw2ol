@@ -354,6 +354,12 @@ class BattleMap(Map):
     def add_player_conn(self, player_conn):
         self.grids[0].add(player_conn)
 
+    def get_nearby_players_by_player(self, player):
+        dic = self.grids[0].roles
+        # print(dic)
+        # del dic[player.name]
+        return dic
+
     def get_all_players_inside(self):
         return self.grids[0].roles
 
