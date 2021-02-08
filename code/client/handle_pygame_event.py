@@ -148,7 +148,9 @@ def other_keys_down(self, event):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
 
     elif event.key == ord('e'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
+        if self.my_role.is_at_sea():
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
+
     elif event.key == ord('q'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
     elif event.key == ord('z'):

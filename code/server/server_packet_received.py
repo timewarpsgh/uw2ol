@@ -187,18 +187,21 @@ def _change_map_to_port(self, target_map, message_obj):
 def try_to_fight_with(self, message_obj):
     """enter battle with someone"""
     # if target is player
-    if message_obj[0] in self.factory.users[self.my_role.map]:
-        _try_to_fight_with_player(self, message_obj)
+    # if message_obj[0] in self.factory.users[self.my_role.map]:
+    _try_to_fight_with_player(self, message_obj)
     # if target is npc
-    else:
-        _try_to_fight_with_npc(self, message_obj)
+    # else:
+    #     _try_to_fight_with_npc(self, message_obj)
 
 def _try_to_fight_with_player(self, message_obj):
     # gets
     enemy_name = message_obj[0]
-    enemy_conn = self.factory.users[self.my_role.map][enemy_name]
+    my_map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+    nearby_players = my_map.get_nearby_players_by_player(self.my_role)
+    enemy_conn = nearby_players[enemy_name]
     enemy_role = enemy_conn.my_role
     my_role = self.my_role
+    enemys_nearby_players = my_map.get_nearby_players_by_player(enemy_role)
 
     # sets
     my_role.enemy_name = enemy_name
@@ -221,17 +224,18 @@ def _try_to_fight_with_player(self, message_obj):
         self.my_role.your_turn_in_battle = True
         enemy_role.your_turn_in_battle = False
 
-        # change users dict state
-        del self.factory.users[my_previous_map][my_name]
-        del self.factory.users[my_previous_map][enemy_role.name]
+        # change map states
+        enemy_map = my_map
+        my_map.remove_player(self.my_role)
+        enemy_map.remove_player(enemy_role)
 
-        self.factory.users[battle_map_name] = {}
-        self.factory.users[battle_map_name][my_name] = self
-        self.factory.users[battle_map_name][enemy_role.name] = enemy_conn
+        battle_map = self.factory.aoi_manager.create_battle_map_by_name(battle_map_name)
+        battle_map.add_player_conn(self)
+        battle_map.add_player_conn(enemy_conn)
 
         # send roles_in_new_map to my client and enemy client
         roles_in_new_map = {}
-        for name, conn in self.factory.users[battle_map_name].items():
+        for name, conn in battle_map.get_all_players_inside().items():
             roles_in_new_map[name] = conn.my_role
 
         # init all ships positions in battle
@@ -257,15 +261,13 @@ def _try_to_fight_with_player(self, message_obj):
         enemy_conn.send('roles_in_battle_map', roles_in_new_map)
 
         # send disappear message to other roles in my previous map
-        names_of_roles_that_disappeared = []
-        names_of_roles_that_disappeared.append(self.my_role.name)
-        names_of_roles_that_disappeared.append(enemy_role.name)
+        del nearby_players[enemy_name]
+        for name, conn in nearby_players.items():
+            conn.send('role_disappeared', self.my_role.name)
 
-        for name, conn in self.factory.users[my_previous_map].items():
-            if name == 'npcs':
-                pass
-            else:
-                conn.send('roles_disappeared', names_of_roles_that_disappeared)
+        del enemys_nearby_players[self.my_role.name]
+        for name, conn in enemys_nearby_players.items():
+                conn.send('role_disappeared', enemy_name)
 
     # can't
     else:

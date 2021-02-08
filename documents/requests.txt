@@ -51,7 +51,6 @@ by function
                         player sees player
                             login OK
 
-
                             move ON
                                 in my grid OK
                                 cross my grid ON
@@ -61,13 +60,14 @@ by function
 
                             sail OK
 
-                            sail 4 additional directions issue OK
+                            enter port OK
+
+                            battle ON
+                                enter OK
+                                exit OK
+                                all ships operate ON
 
 
-
-                            enter port
-
-                            battle with
 
 
 

@@ -345,9 +345,17 @@ class SeaMap(Map):
 
 
 class BattleMap(Map):
+    """different from sea or port. has only one grid"""
     def __init__(self):
         Map.__init__(self)
+        only_grid = Grid()
+        self.grids.append(only_grid)
 
+    def add_player_conn(self, player_conn):
+        self.grids[0].add(player_conn)
+
+    def get_all_players_inside(self):
+        return self.grids[0].roles
 
 class AOIManager:
     """Area of Interest Manager has many maps"""
@@ -372,8 +380,8 @@ class AOIManager:
     def get_port_map_by_id(self, map_id):
         return self.ports[map_id]
 
-    def get_battle_map_by_player_name(self, name):
-        return self.battle_fields[name]
+    def get_battle_map_by_player_map(self, player_map):
+        return self.battle_fields[player_map]
 
     def get_map_by_player(self, player):
         if player.map == 'sea':
@@ -381,7 +389,14 @@ class AOIManager:
         elif player.is_in_port():
             return self.get_port_map_by_id(int(player.map))
         else:
-            return self.get_battle_map_by_player_name(player.map)
+            return self.get_battle_map_by_player_map(player.map)
+
+    def create_battle_map_by_name(self, map_name):
+        self.battle_fields[map_name] = BattleMap()
+        return self.battle_fields[map_name]
+
+    def delete_battle_map_by_name(self, map_name):
+        del self.battle_fields[map_name]
 
 if __name__ == '__main__':
     aoi_manager = AOIManager()
