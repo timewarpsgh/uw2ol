@@ -33,8 +33,8 @@ class NpcManager:
         for name, npc in self.npcs.items():
             # at sea
             if npc.map == 'sea':
-                self._random_move(npc)
-                # self._let_one_npc_move_along_path(npc)
+                # self._random_move(npc)
+                self._let_one_npc_move_along_path(npc)
             # in battle
             else:
                 if npc.your_turn_in_battle:
@@ -99,19 +99,19 @@ class NpcManager:
             direction = 'sw'
 
         self._npc_change_and_send('move', [direction, npc.name], npc.map)
+        self._grid_change(npc)
 
     def _npc_change_and_send(self, protocol_name, params_list, broadcast_map):
         """change local state and send cmd to clients"""
         npc_name = params_list[-1]
 
         npc = self.get_npc_by_name(npc_name)
-
         # local change
         try:
             func = getattr(npc, protocol_name)
             func([params_list[0]])
         except:
-            print('invalid input!')
+            print(f'invalid input!!!!!!!! {npc}')
             return False
 
         # send to players
@@ -134,6 +134,39 @@ class NpcManager:
                     pass
                 else:
                     conn.send(protocol_name, params_list)
+
+    def _grid_change(self, npc):
+        # have changed grid?
+        now_grid_id = None
+        x_tile_pos, y_tile_pos = npc.get_x_and_y_tile_position()
+        my_map = Role.AOI_MANAGER.get_map_by_player(npc)
+        now_grid_id = my_map.get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+
+        if now_grid_id != npc.grid_id:
+            # change my grid
+            map = Role.AOI_MANAGER.get_map_by_player(npc)
+            map.move_npc_to_new_grid(npc, now_grid_id)
+
+            # get new and delete grids
+            new_grids, delete_grids = map.get_new_and_delete_grids_after_movement(now_grid_id, npc.direction)
+
+            # tell roles in delete grids someone disappeared
+            for grid in delete_grids:
+                for name, conn in grid.roles.items():
+                    if name.isdigit():
+                        pass
+                    else:
+                        conn.send('role_disappeared', npc.name)
+
+            # tell roles in new girds someone appeared
+            for grid in new_grids:
+                for name, conn in grid.roles.items():
+                    if name.isdigit():
+                        pass
+                    else:
+                        conn.send('new_role', npc)
+
+
 if __name__ == '__main__':
     manager = NpcManager()
     print(len(manager.npcs))

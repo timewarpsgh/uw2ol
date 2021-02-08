@@ -361,11 +361,6 @@ class Role:
             if self.x > c.WORLD_MAP_X_LENGTH - 160:
                 self.x = 160
 
-        # prints
-        # print("now x:", self.x)
-        # print("new y:", self.y)
-        # print("new direction:", self.direction)
-
     def can_move(self, direction):
         # in port
         if self.map.isdigit():
@@ -2073,6 +2068,8 @@ def _exit_battle_when_enemy_is_npc(self):
     for name, conn in self.factory.users['sea'].items():
         if name != enemy_name and name != self.my_role.name and name != 'npcs':
             conn.send('new_roles_from_battle', new_roles_from_battle)
+
+
 
 if __name__ == '__main__':
     # new role

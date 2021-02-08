@@ -14,7 +14,7 @@ by function
 
                             move ON
                                 rand OK
-                                path
+                                path OK
 
                             battle
 

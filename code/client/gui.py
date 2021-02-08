@@ -1151,7 +1151,6 @@ class Harbor():
                 # pass peacefully
                 if self.days_spent_at_sea <= self.max_days_at_sea:
                     self.days_spent_at_sea += 1
-                    print(self.days_spent_at_sea)
 
                 # starved!
                 else:
