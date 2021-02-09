@@ -153,6 +153,7 @@ class EchoFactory(Factory):
         # aoi
         self.aoi_manager = AOIManager()
         Role.AOI_MANAGER = self.aoi_manager
+        Role.FACTORY = self
 
         # npcs
         self.npc_manager = NpcManager(self.aoi_manager)

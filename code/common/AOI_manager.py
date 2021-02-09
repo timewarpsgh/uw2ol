@@ -373,17 +373,18 @@ class BattleMap(Map):
         only_grid = Grid()
         self.grids.append(only_grid)
 
-    def add_player_conn(self, player_conn):
-        self.grids[0].add(player_conn)
-
     def get_nearby_players_by_player(self, player):
         dic = self.grids[0].roles
-        # print(dic)
-        # del dic[player.name]
         return dic
 
     def get_all_players_inside(self):
         return self.grids[0].roles
+
+    def add_player_conn(self, player_conn):
+        self.grids[0].add(player_conn)
+
+    def add_npc(self, npc):
+        self.grids[0].add_npc(npc)
 
 class AOIManager:
     """Area of Interest Manager has many maps"""

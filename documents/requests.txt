@@ -16,7 +16,8 @@ by function
                                 rand OK
                                 path OK
 
-                            battle
+                            battle OK
+
 
 
 

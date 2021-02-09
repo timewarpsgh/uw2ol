@@ -54,7 +54,7 @@ class Game():
             reactor.callLater(1, self.sail)
 
     def enter_battle(self):
-        self.connection.send('try_to_fight_with', ['b'])
+        self.connection.send('try_to_fight_with', ['1'])
 
     def start_moving(self):
         self.timer = task.LoopingCall(self.move)

@@ -124,7 +124,7 @@ class Role:
         else:
             # npc
             if str(name).isdigit():
-                target_role = Role.users[self.map][name]
+                target_role = Role.FACTORY.npc_manager.get_npc_by_name(name)
                 return target_role
 
             # player
@@ -1893,12 +1893,12 @@ def init_one_default_npc(name):
         mate1 = Mate(int(name))
         npc.mates.append(mate1)
 
-    for i in range(1, 9):
-        mate = Mate(1)
-        npc.mates.append(mate)
+    # for i in range(1, 9):
+    #     mate = Mate(1)
+    #     npc.mates.append(mate)
 
     # test 10 ships
-    for i in range(0, 10):
+    for i in range(0, 2):
         ship = Ship('0', 'Nao')
         ship.crew = 25
         npc.ships.append(ship)
@@ -1947,28 +1947,28 @@ def init_one_default_npc(name):
 
     # diff based on nation
     nation_sequence = int(name) % c.NATION_COUNT
-    if nation_sequence == 0:
-        npc.mates[0].nation = 'England'
-        npc.start_port_id = capital_2_port_id['london']
-    elif nation_sequence == 1:
-        npc.mates[0].nation = 'Holland'
-        npc.start_port_id = capital_2_port_id['amsterdam']
-    elif nation_sequence == 2:
-        npc.mates[0].nation = 'Portugal'
-        npc.start_port_id = capital_2_port_id['lisbon']
-    elif nation_sequence == 3:
-        npc.mates[0].nation = 'Spain'
-        npc.start_port_id = capital_2_port_id['seville']
-    elif nation_sequence == 4:
-        npc.mates[0].nation = 'Italy'
-        npc.start_port_id = capital_2_port_id['genoa']
-    elif nation_sequence == 5:
-        npc.mates[0].nation = 'Turkey'
-        npc.start_port_id = capital_2_port_id['istanbul']
+    # if nation_sequence == 0:
+    #     npc.mates[0].nation = 'England'
+    #     npc.start_port_id = capital_2_port_id['london']
+    # elif nation_sequence == 1:
+    #     npc.mates[0].nation = 'Holland'
+    #     npc.start_port_id = capital_2_port_id['amsterdam']
+    # elif nation_sequence == 2:
+    #     npc.mates[0].nation = 'Portugal'
+    #     npc.start_port_id = capital_2_port_id['lisbon']
+    # elif nation_sequence == 3:
+    #     npc.mates[0].nation = 'Spain'
+    #     npc.start_port_id = capital_2_port_id['seville']
+    # elif nation_sequence == 4:
+    #     npc.mates[0].nation = 'Italy'
+    #     npc.start_port_id = capital_2_port_id['genoa']
+    # elif nation_sequence == 5:
+    #     npc.mates[0].nation = 'Turkey'
+    #     npc.start_port_id = capital_2_port_id['istanbul']
 
     # test all england
-    # npc.mates[0].nation = 'England'
-    # npc.start_port_id = capital_2_port_id['london']
+    npc.mates[0].nation = 'England'
+    npc.start_port_id = capital_2_port_id['london']
 
     port = Port((npc.start_port_id - 1))
     npc.x = port.x
@@ -1981,12 +1981,12 @@ def init_one_default_npc(name):
 
 def exit_battle(self, message_obj):
     """self is server echo"""
-    # # if enemy is npc
-    # if self.my_role.is_enemy_npc():
-    #     _exit_battle_when_enemy_is_npc(self)
-    # # if enemy is player
-    # else:
-    _exit_battle_when_enemy_is_player(self)
+    # if enemy is npc
+    if self.my_role.is_enemy_npc():
+        _exit_battle_when_enemy_is_npc(self)
+    # if enemy is player
+    else:
+        _exit_battle_when_enemy_is_player(self)
 
 def _exit_battle_when_enemy_is_player(self):
     # gets
@@ -2018,8 +2018,6 @@ def _exit_battle_when_enemy_is_player(self):
     self.send('roles_in_new_map', roles_in_new_map)
     enemy_conn.send('roles_in_new_map', roles_in_new_map)
 
-
-
     # send new role message to other roles in new map
     new_roles_from_battle = {}
     new_roles_from_battle[self.my_role.name] = self.my_role
@@ -2032,7 +2030,7 @@ def _exit_battle_when_enemy_is_player(self):
 def _exit_battle_when_enemy_is_npc(self):
     # gets
     enemy_name = self.my_role.enemy_name
-    enemy_role = self.factory.users[self.my_role.map][enemy_name]
+    enemy_role = self.factory.npc_manager.get_npc_by_name(enemy_name)
     my_role = self.my_role
     my_previous_map = self.my_role.map
 
@@ -2041,34 +2039,33 @@ def _exit_battle_when_enemy_is_npc(self):
     enemy_role.map = 'sea'
 
     # change users dict state
-    del self.factory.users[my_previous_map]
-    print(self.factory.users)
+    self.factory.aoi_manager.delete_battle_map_by_name(my_previous_map)
 
-    self.factory.users['sea'][my_role.name] = self
+    sea_map = self.factory.aoi_manager.get_map_by_player(my_role)
+    sea_map.add_player_conn(self)
+    sea_map.add_npc(enemy_role)
 
-    # send roles_in_new_map to my client and enemy client
+    # send roles_in_new_map to my client
+    nearby_players = sea_map.get_nearby_players_by_player(my_role)
     roles_in_new_map = {}
-    for name, conn in self.factory.users['sea'].items():
-        if name == 'npcs':
-            for npc_name, npc in self.factory.users['sea'][name].npcs.items():
-                roles_in_new_map[npc_name] = npc
+    for name, conn in nearby_players.items():
+        if name.isdigit():
+            roles_in_new_map[name] = conn
         else:
             roles_in_new_map[name] = conn.my_role
-
+    roles_in_new_map[my_role.name] = my_role
     self.send('roles_in_new_map', roles_in_new_map)
 
     # send new role message to other roles in new map
     new_roles_from_battle = {}
-    new_roles_from_battle[self.my_role.name] = self.my_role
-    if enemy_role.ships:
-        new_roles_from_battle[enemy_role.name] = self.factory.users['sea']['npcs'].npcs[enemy_role.name]
-    else:
-        new_roles_from_battle[enemy_role.name] = self.factory.users['sea']['npcs'].npcs[enemy_role.name]
+    new_roles_from_battle[my_role.name] = my_role
+    new_roles_from_battle[enemy_role.name] = enemy_role
 
-    for name, conn in self.factory.users['sea'].items():
-        if name != enemy_name and name != self.my_role.name and name != 'npcs':
+    for name, conn in nearby_players.items():
+        if name.isdigit():
+            pass
+        else:
             conn.send('new_roles_from_battle', new_roles_from_battle)
-
 
 
 if __name__ == '__main__':
