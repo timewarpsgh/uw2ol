@@ -34,7 +34,7 @@ class NpcManager:
             # at sea
             if npc.map == 'sea':
                 # self._random_move(npc)
-                # self._let_one_npc_move_along_path(npc)
+                self._let_one_npc_move_along_path(npc)
                 pass
             # in battle
             else:

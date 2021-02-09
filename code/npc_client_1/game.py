@@ -75,7 +75,7 @@ class Game():
             elif not self.my_role.is_in_port():
                 if self.my_role.your_turn_in_battle:
                     self.change_and_send('set_all_ships_target', [0])
-                    self.change_and_send('set_all_ships_attack_method', [0])
+                    self.change_and_send('set_all_ships_attack_method', [1])
                     self.change_and_send('all_ships_operate', [])
 
 

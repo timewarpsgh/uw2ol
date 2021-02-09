@@ -52,7 +52,7 @@ class Role:
         self.map = random.choice(['29', '0'])
         self.in_building_type = None
         self.battle_timer = 0
-        self.your_turn_in_battle = True
+        self.your_turn_in_battle = False
         self.max_days_at_sea = 0
         self.additioanl_days_at_sea = 0
         self.speak_msg = ''
@@ -681,21 +681,24 @@ class Role:
                 if str(enemy_role.name).isdigit():
                     # npc rebirth
                     if self.is_in_server():
-                        Role.FACTORY.npc_manager.npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
+                        pass
+                        # Role.FACTORY.npc_manager.npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
 
                 # if i am npc and enemy is player
                 if self.is_npc() and not enemy_role.is_npc():
                     if self.is_in_server():
-                        new_role = init_one_default_npc(self.name)
+                        pass
+                        # new_role = init_one_default_npc(self.name)
 
-                        new_role.x = self.x
-                        new_role.y = self.y
-                        new_role.point_in_path_id = self.point_in_path_id
-                        new_role.out_ward = self.out_ward
-                        new_role.start_port_id = self.start_port_id
-                        new_role.end_port_id = self.end_port_id
+                        # new_role.x = self.x
+                        # new_role.y = self.y
+                        # new_role.point_in_path_id = self.point_in_path_id
+                        # new_role.out_ward = self.out_ward
+                        # new_role.start_port_id = self.start_port_id
+                        # new_role.end_port_id = self.end_port_id
 
-                        Role.users['sea']['npcs'].npcs[self.name] = new_role
+
+                        # Role.FACTORY.npc_manager.npcs[enemy_role.name] = new_role
 
                 deferred.callback(False)
                 # return deferred
@@ -818,7 +821,10 @@ class Role:
 
             # server controled npc won
             if self.is_in_server() and self.is_npc():
-                enemy_conn = Role.users[self.map][self.enemy_name]
+                print('exiting battle!!!!!!!')
+                battle_map = Role.AOI_MANAGER.get_battle_map_by_player_map(self.map)
+                all_players_in_battle = battle_map.get_all_players_inside()
+                enemy_conn = all_players_in_battle[self.enemy_name]
                 exit_battle(enemy_conn, '')
 
     # ship yard
@@ -1983,6 +1989,7 @@ def exit_battle(self, message_obj):
     """self is server echo"""
     # if enemy is npc
     if self.my_role.is_enemy_npc():
+        print('enemy is npc!!!!')
         _exit_battle_when_enemy_is_npc(self)
     # if enemy is player
     else:
@@ -2013,7 +2020,10 @@ def _exit_battle_when_enemy_is_player(self):
     my_nearby_players = sea_map.get_nearby_players_by_player(self.my_role)
     roles_in_new_map = {}
     for name, conn in my_nearby_players.items():
-        roles_in_new_map[name] = conn.my_role
+        if name.isdigit():
+            roles_in_new_map[name] = conn
+        else:
+            roles_in_new_map[name] = conn.my_role
     roles_in_new_map[my_role.name] = my_role
     self.send('roles_in_new_map', roles_in_new_map)
     enemy_conn.send('roles_in_new_map', roles_in_new_map)
@@ -2025,7 +2035,10 @@ def _exit_battle_when_enemy_is_player(self):
 
     del my_nearby_players[enemy_role.name]
     for name, conn in my_nearby_players.items():
-        conn.send('new_roles_from_battle', new_roles_from_battle)
+        if name.isdigit():
+            pass
+        else:
+            conn.send('new_roles_from_battle', new_roles_from_battle)
 
 def _exit_battle_when_enemy_is_npc(self):
     # gets
@@ -2038,12 +2051,14 @@ def _exit_battle_when_enemy_is_npc(self):
     my_role.map = 'sea'
     enemy_role.map = 'sea'
 
-    # change users dict state
+    # change map states
     self.factory.aoi_manager.delete_battle_map_by_name(my_previous_map)
 
     sea_map = self.factory.aoi_manager.get_map_by_player(my_role)
     sea_map.add_player_conn(self)
-    new_enemy_role = self.factory.npc_manager.get_npc_by_name(enemy_name)
+
+    # new npc
+    new_enemy_role = _generate_new_npc_after_battle(my_role, enemy_role)
     sea_map.add_npc(new_enemy_role)
 
     # send roles_in_new_map to my client
@@ -2060,7 +2075,7 @@ def _exit_battle_when_enemy_is_npc(self):
     # send new role message to other roles in new map
     new_roles_from_battle = {}
     new_roles_from_battle[my_role.name] = my_role
-    new_roles_from_battle[enemy_role.name] = enemy_role
+    new_roles_from_battle[enemy_role.name] = new_enemy_role
 
     for name, conn in nearby_players.items():
         if name.isdigit():
@@ -2068,6 +2083,24 @@ def _exit_battle_when_enemy_is_npc(self):
         else:
             conn.send('new_roles_from_battle', new_roles_from_battle)
 
+def _generate_new_npc_after_battle(my_role, enemy_role):
+    enemy_name = enemy_role.name
+    Role.FACTORY.npc_manager.npcs[enemy_name] = init_one_default_npc(enemy_name)
+    new_npc = Role.FACTORY.npc_manager.get_npc_by_name(enemy_name)
+
+    # npc lost
+    if my_role.ships and not enemy_role.ships:
+        pass
+    # tie / npc won
+    else:
+        new_npc.x = enemy_role.x
+        new_npc.y = enemy_role.y
+        new_npc.point_in_path_id = enemy_role.point_in_path_id
+        new_npc.out_ward = enemy_role.out_ward
+        new_npc.start_port_id = enemy_role.start_port_id
+        new_npc.end_port_id = enemy_role.end_port_id
+
+    return new_npc
 
 if __name__ == '__main__':
     # new role

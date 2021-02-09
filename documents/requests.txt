@@ -18,8 +18,8 @@ by function
 
                             battle OK
                                 win npc OK
-                                lose to npc ON
-                                tie
+                                lose to npc OK
+                                tie OK
 
 
 

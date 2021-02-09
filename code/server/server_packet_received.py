@@ -218,7 +218,6 @@ def _try_to_fight_with_player(self, enemy_name):
     enemy_conn = nearby_players[enemy_name]
     enemy_role = enemy_conn.my_role
     my_role = self.my_role
-    enemys_nearby_players = my_map.get_nearby_players_by_player(enemy_role)
 
     # sets
     my_role.enemy_name = enemy_name
@@ -255,36 +254,25 @@ def _try_to_fight_with_player(self, enemy_name):
         for name, conn in battle_map.get_all_players_inside().items():
             roles_in_new_map[name] = conn.my_role
 
-        # init all ships positions in battle
-        for role in roles_in_new_map.values():
-            # my role
-            if role.name == my_name:
-                y_index = 1
-                for ship in role.ships:
-                    ship.x = 1
-                    ship.y = y_index
-                    ship.direction = role.direction
-                    y_index += 1
-            # enemy role
-            else:
-                y_index = 1
-                for ship in role.ships:
-                    ship.x = 6
-                    ship.y = y_index
-                    ship.direction = role.direction
-                    y_index += 1
+            # init all ships positions in battle
+        _init_all_ships_positions_in_battle(my_name, roles_in_new_map)
 
+            # send
         self.send('roles_in_battle_map', roles_in_new_map)
         enemy_conn.send('roles_in_battle_map', roles_in_new_map)
 
         # send disappear message to other roles in my previous map
         del nearby_players[enemy_name]
-        for name, conn in nearby_players.items():
-            conn.send('role_disappeared', self.my_role.name)
 
-        del enemys_nearby_players[self.my_role.name]
-        for name, conn in enemys_nearby_players.items():
-                conn.send('role_disappeared', enemy_name)
+        names_of_roles_that_disappeared = []
+        names_of_roles_that_disappeared.append(my_role.name)
+        names_of_roles_that_disappeared.append(enemy_role.name)
+
+        for name, conn in nearby_players.items():
+            if name.isdigit():
+                pass
+            else:
+                conn.send('roles_disappeared', names_of_roles_that_disappeared)
 
     # can't
     else:
@@ -333,24 +321,9 @@ def _try_to_fight_with_npc(self, enemy_name):
         roles_in_new_map[enemy_name] = enemy_role
 
         # init all ships positions in battle
-        for role in roles_in_new_map.values():
-            # my role
-            if role.name == my_name:
-                y_index = 1
-                for ship in role.ships:
-                    ship.x = 1
-                    ship.y = y_index
-                    ship.direction = role.direction
-                    y_index += 1
-            # enemy role
-            else:
-                y_index = 1
-                for ship in role.ships:
-                    ship.x = 6
-                    ship.y = y_index
-                    ship.direction = role.direction
-                    y_index += 1
+        _init_all_ships_positions_in_battle(my_name, roles_in_new_map)
 
+        # send
         self.send('roles_in_battle_map', roles_in_new_map)
 
         # send disappear message to other roles in my previous map
@@ -368,6 +341,25 @@ def _try_to_fight_with_npc(self, enemy_name):
     else:
         self.send('target_too_far')
 
+
+def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
+    for role in roles_in_battle.values():
+        # my role
+        if role.name == my_name:
+            y_index = 1
+            for ship in role.ships:
+                ship.x = 1
+                ship.y = y_index
+                ship.direction = role.direction
+                y_index += 1
+        # enemy role
+        else:
+            y_index = 1
+            for ship in role.ships:
+                ship.x = 6
+                ship.y = y_index
+                ship.direction = role.direction
+                y_index += 1
 
 def exit_battle(self, message_obj):
     role.exit_battle(self, message_obj)
