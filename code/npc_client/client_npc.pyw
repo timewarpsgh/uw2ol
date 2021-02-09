@@ -185,7 +185,7 @@ class ClientProcess(Process):
 
 if __name__ == "__main__":
     # start clients
-    for i in range(2, 3):
+    for i in range(2, 10):
         p = ClientProcess(str(i), str(i))
         p.start()
         time.sleep(1)

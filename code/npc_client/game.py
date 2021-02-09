@@ -60,6 +60,7 @@ class Game():
         if self.my_role:
             # at sea
             if self.my_role.is_at_sea():
+                # pass
                 random_direction = random.choice(['up', 'down', 'right', 'left'])
                 self.change_and_send('move', [random_direction])
 

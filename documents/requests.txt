@@ -3,32 +3,10 @@ by function
     travel
         sea npc ON
 
+
+
             longer routes from
                 london
-
-                    broadcast to nearby players only ON
-                        9 grids algorithm
-
-                        ######## pVe
-                            see OK
-
-                            move OK
-                                rand OK
-                                path OK
-
-                            battle OK
-                                win npc OK
-                                lose to npc OK
-                                tie OK
-
-
-
-
-
-
-
-
-
                     west africa
                     east africa
                     india
@@ -44,11 +22,6 @@ by function
                 istanbul
 
 
-
-
-
-
-            broadcast to nearby players only
 
             can't sail from Belgrade
             port npcs positions wrong (lisbon)
