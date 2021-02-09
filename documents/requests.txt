@@ -3,24 +3,7 @@ by function
     travel
         sea npc ON
 
-
-
-            longer routes from
-                london
-                    west africa
-                    east africa
-                    india
-                    asia
-
-
-                amsterdam
-
-                lisbon
-                seville
-
-                genoa
-                istanbul
-
+            longer(all) routes from all 6 capitals (script ready to run at night)
 
 
             can't sail from Belgrade

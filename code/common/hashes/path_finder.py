@@ -46,7 +46,8 @@ class PathFinder:
 if __name__ == '__main__':
     finder = PathFinder()
 
-    # med: 1-27, northern europe: 28-42, america: 43-57, west_africa: 58-66, east_africa: 67-72
+    # med: 1-27, northern europe: 28-42, america: 43-57, west_africa: 58-66,
+    # east_africa: 67-72, mid_east_to_asia: 73-100
 
     # dict
     dict = {
@@ -61,14 +62,23 @@ if __name__ == '__main__':
     }
 
     # find
-    print('~~~~~~~~~ from seville')
-    for i in range(43, 58):
+    print('~~~~~~~~~ from london to med')
+    for i in range(1, 28):
         finder.find_path(dict['london'], i)
 
-    # print('~~~~~~~~~ from genoa')
-    # for i in range(1, 28):
-    #     finder.find_path(dict['genoa'], i)
-    #
-    # print('~~~~~~~~~ from istanbul')
-    # for i in range(1, 28):
-    #     finder.find_path(dict['istanbul'], i)
+    print('~~~~~~~~~ from london to west_africa')
+    for i in range(58, 67):
+        finder.find_path(dict['london'], i)
+
+    print('~~~~~~~~~ from london to east_africa')
+    for i in range(67, 73):
+        finder.find_path(dict['london'], i)
+
+    print('~~~~~~~~~ from london to east_africa')
+    for i in range(73, 101):
+        finder.find_path(dict['london'], i)
+
+    for capital in ['amsterdam', 'lisbon', 'seville', 'genoa', 'istanbul']:
+        print('~~~~~~~~~from amsterdam')
+        for i in range(28, 101):
+            finder.find_path(dict[capital], i)
