@@ -17,6 +17,9 @@ by function
                                 path OK
 
                             battle OK
+                                win npc OK
+                                lose to npc ON
+                                tie
 
 
 

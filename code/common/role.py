@@ -681,7 +681,7 @@ class Role:
                 if str(enemy_role.name).isdigit():
                     # npc rebirth
                     if self.is_in_server():
-                        Role.users['sea']['npcs'].npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
+                        Role.FACTORY.npc_manager.npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
 
                 # if i am npc and enemy is player
                 if self.is_npc() and not enemy_role.is_npc():
@@ -2043,7 +2043,8 @@ def _exit_battle_when_enemy_is_npc(self):
 
     sea_map = self.factory.aoi_manager.get_map_by_player(my_role)
     sea_map.add_player_conn(self)
-    sea_map.add_npc(enemy_role)
+    new_enemy_role = self.factory.npc_manager.get_npc_by_name(enemy_name)
+    sea_map.add_npc(new_enemy_role)
 
     # send roles_in_new_map to my client
     nearby_players = sea_map.get_nearby_players_by_player(my_role)
