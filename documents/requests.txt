@@ -4,10 +4,10 @@ by function
         sea npc ON
 
             longer(all) routes from all 6 capitals (script ready to run at night)
-
-
             can't sail from Belgrade
-            port npcs positions wrong (lisbon)  OK
+
+
+
     trade
 
 

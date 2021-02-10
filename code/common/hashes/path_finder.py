@@ -62,23 +62,26 @@ if __name__ == '__main__':
     }
 
     # find
-    print('~~~~~~~~~ from london to med')
-    for i in range(1, 28):
-        finder.find_path(dict['london'], i)
-
-    print('~~~~~~~~~ from london to west_africa')
-    for i in range(58, 67):
-        finder.find_path(dict['london'], i)
-
-    print('~~~~~~~~~ from london to east_africa')
-    for i in range(67, 73):
-        finder.find_path(dict['london'], i)
-
-    print('~~~~~~~~~ from london to east_africa')
-    for i in range(73, 101):
-        finder.find_path(dict['london'], i)
-
-    for capital in ['amsterdam', 'lisbon', 'seville', 'genoa', 'istanbul']:
-        print('~~~~~~~~~from amsterdam')
-        for i in range(28, 101):
-            finder.find_path(dict[capital], i)
+    # print('~~~~~~~~~ from london to med')
+    # for i in range(1, 28):
+    #     finder.find_path(dict['london'], i)
+    #
+    # print('~~~~~~~~~ from london to west_africa')
+    # for i in range(58, 67):
+    #     finder.find_path(dict['london'], i)
+    #
+    # print('~~~~~~~~~ from london to east_africa')
+    # for i in range(67, 73):
+    #     finder.find_path(dict['london'], i)
+    #
+    # print('~~~~~~~~~ from london to east_africa')
+    # for i in range(73, 101):
+    #     finder.find_path(dict['london'], i)
+    #
+    # for capital in ['amsterdam', 'lisbon', 'seville', 'genoa', 'istanbul']:
+    #     print('~~~~~~~~~from amsterdam')
+    for i in range(28, 101):
+        if i in [62, 65, 76, 77]:
+            pass
+        else:
+            finder.find_path(dict['lisbon'], i)
