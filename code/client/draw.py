@@ -32,6 +32,22 @@ def draw_logged_in_state(self):
         y = self.screen_surface_rect.centery - self.my_role.y
         self.screen_surface.blit(self.images['port'], (x, y))
 
+        # to cover port edges
+
+            # bottom
+        self.screen_surface.blit(self.images['building_bg'],
+                                 (50, y + (c.PORT_TILES_COUNT * c.PIXELS_COVERED_EACH_MOVE)))
+            # top
+        self.screen_surface.blit(self.images['building_bg'],
+                                 (50, y - c.BUILDING_BG_SIZE))
+            # left
+        self.screen_surface.blit(self.images['building_bg'],
+                                 (x - c.BUILDING_BG_SIZE, 0))
+
+            # right
+        self.screen_surface.blit(self.images['building_bg'],
+                                 (x + (c.PORT_TILES_COUNT * c.PIXELS_COVERED_EACH_MOVE), 0))
+
         # at sea
     elif now_map == 'sea':
         x = -(c.PARTIAL_WORLD_MAP_TILES_IN_ONE_DIRECTION * c.PIXELS_COVERED_EACH_MOVE
@@ -41,15 +57,7 @@ def draw_logged_in_state(self):
               - self.screen_surface_rect.centery + self.my_role.y
               - self.map_maker.y_tile * c.PIXELS_COVERED_EACH_MOVE)
 
-        # dim_count = 1
-        # self.images['sea'].fill((dim_count, dim_count, dim_count),
-        #                                         special_flags=pygame.BLEND_RGB_SUB)
-
         self.screen_surface.blit(self.images['sea'], (x, y))
-
-        # brighten = 100
-        # self.images['sea'].fill((brighten, brighten, brighten),
-        #                         special_flags=pygame.BLEND_RGB_ADD)
 
         # in battle
     else:

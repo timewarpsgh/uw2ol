@@ -11,12 +11,7 @@ by function
                 amsterdam
                 london
 
-            Hormuz OK
-
-
-            can't sail from Belgrade, cairo, london ON
-                change map to sea
-                    put on sailable tile
+        port edges ON
 
 
     trade
