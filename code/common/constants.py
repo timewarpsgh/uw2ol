@@ -143,7 +143,8 @@ ITEMS_IMAGE_SIZE = 49
 
 # map data
 WALKABLE_TILES = set(range(1, 40))
-SAILABLE_TILES = set(range(1, 31))
+SAILABLE_TILES = set(range(1, 33))
+# SAILABLE_TILES.add(90)
 
 WALKABLE_TILES_FOR_ASIA = set(range(1, 47))
 PARTIAL_WORLD_MAP_TILES = 73

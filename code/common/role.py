@@ -390,7 +390,9 @@ class Role:
             for tile in tile_list:
                 dx = tile[0]
                 dy = tile[1]
-                if not int(piddle[x + dx, y + dy]) in c.SAILABLE_TILES:
+                tile_id = int(piddle[x + dx, y + dy])
+                if not tile_id in c.SAILABLE_TILES:
+                    print(tile_id)
                     return False
 
             return True

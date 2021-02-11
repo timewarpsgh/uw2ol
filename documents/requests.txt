@@ -11,12 +11,9 @@ by function
                 amsterdam
                 london
 
-            move collision efficiency OK
-            get new and delete grids (refactor to less code)
+            Hormuz OK
 
-            Hormuz
-
-            can't sail from Belgrade
+            can't sail from Belgrade ON
 
 
 
