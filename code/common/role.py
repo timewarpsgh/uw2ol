@@ -383,39 +383,17 @@ class Role:
             piddle = self.GAME.map_maker.world_map_piddle
 
             # perl piddle and python numpy(2d array) are different
-            y = int(self.x / 16)
-            x = int(self.y / 16)
+            y = int(self.x / c.PIXELS_COVERED_EACH_MOVE)
+            x = int(self.y / c.PIXELS_COVERED_EACH_MOVE)
 
-            # basic 4 directions
-            if direction == 'up':
-                if int(piddle[x - 1, y]) in c.SAILABLE_TILES and int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES:
-                    return True
-            elif direction == 'down':
-                if int(piddle[x + 2, y]) in c.SAILABLE_TILES: #int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y + 2]) in c.SAILABLE_TILES and int(piddle[x, y + 2]) in c.SAILABLE_TILES
-                    return True
-            elif direction == 'left':
-                if int(piddle[x, y - 1]) in c.SAILABLE_TILES and int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
-                    return True
-            elif direction == 'right':
-                if int(piddle[x, y + 2]) in c.SAILABLE_TILES and int(piddle[x + 1, y + 2]) in c.SAILABLE_TILES:
-                    return True
+            tile_list = c.SEA_MOVE_COLLISION_TILES[direction]
+            for tile in tile_list:
+                dx = tile[0]
+                dy = tile[1]
+                if not int(piddle[x + dx, y + dy]) in c.SAILABLE_TILES:
+                    return False
 
-            # additional 4 directions
-            elif direction == 'ne':
-                if int(piddle[x - 1, y + 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y + 2]) in c.SAILABLE_TILES and int(piddle[x, y + 2]) in c.SAILABLE_TILES:
-                    return True
-            elif direction == 'nw':
-                if int(piddle[x, y - 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y - 1]) in c.SAILABLE_TILES and int(piddle[x - 1, y]) in c.SAILABLE_TILES:
-                    return True
-            elif direction == 'se':
-                if int(piddle[x + 1, y + 2]) in c.SAILABLE_TILES and int(piddle[x + 2, y + 2]) in c.SAILABLE_TILES and int(piddle[x + 2, y + 1]) in c.SAILABLE_TILES:
-                    return True
-            elif direction == 'sw':
-                if int(piddle[x + 2, y]) in c.SAILABLE_TILES and int(piddle[x + 2, y - 1]) in c.SAILABLE_TILES and int(piddle[x + 1, y - 1]) in c.SAILABLE_TILES:
-                    return True
-
-            # ret
-            return False
+            return True
 
     def get_port(self):
         map_id = int(self.map)

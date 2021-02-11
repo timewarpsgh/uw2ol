@@ -11,7 +11,7 @@ by function
                 amsterdam
                 london
 
-            move efficiency ON
+            move collision efficiency OK
 
             Hormuz
 
