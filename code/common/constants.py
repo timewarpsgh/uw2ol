@@ -77,6 +77,44 @@ SEA_MOVE_COLLISION_TILES = {
     'sw': [[2, 0], [2, -1], [1, -1]],
 }
 
+NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS = {
+    'up': {
+        'new':['-1', -1, 1],
+        'delete':['2', -1, 1],
+    },
+    'down': {
+        'new':['1', -1, 1],
+        'delete':['-2', -1, 1],
+    },
+    'right': {
+        'new':[1, '-1', '1'],
+        'delete':[-2, '-1', '1'],
+    },
+    'left': {
+        'new':[-1, '-1', '1'],
+        'delete':[2, '-1', '1'],
+    },
+}
+
+NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS = {
+    'ne': {
+        'new':[['-1', -1], 1, 1, '1', '1'],
+        'delete':[-2, '1', '1', 1, 1],
+    },
+    'nw': {
+        'new':[[-1, '1'], '-1', '-1', 1, 1],
+        'delete':['2', 1, 1, '-1', '-1'],
+    },
+    'se': {
+        'new':[[-1, '1'], 1, 1, '-1', '-1'],
+        'delete':[-2, '-1', '-1', 1, 1],
+    },
+    'sw': {
+        'new':[[-1, '-1'], '1', '1', 1, 1],
+        'delete':['-2', 1, 1, '1', '1'],
+    },
+}
+
 MAX_ITEMS_IN_BAG = 30
 
 # in battle

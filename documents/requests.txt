@@ -12,6 +12,7 @@ by function
                 london
 
             move collision efficiency OK
+            get new and delete grids (refactor to less code)
 
             Hormuz
 

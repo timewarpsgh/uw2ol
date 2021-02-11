@@ -117,20 +117,30 @@ class Map:
         return grids
 
     def get_new_and_delete_grids_after_movement(self, new_grid_id, direction):
-        # up
-        if direction == 'up':
+        # basic 4 directions
+        if direction in c.NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS:
             # new
-            new_mid_grid_id = new_grid_id - self.x_grid_count
-            new_left_grid_id = new_mid_grid_id - 1
-            new_right_grid_id = new_mid_grid_id + 1
+            new_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS[direction]['new']
+            for index, delta in enumerate(new_deltas):
+                if isinstance(delta, str):
+                    new_deltas[index] = int(delta) * self.x_grid_count
+
+            new_mid_grid_id = new_grid_id + new_deltas[0]
+            new_left_grid_id = new_mid_grid_id + new_deltas[1]
+            new_right_grid_id = new_mid_grid_id + new_deltas[2]
 
             possible_new_grid_ids = [new_left_grid_id, new_mid_grid_id, new_right_grid_id]
             new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
 
             # delete
-            delete_mid_grid_id = new_grid_id + (self.x_grid_count * 2)
-            delete_left_grid_id = delete_mid_grid_id - 1
-            delete_right_grid_id = delete_mid_grid_id + 1
+            delete_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS[direction]['delete']
+            for index, delta in enumerate(delete_deltas):
+                if isinstance(delta, str):
+                    delete_deltas[index] = int(delta) * self.x_grid_count
+
+            delete_mid_grid_id = new_grid_id + delete_deltas[0]
+            delete_left_grid_id = delete_mid_grid_id + delete_deltas[1]
+            delete_right_grid_id = delete_mid_grid_id + delete_deltas[2]
 
             possible_delete_grid_ids = [delete_left_grid_id, delete_mid_grid_id, delete_right_grid_id]
             delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
@@ -138,156 +148,41 @@ class Map:
             # ret
             return new_grids, delete_grids
 
-        # down
-        elif direction == 'down':
+        # additional 4 directions
+        elif direction in c.NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS:
             # new
-            new_mid_grid_id = new_grid_id + self.x_grid_count
-            new_left_grid_id = new_mid_grid_id - 1
-            new_right_grid_id = new_mid_grid_id + 1
+            new_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS[direction]['new']
+            for index, delta in enumerate(new_deltas):
+                if index == 0:
+                    list = new_deltas[index]
+                    for id, inner_delta in enumerate(list):
+                        if isinstance(inner_delta, str):
+                            list[id] = int(inner_delta) * self.x_grid_count
+                else:
+                    if isinstance(delta, str):
+                        new_deltas[index] = int(delta) * self.x_grid_count
 
-            possible_new_grid_ids = [new_left_grid_id, new_mid_grid_id, new_right_grid_id]
-            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
 
-            # delete
-            delete_mid_grid_id = new_grid_id - (self.x_grid_count * 2)
-            delete_left_grid_id = delete_mid_grid_id - 1
-            delete_right_grid_id = delete_mid_grid_id + 1
-
-            possible_delete_grid_ids = [delete_left_grid_id, delete_mid_grid_id, delete_right_grid_id]
-            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
-
-            # ret
-            return new_grids, delete_grids
-
-        elif direction == 'left':
-            # new
-            new_mid_grid_id = new_grid_id - 1
-            new_up_grid_id = new_mid_grid_id - self.x_grid_count
-            new_bot_grid_id = new_mid_grid_id + self.x_grid_count
-
-            possible_new_grid_ids = [new_mid_grid_id, new_up_grid_id, new_bot_grid_id]
-            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
-
-            # delete
-            delete_mid_grid_id = new_grid_id + 2
-            delete_up_grid_id = delete_mid_grid_id - self.x_grid_count
-            delete_bot_grid_id = delete_mid_grid_id + self.x_grid_count
-
-            possible_delete_grid_ids = [delete_mid_grid_id, delete_up_grid_id, delete_bot_grid_id]
-            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
-
-            # ret
-            return new_grids, delete_grids
-        elif direction == 'right':
-            # new
-            new_mid_grid_id = new_grid_id + 1
-            new_up_grid_id = new_mid_grid_id - self.x_grid_count
-            new_bot_grid_id = new_mid_grid_id + self.x_grid_count
-
-            possible_new_grid_ids = [new_mid_grid_id, new_up_grid_id, new_bot_grid_id]
-            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
-
-            # delete
-            delete_mid_grid_id = new_grid_id - 2
-            delete_up_grid_id = delete_mid_grid_id - self.x_grid_count
-            delete_bot_grid_id = delete_mid_grid_id + self.x_grid_count
-
-            possible_delete_grid_ids = [delete_mid_grid_id, delete_up_grid_id, delete_bot_grid_id]
-            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
-
-            # ret
-            return new_grids, delete_grids
-
-        # 4 more directions
-        elif direction == 'ne':
-            # new
-            new_grid_1 = new_grid_id - self.x_grid_count - 1
-            new_grid_2 = new_grid_1 + 1
-            new_grid_3 = new_grid_2 + 1
-            new_grid_4 = new_grid_3 + self.x_grid_count
-            new_grid_5 = new_grid_4 + self.x_grid_count
+            new_grid_1 = new_grid_id + new_deltas[0][0] + new_deltas[0][1]
+            new_grid_2 = new_grid_1 + new_deltas[1]
+            new_grid_3 = new_grid_2 + new_deltas[2]
+            new_grid_4 = new_grid_3 + new_deltas[3]
+            new_grid_5 = new_grid_4 + new_deltas[4]
 
             possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
             new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
 
             # delete
-            delete_grid_1 = new_grid_id - 2
-            delete_grid_2 = delete_grid_1 + self.x_grid_count
-            delete_grid_3 = delete_grid_2 + self.x_grid_count
-            delete_grid_4 = delete_grid_3 + 1
-            delete_grid_5 = delete_grid_4 + 1
+            delete_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS[direction]['delete']
+            for index, delta in enumerate(delete_deltas):
+                if isinstance(delta, str):
+                    delete_deltas[index] = int(delta) * self.x_grid_count
 
-            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
-            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
-
-            # ret
-            return new_grids, delete_grids
-
-        elif direction == 'nw':
-            # new
-            new_grid_1 = new_grid_id - 1 + self.x_grid_count
-            new_grid_2 = new_grid_1 - self.x_grid_count
-            new_grid_3 = new_grid_2 - self.x_grid_count
-            new_grid_4 = new_grid_3 + 1
-            new_grid_5 = new_grid_4 + 1
-
-            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
-            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
-
-            # delete
-            delete_grid_1 = new_grid_id + (2 * self.x_grid_count)
-            delete_grid_2 = delete_grid_1 + 1
-            delete_grid_3 = delete_grid_2 + 1
-            delete_grid_4 = delete_grid_3 - self.x_grid_count
-            delete_grid_5 = delete_grid_4 - self.x_grid_count
-
-            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
-            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
-
-            # ret
-            return new_grids, delete_grids
-
-        elif direction == 'se':
-            # new
-            new_grid_1 = new_grid_id - 1 + self.x_grid_count
-            new_grid_2 = new_grid_1 + 1
-            new_grid_3 = new_grid_2 + 1
-            new_grid_4 = new_grid_3 - self.x_grid_count
-            new_grid_5 = new_grid_4 - self.x_grid_count
-
-            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
-            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
-
-            # delete
-            delete_grid_1 = new_grid_id - 2
-            delete_grid_2 = delete_grid_1 - self.x_grid_count
-            delete_grid_3 = delete_grid_2 - self.x_grid_count
-            delete_grid_4 = delete_grid_3 + 1
-            delete_grid_5 = delete_grid_4 + 1
-
-            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
-            delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
-
-            # ret
-            return new_grids, delete_grids
-
-        elif direction == 'sw':
-            # new
-            new_grid_1 = new_grid_id - 1 - self.x_grid_count
-            new_grid_2 = new_grid_1 + self.x_grid_count
-            new_grid_3 = new_grid_2 + self.x_grid_count
-            new_grid_4 = new_grid_3 + 1
-            new_grid_5 = new_grid_4 + 1
-
-            possible_new_grid_ids = [new_grid_1, new_grid_2, new_grid_3, new_grid_4, new_grid_5]
-            new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
-
-            # delete
-            delete_grid_1 = new_grid_id - (2 * self.x_grid_count)
-            delete_grid_2 = delete_grid_1 + 1
-            delete_grid_3 = delete_grid_2 + 1
-            delete_grid_4 = delete_grid_3 + self.x_grid_count
-            delete_grid_5 = delete_grid_4 + self.x_grid_count
+            delete_grid_1 = new_grid_id + delete_deltas[0]
+            delete_grid_2 = delete_grid_1 + delete_deltas[1]
+            delete_grid_3 = delete_grid_2 + delete_deltas[2]
+            delete_grid_4 = delete_grid_3 + delete_deltas[3]
+            delete_grid_5 = delete_grid_4 + delete_deltas[4]
 
             possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
             delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
