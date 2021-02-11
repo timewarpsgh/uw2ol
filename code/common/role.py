@@ -575,11 +575,6 @@ class Role:
             # sleep 1s
             time.sleep(1)
 
-    # def _exit_battle(self):
-    #     self.map = 'sea'
-    #     target_role = self._get_other_role_by_name(self.target_name)
-    #     target_role.map = 'sea'
-
     def consume_potion(self, params):
         potion_id = params[0]
 
@@ -652,29 +647,6 @@ class Role:
                 self.gold += enemy_role.gold
                 enemy_role.gold = 0
                 print('battle ended. press e to exit battle.')
-
-                # if enemy is npc
-                if str(enemy_role.name).isdigit():
-                    # npc rebirth
-                    if self.is_in_server():
-                        pass
-                        # Role.FACTORY.npc_manager.npcs[enemy_role.name] = init_one_default_npc(enemy_role.name)
-
-                # if i am npc and enemy is player
-                if self.is_npc() and not enemy_role.is_npc():
-                    if self.is_in_server():
-                        pass
-                        # new_role = init_one_default_npc(self.name)
-
-                        # new_role.x = self.x
-                        # new_role.y = self.y
-                        # new_role.point_in_path_id = self.point_in_path_id
-                        # new_role.out_ward = self.out_ward
-                        # new_role.start_port_id = self.start_port_id
-                        # new_role.end_port_id = self.end_port_id
-
-
-                        # Role.FACTORY.npc_manager.npcs[enemy_role.name] = new_role
 
                 deferred.callback(False)
                 # return deferred
