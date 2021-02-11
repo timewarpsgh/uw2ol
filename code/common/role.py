@@ -320,36 +320,12 @@ class Role:
     def move(self, params):
         direction = params[0]
 
-        # basic 4 directions
-        if direction == 'up':
-            self.y -= c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'up'
-        elif direction == 'down':
-            self.y += c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'down'
-        elif direction == 'left':
-            self.x -= c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'left'
-        elif direction == 'right':
-            self.x += c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'right'
-        # additional 4 directions
-        elif direction == 'ne':
-            self.y -= c.PIXELS_COVERED_EACH_MOVE
-            self.x += c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'ne'
-        elif direction == 'nw':
-            self.y -= c.PIXELS_COVERED_EACH_MOVE
-            self.x -= c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'nw'
-        elif direction == 'se':
-            self.y += c.PIXELS_COVERED_EACH_MOVE
-            self.x += c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'se'
-        elif direction == 'sw':
-            self.y += c.PIXELS_COVERED_EACH_MOVE
-            self.x -= c.PIXELS_COVERED_EACH_MOVE
-            self.direction = 'sw'
+        # dx and dy
+        dx = c.MOVE_DX_DY[direction][0]
+        dy = c.MOVE_DX_DY[direction][1]
+        self.x += dx * c.PIXELS_COVERED_EACH_MOVE
+        self.y += dy * c.PIXELS_COVERED_EACH_MOVE
+        self.direction = direction
 
         # change image
         self.person_frame *= -1

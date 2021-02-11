@@ -3,13 +3,17 @@ by function
     travel
         sea npc ON
 
-            longer(all) routes from all 6 capitals (script ready to run at night)
+            longer(all) routes from all 6 capitals (script ready to run at night)  ON
                 lisbon OK
                 seville OK
                 genoa
                 istanbul
                 amsterdam
                 london
+
+            move efficiency ON
+
+            Hormuz
 
             can't sail from Belgrade
 

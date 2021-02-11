@@ -56,6 +56,17 @@ ALTERNATIVE_DIRECTIONS = {
     'se': ['right', 'down'],
     'sw': ['down', 'left'],
 }
+MOVE_DX_DY = {
+    'up': [0, -1],
+    'down': [0, 1],
+    'right': [1, 0],
+    'left': [-1, 0],
+    'ne': [1, -1],
+    'nw': [-1, -1],
+    'se': [1, 1],
+    'sw': [-1, 1],
+}
+
 MAX_ITEMS_IN_BAG = 30
 
 # in battle
