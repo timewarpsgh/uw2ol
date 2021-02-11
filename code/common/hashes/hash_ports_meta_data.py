@@ -1914,6 +1914,7 @@ hash_ports_meta_data = {
 		},
 	  },
 	  'tileset': 1,
+		'maid': 1,
 	},
 	31: {
 	  'name': 'Bristol',
@@ -2117,6 +2118,7 @@ hash_ports_meta_data = {
 		},
 	  },
 	  'tileset': 1,
+		'maid': 2,
 	},
 	34: {
 	  'name': 'Amsterdam',

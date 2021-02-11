@@ -72,7 +72,7 @@ class Game():
         # load assets
         self.font = None
         self.images = {}
-        self.load_assets()
+        self._load_assets()
         self.building_text = ''
 
         # NPCS
@@ -88,7 +88,7 @@ class Game():
         self.port_map = PortMap()
         self.sea_map = SeaMap()
 
-    def load_assets(self):
+    def _load_assets(self):
         # maps
                 # port
             # self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(29)
@@ -157,10 +157,10 @@ class Game():
 
     def update(self):
         """called each frame"""
-        self.process_input_events()
+        self._process_input_events()
         draw.draw(self)
 
-    def process_input_events(self):
+    def _process_input_events(self):
         # update ui
         time_delta = self.clock.tick(60) / 1000.0
         self.ui_manager.update(time_delta)

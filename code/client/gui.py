@@ -1017,7 +1017,7 @@ class MenuClickHandlerForPort():
             'Treat': self.bar.treat,
             'Meet': self.bar.meet,
             'Fire Mate': self.bar.fire_mate,
-            'Waitress': test,
+            'Waitress': self.bar.waitress,
             'Gamble': test,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -1362,6 +1362,9 @@ class Bar():
         self.game.button_click_handler. \
             make_input_boxes('fire_crew', ['count', 'ship_num'])
 
+    def treat(self):
+        self.game.building_text = f"Thank you for your hospitality, Captain {self.game.my_role.name}"
+
     def meet(self):
         # no mate
         if int(self.game.my_role.map) % 2 == 0:
@@ -1371,9 +1374,9 @@ class Bar():
         else:
             mate_id = int((int(self.game.my_role.map) + 1) / 2)
             mate = Mate(mate_id)
-            self.show_one_mate_to_hire(mate, mate_id)
+            self._show_one_mate_to_hire(mate, mate_id)
 
-    def show_one_mate_to_hire(self, mate, mate_id):
+    def _show_one_mate_to_hire(self, mate, mate_id):
         # dict
         duty_name = 'None'
         if mate.duty:
@@ -1407,21 +1410,21 @@ class Bar():
 
         # make actions menu
         dict1 = {
-            'Treat': [self.treat_mate, mate],
-            'Gossip': [self.gossip, mate],
-            'Hire': [self.hire_mate, mate_id],
+            'Treat': [self._treat_mate, mate],
+            'Gossip': [self._gossip, mate],
+            'Hire': [self._hire_mate, mate_id],
         }
         self.game.button_click_handler.make_menu(dict1)
 
-    def treat_mate(self, mate):
+    def _treat_mate(self, mate):
         message = 'Thank you!'
         mate_speak(self.game, mate, message)
 
-    def gossip(self, mate):
+    def _gossip(self, mate):
         message = "I miss the high seas. Just can't sleep well on land."
         mate_speak(self.game, mate, message)
 
-    def hire_mate(self, mate_id):
+    def _hire_mate(self, mate_id):
         self.game.button_click_handler. \
             make_input_boxes('hire_mate', ['mate id'], [str(mate_id)])
 
@@ -1429,8 +1432,30 @@ class Bar():
         self.game.button_click_handler. \
             make_input_boxes('fire_mate', ['mate num'])
 
-    def treat(self):
-        self.game.building_text = f"Thank you for your hospitality, Captain {self.game.my_role.name}"
+    def waitress(self):
+        port = self.game.my_role.get_port()
+        maid = port.get_maid()
+        if maid:
+            # speak
+            self._maid_speak(f"I'm {maid.name}. How are you?")
+
+            # menu
+            dict = {
+                'Ask Info': test,
+                'Investigate': test,
+                'Tell Story': test,
+            }
+            self.game.button_click_handler.make_menu(dict)
+        else:
+            self.game.building_text = "We don't have a maid here. Sorry."
+
+    def _maid_speak(self, msg):
+        port = self.game.my_role.get_port()
+        maid = port.get_maid()
+        figure_image_speak(self.game, maid.image[0], maid.image[1], msg)
+
+    def _ask_info(self):
+        pass
 
 class DryDock():
     def __init__(self, game):

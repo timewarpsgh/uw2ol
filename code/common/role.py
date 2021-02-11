@@ -16,6 +16,7 @@ from hashes.hash_markets_price_details import hash_markets_price_details
 from hashes.hash_special_goods import hash_special_goods
 from hashes.hash_paths import hash_paths
 from hashes.look_up_tables import capital_2_port_id
+from hashes.hash_maids import hash_maids
 
 # add relative directory to python_path
 import sys, os
@@ -1765,6 +1766,18 @@ class Port:
         self.x = hash_ports_meta_data[self.id]['x'] * c.PIXELS_COVERED_EACH_MOVE
         self.y = hash_ports_meta_data[self.id]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
+        if 'maid'in hash_ports_meta_data[self.id]:
+            self.maid_id = hash_ports_meta_data[self.id]['maid']
+        else:
+            self.maid_id = None
+
+    def get_maid(self):
+        if self.maid_id:
+            maid = Maid(self.maid_id)
+            return maid
+        else:
+            return None
+
     def get_available_ships(self):
         available_ships = hash_region_to_ships_available[self.economy_id]
         return available_ships
@@ -1796,7 +1809,6 @@ class Port:
 
 class Path:
     """read only. holds path from one port to another"""
-
     def __init__(self, start_port_id, end_port_id):
         self.list_of_points = hash_paths[start_port_id][end_port_id]
         self.point_id = 0
@@ -1810,6 +1822,14 @@ class Path:
         point = self.list_of_points[self.point_id]
 
         return point
+
+class Maid:
+    def __init__(self, id):
+        dic = hash_maids[id]
+        self.name = dic['name']
+        self.image = dic['image']
+
+
 
 def init_one_default_npc(name):
     # now role
