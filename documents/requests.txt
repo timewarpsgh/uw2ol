@@ -11,7 +11,9 @@ by function
                 amsterdam
                 london
 
-        port edges ON
+        night close and
+
+        no npc at night OK
 
 
     trade

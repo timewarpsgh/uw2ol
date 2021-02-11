@@ -60,7 +60,7 @@ def your_role_data_and_others(self, message_obj):
 
     if my_role.map.isdigit():
         port_index = int(my_role.map)
-        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index, self.time_of_day)
 
         # normal ports
         if port_index < 100:
@@ -111,7 +111,7 @@ def roles_in_new_map(self, message_obj):
     # if in port
     elif self.my_role.map.isdigit():
         port_index = int(self.my_role.map)
-        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index)
+        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index, self.time_of_day)
 
 def roles_disappeared(self, message_obj):
     """in delete grids"""

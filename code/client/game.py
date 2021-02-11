@@ -38,7 +38,6 @@ class Game():
         pygame.display.set_caption(c.CAPTION)
         self.screen_surface = pygame.display.set_mode([c.WINDOW_WIDTH, c.WINDOW_HIGHT])
         self.screen_surface_rect = self.screen_surface.get_rect()
-        # handle_pygame_event.init_key_mappings(self)
         self.movement = None
         self.map_maker = MapMaker()
         self.login_state_text = 'Please login or register.'
@@ -68,6 +67,7 @@ class Game():
         self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
         self.time_of_day_index = 0
         self.days_spent_at_sea = 0
+        self.time_of_day = 'day'
 
         # load assets
         self.font = None

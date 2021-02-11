@@ -1,5 +1,6 @@
 import pygame
 from twisted.internet import reactor, task
+import random
 
 # add relative directory to python_path
 import sys, os
@@ -176,8 +177,20 @@ def other_keys_down(self, event):
 
                 # make npcs
                 if port_id < 100:
-                    port_npc.init_static_npcs(self, port_id)
-                    port_npc.init_dynamic_npcs(self, port_id)
+                    self.time_of_day = random.choice(c.TIME_OF_DAY_OPTIONS)
+
+                    if self.time_of_day == 'night':
+                        self.dog = None
+                        self.old_man = None
+                        self.agent = None
+
+                        self.man = None
+                        self.woman = None
+                    else:
+                        port_npc.init_static_npcs(self, port_id)
+                        port_npc.init_dynamic_npcs(self, port_id)
+
+                # don't make
                 else:
                     self.dog = None
                     self.old_man = None
@@ -209,13 +222,6 @@ def other_keys_down(self, event):
 
     # developer keys
     if c.DEVELOPER_MODE_ON:
-
-        # # change and send keys
-        # if chr(event.key) in self.key_mappings:
-        #     cmd = self.key_mappings[chr(event.key)][0]
-        #     params = self.key_mappings[chr(event.key)][1]
-        #     self.change_and_send(cmd, params)
-
         # auto move
         if event.key == ord('o'):
             print('auto moving!')
