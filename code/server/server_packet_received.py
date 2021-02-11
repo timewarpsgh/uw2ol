@@ -166,9 +166,31 @@ def change_map(self, message_obj):
             conn.send('new_role', self.my_role)
 
 def _change_map_to_sea(self, now_map):
-    self.my_role.x = hash_ports_meta_data[int(now_map) + 1]['x'] * c.PIXELS_COVERED_EACH_MOVE
-    self.my_role.y = hash_ports_meta_data[int(now_map) + 1]['y'] * c.PIXELS_COVERED_EACH_MOVE
+    # set pos
+    port_tile_x = hash_ports_meta_data[int(now_map) + 1]['x']
+    port_tile_y = hash_ports_meta_data[int(now_map) + 1]['y']
 
+    self.my_role.x = port_tile_x * c.PIXELS_COVERED_EACH_MOVE
+    self.my_role.y = port_tile_y * c.PIXELS_COVERED_EACH_MOVE
+
+    matrix = self.factory.world_map_matrix
+    deltas = c.TILES_AROUND_PORTS
+    for delta in deltas:
+        test_tile_x = port_tile_x + delta[1]
+        test_tile_y = port_tile_y + delta[0]
+        if int(matrix[test_tile_y, test_tile_x]) in c.SAILABLE_TILES:
+            sailable = True
+            three_nearby_tiles = c.THREE_NEARBY_TILES_OF_UP_LEFT_TILE
+            for tile in three_nearby_tiles:
+                if not int(matrix[test_tile_y + tile[1], test_tile_x + tile[0]]) in c.SAILABLE_TILES:
+                    sailable = False
+                    break
+
+            if sailable:
+                self.my_role.x = test_tile_x * c.PIXELS_COVERED_EACH_MOVE
+                self.my_role.y = test_tile_y * c.PIXELS_COVERED_EACH_MOVE
+
+    # set speed
     fleet_speed = self.my_role.get_fleet_speed([])
     self.my_role.set_speed([str(fleet_speed)])
     self.my_role.set_speed([str(40)])

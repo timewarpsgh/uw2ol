@@ -5,6 +5,10 @@ from twisted.internet import reactor, threads, defer, task
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
+# add relative directory to python_path
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
+
 # import from common(dir)
 from protocol import MyProtocol
 from DBmanager import Database
@@ -14,6 +18,9 @@ from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
 from npc_manager import NpcManager
 from AOI_manager import AOIManager
+
+# import from client
+from map_maker import MapMaker
 
 class Echo(Protocol):
     def __init__(self, factory):
@@ -150,6 +157,11 @@ class Echo(Protocol):
 
 class EchoFactory(Factory):
     def __init__(self):
+        # world map matrix
+        map_maker = MapMaker()
+        map_maker.set_world_piddle()
+        self.world_map_matrix = map_maker.world_map_piddle
+
         # aoi
         self.aoi_manager = AOIManager()
         Role.AOI_MANAGER = self.aoi_manager

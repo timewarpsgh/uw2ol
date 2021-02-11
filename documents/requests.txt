@@ -13,8 +13,10 @@ by function
 
             Hormuz OK
 
-            can't sail from Belgrade ON
 
+            can't sail from Belgrade, cairo, london ON
+                change map to sea
+                    put on sailable tile
 
 
     trade
