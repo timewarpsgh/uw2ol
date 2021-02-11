@@ -84,4 +84,4 @@ if __name__ == '__main__':
         if i in [62, 65, 76, 77]:
             pass
         else:
-            finder.find_path(dict['lisbon'], i)
+            finder.find_path(dict['seville'], i)

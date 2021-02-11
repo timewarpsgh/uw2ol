@@ -4,6 +4,13 @@ by function
         sea npc ON
 
             longer(all) routes from all 6 capitals (script ready to run at night)
+                lisbon OK
+                seville OK
+                genoa
+                istanbul
+                amsterdam
+                london
+
             can't sail from Belgrade
 
 
