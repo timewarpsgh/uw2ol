@@ -6,8 +6,8 @@ by function
             longer(all) routes from all 6 capitals (script ready to run at night)  ON
                 lisbon OK
                 seville OK
-                genoa
-                istanbul
+                genoa OK
+                istanbul ON
                 amsterdam
                 london
 

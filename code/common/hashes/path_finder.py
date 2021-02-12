@@ -5,13 +5,9 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 
-
-# add relative directory to python_path
-# import sys, os
-# sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
-
 from hash_ports_meta_data import hash_ports_meta_data
 from hash_paths import hash_paths
+
 
 class PathFinder:
     def __init__(self):
@@ -62,26 +58,8 @@ if __name__ == '__main__':
     }
 
     # find
-    # print('~~~~~~~~~ from london to med')
-    # for i in range(1, 28):
-    #     finder.find_path(dict['london'], i)
-    #
-    # print('~~~~~~~~~ from london to west_africa')
-    # for i in range(58, 67):
-    #     finder.find_path(dict['london'], i)
-    #
-    # print('~~~~~~~~~ from london to east_africa')
-    # for i in range(67, 73):
-    #     finder.find_path(dict['london'], i)
-    #
-    # print('~~~~~~~~~ from london to east_africa')
-    # for i in range(73, 101):
-    #     finder.find_path(dict['london'], i)
-    #
-    # for capital in ['amsterdam', 'lisbon', 'seville', 'genoa', 'istanbul']:
-    #     print('~~~~~~~~~from amsterdam')
     for i in range(28, 101):
         if i in [62, 65, 76, 77]:
             pass
         else:
-            finder.find_path(dict['seville'], i)
+            finder.find_path(dict['genoa'], i)
