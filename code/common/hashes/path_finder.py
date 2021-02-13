@@ -58,8 +58,11 @@ if __name__ == '__main__':
     }
 
     # find
-    for i in range(28, 101):
+    for i in range(1, 28):
+        finder.find_path(dict['amsterdam'], i)
+
+    for i in range(43, 101):
         if i in [62, 65, 76, 77]:
             pass
         else:
-            finder.find_path(dict['istanbul'], i)
+            finder.find_path(dict['amsterdam'], i)
