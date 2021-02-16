@@ -7,6 +7,8 @@ by function
             investigate OK
             longitude and latitude OK
             carrying what OK
+            carry rand cargo  OK
+
 
 
     trade

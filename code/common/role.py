@@ -1864,13 +1864,15 @@ def init_one_default_npc(name):
     if fleet_sequence == 0 or fleet_sequence == 1:
         ship0 = Ship('0', 'Nao')
         ship0.crew = 25
-        ship0.add_cargo('Gold', 200)
+        cargo_name = _generate_rand_cargo_name()
+        ship0.add_cargo(cargo_name, 200)
         npc.ships.append(ship0)
         mate0.set_as_captain_of(ship0)
 
         ship1 = Ship('1', 'Nao')
         ship1.crew = 25
-        ship1.add_cargo('Gold', 200)
+        cargo_name = _generate_rand_cargo_name()
+        ship1.add_cargo(cargo_name, 200)
         npc.ships.append(ship1)
         mate1.set_as_captain_of(ship1)
 
@@ -1883,7 +1885,8 @@ def init_one_default_npc(name):
 
         ship1 = Ship('1', 'Nao')
         ship1.crew = 25
-        ship1.add_cargo('Gold', 200)
+        cargo_name = _generate_rand_cargo_name()
+        ship1.add_cargo(cargo_name, 200)
         npc.ships.append(ship1)
         mate1.set_as_captain_of(ship1)
 
@@ -1922,6 +1925,16 @@ def init_one_default_npc(name):
 
     # ret
     return npc
+
+def _generate_rand_cargo_name():
+    cargoes = hash_markets_price_details[0]
+    cargo_names = list(cargoes.keys())
+    cargo_name = random.choice(cargo_names)
+
+    if cargo_name == 'Available_items':
+        cargo_name = 'Gold'
+
+    return cargo_name
 
 def exit_battle(self, message_obj):
     """self is server echo"""
