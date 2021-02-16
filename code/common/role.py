@@ -1802,7 +1802,14 @@ class Port:
         return buy_price
 
     def get_commodity_sell_price(self, commodity_name):
+        # normal
         sell_price = hash_markets_price_details[self.economy_id][commodity_name][1]
+
+        # if it's special
+        specialty_name = hash_special_goods[self.id]['specialty']
+        if commodity_name == specialty_name:
+            sell_price = int(sell_price * 0.3)
+
         return sell_price
 
     def get_available_items_ids_for_sale(self):

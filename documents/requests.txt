@@ -3,7 +3,7 @@ by function
     travel OK
     trade ON
         available goods issue OK
-        specialty sell price ON
+        specialty sell price OK
 
     fight
 

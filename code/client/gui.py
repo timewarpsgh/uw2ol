@@ -1247,11 +1247,11 @@ class Market():
         for item_name in available_goods_dict:
             buy_price = port.get_commodity_buy_price(item_name)
             show_text = item_name + ' ' + str(buy_price)
-            dict[show_text] = [self.negotiate_for_price, [item_name,buy_price]]
+            dict[show_text] = [self._negotiate_for_price, [item_name,buy_price]]
 
         self.game.button_click_handler.make_menu(dict)
 
-    def negotiate_for_price(self, params):
+    def _negotiate_for_price(self, params):
         # params
         cargo_name = params[0]
         buy_price = params[1]
