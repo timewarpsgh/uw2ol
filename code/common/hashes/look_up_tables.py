@@ -23,3 +23,12 @@ capital_2_port_id = {
     'genoa': 9,
     'istanbul': 3,
 }
+
+nation_2_nation_id = {
+    'England': 1,
+    'Holland': 2,
+    'Portugal': 3,
+    'Spain': 4,
+    'Italy': 5,
+    'Turkey': 6,
+}

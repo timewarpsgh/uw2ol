@@ -8,10 +8,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # import from common(dir)
 from protocol import MyProtocol
 from DBmanager import Database
-from role import Role
+from role import Role, Port
 import role
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
+from hashes.look_up_tables import nation_2_nation_id
 import server_packet_received
 
 
@@ -387,8 +388,52 @@ def exit_battle(self, message_obj):
     role.exit_battle(self, message_obj)
 
 
-def _init_ships_states_in_battle(self):
-    pass
+def get_npc_info(self, message_obj):
+    nation = message_obj[0]
+    fleet_type = message_obj[1]
+
+    # get id list
+    nation_id = nation_2_nation_id[nation]
+    fleet_id_list_for_one_nation = list(range((nation_id - 1) * c.FLEET_COUNT_PER_NATION + 1, nation_id * c.FLEET_COUNT_PER_NATION + 1))
+
+    fleet_id_list_for_one_type = []
+    if fleet_type == 'merchant':
+        fleet_id_list_for_one_type.append(fleet_id_list_for_one_nation[0])
+        fleet_id_list_for_one_type.append(fleet_id_list_for_one_nation[1])
+    elif fleet_type == 'convoy':
+        fleet_id_list_for_one_type.append(fleet_id_list_for_one_nation[2])
+        fleet_id_list_for_one_type.append(fleet_id_list_for_one_nation[3])
+    elif fleet_type == 'battle':
+        fleet_id_list_for_one_type.append(fleet_id_list_for_one_nation[4])
+        fleet_id_list_for_one_type.append(fleet_id_list_for_one_nation[5])
+
+    # npc list
+    npc_list = []
+    for id in fleet_id_list_for_one_type:
+        npc = self.factory.npc_manager.get_npc_by_name(str(id))
+        npc_list.append(npc)
+
+    # prepare dic to send
+    dic = {}
+    for npc in npc_list:
+        # destination
+        destination_port_id = None
+        if npc.out_ward:
+            destination_port_id = npc.end_port_id
+        else:
+            destination_port_id = npc.start_port_id
+
+        des_port = Port(destination_port_id - 1)
+        destination = des_port.name
+
+        # dic
+        dic[npc.name] = {
+            'mate_name': npc.mates[0].name,
+            'position': [npc.x, npc.y],
+            'destination': destination,
+        }
+
+    self.send('npc_info', dic)
 
 
 ####################### call backs ###########################

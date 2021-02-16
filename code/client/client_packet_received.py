@@ -160,8 +160,16 @@ def new_roles_from_battle(self, message_obj):
     for name, role in new_roles_from_battle.items():
         self.other_roles[name] = role
 
-
 def target_too_far(self, message_obj):
     self.button_click_handler. \
         make_message_box("target too far!")
 
+def npc_info(self, message_obj):
+    dic = message_obj
+    names = []
+    for name in dic.keys():
+        names.append(dic[name]['destination'])
+
+    names_str = ','.join(names)
+
+    self.button_click_handler.menu_click_handler.port.bar._maid_speak(names_str)

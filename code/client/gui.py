@@ -1441,9 +1441,9 @@ class Bar():
 
             # menu
             dict = {
-                'Ask Info': test,
-                'Investigate': test,
-                'Tell Story': test,
+                'Ask Info': self._ask_info,
+                'Investigate': self._investigate,
+                'Tell Story': self._tell_story,
             }
             self.game.button_click_handler.make_menu(dict)
         else:
@@ -1455,7 +1455,35 @@ class Bar():
         figure_image_speak(self.game, maid.image[0], maid.image[1], msg)
 
     def _ask_info(self):
-        pass
+        self._maid_speak(f"Uhh... That's too personal.")
+
+    def _investigate(self):
+        dict = {
+            'England': [self.__nation_clicked, 'England'],
+            'Holland': [self.__nation_clicked, 'Holland'],
+            'Portugal': [self.__nation_clicked, 'Portugal'],
+            'Spain': [self.__nation_clicked, 'Spain'],
+            'Italy': [self.__nation_clicked, 'Italy'],
+            'Turkey': [self.__nation_clicked, 'Turkey'],
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def __nation_clicked(self, nation):
+        print(nation)
+        dict = {
+            'Merchant Fleet': [self.___send_request, [nation, 'merchant']],
+            'Convoy Fleet': [self.___send_request, [nation, 'convoy']],
+            'Battle Fleet': [self.___send_request, [nation, 'battle']],
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def ___send_request(self, params):
+        nation = params[0]
+        fleet_type = params[1]
+        self.game.connection.send('get_npc_info', [nation, fleet_type])
+
+    def _tell_story(self):
+        self._maid_speak(f"Wow! Interesting...")
 
 class DryDock():
     def __init__(self, game):

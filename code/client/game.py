@@ -52,7 +52,7 @@ class Game():
         self.translator = Translator()
 
         # gui
-        gui.init_gui(self)
+        self.gui = gui.init_gui(self)
 
         # connection
         self.connection = None

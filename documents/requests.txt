@@ -2,17 +2,9 @@
 by function
     travel
         sea npc ON
-
-            longer(all) routes from all 6 capitals (script ready to run at night)  ON
-                lisbon OK
-                seville OK
-                genoa OK
-                istanbul ON
-                amsterdam
-                london
-
+            longer(all) routes from all 6 capitals (script ready to run at night)  OK
         bar girl ON
-        ask fleet info
+            investigate
 
 
 
