@@ -167,6 +167,7 @@ def target_too_far(self, message_obj):
 def npc_info(self, message_obj):
     dic = message_obj
 
+    # get 3 lists
     names = []
     destinations = []
     positions = []
@@ -175,7 +176,19 @@ def npc_info(self, message_obj):
         destinations.append(dic[name]['destination'])
         positions.append(dic[name]['position'])
 
-    speak_str = f"{names[0]} is heading to {destinations[0]}. {names[1]} is heading to {destinations[1]}."
+    # calc longitude and latitude
+    for pos in positions:
+        x = int(pos[0] / c.PIXELS_COVERED_EACH_MOVE)
+        y = int(pos[1] / c.PIXELS_COVERED_EACH_MOVE)
+        longitude, latitude = _calc_longitude_and_latitude(x, y)
+        pos[0] = longitude
+        pos[1] = latitude
+
+    # maid speak
+    speak_str = f"{names[0]} is heading to {destinations[0]} " \
+                f"and his current location is about {positions[0][0]} {positions[0][1]}. " \
+                f"{names[1]} is heading to {destinations[1]} " \
+                f"and his current location is about {positions[1][0]} {positions[1][1]}."
     self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)
 
 def _calc_longitude_and_latitude(x, y):

@@ -5,7 +5,7 @@ by function
             longer(all) routes from all 6 capitals (script ready to run at night)  OK
         bar girl ON
             investigate OK
-            longitude and latitude ON
+            longitude and latitude OK
 
 
 

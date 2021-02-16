@@ -22,5 +22,15 @@ def _calc_longitude_and_latitude(x, y):
 
     return (longitude, latitude)
 
-a, b = _calc_longitude_and_latitude(500, 500)
-print(a, b)
+positions = [[900, 262], [600, 600]]
+
+for pos in positions:
+    x = pos[0]
+    y = pos[1]
+    longitude, latitude = _calc_longitude_and_latitude(x, y)
+    pos[0] = longitude
+    pos[1] = latitude
+
+
+
+print(positions)
