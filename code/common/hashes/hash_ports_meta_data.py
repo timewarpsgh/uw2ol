@@ -1,6 +1,7 @@
 hash_ports_meta_data = {
 	1: {
 	  'name': 'Lisbon',
+	  'maid': 16,
 	  'x': 840,
 	  'y': 358,
 	  'economy': 780,
@@ -152,6 +153,7 @@ hash_ports_meta_data = {
 	},
 	3: {
 	  'name': 'Istanbul',
+	  'maid': 15,
 	  'x': 1072,
 	  'y': 344,
 	  'economy': 810,
@@ -231,6 +233,7 @@ hash_ports_meta_data = {
 	},
 	4: {
 	  'name': 'Barcelona',
+	  'maid': 7,
 	  'x': 914,
 	  'y': 342,
 	  'economy': 590,
@@ -470,6 +473,7 @@ hash_ports_meta_data = {
 	},
 	8: {
 	  'name': 'Marseille',
+	  'maid': 19,
 	  'x': 932,
 	  'y': 326,
 	  'economy': 350,
@@ -540,6 +544,7 @@ hash_ports_meta_data = {
 	},
 	9: {
 	  'name': 'Genoa',
+	  'maid': 11,
 	  'x': 950,
 	  'y': 320,
 	  'economy': 750,
@@ -874,6 +879,7 @@ hash_ports_meta_data = {
 	},
 	14: {
 	  'name': 'Venice',
+	  'maid': 28,
 	  'x': 978,
 	  'y': 318,
 	  'economy': 740,
@@ -1057,6 +1063,7 @@ hash_ports_meta_data = {
 	},
 	17: {
 	  'name': 'Athens',
+	  'maid': 5,
 	  'x': 1044,
 	  'y': 366,
 	  'economy': 640,
@@ -1185,6 +1192,7 @@ hash_ports_meta_data = {
 	},
 	19: {
 	  'name': 'Alexandria',
+	  'maid': 1,
 	  'x': 1078,
 	  'y': 416,
 	  'economy': 720,
@@ -1665,6 +1673,7 @@ hash_ports_meta_data = {
 	},
 	27: {
 	  'name': 'Ceuta',
+	  'maid': 9,
 	  'x': 864,
 	  'y': 384,
 	  'economy': 85,
@@ -1710,6 +1719,7 @@ hash_ports_meta_data = {
 	},
 	28: {
 	  'name': 'Bordeaux',
+	  'maid': 8,
 	  'x': 890,
 	  'y': 314,
 	  'economy': 600,
@@ -1842,6 +1852,7 @@ hash_ports_meta_data = {
 	},
 	30: {
 	  'name': 'London',
+	  'maid': 17,
 	  'x': 900,
 	  'y': 262,
 	  'economy': 720,
@@ -1914,7 +1925,6 @@ hash_ports_meta_data = {
 		},
 	  },
 	  'tileset': 1,
-		'maid': 1,
 	},
 	31: {
 	  'name': 'Bristol',
@@ -2046,6 +2056,7 @@ hash_ports_meta_data = {
 	},
 	33: {
 	  'name': 'Antwerp',
+	  'maid': 3,
 	  'x': 934,
 	  'y': 258,
 	  'economy': 660,
@@ -2118,10 +2129,10 @@ hash_ports_meta_data = {
 		},
 	  },
 	  'tileset': 1,
-		'maid': 2,
 	},
 	34: {
 	  'name': 'Amsterdam',
+	  'maid': 2,
 	  'x': 936,
 	  'y': 248,
 	  'economy': 700,
@@ -2272,6 +2283,7 @@ hash_ports_meta_data = {
 	},
 	36: {
 	  'name': 'Hamburg',
+	  'maid': 13,
 	  'x': 960,
 	  'y': 244,
 	  'economy': 600,
@@ -2385,6 +2397,7 @@ hash_ports_meta_data = {
 	},
 	38: {
 	  'name': 'Stockholm',
+	  'maid': 27,
 	  'x': 1014,
 	  'y': 196,
 	  'economy': 480,
@@ -2592,6 +2605,7 @@ hash_ports_meta_data = {
 	},
 	41: {
 	  'name': 'Riga',
+	  'maid': 23,
 	  'x': 1042,
 	  'y': 218,
 	  'economy': 150,
@@ -2816,6 +2830,7 @@ hash_ports_meta_data = {
 	},
 	45: {
 	  'name': 'Havana',
+	  'maid': 14,
 	  'x': 376,
 	  'y': 502,
 	  'economy': 210,
@@ -2869,6 +2884,7 @@ hash_ports_meta_data = {
 	},
 	46: {
 	  'name': 'Margarita',
+	  'maid': 20,
 	  'x': 482,
 	  'y': 584,
 	  'economy': 40,
@@ -3339,6 +3355,7 @@ hash_ports_meta_data = {
 	},
 	54: {
 	  'name': 'Rio de Janeiro',
+	  'maid': 24,
 	  'x': 594,
 	  'y': 824,
 	  'economy': 45,
@@ -3666,6 +3683,7 @@ hash_ports_meta_data = {
 	},
 	60: {
 	  'name': 'San Jorge',
+	  'maid': 25,
 	  'x': 882,
 	  'y': 596,
 	  'economy': 210,
@@ -3834,6 +3852,7 @@ hash_ports_meta_data = {
 	},
 	63: {
 	  'name': 'Argin',
+	  'maid': 4,
 	  'x': 790,
 	  'y': 494,
 	  'economy': 200,
@@ -4062,6 +4081,7 @@ hash_ports_meta_data = {
 	},
 	67: {
 	  'name': 'Sofala',
+	  'maid': 26,
 	  'x': 1108,
 	  'y': 762,
 	  'economy': 390,
@@ -4688,6 +4708,7 @@ hash_ports_meta_data = {
 	},
 	78: {
 	  'name': 'Mecca',
+	  'maid': 21,
 	  'x': 1136,
 	  'y': 488,
 	  'economy': 500,
@@ -5137,6 +5158,7 @@ hash_ports_meta_data = {
 	},
 	86: {
 	  'name': 'Goa',
+	  'maid': 12,
 	  'x': 1342,
 	  'y': 536,
 	  'economy': 540,
@@ -5205,6 +5227,7 @@ hash_ports_meta_data = {
 	},
 	87: {
 	  'name': 'Malacca',
+	  'maid': 18,
 	  'x': 1506,
 	  'y': 606,
 	  'economy': 90,
@@ -5303,6 +5326,7 @@ hash_ports_meta_data = {
 	},
 	89: {
 	  'name': 'Banda',
+	  'maid': 6,
 	  'x': 1668,
 	  'y': 660,
 	  'economy': 45,
@@ -5808,6 +5832,7 @@ hash_ports_meta_data = {
 	},
 	98: {
 	  'name': 'Changan',
+	  'maid': 10,
 	  'x': 1560,
 	  'y': 388,
 	  'economy': 580,
@@ -5946,6 +5971,7 @@ hash_ports_meta_data = {
 	},
 	100: {
 	  'name': 'Nagasaki',
+	  'maid': 22,
 	  'x': 1676,
 	  'y': 402,
 	  'economy': 210,

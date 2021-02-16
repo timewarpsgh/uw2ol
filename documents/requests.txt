@@ -1,14 +1,16 @@
 
 by function
     travel
-        sea npc ON
-            longer(all) routes from all 6 capitals (script ready to run at night)  OK
+        sea npc OK
+            all routes  OK
+
         bar girl ON
             investigate OK
             longitude and latitude OK
             carrying what OK
             carry rand cargo  OK
 
+            all girls OK
 
 
     trade
