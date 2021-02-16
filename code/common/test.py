@@ -1,13 +1,26 @@
-new_deltas = [['-1', -1], 1, 1, '1', '1']
-
-for index, delta in enumerate(new_deltas):
-    if index == 0:
-        list = new_deltas[index]
-        for id, inner_delta in enumerate(list):
-            if isinstance(inner_delta, str):
-                list[id] = int(inner_delta) * 16
+def _calc_longitude_and_latitude(x, y):
+    # transform to longitude
+    longitude = None
+    if x >= 900 and x <= 1980:
+        longitude = int(( x - 900 )/6)
+        longitude = str(longitude) + 'e'
+    elif x > 1980:
+        longitude = int((900 + 2160 - x)/6)
+        longitude = str(longitude) + 'w'
     else:
-        if isinstance(delta, str):
-            new_deltas[index] = int(delta) * 16
+        longitude = int((900 - x)/6)
+        longitude = str(longitude) + 'w'
 
-print(new_deltas)
+    # transform to latitude
+    latitude = None
+    if y <= 640:
+        latitude = int((640 - y)/7.2)
+        latitude = str(latitude) + 'N'
+    else:
+        latitude = int((y - 640)/7.2)
+        latitude = str(latitude) + 'S'
+
+    return (longitude, latitude)
+
+a, b = _calc_longitude_and_latitude(500, 500)
+print(a, b)

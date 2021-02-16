@@ -166,10 +166,38 @@ def target_too_far(self, message_obj):
 
 def npc_info(self, message_obj):
     dic = message_obj
+
     names = []
+    destinations = []
+    positions = []
     for name in dic.keys():
-        names.append(dic[name]['destination'])
+        names.append(dic[name]['mate_name'])
+        destinations.append(dic[name]['destination'])
+        positions.append(dic[name]['position'])
 
-    names_str = ','.join(names)
+    speak_str = f"{names[0]} is heading to {destinations[0]}. {names[1]} is heading to {destinations[1]}."
+    self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)
 
-    self.button_click_handler.menu_click_handler.port.bar._maid_speak(names_str)
+def _calc_longitude_and_latitude(x, y):
+    # transform to longitude
+    longitude = None
+    if x >= 900 and x <= 1980:
+        longitude = int(( x - 900 )/6)
+        longitude = str(longitude) + 'e'
+    elif x > 1980:
+        longitude = int((900 + 2160 - x)/6)
+        longitude = str(longitude) + 'w'
+    else:
+        longitude = int((900 - x)/6)
+        longitude = str(longitude) + 'w'
+
+    # transform to latitude
+    latitude = None
+    if y <= 640:
+        latitude = int((640 - y)/7.2)
+        latitude = str(latitude) + 'N'
+    else:
+        latitude = int((y - 640)/7.2)
+        latitude = str(latitude) + 'S'
+
+    return (longitude, latitude)
