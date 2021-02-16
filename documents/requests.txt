@@ -4,6 +4,7 @@ by function
     trade ON
         available goods issue OK
         specialty sell price OK
+        refactor sell OK
 
     fight
 
