@@ -1,5 +1,6 @@
 import random
 import time
+import copy
 from threading import Timer
 from twisted.internet import reactor, task, defer
 import constants as c
@@ -1786,14 +1787,15 @@ class Port:
     def get_availbale_goods_dict(self):
         # normal goods
         available_goods_dict = hash_markets_price_details[self.economy_id]['Available_items']
+        temp_dict = copy.deepcopy(available_goods_dict)
 
         # special goods
         specialty_name = hash_special_goods[self.id]['specialty']
         buy_price = hash_special_goods[self.id]['price']
         if specialty_name != '0':
-            available_goods_dict[specialty_name] = [buy_price, 0]
+            temp_dict[specialty_name] = [buy_price, 0]
 
-        return available_goods_dict
+        return temp_dict
 
     def get_commodity_buy_price(self, commodity_name):
         buy_price = self.get_availbale_goods_dict()[commodity_name][0]

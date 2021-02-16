@@ -1,21 +1,9 @@
 
 by function
-    travel
-        sea npc OK
-            all routes  OK
-
-        bar girl ON
-            investigate OK
-            longitude and latitude OK
-            carrying what OK
-            carry rand cargo  OK
-
-            all girls OK
-
-
-    trade
-
-
+    travel OK
+    trade ON
+        available goods issue OK
+        specialty sell price ON
 
     fight
 
