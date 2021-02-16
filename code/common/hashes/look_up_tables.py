@@ -32,3 +32,12 @@ nation_2_nation_id = {
     'Italy': 5,
     'Turkey': 6,
 }
+
+nation_2_capital = {
+    'England': 'london',
+    'Holland': 'amsterdam',
+    'Portugal': 'lisbon',
+    'Spain': 'seville',
+    'Italy': 'genoa',
+    'Turkey': 'istanbul',
+}

@@ -17,6 +17,7 @@ from hashes.hash_special_goods import hash_special_goods
 from hashes.hash_paths import hash_paths
 from hashes.look_up_tables import capital_2_port_id
 from hashes.hash_maids import hash_maids
+from hashes.look_up_tables import nation_2_nation_id, nation_2_capital
 
 # add relative directory to python_path
 import sys, os
@@ -1859,7 +1860,7 @@ def init_one_default_npc(name):
     #     npc.mates[i].set_as_captain_of(ship)
 
     # 3 types of fleet
-    fleet_sequence = int(name) % c.FLEET_COUNT_PER_NATION
+    fleet_sequence = (int(name) - 1) % c.FLEET_COUNT_PER_NATION
     if fleet_sequence == 0 or fleet_sequence == 1:
         ship0 = Ship('0', 'Nao')
         ship0.crew = 25
@@ -1900,25 +1901,14 @@ def init_one_default_npc(name):
 
 
     # diff based on nation
-    nation_sequence = int(name) % c.NATION_COUNT
-    if nation_sequence == 0:
-        npc.mates[0].nation = 'England'
-        npc.start_port_id = capital_2_port_id['london']
-    elif nation_sequence == 1:
-        npc.mates[0].nation = 'Holland'
-        npc.start_port_id = capital_2_port_id['amsterdam']
-    elif nation_sequence == 2:
-        npc.mates[0].nation = 'Portugal'
-        npc.start_port_id = capital_2_port_id['lisbon']
-    elif nation_sequence == 3:
-        npc.mates[0].nation = 'Spain'
-        npc.start_port_id = capital_2_port_id['seville']
-    elif nation_sequence == 4:
-        npc.mates[0].nation = 'Italy'
-        npc.start_port_id = capital_2_port_id['genoa']
-    elif nation_sequence == 5:
-        npc.mates[0].nation = 'Turkey'
-        npc.start_port_id = capital_2_port_id['istanbul']
+    for nation in nation_2_nation_id.keys():
+        nation_id = nation_2_nation_id[nation]
+        fleet_id_list_for_one_nation = list(range((nation_id - 1) * c.FLEET_COUNT_PER_NATION + 1,
+                                                  nation_id * c.FLEET_COUNT_PER_NATION + 1))
+        if int(name) >= fleet_id_list_for_one_nation[0] and int(name) <= fleet_id_list_for_one_nation[-1]:
+            npc.mates[0].nation = nation
+            capital = nation_2_capital[nation]
+            npc.start_port_id = capital_2_port_id[capital]
 
     # test all england
     # npc.mates[0].nation = 'England'

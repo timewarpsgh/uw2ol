@@ -394,7 +394,8 @@ def get_npc_info(self, message_obj):
 
     # get id list
     nation_id = nation_2_nation_id[nation]
-    fleet_id_list_for_one_nation = list(range((nation_id - 1) * c.FLEET_COUNT_PER_NATION + 1, nation_id * c.FLEET_COUNT_PER_NATION + 1))
+    fleet_id_list_for_one_nation = list(range((nation_id - 1) * c.FLEET_COUNT_PER_NATION + 1,
+                                              nation_id * c.FLEET_COUNT_PER_NATION + 1))
 
     fleet_id_list_for_one_type = []
     if fleet_type == 'merchant':
@@ -426,11 +427,18 @@ def get_npc_info(self, message_obj):
         des_port = Port(destination_port_id - 1)
         destination = des_port.name
 
+        # cargo name
+        cargo_names = list(npc.ships[-1].cargoes.keys())
+        cargo_name = 'nothing'
+        if cargo_names:
+            cargo_name = cargo_names[0]
+
         # dic
         dic[npc.name] = {
             'mate_name': npc.mates[0].name,
             'position': [npc.x, npc.y],
             'destination': destination,
+            'cargo_name': cargo_name,
         }
 
     self.send('npc_info', dic)

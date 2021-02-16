@@ -171,10 +171,12 @@ def npc_info(self, message_obj):
     names = []
     destinations = []
     positions = []
+    cargoes = []
     for name in dic.keys():
         names.append(dic[name]['mate_name'])
         destinations.append(dic[name]['destination'])
         positions.append(dic[name]['position'])
+        cargoes.append(dic[name]['cargo_name'])
 
     # calc longitude and latitude
     for pos in positions:
@@ -185,9 +187,9 @@ def npc_info(self, message_obj):
         pos[1] = latitude
 
     # maid speak
-    speak_str = f"{names[0]} is heading to {destinations[0]} " \
+    speak_str = f"{names[0]}'s fleet, carrying {cargoes[0]}, is heading to {destinations[0]} " \
                 f"and his current location is about {positions[0][0]} {positions[0][1]}. " \
-                f"{names[1]} is heading to {destinations[1]} " \
+                f"{names[1]}'s fleet, carrying {cargoes[1]}, is heading to {destinations[1]} " \
                 f"and his current location is about {positions[1][0]} {positions[1][1]}."
     self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)
 

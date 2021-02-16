@@ -6,7 +6,7 @@ by function
         bar girl ON
             investigate OK
             longitude and latitude OK
-
+            carrying what OK
 
 
     trade
