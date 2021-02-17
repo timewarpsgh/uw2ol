@@ -203,6 +203,10 @@ def other_keys_down(self, event):
     if event.key == ord('f'):
         self.button_click_handler.menu_click_handler.cmds.enter_building()
 
+    # go ashore
+    if event.key == ord('g'):
+        self.button_click_handler.menu_click_handler.cmds.go_ashore()
+
     # battle
     if event.key == ord('b'):
         if self.my_role.enemy_name:

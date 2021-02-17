@@ -290,9 +290,9 @@ class ButtonClickHandler():
 
     def cmds(self):
         dict = {
-            'Enter Building (Z)': test,
-            'Enter Port (M)': self.menu_click_handler.cmds.enter_port,
-            'Go Ashore': self.menu_click_handler.cmds.go_ashore,
+            'Enter Building (F)': self.menu_click_handler.cmds.enter_building,
+            'Enter Port (M)': test,
+            'Go Ashore (G)': self.menu_click_handler.cmds.go_ashore,
             'Battle (B)': test,
         }
         self.make_menu(dict)
@@ -743,10 +743,6 @@ class MenuClickHandlerForCmds():
     def __init__(self, game):
         self.game = game
 
-    # def set_target(self):
-    #     self.game.button_click_handler. \
-    #         make_input_boxes('set_target', ['target name'])
-
     def enter_building(self):
         # get my now position in piddle
         x = int(self.game.my_role.x/c.PIXELS_COVERED_EACH_MOVE)
@@ -798,14 +794,14 @@ class MenuClickHandlerForCmds():
                     if port.name == pending_event.port:
                         if building == pending_event.building or pending_event.building == 'any':
                             print(pending_event.dialogues)
-                            self.present_event(pending_event)
+                            self._present_event(pending_event)
                             self.game.change_and_send('trigger_quest', [])
 
                 return
 
         print('no building to enter')
 
-    def present_event(self, event):
+    def _present_event(self, event):
         dialogues = event.dialogues
         figure_images = event.figure_images
 

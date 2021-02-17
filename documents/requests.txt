@@ -11,7 +11,7 @@ by structure
         ships OK
         mates LATER
         items OK
-        cmds
+        cmds OK
         options
 
 
