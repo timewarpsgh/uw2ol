@@ -6,10 +6,7 @@ by function
         supply OK
         crew OK
         item OK
-        ship
-            buy OK
-            sell
-
+        ship OK
 
 
     fight

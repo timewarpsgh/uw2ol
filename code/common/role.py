@@ -21,8 +21,6 @@ from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital
 
 # add relative directory to python_path
-import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'server'))
 
 
 class Role:
@@ -773,13 +771,15 @@ class Role:
                 if ship.price <= self.gold:
                     self.ships.append(ship)
                     self.gold -= ship.price
-
-                    print('now ships:', len(self.ships))
+                # can't afford
+                else:
+                    if self.is_in_client_and_self():
+                        self.GAME.building_text = "Get the ** out of here! You can't afford this."
 
     def sell_ship(self, params):
         num = params[0]
 
-        if self.ships[num] and len(self.ships) >= 2:
+        if self.ships[num] and num != 0:
             self.gold += int(self.ships[num].price / 2)
             if self.ships[num].captain:
                 self.ships[num].captain.relieve_duty()

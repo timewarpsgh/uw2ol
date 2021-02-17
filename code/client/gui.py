@@ -426,63 +426,9 @@ class MenuClickHandlerForShips():
         dict = {}
         index = 0
         for ship in ships:
-            dict[str(index)] = [self.show_one_ship, [ship, target, index]]
+            dict[str(index)] = [_show_one_ship, [self, ship, target, index]]
             index += 1
         self.game.button_click_handler.make_menu(dict)
-
-    def show_one_ship(self, params):
-        # get param
-        ship = params[0]
-        target = params[1]
-        ship_id = params[2]
-
-        # dict
-        captain_name = 'None'
-        if ship.captain:
-            captain_name = ship.captain.name
-
-        speed = 1
-        if ship_id == 0:
-            speed = ship.get_speed(self.game.my_role)
-        else:
-            speed = ship.get_speed()
-
-        dict = {
-            'name': f'{ship.name}  type:{ship.type}  captain:{captain_name}',
-            '1': '',
-            'tacking': f'{ship.tacking}  power:{ship.power}  speed:{speed} knots',
-            'durability': f'{ship.now_hp}/{ship.max_hp}',
-            '2': '',
-            'capacity': f'{ship.capacity}',
-            'max_guns': f'{ship.max_guns}',
-            'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
-            '3': '',
-            'affective_capacity': f'{ship.useful_capacity}',
-        }
-
-        # if no target selected
-        if not target:
-            # supply
-            dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']}" \
-                               f" L{ship.supplies['Lumber']} S{ship.supplies['Shot']} "
-
-            # cargo
-            cargoes_dict = ship.cargoes
-            for cargo_name, count in cargoes_dict.items():
-                dict['supplies'] +=  cargo_name + ':' + str(count)
-
-        # make text from dict
-        text = ''
-        for k, v in dict.items():
-            if k.isdigit():
-                text += f'<br>'
-            else:
-                text += f'{k}:{v}<br>'
-
-        # make window
-        ship_image = self.game.images['ships'][ship.type.lower()]
-        PanelWindow(pygame.Rect((59, 12), (350, 400)),
-                    self.game.ui_manager, text, self.game, ship_image)
 
     def swap_ships(self):
         self.game.button_click_handler.make_input_boxes('swap_ships', ['from ship num', 'to ship num'])
@@ -1555,14 +1501,53 @@ class DryDock():
                     self.game.ui_manager, text, self.game, ship_image)
 
     def repair(self):
-        self.game.change_and_send('repair_all', [])
-        self.game.building_text = "All your ships have been repaired! " \
-                                  "It's free. Just remember to " \
-                                  "come back to me when you want more ships."
+        # calcu need_to_repair
+        need_to_repair = False
+        ships = self.game.my_role.ships
+        for s in ships:
+            if s.now_hp < s.max_hp:
+                need_to_repair = True
+                break
+
+        # if need
+        if need_to_repair:
+            self.game.change_and_send('repair_all', [])
+            self.game.building_text = "All your ships have been repaired! " \
+                                      "It's free. Just remember to " \
+                                      "come back to me when you want more ships."
+        else:
+            self.game.building_text = "All your ships are in perfect shape."
+
 
     def sell_ship(self):
-        self.game.button_click_handler. \
-            make_input_boxes('sell_ship', ['num'])
+        dict = {}
+        index = 0
+        for ship in self.game.my_role.ships:
+            dict[str(index)] = [self._ship_id_clicked, index]
+            index += 1
+        self.game.button_click_handler.make_menu(dict)
+
+    def _ship_id_clicked(self , ship_id):
+        # show ship panel
+        params = [self, self.game.my_role.ships[ship_id], False, ship_id]
+        _show_one_ship(params)
+        price = int(self.game.my_role.ships[ship_id].price / 2)
+        self.game.building_text = f"I can pay {price} for this one."
+
+        # show ok menu
+        dict = {
+            'OK': [self._sell, ship_id]
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def _sell(self, id):
+        escape_thrice(self.game)
+        reactor.callLater(0.3, self.sell_ship)
+        if id == 0:
+            self.game.building_text = "You can't sell your flag ship."
+        else:
+            self.game.building_text = "We'll take good care of her!"
+            self.game.change_and_send('sell_ship', [id])
 
     def remodel(self):
         dict = {
@@ -1960,3 +1945,58 @@ def show_one_item(params):
     # make window
     PanelWindow(pygame.Rect((59, 50), (350, 400)),
                 self.game.ui_manager, text, self.game, figure_surface)
+
+def _show_one_ship(params):
+    # get param
+    self = params[0]
+    ship = params[1]
+    target = params[2]
+    ship_id = params[3]
+
+    # dict
+    captain_name = 'None'
+    if ship.captain:
+        captain_name = ship.captain.name
+
+    speed = 1
+    if ship_id == 0:
+        speed = ship.get_speed(self.game.my_role)
+    else:
+        speed = ship.get_speed()
+
+    dict = {
+        'name': f'{ship.name}  type:{ship.type}  captain:{captain_name}',
+        '1': '',
+        'tacking': f'{ship.tacking}  power:{ship.power}  speed:{speed} knots',
+        'durability': f'{ship.now_hp}/{ship.max_hp}',
+        '2': '',
+        'capacity': f'{ship.capacity}',
+        'max_guns': f'{ship.max_guns}',
+        'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
+        '3': '',
+        'affective_capacity': f'{ship.useful_capacity}',
+    }
+
+    # if no target selected
+    if not target:
+        # supply
+        dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']}" \
+                           f" L{ship.supplies['Lumber']} S{ship.supplies['Shot']} "
+
+        # cargo
+        cargoes_dict = ship.cargoes
+        for cargo_name, count in cargoes_dict.items():
+            dict['supplies'] +=  cargo_name + ':' + str(count)
+
+    # make text from dict
+    text = ''
+    for k, v in dict.items():
+        if k.isdigit():
+            text += f'<br>'
+        else:
+            text += f'{k}:{v}<br>'
+
+    # make window
+    ship_image = self.game.images['ships'][ship.type.lower()]
+    PanelWindow(pygame.Rect((59, 12), (350, 400)),
+                self.game.ui_manager, text, self.game, ship_image)
