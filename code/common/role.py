@@ -805,8 +805,10 @@ class Role:
         ship = self.ships[to_which_ship]
         # if can hold crew
         if ship.crew + count <= ship.max_crew:
-            ship.add_crew(count)
-            print(self.name, "ship", to_which_ship, "now has crew:", self.ships[to_which_ship].crew)
+            total_cost = count * c.CREW_UNIT_COST
+            if total_cost <= self.gold:
+                ship.add_crew(count)
+                self.gold -= total_cost
 
     def fire_crew(self, params):
         count = params[0]

@@ -1351,6 +1351,8 @@ class Bar():
         self.game = game
 
     def recruit_crew(self):
+        self.game.building_text = f"Who wants to sail with Captain {self.game.my_role.name}? " \
+                                  f"Each of you will get {c.CREW_UNIT_COST} coins."
         self.game.button_click_handler. \
             make_input_boxes('hire_crew', ['count', 'ship_num'])
 

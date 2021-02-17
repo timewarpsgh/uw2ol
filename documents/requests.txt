@@ -4,7 +4,7 @@ by function
     trade ON
         cargo OK
         supply OK
-        crew
+        crew OK
         ship
         item
 
