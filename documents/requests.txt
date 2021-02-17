@@ -1,17 +1,21 @@
 
 by function
     travel OK
-    trade ON
-        cargo OK
-        supply OK
-        crew OK
-        item OK
-        ship OK
+    trade OK
 
-
-    fight
-        shooting needs shots ON
+    fight LATER
+        shooting needs shots
 
 by structure
+    buttons on interface ON
+        ships OK
+        mates LATER
+        items OK
+        cmds
+        options
+
+
+
+
+
     buildings
-    buttons on interface

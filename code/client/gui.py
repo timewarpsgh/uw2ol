@@ -279,7 +279,7 @@ class ButtonClickHandler():
 
     def on_button_click_items(self):
         dict = {
-            'Equipments': self.menu_click_handler.items.on_menu_click_equipments,
+            'Equipments': self.menu_click_handler.items.equipments,
             'Items': self.menu_click_handler.items.on_menu_click_items,
             'Discoveries': self.menu_click_handler.items.on_menu_click_discoveries,
             'Diary': self.menu_click_handler.items.diary,
@@ -597,7 +597,7 @@ class MenuClickHandlerForItems():
     def __init__(self, game):
         self.game = game
 
-    def on_menu_click_equipments(self):
+    def equipments(self):
         equipments_dict = self.game.my_role.body.container
 
         dict = {}
@@ -623,7 +623,7 @@ class MenuClickHandlerForItems():
     def _unequip_item_clicked(self, item):
         self.game.change_and_send('unequip', [item.id])
         escape_thrice(self.game)
-        reactor.callLater(0.3, self.on_menu_click_equipments)
+        reactor.callLater(0.3, self.equipments)
 
     def on_menu_click_items(self):
         # show bag load (e.g: 8/10)
@@ -665,64 +665,63 @@ class MenuClickHandlerForItems():
         reactor.callLater(0.3, self.on_menu_click_items)
 
     def on_menu_click_discoveries(self):
-
-        # sub
-        def show_one_discovery(discovery):
-            # dict
-            dict = {
-                'name': discovery.name,
-                'description': discovery.description,
-            }
-
-            # make text from dict
-            text = ''
-            for k, v in dict.items():
-                text += f'{v}<br>'
-
-            # get figure image
-            figure_surface = item_x_y_2_image(self.game, discovery.image_x, discovery.image_y)
-
-            # make window
-            PanelWindow(pygame.Rect((59, 50), (350, 400)),
-                        self.game.ui_manager, text, self.game, figure_surface)
-
-        # do
         my_discoveries = self.game.my_role.discoveries
         dict = {}
         for id in my_discoveries:
             discovery = Discovery(id)
-            dict[discovery.name] = [show_one_discovery, discovery]
+            dict[discovery.name] = [self._show_one_discovery, discovery]
         self.game.button_click_handler.make_menu(dict)
+
+    def _show_one_discovery(self, discovery):
+        # dict
+        dict = {
+            'name': discovery.name,
+            'description': discovery.description,
+        }
+
+        # make text from dict
+        text = ''
+        for k, v in dict.items():
+            text += f'{v}<br>'
+
+        # get figure image
+        figure_surface = item_x_y_2_image(self.game, discovery.image_x, discovery.image_y)
+
+        # make window
+        PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                    self.game.ui_manager, text, self.game, figure_surface)
 
     def diary(self):
         dict = {
-            'Discovery': self.discovery,
-            'Trade': test,
-            'Fight': test,
-            'Abandon Quest': self.abandon_quest,
+            'Quest Log': self._quest_log,
+            'Abandon Quest': self._abandon_quest,
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def discovery(self):
+    def _quest_log(self):
         discovery_quest_id = self.game.my_role.quest_discovery
         if discovery_quest_id:
             discovery = Discovery(discovery_quest_id)
-            self.game.button_click_handler.make_message_box(f""
-                 f"On quest to investigate {discovery.longitude} {discovery.latitude}")
+            msg = f"On quest to investigate {discovery.longitude} {discovery.latitude}"
+            i_speak(self.game, msg)
         else:
-            self.game.button_click_handler.make_message_box("No quest.")
+            msg = f"I have no quest."
+            i_speak(self.game, msg)
 
-    def abandon_quest(self):
+    def _abandon_quest(self):
         dict = {
-            'Abandon Discovery Quest': self.abandon_discovery_quest,
-            'Abandon Trade Quest': test,
-            'Abandon Fight Quest': test,
+            'OK': self.__do_abandon,
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def abandon_discovery_quest(self):
-        self.game.change_and_send('give_up_discovery_quest', [])
-        self.game.button_click_handler.make_message_box("Quest abandoned.")
+    def __do_abandon(self):
+        if self.game.my_role.have_quest():
+            self.game.change_and_send('give_up_discovery_quest', [])
+            msg = f"Quest abandoned."
+            i_speak(self.game, msg)
+        else:
+            msg = f"I have no quest to abandon."
+            i_speak(self.game, msg)
 
     def world_map(self):
         world_map_grids_image = self.game.images['world_map_grids']
@@ -1575,16 +1574,16 @@ class JobHouse:
         self.game.building_text = "Don't know what to do? I have a few suggestions for you."
 
         dict = {
-            'Discovery':self.discovery,
-            'Trade':self.trade,
-            'Fight':test,
+            'Discover':self._discover,
+            'Trade':self._trade,
+            'Fight':self._fight,
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def discovery(self):
+    def _discover(self):
         # if have quest already
         role = self.game.my_role
-        if role.quest_discovery:
+        if role.have_quest():
             # quest done
             if role.quest_discovery in role.discoveries:
                 self.game.change_and_send('submit_discovery_quest', [])
@@ -1601,36 +1600,34 @@ class JobHouse:
             # discovery_id = 48 (stonehenge, near london, for testing)
             discovery = Discovery(discovery_id)
 
-            # make menu
-            dict = {
-                'OK':[self.start_discovery_quest, discovery_id],
-                'Maybe Later':test,
-            }
-            self.game.button_click_handler.make_menu(dict)
-
             # show message
             self.game.button_click_handler. \
                 make_message_box("I heard there's something "
                                  f"interesting at {discovery.longitude} {discovery.latitude}. "
                                  f"Would you like to go and investigate?")
 
-    def start_discovery_quest(self, discovery_id):
+            # make menu
+            dict = {
+                'OK': [self.__start_discovery_quest, discovery_id],
+            }
+            self.game.button_click_handler.make_menu(dict)
+
+    def __start_discovery_quest(self, discovery_id):
         self.game.change_and_send('start_discovery_quest', [discovery_id])
-        self.game.button_click_handler.make_message_box("Quest started.")
+        self.game.button_click_handler.make_message_box("Quest accepted.")
 
-
-    def trade(self):
+    def _trade(self):
         dict = {
-            'A':self.a,
-            'B':self.b,
-            'C':self.c,
-            'D': self.d,
-            'E': self.e,
-            'F': self.f,
+            'A':self.__a,
+            'B':self.__b,
+            'C':self.__c,
+            'D': self.__d,
+            'E': self.__e,
+            'F': self.__f,
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def a(self):
+    def __a(self):
         glass_beads_text = "Kids in West and East Africa are crazy about glass beads. " \
                            "Amsterdam produces tons of them. You can also get " \
                            "them from the mediterranean."
@@ -1644,7 +1641,7 @@ class JobHouse:
 
         self.game.button_click_handler.make_menu(dict)
 
-    def b(self):
+    def __b(self):
         sleepy_text = "You can get tobacco from Havana or Caracas for about 35 gold coins each " \
                      "and sell them for about 250 in the Far East. " \
                    "You can get tea from India or the Far East for about 20 gold coins each " \
@@ -1662,7 +1659,7 @@ class JobHouse:
 
         self.game.button_click_handler.make_menu(dict)
 
-    def c(self):
+    def __c(self):
         text = "You can get coral from South East Asia for about 50 gold coins each " \
                     "and sell them for about 280 in Europe. " \
                "You can get ivory from some Afrian ports for about 70 gold coins each " \
@@ -1676,7 +1673,7 @@ class JobHouse:
 
         self.game.button_click_handler.make_menu(dict)
 
-    def d(self):
+    def __d(self):
         text = "You can get velvet from Iberia for about 80 gold coins each " \
                     "and sell them for about 310 in the Far East. " \
                "You can get amber from Aden for about 100 gold coins each " \
@@ -1690,7 +1687,7 @@ class JobHouse:
 
         self.game.button_click_handler.make_menu(dict)
 
-    def e(self):
+    def __e(self):
         text = "You can get glassware from Venice or Copenhagen for about 180 gold coins each " \
                     "and sell them for about 450 in the Far East. " \
 
@@ -1700,7 +1697,7 @@ class JobHouse:
 
         self.game.button_click_handler.make_menu(dict)
 
-    def f(self):
+    def __f(self):
         text = "You can get gold from Africa, Veracruz or Rio de Janeiro " \
                     "and sell them for about 1100 in Northern Europe. " \
                     "But, please be cautious. There are pirates out there."
@@ -1710,6 +1707,11 @@ class JobHouse:
         }
 
         self.game.button_click_handler.make_menu(dict)
+
+    def _fight(self):
+        text = "I don't have much information on that. " \
+               "But why don't you talk with the bar girls?"
+        self.game.building_text = text
 
     def contry_info(self):
         self.game.building_text = "Well...Don't worry about that."
@@ -1901,6 +1903,18 @@ def item_x_y_2_image(game, x, y):
 def mate_speak(game, mate, message):
     # make text from dict
     text = message
+
+    # get figure image
+    figure_surface = figure_x_y_2_image(game, mate.image_x, mate.image_y)
+
+    # make window
+    PanelWindow(pygame.Rect((59, 50), (350, 400)),
+                game.ui_manager, text, game, figure_surface)
+
+def i_speak(game, message):
+    # make text from dict
+    text = message
+    mate = game.my_role.mates[0]
 
     # get figure image
     figure_surface = figure_x_y_2_image(game, mate.image_x, mate.image_y)

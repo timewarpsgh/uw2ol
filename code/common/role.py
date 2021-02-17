@@ -174,6 +174,12 @@ class Role:
         else:
             return False
 
+    def have_quest(self):
+        if self.quest_discovery:
+            return True
+        else:
+            return False
+
     def get_map_id(self):
         return int(self.map)
 
