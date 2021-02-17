@@ -1138,27 +1138,12 @@ class Harbor():
 
         # make menu
         dict = {
-            'OK':self.sail_ok,
+            'OK':self._sail_ok,
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def sail_ok(self):
-
-        # def
-        def pass_one_day_at_sea(self):
-            if self.my_role.map == 'sea':
-
-                # pass peacefully
-                if self.days_spent_at_sea <= self.max_days_at_sea:
-                    self.days_spent_at_sea += 1
-
-                # starved!
-                else:
-                    self.timer_at_sea.stop()
-                    self.connection.send('change_map', ['29'])
-
-        # main
-            # mate0 must be on the flag ship
+    def _sail_ok(self):
+        # mate0 must be on the flag ship
         role = self.game.my_role
         if not role.ships:
             mate_speak(self.game, role.mates[0], "How do I sail without a ship?")
@@ -1195,36 +1180,51 @@ class Harbor():
             self.game.max_days_at_sea = self.game.my_role.calculate_max_days_at_sea()
             self.game.days_spent_at_sea = 0
             # timer
-            self.game.timer_at_sea = task.LoopingCall(pass_one_day_at_sea, self.game)
+            self.game.timer_at_sea = task.LoopingCall(self.__pass_one_day_at_sea, self.game)
             self.game.timer_at_sea.start(c.ONE_DAY_AT_SEA_IN_SECONDS)
 
             # lose menu
             if len(self.game.menu_stack) >= 1:
                 escape_twice(self.game)
 
+    def __pass_one_day_at_sea(self, game):
+        if game.my_role.map == 'sea':
+
+            # pass peacefully
+            if game.days_spent_at_sea <= game.max_days_at_sea:
+                game.days_spent_at_sea += 1
+
+            # starved!
+            else:
+                game.timer_at_sea.stop()
+                game.connection.send('change_map', ['29'])
+
     def load_supply(self):
+        self.game.building_text = "Everything is 5 coins each. " \
+                                  "Once set, we refill your ships based on the configurations " \
+                                  "immediately after you enter any port."
         dict = {
-            'Food':[self.load, 'Food'],
-            'Water':[self.load, 'Water'],
-            'Lumber':[self.load, 'Lumber'],
-            'Shot':[self.load, 'Shot'],
+            'Food':[self._load, 'Food'],
+            'Water':[self._load, 'Water'],
+            'Lumber':[self._load, 'Lumber'],
+            'Shot':[self._load, 'Shot'],
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def load(self, item_name):
+    def _load(self, item_name):
         self.game.button_click_handler.\
             make_input_boxes('load_supply', ['supply name', 'count', 'ship num'], [item_name])
 
     def unload_supply(self):
         dict = {
-            'Food':[self.unload, 'Food'],
-            'Water':[self.unload, 'Water'],
-            'Lumber':[self.unload, 'Lumber'],
-            'Shot':[self.unload, 'Shot'],
+            'Food':[self._unload, 'Food'],
+            'Water':[self._unload, 'Water'],
+            'Lumber':[self._unload, 'Lumber'],
+            'Shot':[self._unload, 'Shot'],
         }
         self.game.button_click_handler.make_menu(dict)
 
-    def unload(self, item_name):
+    def _unload(self, item_name):
         self.game.button_click_handler.\
             make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'], [item_name])
 

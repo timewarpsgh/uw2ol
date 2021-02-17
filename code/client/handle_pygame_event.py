@@ -165,7 +165,7 @@ def other_keys_down(self, event):
 
     # change map to sea
     if event.key == ord('n'):
-        self.button_click_handler.menu_click_handler.port.port.sail_ok()
+        self.button_click_handler.menu_click_handler.port.port._sail_ok()
 
     # change map to port
     elif event.key == ord('m'):

@@ -3,14 +3,14 @@ by function
     travel OK
     trade ON
         cargo OK
-        supply
+        supply OK
         crew
         ship
         item
 
 
     fight
-
+        shooting needs shots ON
 
 by structure
     buildings
