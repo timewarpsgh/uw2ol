@@ -5,8 +5,11 @@ by function
         cargo OK
         supply OK
         crew OK
+        item OK
         ship
-        item
+            buy OK
+            sell
+
 
 
     fight

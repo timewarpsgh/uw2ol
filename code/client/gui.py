@@ -1488,10 +1488,13 @@ class DryDock():
         self.game = game
 
     def new_ship(self):
-        self.game.building_text = "No, kid. You don't to build a ship from scratch. " \
+        self.game.building_text = "No, kid. You don't want to build a ship from scratch. " \
                                   "It takes too much time and resource. Just grab a used one."
 
     def used_ship(self):
+        # speak
+        self.game.building_text = "Have a look. These are the kinds of ships we offer."
+
         # prepare dict
         dict = {}
 
@@ -1517,8 +1520,9 @@ class DryDock():
         self.game.button_click_handler.make_menu(dict)
 
     def _do_buy_ship(self, type):
-        self.game.button_click_handler. \
-            make_input_boxes('buy_ship', ['type', 'name'], [type])
+        escape_twice(self.game)
+        reactor.callLater(0.3, self.game.button_click_handler. \
+            make_input_boxes, 'buy_ship', ['type', 'name'], [type])
 
     def _show_used_ship(self, params):
         # get param
@@ -1552,8 +1556,9 @@ class DryDock():
 
     def repair(self):
         self.game.change_and_send('repair_all', [])
-        self.game.button_click_handler. \
-            make_message_box('all ships repaired!')
+        self.game.building_text = "All your ships have been repaired! " \
+                                  "It's free. Just remember to " \
+                                  "come back to me when you want more ships."
 
     def sell_ship(self):
         self.game.button_click_handler. \
@@ -1561,7 +1566,7 @@ class DryDock():
 
     def remodel(self):
         dict = {
-            'Capacity':self.remodel_capacity,
+            'Capacity':self._remodel_capacity,
             'Weapon':test,
             'Figure':test,
             'Name': test,
@@ -1569,7 +1574,7 @@ class DryDock():
         self.game.button_click_handler.make_menu(dict)
 
 
-    def remodel_capacity(self):
+    def _remodel_capacity(self):
         self.game.button_click_handler. \
             make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
 
@@ -1868,10 +1873,6 @@ class ItemShop:
         # building speak
         self.game.building_text = 'Thank you!'
 
-
-def escape_n_times_at_once(game, n):
-    for i in range(n):
-        handle_pygame_event.escape(game, '')
 
 def escape_twice(game):
     handle_pygame_event.escape(game, '')

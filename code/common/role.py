@@ -795,7 +795,7 @@ class Role:
         max_crew = params[1]
         max_guns = params[2]
 
-        self.ships[ship_num].remodel_capacity(max_crew, max_guns)
+        self.ships[ship_num]._remodel_capacity(max_crew, max_guns)
 
     # bar
     def hire_crew(self, params):
