@@ -1280,8 +1280,11 @@ class Market():
 
         # buy button
         def buy(cargo_name):
-            self.game.button_click_handler. \
-                make_input_boxes('buy_cargo', ['cargo name', 'count', 'ship num'], [cargo_name])
+            escape_twice(self.game)
+            reactor.callLater(0.3, self.game.button_click_handler. \
+                make_input_boxes, 'buy_cargo',
+                              ['cargo name', 'count', 'ship num'],
+                              [cargo_name])
 
         dict = {
             'Buy': [buy, cargo_name]
@@ -1331,8 +1334,11 @@ class Market():
 
         # sell button
         def sell(cargo_name):
-            self.game.button_click_handler. \
-                make_input_boxes('sell_cargo', ['cargo name', 'ship num', 'count'], [cargo_name, str(index)])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self.game.button_click_handler. \
+                make_input_boxes, 'sell_cargo',
+                              ['cargo name', 'ship num', 'count'],
+                              [cargo_name, str(index)])
 
         dict = {
             'Sell': [sell, cargo_name]
@@ -1860,6 +1866,10 @@ class ItemShop:
         # building speak
         self.game.building_text = 'Thank you!'
 
+
+def escape_n_times_at_once(game, n):
+    for i in range(n):
+        handle_pygame_event.escape(game, '')
 
 def escape_twice(game):
     handle_pygame_event.escape(game, '')

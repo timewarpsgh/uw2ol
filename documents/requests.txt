@@ -2,9 +2,12 @@
 by function
     travel OK
     trade ON
-        available goods issue OK
-        specialty sell price OK
-        refactor sell OK
+        cargo OK
+        supply
+        crew
+        ship
+        item
+
 
     fight
 
