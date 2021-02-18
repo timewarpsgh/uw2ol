@@ -1,9 +1,17 @@
-import random
-import time
+from role import *
 
-li = list(range(10))
+class AA:
+    def __init__(self):
+        self.f1 = 1
 
-for i, index in enumerate(li):
-    print(i * 2, ':', index)
+    def _get(self):
+        return self.f1
 
-print(li)
+    def __get(self):
+        return self.f1
+
+
+if __name__ == '__main__':
+   a = AA()
+   b = a._get()
+   print(b)

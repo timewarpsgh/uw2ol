@@ -23,19 +23,15 @@ from AOI_manager import AOIManager
 from map_maker import MapMaker
 
 class Echo(Protocol):
+    """one server for each client"""
     def __init__(self, factory):
-        super().__init__()
-        # each connection knows the factory
+        super(Echo).__init__()
         self.factory = factory
-
-        # either client or npc_manager(has many npcs)
         self.my_role = None
-        self.npcs = None
 
     def connectionMade(self):
         # init data buffer
         self.dataBuffer = bytes()
-
         print("new connection!")
 
     def connectionLost(self, reason):
@@ -105,7 +101,6 @@ class Echo(Protocol):
             self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
 
     def pck_received(self, pck):
-
         # get packet type and message object
         p = MyProtocol(pck)
         pck_type = p.get_str()

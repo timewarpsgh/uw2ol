@@ -12,6 +12,9 @@ by structure
         mates LATER
         items OK
         cmds OK
+
+        Effective Python: 90 Specific Ways to Write Better Python (Effective Software Development Series)
+
         options
 
 
