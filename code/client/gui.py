@@ -424,10 +424,8 @@ class MenuClickHandlerForShips():
 
         # new menu
         dict = {}
-        index = 0
-        for ship in ships:
-            dict[str(index)] = [_show_one_ship, [self, ship, target, index]]
-            index += 1
+        for index, ship in enumerate(ships):
+            dict[f"{index} {ship.name}"] = [_show_one_ship, [self, ship, target, index]]
         self.game.button_click_handler.make_menu(dict)
 
     def swap_ships(self):
@@ -472,11 +470,11 @@ class MenuClickHandlerForMates():
         dict = {}
         index = 0
         for mate in self.game.my_role.mates:
-            dict[mate.name] = [self.show_one_mate, [mate, index]]
+            dict[mate.name] = [self._show_one_mate, [mate, index]]
             index += 1
         self.game.button_click_handler.make_menu(dict)
 
-    def show_one_mate(self, params):
+    def _show_one_mate(self, params):
         # get param
         mate = params[0]
         mate_num = params[1]
@@ -522,20 +520,22 @@ class MenuClickHandlerForMates():
 
         # make actions menu
         dict1 = {
-            'Set as Captain of': [self.set_as_captain_of, mate_num],
-            'Set as hand': [self.set_as_hand, mate_num],
-            'Relieve Duty': [self.relieve_duty, mate_num],
-            'Level Up': [self.level_up, mate_num],
-            'Add Attribute': [self.add_attribute, mate_num]
+            'Set as Captain of': [self._set_as_captain_of, mate_num],
+            'Relieve Duty': [self._relieve_duty, mate_num],
+            'Level Up': [self._level_up, mate_num],
+            'Add Attribute': [self._add_attribute, mate_num]
         }
 
         # admiral special functions
         if mate_num == 0:
-            dict1['Distribute Exp'] = [self.assign_exp, mate_num]
+            dict1['Distribute Exp'] = [self._assign_exp, mate_num]
+        else:
+            dict1['Set as hand'] = [self._set_as_hand, mate_num],
+
 
         self.game.button_click_handler.make_menu(dict1)
 
-    def set_as_hand(self, mate_num):
+    def _set_as_hand(self, mate_num):
 
         def accountant(mate_num):
             self.game.button_click_handler. \
@@ -557,21 +557,35 @@ class MenuClickHandlerForMates():
 
         self.game.button_click_handler.make_menu(dict1)
 
-    def assign_exp(self, mate_num):
+    def _assign_exp(self, mate_num):
         self.game.button_click_handler. \
             make_input_boxes('give_exp_to_other_mates', ['mate num', 'amount'])
 
-    def level_up(self, mate_num):
-        self.game.button_click_handler. \
-            make_input_boxes('add_mates_lv', ['mate num'], [str(mate_num)])
+    def _level_up(self, mate_num):
+        # def
+        def do_lv_up(mate_num):
+            self.game.change_and_send('add_mates_lv', [mate_num])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
 
-    def add_attribute(self, mate_num):
+        # main
+        dict = {
+            'OK': [do_lv_up, mate_num]
+        }
+        self.game.button_click_handler.make_menu(dict)
+
+    def _add_attribute(self, mate_num):
 
         def do_add_attribute(params):
             mate_num = params[0]
             attribute_name = params[1]
-            self.game.button_click_handler. \
-                make_input_boxes('add_mates_attribute', ['mate num', 'attribute'], [str(mate_num), attribute_name])
+
+            self.game.change_and_send('add_mates_attribute', [mate_num, attribute_name])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
+
+            # self.game.button_click_handler. \
+            #     make_input_boxes('add_mates_attribute', ['mate num', 'attribute'], [str(mate_num), attribute_name])
 
         dict1 = {
             'Leadership': [do_add_attribute, [mate_num, 'leadership']],
@@ -585,13 +599,32 @@ class MenuClickHandlerForMates():
 
         self.game.button_click_handler.make_menu(dict1)
 
-    def set_as_captain_of(self, mate_num):
-        self.game.button_click_handler. \
-            make_input_boxes('set_mates_duty', ['mate num', 'ship num'], [str(mate_num)])
+    def _set_as_captain_of(self, mate_num):
+        # def
+        def do_set_as_captain_of(ship_id):
+            self.game.change_and_send('set_mates_duty', [mate_num, ship_id])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
 
-    def relieve_duty(self, mate_num):
-        self.game.button_click_handler. \
-            make_input_boxes('relieve_mates_duty', ['mate num'], [str(mate_num)])
+        # main
+        d = {}
+        for id, ship in enumerate(self.game.my_role.ships):
+            d[f"{id} {ship.name}"] = [do_set_as_captain_of, id]
+        self.game.button_click_handler.make_menu(d)
+
+    def _relieve_duty(self, mate_num):
+        # def
+        def do_relieve_duty(mate_num):
+            self.game.change_and_send('relieve_mates_duty', [mate_num])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
+
+        # main
+        dict = {
+            'OK': [do_relieve_duty, mate_num]
+        }
+        self.game.button_click_handler.make_menu(dict)
+
 
 class MenuClickHandlerForItems():
     def __init__(self, game):

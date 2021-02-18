@@ -9,12 +9,16 @@ by function
 by structure
     buttons on interface ON
         ships OK
-        mates LATER
         items OK
         cmds OK
         Effective Python OK
         options OK
 
+        mates ON
+            mate 0 ON
+                add attribute ON
+
+            other mates
 
 
 
