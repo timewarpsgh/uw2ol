@@ -65,17 +65,10 @@ class Echo(Protocol):
                 role_to_save = self.my_role
                 d = threads.deferToThread(self.factory.db.save_character_data, account, role_to_save)
 
-        # delete from users dict and tell clients that you logged out
+        # delete from users dict and tell nearby clients that you logged out
         map = self.factory.aoi_manager.get_map_by_player(self.my_role)
-        nearby_players = map.get_nearby_players_by_player(self.my_role)
+        self.send_to_other_clients('logout', self.my_role.name)
         map.remove_player(self.my_role)
-
-        for name, conn in nearby_players.items():
-            if name.isdigit():
-                pass
-            else:
-                conn.send('logout', self.my_role.name)
-
 
     def dataReceived(self, data):
         """combine data to get packet"""
