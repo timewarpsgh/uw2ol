@@ -13,7 +13,7 @@ by structure
         items OK
         cmds OK
         Effective Python OK
-        options
+        options OK
 
 
 

@@ -90,7 +90,7 @@ def handle_pygame_event(self, event):
             print('event ui window close!')
             print('stack length:', len(self.menu_stack))
 
-def quit(self, event):
+def quit(self, *event):
     # when in game
     if self.my_role:
         if self.my_role.map.isdigit():

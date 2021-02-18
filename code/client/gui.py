@@ -302,7 +302,7 @@ class ButtonClickHandler():
             'Language': test,
             'Sounds': test,
             'Hot Keys': test,
-            'Exit': test,
+            'Exit': [handle_pygame_event.quit, self.game]
         }
         self.make_menu(dict)
 
