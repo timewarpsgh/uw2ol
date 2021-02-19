@@ -6,6 +6,10 @@ by function
     fight LATER
         shooting needs shots
 
+    lv up (get exp)
+
+    get gold
+
 by structure
     buttons on interface ON
         ships OK
@@ -15,10 +19,9 @@ by structure
         options OK
 
         mates ON
-            mate 0 ON
-                add attribute ON
+            show exp needed to next LV OK
 
-            other mates
+
 
 
 

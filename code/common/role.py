@@ -18,7 +18,7 @@ from hashes.hash_special_goods import hash_special_goods
 from hashes.hash_paths import hash_paths
 from hashes.look_up_tables import capital_2_port_id
 from hashes.hash_maids import hash_maids
-from hashes.look_up_tables import nation_2_nation_id, nation_2_capital
+from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 
 # add relative directory to python_path
 
@@ -1591,8 +1591,10 @@ class Mate:
         self.exp += amount
 
     def add_lv(self):
-        if self.exp >= 100:
-            self.exp -= 100
+        exp_needed_to_next_lv = lv_2_exp_needed_to_next_lv[self.lv]
+
+        if self.exp >= exp_needed_to_next_lv:
+            self.exp -= exp_needed_to_next_lv
             self.lv += 1
             self.points += 5
 

@@ -16,7 +16,7 @@ from hashes import hash_villages
 import handle_pygame_event
 
 from hashes.hash_ports_meta_data import hash_ports_meta_data
-from hashes.look_up_tables import id_2_building_type
+from hashes.look_up_tables import id_2_building_type, lv_2_exp_needed_to_next_lv
 from hashes.hash_items import hash_items
 
 def test():
@@ -491,7 +491,7 @@ class MenuClickHandlerForMates():
             'name': f"{mate.name} nation:{mate.nation}",
             'duty': duty_name,
             '1': '',
-            'lv': f"{mate.lv} exp:{mate.exp} points:{mate.points}",
+            'lv': f"{mate.lv} exp/to_next_lv:{mate.exp}/{lv_2_exp_needed_to_next_lv[mate.lv]} points:{mate.points}",
             '2': '',
             'leadership': mate.leadership,
             'seamanship': f"{mate.seamanship} luck:{mate.luck}",
@@ -580,7 +580,14 @@ class MenuClickHandlerForMates():
         dict = {
             'OK': [do_lv_up, mate_num]
         }
-        self.game.button_click_handler.make_menu(dict)
+
+        mate = self.game.my_role.mates[mate_num]
+        exp_needed = lv_2_exp_needed_to_next_lv[mate.lv]
+
+        if mate.exp < exp_needed:
+            mate_speak(self.game, mate, "I don't have enough experience to reach the next level.")
+        else:
+            self.game.button_click_handler.make_menu(dict)
 
     def _add_attribute(self, mate_num):
 
