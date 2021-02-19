@@ -1,6 +1,9 @@
 
 by function
     travel OK
+
+    discover
+
     trade OK
 
     fight LATER
@@ -17,9 +20,8 @@ by structure
         cmds OK
         Effective Python OK
         options OK
+        mates OK
 
-        mates ON
-            show exp needed to next LV OK
 
 
 

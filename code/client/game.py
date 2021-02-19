@@ -25,6 +25,7 @@ from AOI_manager import PortMap, SeaMap
 
 from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type
+from gui import mate_speak as m_speak
 
 def test():
     print('testing')
@@ -285,3 +286,6 @@ class Game():
 
                         # make sea image
                         self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y, time_of_day)
+
+    def mate_speak(self, mate, msg):
+        m_speak(self, mate, msg)

@@ -940,13 +940,18 @@ class Role:
                 unit_price = port.get_commodity_sell_price(cargo_name)
                 sell_price_modifier = self.get_sell_price_modifier()
                 unit_price = int(unit_price * sell_price_modifier)
-                self.gold += count * unit_price
+                total_gold = count * unit_price
+                self.gold += total_gold
 
                 # add exp
-                self.mates[0].exp += int(count * unit_price / 100)
+                total_exp = int(count * unit_price / 100) * c.EXP_GOT_MODIFIER
+                self.mates[0].exp += total_exp
 
-                print(self.name, "ship", from_which_ship, "cargoes", self.ships[from_which_ship].cargoes)
-                print(self.name, "gold:", self.gold)
+                if self.is_in_client_and_self():
+                    msg = f"Got {total_gold} gold coins and {total_exp} exp for {count} {cargo_name}"
+                    for i in range(2):
+                        self.GAME.mate_speak(self.mates[0], msg)
+
 
     # harbor
     def load_supply(self, params):
