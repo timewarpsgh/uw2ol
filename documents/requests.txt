@@ -11,7 +11,7 @@ by function
 
     use of lv
         hire mate
-        fire mate ON
+        fire mate OK
 
 
 

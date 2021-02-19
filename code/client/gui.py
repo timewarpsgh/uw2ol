@@ -1461,26 +1461,28 @@ class Bar():
         mates = self.game.my_role.mates[1:]
 
         d = {}
-        for id, mate in enumerate(mates, 1):
-            d[mate.name] = [self._mate_name_clicked, [mate, id]]
+        for mate_num, mate in enumerate(mates, 1):
+            d[mate.name] = [self._mate_name_clicked, [mate, mate_num]]
 
         self.game.button_click_handler.make_menu(d)
 
     def _mate_name_clicked(self, params):
         mate = params[0]
-        id = params[1]
+        mate_num = params[1]
 
-        self.game.button_click_handler.mate_speak(mate, "Did I do anything wrong? Are you sure?")
+        mate_speak(self.game, mate, "Did I do anything wrong? Are you sure?")
 
         def do_fire():
-            self.game.change_and_send('fire_mate', [id])
+            self.game.change_and_send('fire_mate', [mate_num])
             escape_thrice(self.game)
-            self.game.button_click_handler.mate_speak(mate, "Farewell. I'll miss you captain.")
+            reactor.callLater(0.3,
+                              self.game.button_click_handler.mate_speak,
+                              mate, "Farewell. I'll miss you captain.")
 
-        d = {
+        dic = {
             'OK': do_fire
         }
-        self.game.button_click_handler.make_menu(d)
+        self.game.button_click_handler.make_menu(dic)
 
     def waitress(self):
         port = self.game.my_role.get_port()
