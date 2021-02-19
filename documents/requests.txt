@@ -2,30 +2,15 @@
 by function
     travel OK
 
-    discover
+    discover OK
 
     trade OK
 
     fight LATER
         shooting needs shots
 
-    use of lv
-        lv cap OK
-
-
 by structure
     buttons on interface ON
-        ships OK
-        items OK
-        cmds OK
-        Effective Python OK
-        options OK
-        mates OK
-
-
-
-
-
-
-
+        ships fleet info(big) OK
+        enemy fleet info ON
     buildings

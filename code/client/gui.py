@@ -157,10 +157,73 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
         self.game.menu_stack.append(self)
         self.game.selection_list_stack.append(self)
 
+class FleetPanelWindow(pygame_gui.elements.UIWindow):
+    """displays info"""
+    def __init__(self, rect, ui_manager, text, game, image='none'):
+        # super
+        super().__init__(rect, ui_manager,
+                         window_display_title='',
+                         object_id='#scaling_window',
+                         resizable=True)
+
+        self.game = game
+
+        # show bg
+        bg_image = game.images['ships']['fleet_info']
+        bg_rect = bg_image.get_rect()
+
+        rect = pygame.Rect((0, -10), (bg_rect.width, bg_rect.height - 110))
+        pygame_gui.elements.UIImage(rect,
+                                    bg_image,
+                                    ui_manager,
+                                    container=self,
+                                    anchors={'top': 'top', 'bottom': 'bottom',
+                                             'left': 'left', 'right': 'right'})
+
+        # get ships_images
+        ships = game.my_role.ships
+        ships_types = [s.type for s in ships]
+        ships_images = [game.images['ships'][t.lower()] for t in ships_types]
+
+        # show images
+        for index, image in enumerate(ships_images):
+            image_width = image.get_rect().width
+            image_height = image.get_rect().height
+            if index <= 4:
+                x = (image_width + 7) * index
+                y = 0
+            else:
+                x = (image_width + 7) * (index - 5)
+                y = image_height
+
+            rect = pygame.Rect((x, y), (image.get_rect().size))
+            pygame_gui.elements.UIImage(rect,
+                                        image,
+                                        ui_manager,
+                                        container=self,
+                                        anchors={'top': 'top', 'bottom': 'bottom',
+                                               'left': 'left', 'right': 'right'})
+
+        # show text
+        if text:
+            x = 0
+            y = ships_images[0].get_rect().height * 2 + 20
+
+            rect = pygame.Rect(x, y, 600, 10)
+            pygame_gui.elements.UITextBox(html_text=text,
+                                         relative_rect=rect,
+                                         manager=ui_manager,
+                                         wrap_to_height=True,
+                                         container=self)
+
+        # push into stacks
+        game.menu_stack.append(self)
+        game.selection_list_stack.append(self)
+
 class PanelWindow(pygame_gui.elements.UIWindow):
     """displays info"""
     def __init__(self, rect, ui_manager, text, game, image='none'):
-
+        # default image
         if image == 'none':
             image = game.images['ship_at_sea']
 
@@ -418,13 +481,12 @@ class MenuClickHandlerForShips():
         types = [ship.type for ship in ships]
         text = ''
         for type in types:
-            text += f'{type}<br>'
+            text += f'{type}, '
 
         text += f'<br>Fleet Speed: {self.game.my_role.get_fleet_speed([])} knots'
         text += f'<br>Flag: {nation}'
 
-
-        PanelWindow(pygame.Rect((59, 50), (350, 400)),
+        FleetPanelWindow(pygame.Rect((0, 0), (900, 900)),
                     self.game.ui_manager, text, self.game)
 
     def ship_info(self, target=False):
