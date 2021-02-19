@@ -187,6 +187,8 @@ class FleetPanelWindow(pygame_gui.elements.UIWindow):
 
         # show images
         for index, image in enumerate(ships_images):
+            image = pygame.transform.scale(image, (113, 85))
+
             image_width = image.get_rect().width
             image_height = image.get_rect().height
             if index <= 4:
