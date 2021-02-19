@@ -10,9 +10,7 @@ by function
         shooting needs shots
 
     use of lv
-        hire mate
-        fire mate OK
-
+        lv cap OK
 
 
 by structure

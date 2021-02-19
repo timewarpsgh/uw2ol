@@ -1601,7 +1601,7 @@ class Mate:
     def add_lv(self):
         exp_needed_to_next_lv = lv_2_exp_needed_to_next_lv[self.lv]
 
-        if self.exp >= exp_needed_to_next_lv:
+        if self.exp >= exp_needed_to_next_lv and self.lv < c.MAX_LV:
             self.exp -= exp_needed_to_next_lv
             self.lv += 1
             self.points += 5
