@@ -18,6 +18,7 @@ import handle_pygame_event
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import id_2_building_type, lv_2_exp_needed_to_next_lv
 from hashes.hash_items import hash_items
+from hashes.hash_villages import villages_dict
 
 def test():
     print('testing')
@@ -38,14 +39,14 @@ def init_gui(self):
 
     # buttons
     self.buttons = {}
-    init_button(self, {'Ships': self.button_click_handler.on_button_click_ships}, 1)
-    init_button(self, {'Mates': self.button_click_handler.on_button_click_mates}, 2)
-    init_button(self, {'Items': self.button_click_handler.on_button_click_items}, 3)
-    init_button(self, {'Cmds': self.button_click_handler.cmds}, 4)
-    init_button(self, {'Options': self.button_click_handler.options}, 5)
-    init_button(self, {'Port': self.button_click_handler.port}, 6)
-    init_button(self, {'Battle': self.button_click_handler.battle}, 7)
-    init_button(self, {'Login': self.button_click_handler.login}, 8)
+    _init_button(self, {'Ships': self.button_click_handler.on_button_click_ships}, 1)
+    _init_button(self, {'Mates': self.button_click_handler.on_button_click_mates}, 2)
+    _init_button(self, {'Items': self.button_click_handler.on_button_click_items}, 3)
+    _init_button(self, {'Cmds': self.button_click_handler.cmds}, 4)
+    _init_button(self, {'Options': self.button_click_handler.options}, 5)
+    _init_button(self, {'Port': self.button_click_handler.port}, 6)
+    _init_button(self, {'Battle': self.button_click_handler.battle}, 7)
+    _init_button(self, {'Login': self.button_click_handler.login}, 8)
 
     self.buttons_in_windows = {}
 
@@ -53,7 +54,7 @@ def init_gui(self):
     self.menu_stack = []
     self.selection_list_stack = []
 
-def init_button(self, dict, position):
+def _init_button(self, dict, position):
     """argument self is game"""
     # get text and function from dict
     text_list = list(dict.keys())
@@ -220,6 +221,9 @@ class SelectionListWindow(pygame_gui.elements.UIWindow):
         game.selection_list_stack.append(self.selection_list)
 
 class ButtonClickHandler():
+    """ function 1: make menu, input box, msg box, speak ...
+        function 2: menu text for most outside interfaces(buttons)
+    """
     def __init__(self, game):
         self.game = game
         self.ui_manager = game.ui_manager
@@ -261,6 +265,16 @@ class ButtonClickHandler():
                                       (350, 350)),
                           self.ui_manager,
                           text, self.game)
+
+    def building_speak(self, msg):
+        self.game.building_text = msg
+
+    def mate_speak(self, mate, msg):
+        reactor.callLater(0.1, mate_speak, self.game, mate, msg)
+
+    def i_speak(self, msg):
+        mate = self.game.my_role.mates[0]
+        reactor.callLater(0.1, mate_speak, self.game, mate, msg)
 
     def on_button_click_ships(self):
         dict = {
@@ -1646,31 +1660,38 @@ class JobHouse:
 
             # quest not finished
             else:
-                self.game.button_click_handler. \
-                        make_message_box("Oh! Have you finished your quest?")
+                self.game.building_text = "Oh! Have you finished your quest?"
 
         # no quest
         else:
             # generate random discovery
-            discovery_id = random.randint(1, 98)
-            # discovery_id = 48 (stonehenge, near london, for testing)
-            discovery = Discovery(discovery_id)
+            set_for_unkown_places = villages_dict.keys() - self.game.my_role.discoveries.keys()
 
-            # show message
-            self.game.button_click_handler. \
-                make_message_box("I heard there's something "
-                                 f"interesting at {discovery.longitude} {discovery.latitude}. "
-                                 f"Would you like to go and investigate?")
+            # set not empty
+            if set_for_unkown_places:
+                discovery_id = random.choice(list(set_for_unkown_places))
+                #  (stonehenge, near london, for testing)
+                # discovery_id = 48
+                discovery = Discovery(discovery_id)
 
-            # make menu
-            dict = {
-                'OK': [self.__start_discovery_quest, discovery_id],
-            }
-            self.game.button_click_handler.make_menu(dict)
+                # show message
+                self.game.building_text = f"I heard there's something interesting " \
+                                          f"at {discovery.longitude} {discovery.latitude}. " \
+                                          f"Would you like to go and investigate? "
+
+                # make menu
+                dict = {
+                    'OK': [self.__start_discovery_quest, discovery_id],
+                }
+                self.game.button_click_handler.make_menu(dict)
+
+            else:
+                self.game.building_text = "Wow~  You have been to lots of places. " \
+                                          "I'm afraid I can't provide any more advice."
 
     def __start_discovery_quest(self, discovery_id):
         self.game.change_and_send('start_discovery_quest', [discovery_id])
-        self.game.button_click_handler.make_message_box("Quest accepted.")
+        self.game.button_click_handler.i_speak("Quest accepted.")
 
     def _trade(self):
         dict = {

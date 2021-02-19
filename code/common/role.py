@@ -504,11 +504,11 @@ class Role:
         discovery_id = params[0]
         if discovery_id in self.discoveries:
             if self.is_in_client_and_self():
-                self.GAME.button_click_handler.make_message_box("Have seen this.")
+                self.GAME.button_click_handler.i_speak("Have seen this.")
         else:
             if self.quest_discovery == discovery_id or True:
                 self.discoveries[discovery_id] = 1
-                self.mates[0].exp += 100
+                self.mates[0].exp += c.EXP_PER_DISCOVERY
 
                 # give random item
                 rand_seed_num = self.x + self.y + discovery_id
@@ -519,10 +519,11 @@ class Role:
                 if self.is_in_client_and_self():
                     discovery = Discovery(discovery_id)
                     item = Item(item_id)
-                    self.GAME.button_click_handler.make_message_box(f'We found {discovery.name} and {item.name}!')
+                    self.GAME.button_click_handler.i_speak(f'We found {discovery.name} '
+                                      f'and {item.name}! Got {c.EXP_PER_DISCOVERY} exp.')
             else:
                 if self.is_in_client_and_self():
-                    self.GAME.button_click_handler.make_message_box("Can't find anything.")
+                    self.GAME.button_click_handler.i_speak("Can't find anything.")
 
     def enter_battle_with(self, params):
 
@@ -949,7 +950,7 @@ class Role:
 
                 if self.is_in_client_and_self():
                     msg = f"Got {total_gold} gold coins and {total_exp} exp for {count} {cargo_name}"
-                    self.GAME.i_speak(msg)
+                    self.GAME.button_click_handler.i_speak(msg)
 
 
     # harbor
@@ -999,13 +1000,15 @@ class Role:
     def submit_discovery_quest(self, params):
         if self.quest_discovery in self.discoveries and self.quest_discovery:
             # result
-            self.mates[0].exp += 100
-            self.gold += 5000
+            self.mates[0].exp += c.EXP_PER_DISCOVERY
+            self.gold += c.GOLD_REWARD_FOR_HANDING_IN_QUEST
             self.quest_discovery = None
 
             # client does
             if self.is_in_client_and_self():
-                self.GAME.button_click_handler.make_message_box("Quest complete!")
+                self.GAME.button_click_handler.building_speak("Well done!")
+                self.GAME.button_click_handler.i_speak(f"Got exp {c.EXP_PER_DISCOVERY}, "
+                                                       f"gold coins {c.GOLD_REWARD_FOR_HANDING_IN_QUEST}.")
 
         # trade
     def set_trade_quest(self):

@@ -10,6 +10,8 @@ by function
         shooting needs shots
 
     lv up (get exp)
+        sell cargo OK
+        discover OK
 
     get gold
 

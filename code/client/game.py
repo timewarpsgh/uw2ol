@@ -287,9 +287,9 @@ class Game():
                         # make sea image
                         self.images['sea'] = self.map_maker.make_partial_world_map(my_tile_x, my_tile_y, time_of_day)
 
-    def mate_speak(self, mate, msg):
-        m_speak(self, mate, msg)
 
-    def i_speak(self, msg):
-        mate = self.my_role.mates[0]
-        reactor.callLater(0.1, m_speak, self, mate, msg)
+
+
+
+
+
