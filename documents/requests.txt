@@ -9,11 +9,11 @@ by function
     fight LATER
         shooting needs shots
 
-    lv up (get exp)
-        sell cargo OK
-        discover OK
+    use of lv
+        hire mate
+        fire mate ON
 
-    get gold
+
 
 by structure
     buttons on interface ON

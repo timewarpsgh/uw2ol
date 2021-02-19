@@ -229,6 +229,10 @@ class ButtonClickHandler():
         self.ui_manager = game.ui_manager
         self.menu_click_handler = MenuClickHandler(game)
 
+    def escape_thrice(self):
+        escape_thrice(self.game)
+
+
     def make_menu(self, dict):
         SelectionListWindow(pygame.Rect((c.SELECTION_LIST_X, c.SELECTION_LIST_Y),
                                         (c.SELECTION_LIST_WIDTH, c.SELECTION_LIST_HIGHT)),
@@ -1381,13 +1385,19 @@ class Bar():
     def meet(self):
         # no mate
         if int(self.game.my_role.map) % 2 == 0:
-            self.game.button_click_handler.make_message_box("No one's availabale here.")
+            self.game.button_click_handler.building_speak("No one's availabale here.")
 
         # have mate
         else:
             mate_id = int((int(self.game.my_role.map) + 1) / 2)
             mate = Mate(mate_id)
-            self._show_one_mate_to_hire(mate, mate_id)
+
+            my_mates_names = {mate.name for mate in self.game.my_role.mates}
+
+            if mate.name in my_mates_names:
+                self.game.button_click_handler.building_speak("No one's availabale here.")
+            else:
+                self._show_one_mate_to_hire(mate, mate_id)
 
     def _show_one_mate_to_hire(self, mate, mate_id):
         # dict
@@ -1438,12 +1448,39 @@ class Bar():
         mate_speak(self.game, mate, message)
 
     def _hire_mate(self, mate_id):
-        self.game.button_click_handler. \
-            make_input_boxes('hire_mate', ['mate id'], [str(mate_id)])
+
+        def do_hire():
+            self.game.change_and_send('hire_mate', [mate_id])
+
+        d = {
+            'OK': do_hire
+        }
+        self.game.button_click_handler.make_menu(d)
 
     def fire_mate(self):
-        self.game.button_click_handler. \
-            make_input_boxes('fire_mate', ['mate num'])
+        mates = self.game.my_role.mates[1:]
+
+        d = {}
+        for id, mate in enumerate(mates, 1):
+            d[mate.name] = [self._mate_name_clicked, [mate, id]]
+
+        self.game.button_click_handler.make_menu(d)
+
+    def _mate_name_clicked(self, params):
+        mate = params[0]
+        id = params[1]
+
+        self.game.button_click_handler.mate_speak(mate, "Did I do anything wrong? Are you sure?")
+
+        def do_fire():
+            self.game.change_and_send('fire_mate', [id])
+            escape_thrice(self.game)
+            self.game.button_click_handler.mate_speak(mate, "Farewell. I'll miss you captain.")
+
+        d = {
+            'OK': do_fire
+        }
+        self.game.button_click_handler.make_menu(d)
 
     def waitress(self):
         port = self.game.my_role.get_port()

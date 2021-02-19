@@ -835,31 +835,32 @@ class Role:
         # lv not enough
         if self.mates[0].lv + 10 < mate.lv:
             if self.is_in_client_and_self():
-                self.GAME.button_click_handler.make_message_box("Lv too low.")
-                self.GAME.button_click_handler.make_message_box("Lv too low.")
+                self.GAME.button_click_handler.mate_speak(mate, "Your level is too low. "
+                                                                "Maybe I'll sail with you the next time.")
             return
 
         # leadership must be enough
         if int(self.mates[0].leadership / 10) <= len(self.mates):
             if self.is_in_client_and_self():
-                self.GAME.button_click_handler.make_message_box("Leadership not enough.")
-                self.GAME.button_click_handler.make_message_box("Leadership not enough.")
+                self.GAME.button_click_handler.i_speak("I don't have enough "
+                                                       "leadership to handle so many people.")
             return
 
         # can't hire same mate twice
         for mate_t in self.mates:
             if mate_t.name == name:
-                print('have this guy already.')
                 if self.is_in_client_and_self():
-                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
-                    self.GAME.button_click_handler.make_message_box("Already have this guy.")
+                    self.GAME.button_click_handler.i_speak("Already have this guy.")
                 return
 
 
         # do hire
         self.mates.append(mate)
 
-        print('now mates:', len(self.mates))
+        if self.is_in_client_and_self():
+            self.GAME.button_click_handler.escape_thrice()
+            msg = "Thank you, captain. I'll do my best."
+            reactor.callLater(0.3, self.GAME.button_click_handler.mate_speak, mate, msg)
 
     def fire_mate(self, params):
         num = params[0]
