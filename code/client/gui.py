@@ -530,7 +530,7 @@ class MenuClickHandlerForMates():
         if mate_num == 0:
             dict1['Distribute Exp'] = [self._assign_exp, mate_num]
         else:
-            dict1['Set as hand'] = [self._set_as_hand, mate_num],
+            dict1['Set as hand'] = [self._set_as_hand, mate_num]
 
 
         self.game.button_click_handler.make_menu(dict1)
@@ -538,16 +538,19 @@ class MenuClickHandlerForMates():
     def _set_as_hand(self, mate_num):
 
         def accountant(mate_num):
-            self.game.button_click_handler. \
-                make_input_boxes('set_mate_as_hand', ['mate num', 'position'], [str(mate_num), 'accountant'])
+            self.game.change_and_send('set_mate_as_hand', [mate_num, 'accountant'])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
 
         def first_mate(mate_num):
-            self.game.button_click_handler. \
-                make_input_boxes('set_mate_as_hand', ['mate num', 'position'], [str(mate_num), 'first_mate'])
+            self.game.change_and_send('set_mate_as_hand', [mate_num, 'first_mate'])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
 
         def chief_navigator(mate_num):
-            self.game.button_click_handler. \
-                make_input_boxes('set_mate_as_hand', ['mate num', 'position'], [str(mate_num), 'chief_navigator'])
+            self.game.change_and_send('set_mate_as_hand', [mate_num, 'chief_navigator'])
+            escape_thrice(self.game)
+            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
 
         dict1 = {
             'Accountant': [accountant, mate_num],
@@ -555,11 +558,16 @@ class MenuClickHandlerForMates():
             'Chief Navigator': [chief_navigator, mate_num],
         }
 
-        self.game.button_click_handler.make_menu(dict1)
+        mate = self.game.my_role.mates[mate_num]
+        if mate.duty:
+            mate_speak(self.game, mate, "I already have a duty.")
+        else:
+            self.game.button_click_handler.make_menu(dict1)
 
     def _assign_exp(self, mate_num):
-        self.game.button_click_handler. \
-            make_input_boxes('give_exp_to_other_mates', ['mate num', 'amount'])
+        escape_twice(self.game)
+        reactor.callLater(0.3, self.game.button_click_handler. \
+            make_input_boxes, 'give_exp_to_other_mates', ['mate num', 'amount'])
 
     def _level_up(self, mate_num):
         # def
@@ -580,12 +588,14 @@ class MenuClickHandlerForMates():
             mate_num = params[0]
             attribute_name = params[1]
 
-            self.game.change_and_send('add_mates_attribute', [mate_num, attribute_name])
-            escape_thrice(self.game)
-            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
-
-            # self.game.button_click_handler. \
-            #     make_input_boxes('add_mates_attribute', ['mate num', 'attribute'], [str(mate_num), attribute_name])
+            mate = self.game.my_role.mates[mate_num]
+            if mate.points == 0:
+                mate_speak(self.game, mate, "I have 0 point.")
+            else:
+                self.game.change_and_send('add_mates_attribute', [mate_num, attribute_name])
+                escape_thrice(self.game)
+                reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
+                reactor.callLater(0.35, self._add_attribute, mate_num)
 
         dict1 = {
             'Leadership': [do_add_attribute, [mate_num, 'leadership']],
@@ -602,15 +612,25 @@ class MenuClickHandlerForMates():
     def _set_as_captain_of(self, mate_num):
         # def
         def do_set_as_captain_of(ship_id):
-            self.game.change_and_send('set_mates_duty', [mate_num, ship_id])
-            escape_thrice(self.game)
-            reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
+            ship = self.game.my_role.ships[ship_id]
+            if ship.captain:
+                mate = self.game.my_role.mates[mate_num]
+                mate_speak(self.game, mate, f"{ship.name} has a captain.")
+            else:
+                self.game.change_and_send('set_mates_duty', [mate_num, ship_id])
+                escape_thrice(self.game)
+                reactor.callLater(0.3, self._show_one_mate, [self.game.my_role.mates[mate_num], mate_num])
 
         # main
         d = {}
         for id, ship in enumerate(self.game.my_role.ships):
             d[f"{id} {ship.name}"] = [do_set_as_captain_of, id]
-        self.game.button_click_handler.make_menu(d)
+
+        mate = self.game.my_role.mates[mate_num]
+        if mate.duty:
+            mate_speak(self.game, mate, "I already have a duty.")
+        else:
+            self.game.button_click_handler.make_menu(d)
 
     def _relieve_duty(self, mate_num):
         # def

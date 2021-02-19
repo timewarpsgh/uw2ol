@@ -456,7 +456,7 @@ class Role:
 
         if self.is_in_port():
             mate = self.mates[mate_num]
-            mate._set_as_hand(position_name, self)
+            mate.set_as_hand(position_name, self)
 
     def relieve_mates_duty(self, params):
         mate_num = params[0]
@@ -479,7 +479,7 @@ class Role:
         attribute = params[1]
 
         mate = self.mates[mate_num]
-        mate._add_attribute(attribute)
+        mate.add_attribute(attribute)
 
     def give_exp_to_other_mates(self, params):
         mate_num = params[0]
@@ -1564,8 +1564,9 @@ class Mate:
 
     def set_as_captain_of(self, ship):
         if not self.duty:
-            ship.captain = self
-            self.duty = ship
+            if not ship.captain:
+                ship.captain = self
+                self.duty = ship
 
     def set_as_hand(self, position_name, role):
         if not self.duty:
