@@ -949,8 +949,7 @@ class Role:
 
                 if self.is_in_client_and_self():
                     msg = f"Got {total_gold} gold coins and {total_exp} exp for {count} {cargo_name}"
-                    for i in range(2):
-                        self.GAME.mate_speak(self.mates[0], msg)
+                    self.GAME.i_speak(msg)
 
 
     # harbor

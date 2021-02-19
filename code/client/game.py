@@ -289,3 +289,7 @@ class Game():
 
     def mate_speak(self, mate, msg):
         m_speak(self, mate, msg)
+
+    def i_speak(self, msg):
+        mate = self.my_role.mates[0]
+        reactor.callLater(0.1, m_speak, self, mate, msg)
