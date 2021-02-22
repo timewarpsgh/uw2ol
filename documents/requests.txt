@@ -37,10 +37,12 @@ by structure
 
         7: 'job_house', OK
 
+        8: 'msc', OK
+
+        9: 'bank',  OK
 
 
-        8: 'msc',
-        9: 'bank',
+
         10: 'item_shop',
         11: 'church',
         12: 'fortune_house',

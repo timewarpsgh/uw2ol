@@ -1074,6 +1074,7 @@ class MenuClickHandlerForPort():
         self.bank = Bank(game)
         self.item_shop = ItemShop(game)
         self.inn = Inn(game)
+        self.msc = Msc(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -1143,7 +1144,7 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_msc(self):
         dict = {
-            'Exit': test,
+            'Enter': self.msc.enter,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1944,7 +1945,7 @@ class Bank:
         # can borrow
         if self.game.my_role.bank_gold <= 0:
             max_credit = self.game.my_role.get_max_credit()
-            self.game.building_text = f"Yes. We're happy to lend you up to {max_credit} gold coins." \
+            self.game.building_text = f"Yes. We're happy to lend you up to {max_credit} gold coins. " \
                                       f"Kindly remind you, your current balance is {self.game.my_role.bank_gold}."
             self.game.button_click_handler.make_input_boxes('borrow', ['amount'])
 
@@ -2053,6 +2054,15 @@ class Inn:
 
     def port_info(self):
         pass
+
+
+class Msc:
+    def __init__(self, game):
+        self.game = game
+
+    def enter(self):
+        msg = "Entry is by invitation only."
+        self.game.button_click_handler.building_speak(msg)
 
 
 def escape_twice(game):
