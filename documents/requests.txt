@@ -14,14 +14,11 @@ by structure
 
     buildings ON
         1: 'market',
-           each port has
-               allied nation
-               price index
+           each port has   OK
+               rand allied nation OK
            tax permits can only be used in an applied port
            palace can see allied ports and PI
 
-
-           see PI   OK
 
         6: 'palace',
             meet ruler

@@ -1,7 +1,4 @@
 import random
 
-a = list(range(5))
-
-
+a = random.randint(80, 120)
 print(a)
-print(a[1:])

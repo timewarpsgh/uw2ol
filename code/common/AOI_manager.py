@@ -1,8 +1,11 @@
+import random
+
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import constants as c
+from hashes.look_up_tables import nation_2_nation_id
 
 
 class Grid:
@@ -234,6 +237,8 @@ class Map:
 class PortMap(Map):
     def __init__(self):
         Map.__init__(self)
+
+        # fill empty fields
         self.x_tile_count = c.PORT_TILES_COUNT
         self.y_tile_count = c.PORT_TILES_COUNT
 
@@ -260,6 +265,8 @@ class PortMap(Map):
 class SeaMap(Map):
     def __init__(self):
         Map.__init__(self)
+
+        # fill empty fields
         self.x_tile_count = c.WORLD_MAP_COLUMNS
         self.y_tile_count = c.WORLD_MAP_ROWS
 
@@ -299,22 +306,38 @@ class AOIManager:
         # sea
         self.sea = SeaMap()
 
+        # ports
+        self.ports = None
+        self._init_ports()
+
+        # battle maps (keys are the names of initiators)
+        self.battle_fields = {
+            'e.g:alex': BattleMap(),
+        }
+
+    def _init_ports(self):
         # ports, map_id 0 - 130
         port_count = 131
         self.ports = [None] * port_count
+        nations = list(nation_2_nation_id.keys())
         for i in range(port_count):
             port_map = PortMap()
-            rand_nation = 'England'
+            rand_nation = random.choice(nations)
             port_map.set_allied_nation(rand_nation)
-            price_index = 98
+            price_index = random.randint(80, 120)
             port_map.set_price_index(price_index)
 
             self.ports[i] = port_map
 
-        # keys are the names of initiators
-        self.battle_fields = {
-            'alex': BattleMap(),
-        }
+        # capital ports allied to own nation
+        self.ports[29].set_allied_nation('England')
+        self.ports[33].set_allied_nation('Holland')
+
+        self.ports[0].set_allied_nation('Portugal')
+        self.ports[1].set_allied_nation('Spain')
+
+        self.ports[8].set_allied_nation('Italy')
+        self.ports[2].set_allied_nation('Turkey')
 
     def get_sea_map(self):
         return self.sea
