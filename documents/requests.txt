@@ -46,4 +46,4 @@ by structure
         11: 'church',   ON
             each port has a line from the bible
 
-        12: 'fortune_house',
+        12: 'fortune_house', OK

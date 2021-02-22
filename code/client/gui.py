@@ -1075,6 +1075,7 @@ class MenuClickHandlerForPort():
         self.item_shop = ItemShop(game)
         self.inn = Inn(game)
         self.msc = Msc(game)
+        self.fortune_house = FortuneHouse(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -1175,10 +1176,10 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_fortune_house(self):
         dict = {
-            'Life': test,
-            'Career': test,
-            'Love': test,
-            'Mates': test,
+            'Life': self.fortune_house.life,
+            'Career': self.fortune_house.career,
+            'Love': self.fortune_house.love,
+            'Mates': self.fortune_house.mates,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -2062,6 +2063,51 @@ class Msc:
 
     def enter(self):
         msg = "Entry is by invitation only."
+        self.game.button_click_handler.building_speak(msg)
+
+
+class FortuneHouse:
+    def __init__(self, game):
+        self.game = game
+
+    def life(self):
+        d = {
+            'Talents': self._talents,
+            'Skills': self._skills,
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def _talents(self):
+        msg = "Each of us in this world is born with three talents. " \
+              "Navigation allows you to sail faster. " \
+              "Gunnery makes you a natural fighter. " \
+              "Accounting makes you comfortable doing business. " \
+              "You don't seem to have any of them. " \
+              "I'm afraid you can't have them even if you pay me."
+        self.game.button_click_handler.make_message_box(msg)
+
+    def _skills(self):
+        msg = "There are six skills you can acquire. " \
+              "Leadership allows you to find more company. " \
+              "Seamanship allows you to sail faster. " \
+              "Luck? Do you believe it? " \
+              "Knowledge allows you to buy cargo with less cost. " \
+              "Intuition allows you to sell cargo for more profit. " \
+              "Courage makes your shooting more effective in battle. " \
+              "Swordplay makes your engaging more effective. "
+        self.game.button_click_handler.make_message_box(msg)
+
+    def career(self):
+        msg = "If you need advice on acreer development, " \
+              "go consult the guy at the job house."
+        self.game.button_click_handler.building_speak(msg)
+
+    def love(self):
+        msg = "Bar girls know a lot, but there aren't many of them."
+        self.game.button_click_handler.building_speak(msg)
+
+    def mates(self):
+        msg = "Have you found good company?"
         self.game.button_click_handler.building_speak(msg)
 
 
