@@ -182,6 +182,9 @@ class Game():
         client_packet_received.process_packet(self, pck_type, message_obj)
 
     def change_and_send(self, protocol_name, params_list):
+        print(protocol_name)
+        print(params_list)
+
         # when logged in
         if self.my_role:
             try:

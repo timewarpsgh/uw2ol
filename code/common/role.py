@@ -802,7 +802,13 @@ class Role:
         max_crew = params[1]
         max_guns = params[2]
 
-        self.ships[ship_num]._remodel_capacity(max_crew, max_guns)
+        self.ships[ship_num].remodel_capacity(max_crew, max_guns)
+
+    def remodel_ship_name(self, params):
+        ship_num = params[0]
+        name = params[1]
+
+        self.ships[ship_num].remodel_name(name)
 
     # bar
     def hire_crew(self, params):
@@ -1125,6 +1131,9 @@ class Ship:
             'Lumber':0,
             'Shot':0
         }
+
+    def remodel_name(self, name):
+        self.name = name
 
     def remodel_capacity(self, max_crew, max_guns):
         type = self.type

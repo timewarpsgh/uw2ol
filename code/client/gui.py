@@ -1114,7 +1114,6 @@ class MenuClickHandlerForPort():
             'Repair': self.dry_dock.repair,
             'Sell': self.dry_dock.sell_ship,
             'Remodel': self.dry_dock.remodel,
-            'Invest': self.dry_dock.invest,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1727,19 +1726,18 @@ class DryDock():
         dict = {
             'Capacity':self._remodel_capacity,
             'Weapon':test,
-            'Figure':test,
-            'Name': test,
+            'Name': self._remodel_name,
         }
         self.game.button_click_handler.make_menu(dict)
-
 
     def _remodel_capacity(self):
         self.game.button_click_handler. \
             make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
 
-    def invest(self):
-        self.game.building_text = "You do want to invest 5 gold ingots to our industry? " \
-                                  "That'll definitely help us."
+    def _remodel_name(self):
+        self.game.button_click_handler. \
+            make_input_boxes('remodel_ship_name', ['ship_num', 'name'])
+
 
 class JobHouse:
     def __init__(self, game):
