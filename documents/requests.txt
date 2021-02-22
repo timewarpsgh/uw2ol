@@ -20,12 +20,11 @@ by structure
            tax permits can only be used in an applied port
            palace can see allied ports and PI
 
-        2: 'bar',   OK
+
         3: 'dry_dock',
             remodel
                 weapon
 
-        4: 'harbor', OK
 
         5: 'inn',
             port info(get ally nation)
@@ -35,15 +34,8 @@ by structure
                 contry info (allied ports and PI)
             defect
 
-        7: 'job_house', OK
-
-        8: 'msc', OK
-
-        9: 'bank',  OK
-
-        10: 'item_shop',    OK
 
         11: 'church',   ON
             each port has a line from the bible
 
-        12: 'fortune_house', OK
+
