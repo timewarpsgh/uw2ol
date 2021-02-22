@@ -180,6 +180,9 @@ class Role:
         else:
             return False
 
+    def get_port_id(self):
+        return self.get_map_id() + 1
+
     def get_map_id(self):
         return int(self.map)
 

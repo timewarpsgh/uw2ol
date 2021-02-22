@@ -19,6 +19,7 @@ from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import id_2_building_type, lv_2_exp_needed_to_next_lv
 from hashes.hash_items import hash_items
 from hashes.hash_villages import villages_dict
+from hashes.hash_bible_quotes import hash_bible_quotes
 
 def test():
     print('testing')
@@ -1902,7 +1903,9 @@ class Church:
         self.game = game
 
     def pray(self):
-        self.game.building_text = 'May God bless you in all your endeavours.'
+        port_id = self.game.my_role.get_port_id()
+        quote_str = hash_bible_quotes[port_id]
+        self.game.button_click_handler.make_message_box(quote_str)
 
     def donate(self):
         self.game.building_text = 'Thank you for your generosity. ' \

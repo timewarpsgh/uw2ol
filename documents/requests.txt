@@ -35,7 +35,7 @@ by structure
             defect
 
 
-        11: 'church',   ON
+        11: 'church',   OK
             each port has a line from the bible
 
 
