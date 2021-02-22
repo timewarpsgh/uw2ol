@@ -1073,6 +1073,7 @@ class MenuClickHandlerForPort():
         self.palace = Palace(game)
         self.bank = Bank(game)
         self.item_shop = ItemShop(game)
+        self.inn = Inn(game)
 
     def on_menu_click_port(self):
         dict = {
@@ -1118,9 +1119,9 @@ class MenuClickHandlerForPort():
 
     def on_menu_click_inn(self):
         dict = {
-            'Check In': test,
-            'Gossip': test,
-            'Port Info': test,
+            'Check In': self.inn.check_in,
+            'Gossip': self.inn.gossip,
+            'Port Info': self.inn.port_info,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -2035,6 +2036,21 @@ class ItemShop:
 
         # building speak
         self.game.building_text = 'Thank you!'
+
+
+class Inn:
+    def __init__(self, game):
+        self.game = game
+
+    def check_in(self):
+        self.game.button_click_handler.building_speak("Sweet dreams.")
+
+    def gossip(self):
+        msg = "I've no idea why this port keeps allying to different nations."
+        self.game.button_click_handler.building_speak(msg)
+
+    def port_info(self):
+        pass
 
 
 def escape_twice(game):

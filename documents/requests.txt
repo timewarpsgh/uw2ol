@@ -26,7 +26,11 @@ by structure
                 weapon
 
         4: 'harbor', OK
+
         5: 'inn',
+            port info(get ally nation)
+
+
         6: 'palace',
         7: 'job_house',
         8: 'msc',
