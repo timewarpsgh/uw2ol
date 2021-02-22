@@ -1089,7 +1089,6 @@ class MenuClickHandlerForPort():
         dict = {
             'Buy': self.market.buy,
             'Sell': self.market.sell,
-            'Invest': test,
             'Price Index': test,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -1104,7 +1103,6 @@ class MenuClickHandlerForPort():
             'Meet': self.bar.meet,
             'Fire Mate': self.bar.fire_mate,
             'Waitress': self.bar.waitress,
-            'Gamble': test,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1443,6 +1441,7 @@ class Bar():
             make_input_boxes('hire_crew', ['count', 'ship_num'])
 
     def dismiss_crew(self):
+        self.game.button_click_handler.building_speak("Is your ship too crowded?")
         self.game.button_click_handler. \
             make_input_boxes('fire_crew', ['count', 'ship_num'])
 

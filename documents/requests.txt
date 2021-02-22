@@ -10,7 +10,26 @@ by function
         shooting needs sho1ts
 
 by structure
-    buttons on interface ON
-        ships fleet info(big) OK
-        enemy fleet info OK
-    buildings
+    buttons on interface OK
+
+    buildings ON
+        1: 'market',
+           each port has
+               allied nation
+               price index
+           tax permits can only be used in an applied port
+           palace can see allied ports and PI
+
+        2: 'bar',   OK
+
+
+        3: 'dry_dock',
+        4: 'harbor',
+        5: 'inn',
+        6: 'palace',
+        7: 'job_house',
+        8: 'msc',
+        9: 'bank',
+        10: 'item_shop',
+        11: 'church',
+        12: 'fortune_house',
