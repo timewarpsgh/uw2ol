@@ -41,8 +41,9 @@ by structure
 
         9: 'bank',  OK
 
+        10: 'item_shop',    OK
 
+        11: 'church',   ON
+            each port has a line from the bible
 
-        10: 'item_shop',
-        11: 'church',
         12: 'fortune_house',
