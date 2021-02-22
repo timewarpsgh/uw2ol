@@ -239,7 +239,7 @@ class Map:
 
 
 class PortMap(Map):
-    def __init__(self):
+    def __init__(self, map_id=1):
         Map.__init__(self)
 
         # fill empty fields
@@ -258,6 +258,7 @@ class PortMap(Map):
         # allied nation and price index
         self.nation = None
         self.price_index = None
+        self.map_id = map_id
 
     def set_allied_nation(self, nation):
         self.nation = nation
@@ -310,6 +311,11 @@ class AOIManager:
         # sea
         self.sea = SeaMap()
 
+        # nations ports (each nation has a set of map ids)
+        self.nations_ports = {}
+        for nation in nation_2_nation_id.keys():
+            self.nations_ports[nation] = set()
+
         # ports
         self.ports = None
         self._init_ports()
@@ -325,9 +331,11 @@ class AOIManager:
         self.ports = [None] * port_count
         nations = list(nation_2_nation_id.keys())
         for i in range(port_count):
-            port_map = PortMap()
+            port_map = PortMap(i)
             rand_nation = random.choice(nations)
             port_map.set_allied_nation(rand_nation)
+            self.nations_ports[rand_nation].add(port_map)
+
             price_index = random.randint(80, 120)
             port_map.set_price_index(price_index)
 
@@ -335,7 +343,11 @@ class AOIManager:
 
         # capital ports allied to own nation
         for map_id, nation in capital_map_id_2_nation.items():
-            self.ports[map_id].set_allied_nation(nation)
+            port_map = self.ports[map_id]
+            prev_nation = port_map.nation
+            self.nations_ports[prev_nation].remove(port_map)
+            port_map.set_allied_nation(nation)
+            self.nations_ports[nation].add(port_map)
 
         # update nation and PI
         self.timer = task.LoopingCall(self._update_ports_nation_and_price_index)

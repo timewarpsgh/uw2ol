@@ -1919,7 +1919,8 @@ class Palace:
         self.game = game
 
     def meet_ruler(self):
-        self.game.building_text = "I'm afraid the King's too buy to see you."
+        self.game.connection.send('get_allied_ports_and_pi', [])
+
 
     def defect(self):
         self.game.building_text = "We do appreciate your willingness to join us. " \

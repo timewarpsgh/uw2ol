@@ -14,18 +14,20 @@ by structure
 
     buildings ON
 
-        ports nations and pi change every 2 hours OK
-
-
         1: 'market',
+            tax permits can only be used in an applied port
 
-           tax permits can only be used in an applied port
-           palace can see allied ports and PI
 
 
         6: 'palace',
             meet ruler
-                contry info (allied ports and PI)
+                contry info (allied ports and PI) ON
+
+
+
+
+
+
 
 
 
@@ -39,7 +41,7 @@ by structure
                 weapon
 
 
-
+        can't fight fleet from same nation
 
 
 

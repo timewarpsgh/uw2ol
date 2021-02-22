@@ -3,7 +3,7 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 # import from common(dir)
-from role import Role, Ship, Mate
+from role import Role, Ship, Mate, Port
 from twisted.internet.task import LoopingCall
 import port_npc
 import handle_pygame_event
@@ -227,3 +227,36 @@ def price_index(self, message_obj):
     msg = f"The price index of this port is {price_index}%. " \
           f"Any cargo you buy or sell will be affected by this index."
     self.button_click_handler.building_speak(msg)
+
+def allied_ports_and_pi(self, message_obj):
+    d = message_obj
+
+    # make my_dict (economy_id: set of dic)
+    my_dict = {}
+    for map_id, pi in d.items():
+        port = Port(map_id)
+        economy_id = port.economy_id
+
+        port_name = port.name
+
+        if economy_id in my_dict:
+            pass
+        else:
+            my_dict[economy_id] = []
+        dic = {
+            'port_name': port_name,
+            'pi': pi
+        }
+        my_dict[economy_id].append(dic)
+
+
+    print(my_dict)
+
+#     dic = {}
+#     for k in my_dict.keys():
+#         dic[k] = _show_allied_ports_for_one_economy_id
+#
+#     self.button_click_handler.make_menu(dic)
+#
+# def _show_allied_ports_for_one_economy_id():
+#     pass

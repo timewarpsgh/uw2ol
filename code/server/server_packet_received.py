@@ -455,6 +455,19 @@ def get_price_index(self, message_obj):
 
     self.send('price_index', price_index)
 
+def get_allied_ports_and_pi(self, message_obj):
+    port_map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+    nation = port_map.nation
+
+    port_maps_set = self.factory.aoi_manager.nations_ports[nation]
+    d = {}
+    for port_map in port_maps_set:
+        pi = port_map.price_index
+        map_id = port_map.map_id
+        if map_id <= 99:
+            d[map_id] = pi
+
+    self.send('allied_ports_and_pi', d)
 
 ####################### call backs ###########################
 def on_create_character_got_result(self, is_ok):

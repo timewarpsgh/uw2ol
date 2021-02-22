@@ -1,4 +1,8 @@
 import random
 
-a = random.randint(80, 120)
-print(a)
+a = set()
+a.add(1)
+a.add(2)
+
+
+a.get
