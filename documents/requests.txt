@@ -7,10 +7,10 @@ by function
     trade OK
 
     fight LATER
-        shooting needs shots
+        shooting needs sho1ts
 
 by structure
     buttons on interface ON
         ships fleet info(big) OK
-        enemy fleet info ON
+        enemy fleet info OK
     buildings

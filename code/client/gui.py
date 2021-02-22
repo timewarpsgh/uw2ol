@@ -159,7 +159,7 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
 
 class FleetPanelWindow(pygame_gui.elements.UIWindow):
     """displays info"""
-    def __init__(self, rect, ui_manager, text, game, image='none'):
+    def __init__(self, rect, ui_manager, game, target):
         # super
         super().__init__(rect, ui_manager,
                          window_display_title='',
@@ -167,6 +167,35 @@ class FleetPanelWindow(pygame_gui.elements.UIWindow):
                          resizable=True)
 
         self.game = game
+
+        # get ships and nation
+        ships = None
+        nation = None
+        speed = None
+        if target:
+            # enemy
+            role = self.game.my_role
+            enemy_name = role.enemy_name
+            enemy_role = role._get_other_role_by_name(enemy_name)
+
+            ships = enemy_role.ships
+            nation = enemy_role.mates[0].nation
+            speed = enemy_role.get_fleet_speed([])
+
+            # my
+        else:
+            ships = self.game.my_role.ships
+            nation = self.game.my_role.mates[0].nation
+            speed = self.game.my_role.get_fleet_speed([])
+
+        # get text
+        types = [ship.type for ship in ships]
+        text = ''
+        for type in types:
+            text += f'{type}, '
+
+        text += f'<br>Fleet Speed: {speed} knots'
+        text += f'<br>Flag: {nation}'
 
         # show bg
         bg_image = game.images['ships']['fleet_info']
@@ -181,7 +210,6 @@ class FleetPanelWindow(pygame_gui.elements.UIWindow):
                                              'left': 'left', 'right': 'right'})
 
         # get ships_images
-        ships = game.my_role.ships
         ships_types = [s.type for s in ships]
         ships_images = [game.images['ships'][t.lower()] for t in ships_types]
 
@@ -463,33 +491,8 @@ class MenuClickHandlerForShips():
         self.game = game
 
     def fleet_info(self, target=False):
-        # get ships and nation
-        ships = None
-        nation = None
-        if target:
-            # enemy
-            role = self.game.my_role
-            enemy_name = role.enemy_name
-            enemy_role = role._get_other_role_by_name(enemy_name)
-            ships = enemy_role.ships
-
-            nation = enemy_role.mates[0].nation
-            # my
-        else:
-            ships = self.game.my_role.ships
-            nation = self.game.my_role.mates[0].nation
-
-        # make panel window
-        types = [ship.type for ship in ships]
-        text = ''
-        for type in types:
-            text += f'{type}, '
-
-        text += f'<br>Fleet Speed: {self.game.my_role.get_fleet_speed([])} knots'
-        text += f'<br>Flag: {nation}'
-
         FleetPanelWindow(pygame.Rect((0, 0), (900, 900)),
-                    self.game.ui_manager, text, self.game)
+                    self.game.ui_manager, self.game, target)
 
     def ship_info(self, target=False):
         # get ships
