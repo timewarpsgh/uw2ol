@@ -13,6 +13,17 @@ id_2_building_type = {
     12: 'fortune_house',
 }
 
+capital_map_id_2_nation = {
+    29: 'England',
+    33: 'Holland',
+
+    0: 'Portugal',
+    1: 'Spain',
+
+    8: 'Italy',
+    2: 'Turkey',
+}
+
 capital_2_port_id = {
     'london': 30,
     'amsterdam': 34,

@@ -1,11 +1,15 @@
 import random
 
+from twisted.internet import reactor, task
+from twisted.internet.task import LoopingCall
+
+
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import constants as c
-from hashes.look_up_tables import nation_2_nation_id
+from hashes.look_up_tables import nation_2_nation_id, capital_map_id_2_nation
 
 
 class Grid:
@@ -316,8 +320,8 @@ class AOIManager:
         }
 
     def _init_ports(self):
-        # ports, map_id 0 - 130
-        port_count = 131
+        # ports, map_id 0 - 129
+        port_count = c.PORT_COUNT
         self.ports = [None] * port_count
         nations = list(nation_2_nation_id.keys())
         for i in range(port_count):
@@ -330,14 +334,26 @@ class AOIManager:
             self.ports[i] = port_map
 
         # capital ports allied to own nation
-        self.ports[29].set_allied_nation('England')
-        self.ports[33].set_allied_nation('Holland')
+        for map_id, nation in capital_map_id_2_nation.items():
+            self.ports[map_id].set_allied_nation(nation)
 
-        self.ports[0].set_allied_nation('Portugal')
-        self.ports[1].set_allied_nation('Spain')
+        # update nation and PI
+        self.timer = task.LoopingCall(self._update_ports_nation_and_price_index)
+        self.timer.start(c.PORTS_ALLIED_NATION_AND_PRICE_INDEX_CHANGE_INTERVAL_SECONDS, False)
 
-        self.ports[8].set_allied_nation('Italy')
-        self.ports[2].set_allied_nation('Turkey')
+    def _update_ports_nation_and_price_index(self):
+        # ports, map_id 0 - 129
+        port_count = c.PORT_COUNT
+        nations = list(nation_2_nation_id.keys())
+        for i in range(port_count):
+            rand_nation = random.choice(nations)
+            self.ports[i].set_allied_nation(rand_nation)
+            price_index = random.randint(80, 120)
+            self.ports[i].set_price_index(price_index)
+
+        # capital ports allied to own nation
+        for map_id, nation in capital_map_id_2_nation.items():
+            self.ports[map_id].set_allied_nation(nation)
 
     def get_sea_map(self):
         return self.sea
