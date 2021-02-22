@@ -30,8 +30,13 @@ by structure
         5: 'inn',
             port info(get ally nation)
 
+        6: 'palace',    ON
+            meet ruler
+                contry info (allied ports and PI)
+            defect
 
-        6: 'palace',
+
+
         7: 'job_house',
         8: 'msc',
         9: 'bank',
