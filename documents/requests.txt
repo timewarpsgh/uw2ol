@@ -35,9 +35,10 @@ by structure
                 contry info (allied ports and PI)
             defect
 
+        7: 'job_house', OK
 
 
-        7: 'job_house',
+
         8: 'msc',
         9: 'bank',
         10: 'item_shop',

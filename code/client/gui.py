@@ -1891,7 +1891,9 @@ class JobHouse:
         self.game.building_text = text
 
     def contry_info(self):
-        self.game.building_text = "Well...Don't worry about that."
+        msg = "Go to your capital and ask your ruler about this. "
+        self.game.button_click_handler.building_speak(msg)
+
 
 class Church:
     def __init__(self, game):
