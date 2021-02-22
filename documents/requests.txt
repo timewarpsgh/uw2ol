@@ -21,11 +21,11 @@ by structure
            palace can see allied ports and PI
 
         2: 'bar',   OK
-        3: 'dry_dock',  
+        3: 'dry_dock',
             remodel
                 weapon
 
-        4: 'harbor',
+        4: 'harbor', OK
         5: 'inn',
         6: 'palace',
         7: 'job_house',

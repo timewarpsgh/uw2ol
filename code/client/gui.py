@@ -1079,7 +1079,6 @@ class MenuClickHandlerForPort():
             'Sail': self.port.sail,
             'Load Supply': self.port.load_supply,
             'Unload Supply': self.port.unload_supply,
-            'Dry Dock': self.port.dry_dock,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1310,9 +1309,6 @@ class Harbor():
     def _unload(self, item_name):
         self.game.button_click_handler.\
             make_input_boxes('unload_supply', ['supply name', 'count', 'ship num'], [item_name])
-
-    def dry_dock(self):
-        self.game.building_text = "We don't have any space left for you. Sorry."
 
 
 class Market():
