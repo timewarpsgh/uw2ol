@@ -1092,7 +1092,7 @@ class MenuClickHandlerForPort():
         dict = {
             'Buy': self.market.buy,
             'Sell': self.market.sell,
-            'Price Index': test,
+            'Price Index': self.market.price_index,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1428,6 +1428,9 @@ class Market():
         }
 
         self.game.button_click_handler.make_menu(dict)
+
+    def price_index(self):
+        self.game.connection.send('get_price_index', [])
 
 class Bar():
     def __init__(self, game):

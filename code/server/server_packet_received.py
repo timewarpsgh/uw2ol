@@ -449,7 +449,11 @@ def get_allied_nation(self, message_obj):
 
     self.send('allied_nation', allied_nation)
 
+def get_price_index(self, message_obj):
+    map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+    price_index = map.price_index
 
+    self.send('price_index', price_index)
 
 
 ####################### call backs ###########################

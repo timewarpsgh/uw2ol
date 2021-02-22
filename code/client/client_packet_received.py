@@ -221,3 +221,9 @@ def allied_nation(self, message_obj):
     allied_nation = message_obj
     msg = f"This port is allied to {allied_nation}."
     self.button_click_handler.building_speak(msg)
+
+def price_index(self, message_obj):
+    price_index = message_obj
+    msg = f"The price index of this port is {price_index}%. " \
+          f"Any cargo you buy or sell will be affected by this index."
+    self.button_click_handler.building_speak(msg)

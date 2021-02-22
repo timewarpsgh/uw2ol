@@ -21,11 +21,7 @@ by structure
            palace can see allied ports and PI
 
 
-           see PI   ON
-
-
-        5: 'inn',
-            port info(get ally nation)  OK
+           see PI   OK
 
         6: 'palace',
             meet ruler
