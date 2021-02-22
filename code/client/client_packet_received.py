@@ -216,3 +216,8 @@ def _calc_longitude_and_latitude(x, y):
         latitude = str(latitude) + 'S'
 
     return (longitude, latitude)
+
+def allied_nation(self, message_obj):
+    allied_nation = message_obj
+    msg = f"This port is allied to {allied_nation}."
+    self.button_click_handler.building_speak(msg)

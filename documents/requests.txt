@@ -21,21 +21,33 @@ by structure
            palace can see allied ports and PI
 
 
+           see PI   ON
+
+
+        5: 'inn',
+            port info(get ally nation)  OK
+
+        6: 'palace',
+            meet ruler
+                contry info (allied ports and PI)
+
+
+
+
+
+
+            defect  LATER
+
         3: 'dry_dock',
             remodel
                 weapon
 
 
-        5: 'inn',
-            port info(get ally nation)
-
-        6: 'palace',    ON
-            meet ruler
-                contry info (allied ports and PI)
-            defect
 
 
-        11: 'church',   OK
-            each port has a line from the bible
+
+
+
+
 
 

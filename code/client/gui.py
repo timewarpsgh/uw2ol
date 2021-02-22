@@ -2057,7 +2057,7 @@ class Inn:
         self.game.button_click_handler.building_speak(msg)
 
     def port_info(self):
-        pass
+        self.game.connection.send('get_allied_nation', [])
 
 
 class Msc:

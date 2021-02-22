@@ -443,6 +443,14 @@ def get_npc_info(self, message_obj):
 
     self.send('npc_info', dic)
 
+def get_allied_nation(self, message_obj):
+    map = self.factory.aoi_manager.get_map_by_player(self.my_role)
+    allied_nation = map.nation
+
+    self.send('allied_nation', allied_nation)
+
+
+
 
 ####################### call backs ###########################
 def on_create_character_got_result(self, is_ok):

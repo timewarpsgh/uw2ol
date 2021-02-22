@@ -230,6 +230,7 @@ class Map:
         new_grid.add_npc(npc)
         npc.grid_id = new_grid_id
 
+
 class PortMap(Map):
     def __init__(self):
         Map.__init__(self)
@@ -244,6 +245,17 @@ class PortMap(Map):
         self.grids = [None] * self.total_num_of_grids
         for i in range(0, self.total_num_of_grids):
             self.grids[i] = Grid()
+
+        # allied nation and price index
+        self.nation = None
+        self.price_index = None
+
+    def set_allied_nation(self, nation):
+        self.nation = nation
+
+    def set_price_index(self, pi):
+        self.price_index = pi
+
 
 class SeaMap(Map):
     def __init__(self):
@@ -291,7 +303,13 @@ class AOIManager:
         port_count = 131
         self.ports = [None] * port_count
         for i in range(port_count):
-            self.ports[i] = PortMap()
+            port_map = PortMap()
+            rand_nation = 'England'
+            port_map.set_allied_nation(rand_nation)
+            price_index = 98
+            port_map.set_price_index(price_index)
+
+            self.ports[i] = port_map
 
         # keys are the names of initiators
         self.battle_fields = {
