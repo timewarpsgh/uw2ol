@@ -17,17 +17,12 @@ by structure
         1: 'market',
             tax permits can only be used in an applied port
 
-
-
-        6: 'palace',
-            defect  OK
-
         3: 'dry_dock',
             remodel
                 weapon
 
 
-        can't fight fleet from same nation
+        can't fight fleet from same nation OK
 
 
 
