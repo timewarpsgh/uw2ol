@@ -189,7 +189,7 @@ def npc_info(self, message_obj):
 
     # maid speak
     speak_str = f"{names[0]}'s fleet, carrying {cargoes[0]}, is heading to {destinations[0]} " \
-                f"and his current location is about {positions[0][0]} {positions[0][1]}. " \
+                f"and his current location is about {positions[0][0]} {positions[0][1]}. <br><br>" \
                 f"{names[1]}'s fleet, carrying {cargoes[1]}, is heading to {destinations[1]} " \
                 f"and his current location is about {positions[1][0]} {positions[1][1]}."
     self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)

@@ -18,6 +18,7 @@ by structure
         industry index OK
         rand index OK
         country info shows e and i index OK
+        bar girl fleet info format OK
 
 
 
