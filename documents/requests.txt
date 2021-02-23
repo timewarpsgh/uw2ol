@@ -15,6 +15,7 @@ by structure
     buildings ON
 
             tax permits can only be used in an allied port OK
+            buy tax permits from capitals OK
 
         3: 'dry_dock',
             remodel

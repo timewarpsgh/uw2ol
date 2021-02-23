@@ -20,6 +20,7 @@ hash_ports_meta_data = {
 		  20,
 		  24,
 		  3,
+		  13,
 		],
 	  },
 	  'economyId': 0,
@@ -92,6 +93,7 @@ hash_ports_meta_data = {
 		  24,
 		  6,
 		  3,
+		  14,
 		],
 		'secret': [
 		  13,
@@ -172,6 +174,7 @@ hash_ports_meta_data = {
 		  24,
 		  16,
 		  20,
+		  15,
 		],
 		'secret': [
 		  7,
@@ -563,6 +566,7 @@ hash_ports_meta_data = {
 		  9,
 		  20,
 		  58,
+		  12,
 		],
 	  },
 	  'economyId': 2,
@@ -1871,6 +1875,7 @@ hash_ports_meta_data = {
 		  9,
 		  24,
 		  58,
+		  10,
 		],
 		'secret': [
 		  21,
@@ -2151,6 +2156,7 @@ hash_ports_meta_data = {
 		  24,
 		  21,
 		  22,
+		  11,
 		],
 		'secret': [
 		  23,
