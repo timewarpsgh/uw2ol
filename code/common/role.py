@@ -19,6 +19,7 @@ from hashes.hash_paths import hash_paths
 from hashes.look_up_tables import capital_2_port_id
 from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
+from hashes.look_up_tables import capital_map_id_2_nation
 
 # add relative directory to python_path
 
@@ -500,6 +501,9 @@ class Role:
         if self.is_in_port():
             ships = self.ships
             ships[from_ship_num], ships[to_ship_num] = ships[to_ship_num], ships[from_ship_num]
+
+    def defect(self, params):
+        self.mates[0].nation = capital_map_id_2_nation[self.get_map_id()]
 
     # at sea
     def discover(self, params):

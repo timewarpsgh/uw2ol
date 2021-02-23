@@ -20,21 +20,7 @@ by structure
 
 
         6: 'palace',
-            meet ruler
-                contry info (allied ports and PI) OK
-
-
-
-
-
-
-
-
-
-
-
-
-            defect  LATER
+            defect  OK
 
         3: 'dry_dock',
             remodel

@@ -323,6 +323,9 @@ class ButtonClickHandler():
         self.ui_manager = game.ui_manager
         self.menu_click_handler = MenuClickHandler(game)
 
+    def escape(self):
+        handle_pygame_event.escape(self.game, '')
+
     def escape_thrice(self):
         escape_thrice(self.game)
 
@@ -1932,8 +1935,19 @@ class Palace:
         self.game.connection.send('get_allied_ports_and_pi', [])
 
     def defect(self):
-        self.game.building_text = "We do appreciate your willingness to join us. " \
-                                  "Unfortunately, however, our quota has already been fulfilled this year."
+        msg = "You do wish to join us? "
+        self.game.button_click_handler.building_speak(msg)
+
+        d = {
+            'OK': self._do_defect
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def _do_defect(self):
+        self.game.change_and_send('defect', [])
+        msg = "You are one of us now!"
+        self.game.button_click_handler.building_speak(msg)
+        self.game.button_click_handler.escape()
 
     def ship_aid(self):
         self.game.building_text = "If you want a ship, go earn it."
