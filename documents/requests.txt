@@ -14,12 +14,7 @@ by structure
 
     buildings ON
 
-            use of price index OK
-            get pi and nation OK
-
-
-
-            tax permits can only be used in an allied port LATER
+            tax permits can only be used in an allied port OK
 
         3: 'dry_dock',
             remodel

@@ -19,7 +19,7 @@ from hashes.hash_paths import hash_paths
 from hashes.look_up_tables import capital_2_port_id
 from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
-from hashes.look_up_tables import capital_map_id_2_nation
+from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
 
 # add relative directory to python_path
 
@@ -61,8 +61,8 @@ class Role:
         self.gold = gold
         self.bank_gold = 2000
         self.target_name = ''
-        self.price_index = None
-        self.nation = None
+        self.price_index = None # the current port's price index
+        self.nation = None # the nation my current port belongs to
 
 
         # point in path id (only for npc)
@@ -929,14 +929,15 @@ class Role:
                 # cut gold
                 unit_price = port.get_commodity_buy_price(cargo_name)
                 buy_price_modifier = self.get_buy_price_modifier()
-
-
                 unit_price = int(unit_price * buy_price_modifier)
 
-                # has tax permit
-                if c.TAX_FREE_PERMIT_ID in self.bag.get_all_items_dict():
+                # has the right tax permit
+                right_tax_permit_id = nation_2_tax_permit_id[self.nation]
+
+                if right_tax_permit_id in self.bag.get_all_items_dict() and \
+                        self.nation == self.mates[0].nation:
                     self.gold -= count * unit_price
-                    self.bag.remove_item(c.TAX_FREE_PERMIT_ID)
+                    self.bag.remove_item(right_tax_permit_id)
                 else:
                     self.gold -= int(count * unit_price * 1.2)
 

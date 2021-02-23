@@ -17,6 +17,8 @@ import handle_pygame_event
 
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import id_2_building_type, lv_2_exp_needed_to_next_lv, capital_map_id_2_ruler_image
+from hashes.look_up_tables import nation_2_tax_permit_id
+
 from hashes.hash_items import hash_items
 from hashes.hash_villages import villages_dict
 from hashes.hash_bible_quotes import hash_bible_quotes
@@ -1348,7 +1350,8 @@ class Market():
         buy_price = int(buy_price * buy_price_modifier)
 
         # if have permit
-        if c.TAX_FREE_PERMIT_ID in role.bag.get_all_items_dict():
+        right_tax_permit_id = nation_2_tax_permit_id[role.nation]
+        if right_tax_permit_id in role.bag.get_all_items_dict() and role.nation == role.mates[0].nation:
             self.game.building_text = f"Since you have a tax free permit, the price would be {buy_price}."
         else:
             buy_price = int(buy_price * 1.2)

@@ -13,6 +13,17 @@ id_2_building_type = {
     12: 'fortune_house',
 }
 
+nation_2_tax_permit_id = {
+    'England': 10,
+    'Holland': 11,
+
+    'Portugal': 13,
+    'Spain': 14,
+
+    'Italy': 12,
+    'Turkey': 15,
+}
+
 capital_map_id_2_nation = {
     29: 'England',
     33: 'Holland',
