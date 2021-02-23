@@ -14,8 +14,13 @@ by structure
 
     buildings ON
 
-            tax permits can only be used in an allied port OK
-            buy tax permits from capitals OK
+        economy index  OK
+            each port has a rand int from 1 - 1000
+            determines types of cargo available
+        industry index OK
+            each port has a rand int from 1 - 1000
+            determines types of ship available
+
 
         3: 'dry_dock',
             remodel

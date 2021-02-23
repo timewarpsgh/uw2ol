@@ -1,6 +1,8 @@
 import random
 import time
 import copy
+import itertools
+
 from threading import Timer
 from twisted.internet import reactor, task, defer
 import constants as c
@@ -1811,6 +1813,9 @@ class Port:
         self.x = hash_ports_meta_data[self.id]['x'] * c.PIXELS_COVERED_EACH_MOVE
         self.y = hash_ports_meta_data[self.id]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
+        self.economy = hash_ports_meta_data[self.id]['economy']
+        self.industry = hash_ports_meta_data[self.id]['industry']
+
         if 'maid'in hash_ports_meta_data[self.id]:
             self.maid_id = hash_ports_meta_data[self.id]['maid']
         else:
@@ -1825,20 +1830,47 @@ class Port:
 
     def get_available_ships(self):
         available_ships = hash_region_to_ships_available[self.economy_id]
+        num_of_available_ships = len(available_ships)
+
+        # get modifier
+        modifier = None
+        if self.industry >= 800:
+            modifier = 1
+        else:
+            modifier = self.industry / 1000
+
+        # get slice
+        num_of_available_ships *= modifier
+        num_of_available_ships = int(num_of_available_ships)
+        available_ships = available_ships[:num_of_available_ships]
+
         return available_ships
 
     def get_availbale_goods_dict(self):
         # normal goods
         available_goods_dict = hash_markets_price_details[self.economy_id]['Available_items']
         temp_dict = copy.deepcopy(available_goods_dict)
+        num_of_available_items = len(temp_dict)
+
+        # get modifier
+        modifier = None
+        if self.economy >= 800:
+            modifier = 1
+        else:
+            modifier = self.economy / 1000
+
+        # get slice
+        num_of_available_items *= modifier
+        num_of_available_items = int(num_of_available_items)
+        dic = dict(itertools.islice(temp_dict.items(), num_of_available_items))
 
         # special goods
         specialty_name = hash_special_goods[self.id]['specialty']
         buy_price = hash_special_goods[self.id]['price']
         if specialty_name != '0':
-            temp_dict[specialty_name] = [buy_price, 0]
+            dic[specialty_name] = [buy_price, 0]
 
-        return temp_dict
+        return dic
 
     def get_commodity_buy_price(self, commodity_name):
         buy_price = self.get_availbale_goods_dict()[commodity_name][0]

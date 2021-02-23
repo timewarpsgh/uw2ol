@@ -6,10 +6,10 @@ hash_region_to_ships_available = {
     1:['Hansa Cog', 'Light Galley', 'Caravela Redonda', 'Pinnace', 'Sloop', 'Nao', 'Flemish Galleon', 'La Reale', 'Galleon', 'Frigate', 'Barge'],
 
     #### 'The Mediterranean', ####
-    2:['Light Galley', 'Talette', 'Caravela Latina', 'Buss', 'Flemish Galleon', 'Nao', 'Venetian Galeass', 'Carrack'],
+    2:['Light Galley', 'Talette', 'Caravela Latina', 'Buss', 'Flemish Galleon', 'Nao', 'Carrack', 'Venetian Galeass'],
 
     #### 'Ottoman Empire', ####
-    4:['Light Galley', 'Caravela Latina', 'Flemish Galleon', 'Nao', 'Xebec', 'Venetian Galeass', 'Carrack'],
+    4:['Light Galley', 'Caravela Latina', 'Flemish Galleon', 'Nao', 'Xebec', 'Carrack', 'Venetian Galeass'],
 
     #### 'Middle East' , Southeast Asia, and Far East ####
     9:['Light Galley', 'Dhow', 'Xebec'],
