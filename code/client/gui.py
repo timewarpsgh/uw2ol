@@ -1433,7 +1433,9 @@ class Market():
         self.game.button_click_handler.make_menu(dict)
 
     def price_index(self):
-        self.game.connection.send('get_price_index', [])
+        msg = f"The price index of this port is {self.game.my_role.price_index}%. " \
+              f"Any cargo you buy or sell will be affected by this index."
+        self.game.button_click_handler.building_speak(msg)
 
 class Bar():
     def __init__(self, game):
@@ -2084,8 +2086,8 @@ class Inn:
         self.game.button_click_handler.building_speak(msg)
 
     def port_info(self):
-        self.game.connection.send('get_allied_nation', [])
-
+        msg = f"This port is allied to {self.game.my_role.nation}."
+        self.game.button_click_handler.building_speak(msg)
 
 class Msc:
     def __init__(self, game):

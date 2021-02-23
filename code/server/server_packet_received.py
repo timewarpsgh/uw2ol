@@ -446,18 +446,6 @@ def get_npc_info(self, message_obj):
 
     self.send('npc_info', dic)
 
-def get_allied_nation(self, message_obj):
-    map = self.factory.aoi_manager.get_map_by_player(self.my_role)
-    allied_nation = map.nation
-
-    self.send('allied_nation', allied_nation)
-
-def get_price_index(self, message_obj):
-    map = self.factory.aoi_manager.get_map_by_player(self.my_role)
-    price_index = map.price_index
-
-    self.send('price_index', price_index)
-
 def get_allied_ports_and_pi(self, message_obj):
     port_map = self.factory.aoi_manager.get_map_by_player(self.my_role)
     nation = port_map.nation

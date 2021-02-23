@@ -218,17 +218,6 @@ def _calc_longitude_and_latitude(x, y):
 
     return (longitude, latitude)
 
-def allied_nation(self, message_obj):
-    allied_nation = message_obj
-    msg = f"This port is allied to {allied_nation}."
-    self.button_click_handler.building_speak(msg)
-
-def price_index(self, message_obj):
-    price_index = message_obj
-    msg = f"The price index of this port is {price_index}%. " \
-          f"Any cargo you buy or sell will be affected by this index."
-    self.button_click_handler.building_speak(msg)
-
 def allied_ports_and_pi(self, message_obj):
     d = message_obj
 
@@ -250,9 +239,7 @@ def allied_ports_and_pi(self, message_obj):
         }
         my_dict[economy_id].append(dic)
 
-
-    print(my_dict)
-
+    # dic to show
     dic = {}
     for k in sorted(my_dict):
         dic[hash_ports_meta_data['markets'][k]] = [_show_allied_ports_for_one_economy_id, [self, my_dict[k]]]

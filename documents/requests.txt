@@ -15,6 +15,7 @@ by structure
     buildings ON
 
             use of price index OK
+            get pi and nation OK
 
 
 
