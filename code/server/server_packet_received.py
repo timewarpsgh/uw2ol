@@ -138,6 +138,9 @@ def change_map(self, message_obj):
     if target_map != 'sea':
         self.my_role.price_index = next_map.price_index
         self.my_role.nation = next_map.nation
+        self.my_role.port_economy = next_map.economy
+        self.my_role.port_industry = next_map.industry
+
 
     prev_map.remove_player(self.my_role)
     next_map.add_player_conn(self)
@@ -496,9 +499,11 @@ def on_get_character_data_got_result(self, role):
         map_id = role.get_map_id()
         map = self.factory.aoi_manager.get_map_by_player(role)
         map.add_player_conn(self)
+
         self.my_role.price_index = map.price_index
         self.my_role.nation = map.nation
-
+        self.my_role.port_economy = map.economy
+        self.my_role.port_industry = map.industry
 
         # tell other clients nearby of new role
         nearby_players = map.get_nearby_players_by_player(role)

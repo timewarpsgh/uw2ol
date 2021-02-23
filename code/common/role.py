@@ -63,9 +63,12 @@ class Role:
         self.gold = gold
         self.bank_gold = 2000
         self.target_name = ''
-        self.price_index = None # the current port's price index
-        self.nation = None # the nation my current port belongs to
 
+        # my current port's states
+        self.price_index = None
+        self.nation = None
+        self.port_economy = None
+        self.port_industry = None
 
         # point in path id (only for npc)
         if self.name.isdigit():
@@ -415,7 +418,7 @@ class Role:
 
     def get_port(self):
         map_id = int(self.map)
-        port = Port(map_id)
+        port = Port(map_id, self)
         return port
 
     def calculate_max_days_at_sea(self):
@@ -1806,20 +1809,22 @@ class Item:
 class Port:
     """read only. holds a port's special items(ships, goods, items)"""
 
-    def __init__(self, map_id):
+    def __init__(self, map_id, role=None):
         self.id = map_id + 1
         self.economy_id = hash_ports_meta_data[self.id]['economyId']
         self.name = hash_ports_meta_data[self.id]['name']
         self.x = hash_ports_meta_data[self.id]['x'] * c.PIXELS_COVERED_EACH_MOVE
         self.y = hash_ports_meta_data[self.id]['y'] * c.PIXELS_COVERED_EACH_MOVE
 
-        self.economy = hash_ports_meta_data[self.id]['economy']
-        self.industry = hash_ports_meta_data[self.id]['industry']
-
         if 'maid'in hash_ports_meta_data[self.id]:
             self.maid_id = hash_ports_meta_data[self.id]['maid']
         else:
             self.maid_id = None
+
+        if role:
+            self.economy = role.port_economy
+            self.industry = role.port_industry
+
 
     def get_maid(self):
         if self.maid_id:

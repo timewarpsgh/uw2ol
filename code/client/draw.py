@@ -155,8 +155,8 @@ def draw_hud(self):
             draw_text(self, region_name, c.WINDOW_WIDTH - 100, 20)
 
             # index
-            economy_index = hash_ports_meta_data[int(self.my_role.map) + 1]['economy']
-            industry_index = hash_ports_meta_data[int(self.my_role.map) + 1]['industry']
+            economy_index = self.my_role.port_economy
+            industry_index = self.my_role.port_industry
 
             draw_text(self, 'Economy', c.WINDOW_WIDTH - 100, 80)
             draw_text(self, str(economy_index), c.WINDOW_WIDTH - 100, 100)

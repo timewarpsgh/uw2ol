@@ -1327,7 +1327,7 @@ class Market():
     def buy(self):
         # get available goods
         map_id = int(self.game.my_role.map)
-        port = Port(map_id)
+        port = self.game.my_role.get_port()
         available_goods_dict = port.get_availbale_goods_dict()
 
         # make menu
@@ -1630,7 +1630,7 @@ class DryDock():
 
         # available ships
         my_map_id = int(self.game.my_role.map)
-        port = Port(my_map_id)
+        port = self.game.my_role.get_port()
         ships_list = port.get_available_ships()
 
         for ship_type in ships_list:

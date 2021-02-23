@@ -15,11 +15,9 @@ by structure
     buildings ON
 
         economy index  OK
-            each port has a rand int from 1 - 1000
-            determines types of cargo available
         industry index OK
-            each port has a rand int from 1 - 1000
-            determines types of ship available
+        rand index OK
+
 
 
         3: 'dry_dock',

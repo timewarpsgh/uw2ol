@@ -258,6 +258,9 @@ class PortMap(Map):
         # allied nation and price index
         self.nation = None
         self.price_index = None
+        self.economy = None
+        self.industry = None
+
         self.map_id = map_id
 
     def set_allied_nation(self, nation):
@@ -339,6 +342,9 @@ class AOIManager:
             price_index = random.randint(80, 120)
             port_map.set_price_index(price_index)
 
+            port_map.economy = random.randint(1, 1000)
+            port_map.industry = random.randint(1, 1000)
+
             self.ports[i] = port_map
 
         # capital ports allied to own nation
@@ -362,6 +368,9 @@ class AOIManager:
             self.ports[i].set_allied_nation(rand_nation)
             price_index = random.randint(80, 120)
             self.ports[i].set_price_index(price_index)
+
+            self.ports[i].economy = random.randint(1, 1000)
+            self.ports[i].industry = random.randint(1, 1000)
 
         # capital ports allied to own nation
         for map_id, nation in capital_map_id_2_nation.items():
