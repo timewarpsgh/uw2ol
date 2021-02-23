@@ -16,7 +16,7 @@ from hashes import hash_villages
 import handle_pygame_event
 
 from hashes.hash_ports_meta_data import hash_ports_meta_data
-from hashes.look_up_tables import id_2_building_type, lv_2_exp_needed_to_next_lv
+from hashes.look_up_tables import id_2_building_type, lv_2_exp_needed_to_next_lv, capital_map_id_2_ruler_image
 from hashes.hash_items import hash_items
 from hashes.hash_villages import villages_dict
 from hashes.hash_bible_quotes import hash_bible_quotes
@@ -1919,8 +1919,17 @@ class Palace:
         self.game = game
 
     def meet_ruler(self):
-        self.game.connection.send('get_allied_ports_and_pi', [])
+        msg = f"Hello, {self.game.my_role.name}. Are you interested in our allied ports?"
+        image_x, image_y = capital_map_id_2_ruler_image[self.game.my_role.get_map_id()]
+        figure_image_speak(self.game, image_x, image_y, msg)
 
+        d = {
+            'Country Info': self._get_country_info
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def _get_country_info(self):
+        self.game.connection.send('get_allied_ports_and_pi', [])
 
     def defect(self):
         self.game.building_text = "We do appreciate your willingness to join us. " \

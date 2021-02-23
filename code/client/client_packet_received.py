@@ -8,6 +8,7 @@ from twisted.internet.task import LoopingCall
 import port_npc
 import handle_pygame_event
 import constants as c
+from hashes.hash_ports_meta_data import hash_ports_meta_data
 
 def process_packet(self, pck_type, message_obj):
     # method not in role (in this file)
@@ -252,11 +253,17 @@ def allied_ports_and_pi(self, message_obj):
 
     print(my_dict)
 
-#     dic = {}
-#     for k in my_dict.keys():
-#         dic[k] = _show_allied_ports_for_one_economy_id
-#
-#     self.button_click_handler.make_menu(dic)
-#
-# def _show_allied_ports_for_one_economy_id():
-#     pass
+    dic = {}
+    for k in sorted(my_dict):
+        dic[hash_ports_meta_data['markets'][k]] = [_show_allied_ports_for_one_economy_id, [self, my_dict[k]]]
+
+    self.button_click_handler.make_menu(dic)
+
+def _show_allied_ports_for_one_economy_id(params):
+    self = params[0]
+    list_of_dict = params[1]
+
+    msg = ""
+    for d in list_of_dict:
+        msg += f"{d['port_name']}:{d['pi']}, "
+    self.button_click_handler.make_message_box(msg)

@@ -24,6 +24,17 @@ capital_map_id_2_nation = {
     2: 'Turkey',
 }
 
+capital_map_id_2_ruler_image = {
+    29: [12, 2],
+    33: [13, 2],
+
+    0: [3, 2],
+    1: [5, 2],
+
+    8: [7, 2],
+    2: [14, 2],
+}
+
 capital_2_port_id = {
     'london': 30,
     'amsterdam': 34,

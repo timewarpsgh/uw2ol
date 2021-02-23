@@ -1,8 +1,5 @@
 import random
 
-a = set()
-a.add(1)
-a.add(2)
-
-
-a.get
+x, y = [1, 2]
+print(x)
+print(y)
