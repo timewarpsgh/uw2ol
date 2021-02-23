@@ -17,6 +17,7 @@ by structure
         economy index  OK
         industry index OK
         rand index OK
+        country info shows e and i index OK
 
 
 

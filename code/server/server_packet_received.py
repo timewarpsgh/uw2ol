@@ -141,7 +141,6 @@ def change_map(self, message_obj):
         self.my_role.port_economy = next_map.economy
         self.my_role.port_industry = next_map.industry
 
-
     prev_map.remove_player(self.my_role)
     next_map.add_player_conn(self)
 
@@ -457,9 +456,12 @@ def get_allied_ports_and_pi(self, message_obj):
     d = {}
     for port_map in port_maps_set:
         pi = port_map.price_index
+        economy = port_map.economy
+        industry = port_map.industry
+
         map_id = port_map.map_id
         if map_id <= 99:
-            d[map_id] = pi
+            d[map_id] = [pi, economy, industry]
 
     self.send('allied_ports_and_pi', d)
 

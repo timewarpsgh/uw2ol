@@ -223,9 +223,13 @@ def allied_ports_and_pi(self, message_obj):
 
     # make my_dict (economy_id: set of dic)
     my_dict = {}
-    for map_id, pi in d.items():
+    for map_id, list in d.items():
         port = Port(map_id)
         economy_id = port.economy_id
+
+        pi = list[0]
+        economy = list[1]
+        industry = list[2]
 
         port_name = port.name
 
@@ -235,22 +239,30 @@ def allied_ports_and_pi(self, message_obj):
             my_dict[economy_id] = []
         dic = {
             'port_name': port_name,
-            'pi': pi
+            'pi': pi,
+            'economy': economy,
+            'industry': industry,
         }
         my_dict[economy_id].append(dic)
 
     # dic to show
     dic = {}
     for k in sorted(my_dict):
-        dic[hash_ports_meta_data['markets'][k]] = [_show_allied_ports_for_one_economy_id, [self, my_dict[k]]]
+        region_name = hash_ports_meta_data['markets'][k]
+        dic[region_name] = [_show_allied_ports_for_one_economy_id, [self, region_name, my_dict[k]]]
 
     self.button_click_handler.make_menu(dic)
 
 def _show_allied_ports_for_one_economy_id(params):
     self = params[0]
-    list_of_dict = params[1]
+    region_name = params[1]
+    list_of_dict = params[2]
+    port_count = len(list_of_dict)
 
-    msg = ""
+    msg = f"In {region_name}, the number of ports allied to us is {port_count}. <br><br>"
     for d in list_of_dict:
-        msg += f"{d['port_name']}:{d['pi']}, "
+        msg += f"{d['port_name']}: PI-{d['pi']}, " \
+               f"E-{d['economy']}, " \
+               f"I-{d['industry']}<br>"
+
     self.button_click_handler.make_message_box(msg)
