@@ -7,22 +7,23 @@ by function
     trade OK
 
     fight LATER
-        shooting needs sho1ts
+        shooting needs shots
 
 by structure
     buttons on interface OK
 
     buildings ON
 
-        1: 'market',
-            tax permits can only be used in an applied port
+            use of price index OK
+
+
+
+            tax permits can only be used in an allied port LATER
 
         3: 'dry_dock',
             remodel
                 weapon
 
-
-        can't fight fleet from same nation OK
 
 
 

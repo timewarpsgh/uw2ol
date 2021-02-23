@@ -61,6 +61,9 @@ class Role:
         self.gold = gold
         self.bank_gold = 2000
         self.target_name = ''
+        self.price_index = None
+        self.nation = None
+
 
         # point in path id (only for npc)
         if self.name.isdigit():
@@ -893,7 +896,8 @@ class Role:
         else:
             mate = self.mates[0]
 
-        buy_price_modifier = (100 - (mate.knowledge + mate.accounting * 20) / 4) / 100
+        price_index = self.price_index
+        buy_price_modifier = (100 - (100 - price_index) - (mate.knowledge + mate.accounting * 20) / 4) / 100
         return buy_price_modifier
 
     def get_sell_price_modifier(self):
@@ -903,7 +907,8 @@ class Role:
         else:
             mate = self.mates[0]
 
-        sell_price_modifier = (50 + mate.intuition + mate.accounting * 10) / 100
+        price_index = self.price_index
+        sell_price_modifier = (50 + (price_index - 100) + mate.intuition + mate.accounting * 10) / 100
         return sell_price_modifier
 
     def buy_cargo(self, params):
@@ -924,6 +929,8 @@ class Role:
                 # cut gold
                 unit_price = port.get_commodity_buy_price(cargo_name)
                 buy_price_modifier = self.get_buy_price_modifier()
+
+
                 unit_price = int(unit_price * buy_price_modifier)
 
                 # has tax permit
