@@ -14,7 +14,7 @@ by structure
 msc
     godspeed OK
     right graphics OK
-    fleet type wrong ON
+    fleet type wrong OK
 
 
 

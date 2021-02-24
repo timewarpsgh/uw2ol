@@ -202,7 +202,7 @@ class Role:
         return x_tile_pos, y_tile_pos
 
     def get_npc_fleet_type(self):
-        fleet_sequence = int(self.name) % c.FLEET_COUNT_PER_NATION
+        fleet_sequence = (int(self.name) - 1) % c.FLEET_COUNT_PER_NATION
         if fleet_sequence == 0 or fleet_sequence == 1:
             return 'merchant'
         elif fleet_sequence == 2 or fleet_sequence == 3:
