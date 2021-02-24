@@ -22,6 +22,7 @@ from hashes.look_up_tables import capital_2_port_id
 from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
+from hashes.hash_cannons import hash_cannons
 
 # add relative directory to python_path
 
@@ -825,6 +826,26 @@ class Role:
 
         self.ships[ship_num].remodel_name(name)
 
+    def remodel_ship_gun(self, params):
+        ship_id = params[0]
+        gun_id = params[1]
+
+        ship = self.ships[ship_id]
+        gun = Gun(gun_id)
+        total_cost = ship.max_guns * gun.price
+
+        if self.gold >= total_cost:
+            ship.remodel_gun(gun_id)
+            self.gold -= total_cost
+            if self.is_in_client_and_self():
+                self.GAME.button_click_handler.escape_n_times(4)
+
+        else:
+            if self.is_in_client_and_self():
+                msg = "We can't afford that."
+                self.GAME.button_click_handler.i_speak(msg)
+
+
     # bar
     def hire_crew(self, params):
         count = params[0]
@@ -1122,6 +1143,7 @@ class Ship:
         self.capacity = ship_dict['capacity']
 
         self.max_guns = ship_dict['max_guns']
+        self.gun = 1
         self.min_crew = ship_dict['min_crew']
         self.max_crew = ship_dict['max_crew']
 
@@ -1151,6 +1173,9 @@ class Ship:
             'Lumber':0,
             'Shot':0
         }
+
+    def remodel_gun(self, gun_id):
+        self.gun = gun_id
 
     def remodel_name(self, name):
         self.name = name
@@ -1358,13 +1383,15 @@ class Ship:
 
         # damage based on attributes
         damage = 0
+        gun = Gun(self.gun)
+
             # if no first mate
         if not self.captain.first_mate:
-            damage = c.SHOOT_DAMAGE * int((self.max_guns + int(self.captain.swordplay / 2) + self.captain.gunnery * 20) / 10)
+            damage = c.SHOOT_DAMAGE * int(( (self.max_guns * gun.damage)  + int(self.captain.swordplay / 2) + self.captain.gunnery * 20) / 10)
             # if have first mate
         else:
             damage = c.SHOOT_DAMAGE * int(
-                (self.max_guns + int(self.captain.first_mate.swordplay / 2) + self.captain.first_mate.gunnery * 20) / 10)
+                ((self.max_guns * gun.damage) + int(self.captain.first_mate.swordplay / 2) + self.captain.first_mate.gunnery * 20) / 10)
 
         # damage based on equipments
 
@@ -1919,6 +1946,13 @@ class Maid:
         self.name = dic['name']
         self.image = dic['image']
 
+
+class Gun:
+    def __init__(self, id):
+        dic = hash_cannons[id]
+        self.name = dic['name']
+        self.price = dic['price']
+        self.damage = dic['damage']
 
 
 def init_one_default_npc(name):

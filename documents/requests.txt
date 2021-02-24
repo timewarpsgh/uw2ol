@@ -1,22 +1,15 @@
-
 by function
     travel OK
-
     discover OK
-
     trade OK
-
     fight LATER
-        shooting needs shots (no)   OK
 
 by structure
     buttons on interface OK
-
     buildings ON
-
         3: 'dry_dock',
             remodel
-                weapon
+                weapon OK
 
 
 

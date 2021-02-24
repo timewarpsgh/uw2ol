@@ -115,9 +115,9 @@ class Database:
                     default_role.mates.append(mate1)
                     mate1.set_as_captain_of(ship1)
 
-                    for i in range(8):
-                        s = Ship('x', 'Frigate')
-                        default_role.ships.append(s)
+                    # for i in range(8):
+                    #     s = Ship('x', 'Frigate')
+                    #     default_role.ships.append(s)
 
 
                     default_role.mates[0].exp = 10000

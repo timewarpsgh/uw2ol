@@ -10,7 +10,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 # import from common(dir)
 import constants as c
-from role import Port, Mate, Ship, Discovery, Item
+from role import Port, Mate, Ship, Discovery, Item, Gun
 from hashes import hash_villages
 
 import handle_pygame_event
@@ -22,6 +22,8 @@ from hashes.look_up_tables import nation_2_tax_permit_id
 from hashes.hash_items import hash_items
 from hashes.hash_villages import villages_dict
 from hashes.hash_bible_quotes import hash_bible_quotes
+from hashes.hash_cannons import hash_cannons
+
 
 def test():
     print('testing')
@@ -331,6 +333,17 @@ class ButtonClickHandler():
     def escape_thrice(self):
         escape_thrice(self.game)
 
+    def escape_4_times(self):
+        handle_pygame_event.escape(game, '')
+        reactor.callLater(0.1, handle_pygame_event.escape, game, '')
+        reactor.callLater(0.2, handle_pygame_event.escape, game, '')
+        reactor.callLater(0.3, handle_pygame_event.escape, game, '')
+
+    def escape_n_times(self, n):
+        game = self.game
+        for i in range(n):
+            delay = i * 0.1
+            reactor.callLater(delay, handle_pygame_event.escape, game, '')
 
     def make_menu(self, dict):
         SelectionListWindow(pygame.Rect((c.SELECTION_LIST_X, c.SELECTION_LIST_Y),
@@ -1736,7 +1749,7 @@ class DryDock():
     def remodel(self):
         dict = {
             'Capacity':self._remodel_capacity,
-            'Weapon':test,
+            'Weapon':self._remodel_weapon,
             'Name': self._remodel_name,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -1744,6 +1757,49 @@ class DryDock():
     def _remodel_capacity(self):
         self.game.button_click_handler. \
             make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
+
+    def _remodel_weapon(self):
+        ships = self.game.my_role.ships
+        d = {}
+        for id, ship in enumerate(ships):
+            d[str(id) + " " + ship.name] = [self.__ship_name_clicked, [self, ship, False, id]]
+        self.game.button_click_handler.make_menu(d)
+
+    def __ship_name_clicked(self, params):
+        ship_id = params[-1]
+
+        # show ship info
+        _show_one_ship(params)
+
+        # show cannons menu
+        d = {}
+        for gun_id in hash_cannons.keys():
+            gun = Gun(gun_id)
+            d[gun.name] = [self.___gun_name_clicked, [ship_id, gun_id]]
+        self.game.button_click_handler.make_menu(d)
+
+    def ___gun_name_clicked(self, params):
+        ship_id = params[0]
+        gun_id = params[1]
+
+        ship = self.game.my_role.ships[ship_id]
+        gun = Gun(gun_id)
+
+        msg = f"{gun.name} costs {gun.price} each. " \
+              f"{ship.max_guns} of them will cost you {ship.max_guns * gun.price}. " \
+              f"Are you sure?"
+        self.game.button_click_handler.make_message_box(msg)
+
+        d = {
+            'OK': [self.____do_remodel_gun, [ship_id, gun_id]]
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def ____do_remodel_gun(self, params):
+        ship_id = params[0]
+        gun_id = params[1]
+        self.game.change_and_send('remodel_ship_gun', [ship_id, gun_id])
+
 
     def _remodel_name(self):
         self.game.button_click_handler. \
@@ -2263,6 +2319,8 @@ def _show_one_ship(params):
     else:
         speed = ship.get_speed()
 
+    gun = Gun(ship.gun)
+    gun_name = gun.name
     dict = {
         'name': f'{ship.name}  type:{ship.type}  captain:{captain_name}',
         '1': '',
@@ -2270,7 +2328,7 @@ def _show_one_ship(params):
         'durability': f'{ship.now_hp}/{ship.max_hp}',
         '2': '',
         'capacity': f'{ship.capacity}',
-        'max_guns': f'{ship.max_guns}',
+        'max_guns': f'{ship.max_guns}, guns:{ship.max_guns} {gun_name}',
         'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
         '3': '',
         'affective_capacity': f'{ship.useful_capacity}',
