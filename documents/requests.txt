@@ -15,6 +15,9 @@ msc
     godspeed OK
     right graphics OK
     fleet type wrong OK
+    npc fleet ship type rand OK
+
+
 
 
 

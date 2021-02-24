@@ -15,7 +15,7 @@ hash_region_to_ships_available = {
     9:['Light Galley', 'Dhow', 'Xebec'],
     10:['Light Galley', 'Dhow', 'Xebec'],
     11:['Light Galley', 'Dhow', 'Xebec'],
-    12:['Light Galley', 'Dhow', 'Xebec'],
+    12:['Light Galley', 'Dhow', 'Xebec', 'Junk'],
 
     #### 'Africa', ####
     3:['Light Galley', 'Caravela Redonda', 'Nao', 'Carrack'],

@@ -1963,67 +1963,50 @@ def init_one_default_npc(name):
     if int(name) >= 50:
         mate0 = Mate(1)
         npc.mates.append(mate0)
-        mate1 = Mate(1)
-        npc.mates.append(mate1)
     else:
         mate0 = Mate(int(name))
         npc.mates.append(mate0)
-        mate1 = Mate(int(name))
-        npc.mates.append(mate1)
-
-    # for i in range(1, 9):
-    #     mate = Mate(1)
-    #     npc.mates.append(mate)
-
-    # test 10 ships
-    # for i in range(0, 2):
-    #     ship = Ship('0', 'Nao')
-    #     ship.crew = 25
-    #     npc.ships.append(ship)
-    #     npc.mates[i].set_as_captain_of(ship)
 
     # 3 types of fleet
     fleet_sequence = (int(name) - 1) % c.FLEET_COUNT_PER_NATION
-    if fleet_sequence == 0 or fleet_sequence == 1:
-        ship0 = Ship('0', 'Nao')
-        ship0.crew = 25
-        cargo_name = _generate_rand_cargo_name()
-        ship0.add_cargo(cargo_name, 200)
-        npc.ships.append(ship0)
-        mate0.set_as_captain_of(ship0)
 
-        ship1 = Ship('1', 'Nao')
-        ship1.crew = 25
+    # merchant
+    if fleet_sequence == 0 or fleet_sequence == 1:
         cargo_name = _generate_rand_cargo_name()
-        ship1.add_cargo(cargo_name, 200)
-        npc.ships.append(ship1)
-        mate1.set_as_captain_of(ship1)
+        num_of_ships = random.randint(3, 5)
+        ship_type = random.choice(['Nao', 'Carrack', 'Flemish Galleon'])
+        for i in range(num_of_ships):
+            ship = Ship(str(i), ship_type)
+            ship.crew = ship.max_crew
+            ship.add_cargo(cargo_name, ship.useful_capacity)
+            npc.ships.append(ship)
+            ship.captain = mate0
 
     # convoy
     elif fleet_sequence == 2 or fleet_sequence == 3:
-        ship0 = Ship('0', 'Galleon')
-        ship0.crew = 200
-        npc.ships.append(ship0)
-        mate0.set_as_captain_of(ship0)
-
-        ship1 = Ship('1', 'Nao')
-        ship1.crew = 25
         cargo_name = _generate_rand_cargo_name()
-        ship1.add_cargo(cargo_name, 200)
-        npc.ships.append(ship1)
-        mate1.set_as_captain_of(ship1)
+        num_of_ships = random.randint(5, 8)
+        ship_type = random.choice([ 'Galleon', 'Venetian Galeass'])
+        for i in range(num_of_ships):
+            ship = Ship(str(i), ship_type)
+            ship.gun = 4
+            ship.crew = ship.max_crew
+            ship.add_cargo(cargo_name, ship.useful_capacity)
+            npc.ships.append(ship)
+            ship.captain = mate0
 
     # battle
     else:
-        ship0 = Ship('0', 'Galleon')
-        ship0.crew = 200
-        npc.ships.append(ship0)
-        mate0.set_as_captain_of(ship0)
-
-        ship1 = Ship('1', 'Galleon')
-        ship1.crew = 200
-        npc.ships.append(ship1)
-        mate1.set_as_captain_of(ship1)
+        cargo_name = _generate_rand_cargo_name()
+        num_of_ships = random.randint(8, 10)
+        ship_type = random.choice(['Frigate', 'Barge', 'Full Rigged Ship'])
+        for i in range(num_of_ships):
+            ship = Ship(str(i), ship_type)
+            ship.gun = 6
+            ship.crew = ship.max_crew
+            ship.add_cargo(cargo_name, ship.useful_capacity)
+            npc.ships.append(ship)
+            ship.captain = mate0
 
 
     # diff based on nation

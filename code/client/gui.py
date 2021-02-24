@@ -1061,8 +1061,7 @@ class MenuClickHandlerForBattle():
         dict = {}
         index = 0
         for ship in enemy_ships:
-            dict[ship.name] = [self.game.button_click_handler.menu_click_handler.\
-                ships.show_one_ship, [ship, True, index]]
+            dict[ship.name] = [_show_one_ship, [self, ship, True, index]]
             index += 1
         self.game.button_click_handler.make_menu(dict)
 
