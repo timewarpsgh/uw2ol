@@ -119,16 +119,19 @@ class Role:
         if self.main_events_ids:
             self.main_events_ids.pop()
 
+    def get_enemy_role(self):
+        enemy_name = self.enemy_name
+        enemy_role = self._get_other_role_by_name(enemy_name)
+        return enemy_role
+
     def _get_other_role_by_name(self, name):
 
         # in client
         if self.GAME:
             if name in self.GAME.other_roles:
                 target_role = self.GAME.other_roles[name]
-                print("target is:", target_role.name)
                 return target_role
             else:
-                print("target is:", self.GAME.my_role.name)
                 return self.GAME.my_role
 
         # in server
@@ -1379,6 +1382,7 @@ class Ship:
     def shoot(self, ship):
         # change states
         self.state = 'shooting'
+        self.cannon_frame = 0
         reactor.callLater(1, self._clear_shooting_state, ship)
 
         # damage based on attributes

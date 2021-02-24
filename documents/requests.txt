@@ -8,9 +8,13 @@ by function
         hot key for set all target to 0 OK
 
         shooting animation
+            I shoot OK
+            cannon alpha ON
+            enemy shoot ON
         explosion animation
 
-
+    key press bugs LATER
+    sounds LATER
 
 by structure
     buttons on interface OK
