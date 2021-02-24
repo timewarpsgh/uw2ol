@@ -7,20 +7,12 @@ by function
     trade OK
 
     fight LATER
-        shooting needs shots
+        shooting needs shots (no)   OK
 
 by structure
     buttons on interface OK
 
     buildings ON
-
-        economy index  OK
-        industry index OK
-        rand index OK
-        country info shows e and i index OK
-        bar girl fleet info format OK
-
-
 
         3: 'dry_dock',
             remodel

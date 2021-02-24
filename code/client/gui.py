@@ -1297,8 +1297,8 @@ class Harbor():
         dict = {
             'Food':[self._load, 'Food'],
             'Water':[self._load, 'Water'],
-            'Lumber':[self._load, 'Lumber'],
-            'Shot':[self._load, 'Shot'],
+            # 'Lumber':[self._load, 'Lumber'],
+            # 'Shot':[self._load, 'Shot'],
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1310,8 +1310,8 @@ class Harbor():
         dict = {
             'Food':[self._unload, 'Food'],
             'Water':[self._unload, 'Water'],
-            'Lumber':[self._unload, 'Lumber'],
-            'Shot':[self._unload, 'Shot'],
+            # 'Lumber':[self._unload, 'Lumber'],
+            # 'Shot':[self._unload, 'Shot'],
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -2279,8 +2279,7 @@ def _show_one_ship(params):
     # if no target selected
     if not target:
         # supply
-        dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']}" \
-                           f" L{ship.supplies['Lumber']} S{ship.supplies['Shot']} "
+        dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']}"
 
         # cargo
         cargoes_dict = ship.cargoes
