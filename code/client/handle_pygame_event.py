@@ -213,7 +213,7 @@ def other_keys_down(self, event):
             enemy_role = self.my_role._get_other_role_by_name(self.my_role.enemy_name)
             my_role = self.my_role
             if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
-                if enemy_role.mates[0].nation == my_role.mates[0].nation:
+                if enemy_role.mates[0].nation == my_role.mates[0].nation and not c.DEVELOPER_MODE_ON:
                     self.button_click_handler.i_speak("That fleet is from my own country.")
                 else:
                     self.connection.send('try_to_fight_with', [self.my_role.enemy_name])

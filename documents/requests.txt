@@ -10,7 +10,7 @@ by function
         shooting animation
             I shoot OK
             cannon alpha OK
-            enemy shoot ON
+            enemy shoot OK
         explosion animation
 
     key press bugs LATER

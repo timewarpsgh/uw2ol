@@ -745,6 +745,7 @@ class Role:
 
         # attack
         d_result = self.attack_ship([i, random_target_ship_id])
+        self.ships[i].target = random_target_ship_id
         d_result.addCallback(self._call_back_for_attack_ship, i, enemy_ships)
 
     def _call_back_for_attack_ship(self, result, i, enemy_ships):
@@ -1964,6 +1965,7 @@ def init_one_default_npc(name):
     npc = Role(14400, 4208, name)
 
     # add mate and ship
+    mate0 = None
     if int(name) >= 50:
         mate0 = Mate(1)
         npc.mates.append(mate0)
