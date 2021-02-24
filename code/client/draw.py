@@ -121,7 +121,7 @@ def draw_hud(self):
 
         # year and time of day
     draw_text(self, 'A.D. 1492', 10, 25)
-    draw_text(self, 'Morning', 10, 139)
+    draw_text(self, 'Godspeed', 10, 139)
 
         # LV
     draw_text(self, 'Lv', 10, c.WINDOW_HIGHT - 120 - 40)

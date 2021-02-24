@@ -2,18 +2,18 @@ by function
     travel OK
     discover OK
     trade OK
-    fight LATER
+
+    fight ON
 
 by structure
     buttons on interface OK
-    buildings ON
-        3: 'dry_dock',
-            remodel
-                weapon OK
+    buildings OK
 
 
 
-
+msc
+    godspeed OK
+    right graphics ON
 
 
 
