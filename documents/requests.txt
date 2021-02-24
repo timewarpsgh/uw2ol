@@ -4,6 +4,13 @@ by function
     trade OK
 
     fight ON
+        hot key for all ships move OK
+        hot key for set all target to 0 OK
+
+        shooting animation
+        explosion animation
+
+
 
 by structure
     buttons on interface OK

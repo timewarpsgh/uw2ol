@@ -225,7 +225,11 @@ def other_keys_down(self, event):
             if self.my_role.your_turn_in_battle:
                 self.connection.send('exit_battle', [])
     elif event.key == ord('k'):
-        self.button_click_handler.menu_click_handler.battle.all_ships_move()
+        if 'battle' in self.my_role.map:
+            self.button_click_handler.menu_click_handler.battle.all_ships_move()
+    elif event.key == ord('l'):
+        if 'battle' in self.my_role.map:
+            self.change_and_send('set_all_ships_target', [0])
 
     # developer keys
     if c.DEVELOPER_MODE_ON:

@@ -1974,7 +1974,7 @@ def init_one_default_npc(name):
     if fleet_sequence == 0 or fleet_sequence == 1:
         cargo_name = _generate_rand_cargo_name()
         num_of_ships = random.randint(3, 5)
-        ship_type = random.choice(['Nao', 'Carrack', 'Flemish Galleon'])
+        ship_type = random.choice(['Nao', 'Carrack', 'Flemish Galleon', 'Buss', 'Sloop', 'Xebec'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
             ship.crew = ship.max_crew
