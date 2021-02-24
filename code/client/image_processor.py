@@ -21,4 +21,4 @@ def make_white_bg_transparent(img_file):
 
 
 if __name__ == '__main__':
-    make_white_bg_transparent('cannon.png')
+    make_white_bg_transparent('explosion.png')

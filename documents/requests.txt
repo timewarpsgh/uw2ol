@@ -11,7 +11,7 @@ by function
             I shoot OK
             cannon alpha OK
             enemy shoot OK
-        explosion animation
+        explosion animation OK
 
     key press bugs LATER
     sounds LATER

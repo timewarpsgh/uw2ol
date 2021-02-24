@@ -130,6 +130,9 @@ class Game():
         self.images['person_tileset'] = pygame.image.load("../../assets/person_tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
+        self.images['explosion'] = pygame.image.load("../../assets/explosion.png").convert_alpha()
+        # self.images['explosion'] = pygame.transform.scale(self.images['explosion'], (160, 80))
+
         # cannon and engage_sign
         self.images['cannon'] = pygame.image.load("../../assets/cannon.png").convert_alpha()
         self.images['cannon'] = pygame.transform.scale(self.images['cannon'], (10, 10))
