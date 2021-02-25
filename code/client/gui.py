@@ -2336,12 +2336,12 @@ def _show_one_ship(params):
     # if no target selected
     if not target:
         # supply
-        dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']}"
+        dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']} "
 
         # cargo
         cargoes_dict = ship.cargoes
         for cargo_name, count in cargoes_dict.items():
-            dict['supplies'] +=  cargo_name + ':' + str(count)
+            dict['supplies'] += cargo_name + ':' + str(count)
 
     # make text from dict
     text = ''

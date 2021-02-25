@@ -676,19 +676,14 @@ class Role:
             # return deferred
 
     def all_ships_operate(self, params):
-
         if self.your_turn_in_battle:
-
             # all ships know my_role
             for ship in self.ships:
                 ship.ROLE = self
-            # Ship.ROLE = self
 
             # get my and enemy ships
             enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
             my_ships = self.ships
-
-            print(enemy_ships)
 
             # flag ship attacks
             self._pick_one_ship_to_attack([0, enemy_ships])
@@ -1327,17 +1322,11 @@ class Ship:
     def shoot_or_move_closer(self, ship, deferred):
         # if in range
         if abs(self.x - ship.x) + abs(self.y - ship.y) <= c.SHOOT_RANGE_IN_BATTLE:
-            # engage
-            result = self.shoot(ship)
-
-            # call back
-            deferred.callback(result)
-
+            self.shoot(ship, deferred)
         # not in range
         else:
             # move closer
             moved = self.move_closer(ship, deferred)
-
             if moved:
                 # if have steps
                 if self.steps_left >= 1:
@@ -1391,14 +1380,13 @@ class Ship:
 
         return True
 
-    def shoot(self, ship):
+    def shoot(self, ship, deferred):
         # change states
-        self.state = 'shooting'
-        self.cannon_frame = 0
-        reactor.callLater(1, self._clear_shooting_state, ship)
         self._show_shooting_anim(ship)
+        reactor.callLater(1, self._show_explosion_anim, ship)
+        reactor.callLater(1.3, self._deal_shoot_damage, ship, deferred)
 
-
+    def _deal_shoot_damage(self, ship, deferred):
         # damage based on attributes
         damage = 0
         gun = Gun(self.gun)
@@ -1441,7 +1429,8 @@ class Ship:
             ship.now_hp = 0
 
         # ret
-        return ship.now_hp <= 0
+        result = ship.now_hp <= 0
+        deferred.callback(result)
 
     def _show_shooting_anim(self, ship):
         # show explosion anim
@@ -1601,13 +1590,8 @@ class Ship:
                 else:
                     deferred.callback(False)
 
-    def _clear_shooting_state(self, ship):
-        self.state = ''
-        reactor.callLater(0.5, self._clear_state, ship)
-
-        # show explosion anim
+    def _show_explosion_anim(self, ship):
         if not self.ROLE.is_in_server():
-
             # self is me
             if self.ROLE.is_in_client_and_self():
                 game = self.ROLE.GAME
