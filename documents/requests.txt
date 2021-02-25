@@ -13,6 +13,8 @@ by function
             enemy shoot OK
         explosion animation OK
 
+        explosion animation inherits pygame.sprite ON
+
     key press bugs LATER
     sounds LATER
 

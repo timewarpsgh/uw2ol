@@ -25,7 +25,10 @@ from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_i
 from hashes.hash_cannons import hash_cannons
 
 # add relative directory to python_path
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
+from sprites import Explosion
 
 class Role:
     """
@@ -1554,6 +1557,9 @@ class Ship:
         ship.state = 'shot'
         ship.explosion_frame = -1
         reactor.callLater(0.5, self._clear_state, ship)
+
+        if not self.ROLE.is_in_server():
+            self.ROLE.GAME.all_sprites.add(Explosion(self.ROLE.GAME))
 
     def _clear_state(self, ship):
         self.state = ''

@@ -26,6 +26,9 @@ from AOI_manager import PortMap, SeaMap
 from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type
 from gui import mate_speak as m_speak
+from image_processor import load_image
+from sprites import Explosion
+
 
 def test():
     print('testing')
@@ -89,6 +92,9 @@ class Game():
         self.port_map = PortMap()
         self.sea_map = SeaMap()
 
+        # sprite group
+        self.all_sprites = pygame.sprite.Group()
+
     def _load_assets(self):
         # maps
                 # port
@@ -130,8 +136,7 @@ class Game():
         self.images['person_tileset'] = pygame.image.load("../../assets/person_tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
-        self.images['explosion'] = pygame.image.load("../../assets/explosion.png").convert_alpha()
-        # self.images['explosion'] = pygame.transform.scale(self.images['explosion'], (160, 80))
+        self.images['explosion'] = load_image("../../assets/explosion.png")
 
         # cannon and engage_sign
         self.images['cannon'] = pygame.image.load("../../assets/cannon.png").convert_alpha()

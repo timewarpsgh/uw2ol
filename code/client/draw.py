@@ -8,6 +8,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 
+from sprites import Explosion
+
 def draw(self):
     """argument self is game"""
     # clear
@@ -16,6 +18,7 @@ def draw(self):
     # draw
     if self.my_role:
         draw_logged_in_state(self)
+        self.all_sprites.update()
     else:
         draw_not_logged_in_state(self)
 
@@ -466,20 +469,26 @@ def draw_enemy_ships(self):
                                              (x + 8 + d_x * ship.cannon_frame,
                                               y + 8 + d_y * ship.cannon_frame))
             elif ship.state == 'shot':
-                ship.explosion_frame += 1
+                # ship.explosion_frame += 1
+                #
+                # collumns = 4
+                # rows = 4
+                #
+                # one_sprite_width = int(self.images['explosion'].get_width() / collumns)
+                # one_sprite_height = int(self.images['explosion'].get_height() / rows)
+                #
+                # rect_x = (ship.explosion_frame % 4) *  one_sprite_width
+                # rect_y = (ship.explosion_frame // 4) *  one_sprite_height
+                #
+                # explosion_rect = pygame.Rect(rect_x, rect_y, one_sprite_width, one_sprite_height)
+                #
+                #
+                #
+                # self.screen_surface.blit(self.images['explosion'], (x, y), explosion_rect)
+                pass
 
-                collumns = 4
-                rows = 4
 
-                one_sprite_width = int(self.images['explosion'].get_width() / collumns)
-                one_sprite_height = int(self.images['explosion'].get_height() / rows)
 
-                rect_x = (ship.explosion_frame % 4) *  one_sprite_width
-                rect_y = (ship.explosion_frame // 4) *  one_sprite_height
-
-                explosion_rect = pygame.Rect(rect_x, rect_y, one_sprite_width, one_sprite_height)
-
-                self.screen_surface.blit(self.images['explosion'], (x, y), explosion_rect)
             elif ship.state == 'engaging':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
             elif ship.state == 'engaged':
