@@ -169,6 +169,12 @@ class Role:
         else:
             return False
 
+    def is_in_battle(self):
+        if not self.is_in_port() and not self.is_at_sea():
+            return True
+        else:
+            return False
+
     def is_in_supply_port(self):
         if self.is_in_port():
             if int(self.map) >= 100:
@@ -1444,31 +1450,37 @@ class Ship:
             # self is me
             if self.ROLE.is_in_client_and_self():
                 game = self.ROLE.GAME
+
+                # get start pos
                 flag_ship = self.ROLE.ships[0]
                 x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
                 y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
 
-                enemy_role = self.ROLE.get_enemy_role()
-                if self.target < len(enemy_role.ships):
-                    target_x = ship.x
-                    target_y = ship.y
-                    d_x = (target_x - self.x) * c.BATTLE_TILE_SIZE
-                    d_y = (target_y - self.y) * c.BATTLE_TILE_SIZE
+                # get target pos
+                d_x = (ship.x - self.x) * c.BATTLE_TILE_SIZE
+                d_y = (ship.y - self.y) * c.BATTLE_TILE_SIZE
 
-                    cannnon_ball = CannonBall(game, (x+8), (y+8), d_x, d_y)
-                    game.all_sprites.add(cannnon_ball)
+                # draw
+                cannnon_ball = CannonBall(game, (x+8), (y+8), d_x, d_y)
+                game.all_sprites.add(cannnon_ball)
 
             # self if enemy
             else:
-                pass
-                # game = self.ROLE.GAME
-                # enemy_role = self.ROLE._get_other_role_by_name(self.ROLE.enemy_name)
-                # flag_ship = enemy_role.ships[0]
-                # x = game.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
-                # y = game.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
-                #
-                # explosion = Explosion(game, x, y)
-                # self.ROLE.GAME.all_sprites.add(explosion)
+                game = self.ROLE.GAME
+
+                # get start pos
+                my_role = self.ROLE.get_enemy_role()
+                flag_ship = my_role.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
+                y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                # get target pos
+                d_x = (ship.x - self.x) * c.BATTLE_TILE_SIZE
+                d_y = (ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                # draw
+                cannnon_ball = CannonBall(game, (x + 8), (y + 8), d_x, d_y)
+                game.all_sprites.add(cannnon_ball)
 
     def engage(self, ship):
         # change states

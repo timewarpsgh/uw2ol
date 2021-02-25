@@ -386,22 +386,6 @@ def draw_my_ships(self):
             # state
             if ship.state == 'shooting':
                 pass
-                # enemy_role = self.my_role.get_enemy_role()
-                # if ship.target < len(enemy_role.ships):
-                #     target_ship = enemy_role.ships[ship.target]
-                #     target_x = target_ship.x
-                #     target_y = target_ship.y
-                #     x_dif = target_x - ship.x
-                #     y_dif = target_y - ship.y
-                #
-                #     d_x = int(x_dif * c.PIXELS_COVERED_EACH_MOVE / 15)
-                #     d_y = int(y_dif * c.PIXELS_COVERED_EACH_MOVE / 15)
-                #     ship.cannon_frame += 1
-                #
-                #     self.screen_surface.blit(self.images['cannon'],
-                #                              (x + 8 + d_x * ship.cannon_frame,
-                #                               y + 8 + d_y * ship.cannon_frame))
-
             elif ship.state == 'engaging':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
             elif ship.state == 'engaged':
@@ -440,21 +424,7 @@ def draw_enemy_ships(self):
 
             # state
             if ship.state == 'shooting':
-                if ship.target < len(self.my_role.ships):
-                    target_ship = self.my_role.ships[ship.target]
-                    target_x = target_ship.x
-                    target_y = target_ship.y
-                    x_dif = target_x - ship.x
-                    y_dif = target_y - ship.y
-
-                    d_x = int(x_dif * c.PIXELS_COVERED_EACH_MOVE / 15)
-                    d_y = int(y_dif * c.PIXELS_COVERED_EACH_MOVE / 15)
-                    ship.cannon_frame += 1
-
-                    self.screen_surface.blit(self.images['cannon'],
-                                             (x + 8 + d_x * ship.cannon_frame,
-                                              y + 8 + d_y * ship.cannon_frame))
-
+                pass
             elif ship.state == 'engaging':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
             elif ship.state == 'engaged':

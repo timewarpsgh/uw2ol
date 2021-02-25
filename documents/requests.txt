@@ -5,7 +5,7 @@ by function
 
     fight ON
         explosion animation inherits pygame.sprite OK
-        cannon anim inherits sprite ON
+        cannon anim inherits sprite OK
 
 
 
