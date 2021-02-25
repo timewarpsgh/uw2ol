@@ -10,6 +10,9 @@ by function
         don't shoot dead enemy OK
         health shows later OK
 
+        engage i lose OK
+
+
 
 
         engage inherits spriets ON

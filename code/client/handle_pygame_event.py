@@ -230,6 +230,9 @@ def other_keys_down(self, event):
     elif event.key == ord('l'):
         if 'battle' in self.my_role.map:
             self.change_and_send('set_all_ships_target', [1])
+    elif event.key == ord(';'):
+        if 'battle' in self.my_role.map:
+            self.change_and_send('set_all_ships_attack_method', [1])
 
     # developer keys
     if c.DEVELOPER_MODE_ON:

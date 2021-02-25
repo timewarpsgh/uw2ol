@@ -240,7 +240,7 @@ class FleetPanelWindow(pygame_gui.elements.UIWindow):
                                                'left': 'left', 'right': 'right'})
 
         # show text
-        if text:
+        if text and ships_images:
             x = 0
             y = ships_images[0].get_rect().height * 2 + 20
 

@@ -763,8 +763,10 @@ class Role:
                 enemy_ships.extend(self.ships)
                 self.ships.clear()
 
+                # print('my active engage got me lost!!')
+
                 # exit if in client and have ships left (the winner sends exit_battle message to server)
-                if Role.GAME and Role.GAME.my_role.ships:
+                if Role.GAME:
                     reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
             # else
@@ -2109,13 +2111,14 @@ def _generate_rand_cargo_name():
 
 def exit_battle(self, message_obj):
     """self is server echo"""
-    # if enemy is npc
-    if self.my_role.is_enemy_npc():
-        print('enemy is npc!!!!')
-        _exit_battle_when_enemy_is_npc(self)
-    # if enemy is player
-    else:
-        _exit_battle_when_enemy_is_player(self)
+    if self.my_role.is_in_battle():
+        # if enemy is npc
+        if self.my_role.is_enemy_npc():
+            print('enemy is npc!!!!')
+            _exit_battle_when_enemy_is_npc(self)
+        # if enemy is player
+        else:
+            _exit_battle_when_enemy_is_player(self)
 
 def _exit_battle_when_enemy_is_player(self):
     # gets
