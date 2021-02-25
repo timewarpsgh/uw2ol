@@ -89,7 +89,6 @@ class Database:
 
                 x = y = c.PIXELS_COVERED_EACH_MOVE
                 default_role = Role(x, y, character_name)
-                Ship.ROLE = default_role
 
                 # ship0 = Ship('Reagan', 'Frigate')
                 # ship0.crew = 20

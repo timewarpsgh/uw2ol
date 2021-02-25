@@ -1132,10 +1132,8 @@ class Role:
 
 
 class Ship:
-    # ROLE = None
-    # shooting_img = ''
-
     def __init__(self, name, type):
+        # set at role.all_ships_operate
         self.ROLE = None
 
         # necessary params
@@ -1289,13 +1287,13 @@ class Ship:
             future_x += 1
 
         # collide with any of my ships?
-        for ship in Ship.ROLE.ships:
+        for ship in self.ROLE.ships:
             if ship.x == future_x and ship.y == future_y:
                 return False
 
         # collide with any of enemy ships?
-        enemy_name = Ship.ROLE.enemy_name
-        enemy_role = Ship.ROLE._get_other_role_by_name(enemy_name)
+        enemy_name = self.ROLE.enemy_name
+        enemy_role = self.ROLE._get_other_role_by_name(enemy_name)
         for ship in enemy_role.ships:
             if ship.x == future_x and ship.y == future_y:
                 return False
