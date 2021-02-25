@@ -387,9 +387,11 @@ def draw_my_ships(self):
             if ship.state == 'shooting':
                 pass
             elif ship.state == 'engaging':
-                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                pass
+                # self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
             elif ship.state == 'engaged':
-                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                pass
+                # self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
 
             # ships stats
 
@@ -426,9 +428,11 @@ def draw_enemy_ships(self):
             if ship.state == 'shooting':
                 pass
             elif ship.state == 'engaging':
-                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                pass
+                # self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
             elif ship.state == 'engaged':
-                self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
+                pass
+                # self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
 
             # ships stats
 

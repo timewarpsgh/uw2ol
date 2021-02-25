@@ -28,7 +28,7 @@ from hashes.hash_cannons import hash_cannons
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
-from sprites import Explosion, CannonBall
+from sprites import Explosion, CannonBall, EngageSign
 
 class Role:
     """
@@ -676,6 +676,9 @@ class Role:
             # return deferred
 
     def all_ships_operate(self, params):
+        # for testing
+        self.set_all_ships_attack_method([1])
+
         if self.your_turn_in_battle:
             # all ships know my_role
             for ship in self.ships:
@@ -1478,6 +1481,7 @@ class Ship:
         self.state = 'engaging'
         ship.state = 'engaged'
         reactor.callLater(1, self._clear_state, ship)
+        self._show_engage_anim(ship)
 
         # change values
 
@@ -1552,6 +1556,43 @@ class Ship:
 
         # ret
         return ship.crew <= 0
+
+    def _show_engage_anim(self, ship):
+        if not self.ROLE.is_in_server():
+            # self is me
+            if self.ROLE.is_in_client_and_self():
+                game = self.ROLE.GAME
+                flag_ship = self.ROLE.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE + 6
+                y = game.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE + 6
+
+                # target
+                engage_sign = EngageSign(game, x, y)
+                self.ROLE.GAME.all_sprites.add(engage_sign)
+
+                # my ship
+                x_1 = x + (self.x - ship.x) * c.BATTLE_TILE_SIZE
+                y_1 = y + (self.y - ship.y) * c.BATTLE_TILE_SIZE
+                engage_sign1 = EngageSign(game, x_1, y_1)
+                self.ROLE.GAME.all_sprites.add(engage_sign1)
+
+            # self if enemy
+            else:
+                game = self.ROLE.GAME
+                enemy_role = self.ROLE._get_other_role_by_name(self.ROLE.enemy_name)
+                flag_ship = enemy_role.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE + 6
+                y = game.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE + 6
+
+                # target
+                engage_sign = EngageSign(game, x, y)
+                self.ROLE.GAME.all_sprites.add(engage_sign)
+
+                # my ship
+                x_1 = x + (self.x - ship.x) * c.BATTLE_TILE_SIZE
+                y_1 = y + (self.y - ship.y) * c.BATTLE_TILE_SIZE
+                engage_sign1 = EngageSign(game, x_1, y_1)
+                self.ROLE.GAME.all_sprites.add(engage_sign1)
 
     def try_to_engage(self, ship):
         """returns a deferred"""

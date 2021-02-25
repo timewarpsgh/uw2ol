@@ -90,5 +90,46 @@ class CannonBall(pg.sprite.Sprite):
     def _draw(self):
         self.game.screen_surface.blit(self.image, self.rect)
 
+class EngageSign(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.frames = []
+        for i in range(2):
+            image_0 = game.images['engage_sign']
+            image_1 = game.images['engage_sign_1']
+
+            self.frames.append(image_0)
+            self.frames.append(image_0)
+            self.frames.append(image_0)
+            self.frames.append(image_0)
+
+            self.frames.append(image_1)
+            self.frames.append(image_1)
+            self.frames.append(image_1)
+            self.frames.append(image_1)
+
+        self.frame_index = -1
+
+        self.image = self.frames[self.frame_index]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        if self.frame_index < len(self.frames) - 1:
+            self.frame_index += 1
+            self.image = self.frames[self.frame_index]
+        else:
+            self.kill()
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
 if __name__ == '__main__':
     ex = Explosion()
