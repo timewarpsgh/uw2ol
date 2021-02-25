@@ -1171,7 +1171,6 @@ class Ship:
         self.direction = 'up'
         self.target = None
         self.attack_method = None
-        self.state = ''
         self.damage_got = ''
 
         # mate
@@ -1477,10 +1476,7 @@ class Ship:
                 game.all_sprites.add(cannnon_ball)
 
     def engage(self, ship):
-        # change states
-        self.state = 'engaging'
-        ship.state = 'engaged'
-        reactor.callLater(1, self._clear_state, ship)
+        # show animation
         self._show_engage_anim(ship)
 
         # change values
@@ -1655,10 +1651,6 @@ class Ship:
 
                 explosion = Explosion(game, x, y)
                 self.ROLE.GAME.all_sprites.add(explosion)
-
-    def _clear_state(self, ship):
-        self.state = ''
-        ship.state = ''
 
     def add_crew(self, count):
         self.crew += count

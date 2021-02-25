@@ -100,15 +100,10 @@ class EngageSign(pg.sprite.Sprite):
             image_0 = game.images['engage_sign']
             image_1 = game.images['engage_sign_1']
 
-            self.frames.append(image_0)
-            self.frames.append(image_0)
-            self.frames.append(image_0)
-            self.frames.append(image_0)
-
-            self.frames.append(image_1)
-            self.frames.append(image_1)
-            self.frames.append(image_1)
-            self.frames.append(image_1)
+            for j in range(4):
+                self.frames.append(image_0)
+            for k in range(4):
+                self.frames.append(image_1)
 
         self.frame_index = -1
 
