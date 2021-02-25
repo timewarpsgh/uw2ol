@@ -401,20 +401,21 @@ def draw_my_ships(self):
                                              (x + 8 + d_x * ship.cannon_frame,
                                               y + 8 + d_y * ship.cannon_frame))
             elif ship.state == 'shot':
-                ship.explosion_frame += 1
-
-                collumns = 4
-                rows = 4
-
-                one_sprite_width = int(self.images['explosion'].get_width() / collumns)
-                one_sprite_height = int(self.images['explosion'].get_height() / rows)
-
-                rect_x = (ship.explosion_frame % 4) *  one_sprite_width
-                rect_y = (ship.explosion_frame // 4) *  one_sprite_height
-
-                explosion_rect = pygame.Rect(rect_x, rect_y, one_sprite_width, one_sprite_height)
-
-                self.screen_surface.blit(self.images['explosion'], (x, y), explosion_rect)
+                # ship.explosion_frame += 1
+                #
+                # collumns = 4
+                # rows = 4
+                #
+                # one_sprite_width = int(self.images['explosion'].get_width() / collumns)
+                # one_sprite_height = int(self.images['explosion'].get_height() / rows)
+                #
+                # rect_x = (ship.explosion_frame % 4) *  one_sprite_width
+                # rect_y = (ship.explosion_frame // 4) *  one_sprite_height
+                #
+                # explosion_rect = pygame.Rect(rect_x, rect_y, one_sprite_width, one_sprite_height)
+                #
+                # self.screen_surface.blit(self.images['explosion'], (x, y), explosion_rect)
+                pass
 
             elif ship.state == 'engaging':
                 self.screen_surface.blit(self.images['engage_sign'], (x + 8, y + 8))
@@ -486,7 +487,12 @@ def draw_enemy_ships(self):
                 #
                 # self.screen_surface.blit(self.images['explosion'], (x, y), explosion_rect)
                 pass
-
+                # if ship.exploded:
+                #     pass
+                # else:
+                #     explosion = Explosion(self)
+                #     self.all_sprites.add(explosion)
+                #     ship.exploded = True
 
 
             elif ship.state == 'engaging':

@@ -674,7 +674,9 @@ class Role:
         if self.your_turn_in_battle:
 
             # all ships know my_role
-            Ship.ROLE = self
+            for ship in self.ships:
+                ship.ROLE = self
+            # Ship.ROLE = self
 
             # get my and enemy ships
             enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
@@ -1130,10 +1132,12 @@ class Role:
 
 
 class Ship:
-    ROLE = None
-    shooting_img = ''
+    # ROLE = None
+    # shooting_img = ''
 
     def __init__(self, name, type):
+        self.ROLE = None
+
         # necessary params
         self.name = name
         self.type = type
@@ -1558,8 +1562,29 @@ class Ship:
         ship.explosion_frame = -1
         reactor.callLater(0.5, self._clear_state, ship)
 
+        # show explosion anim
         if not self.ROLE.is_in_server():
-            self.ROLE.GAME.all_sprites.add(Explosion(self.ROLE.GAME))
+
+            # self is me
+            if self.ROLE.is_in_client_and_self():
+                game = self.ROLE.GAME
+                flag_ship = self.ROLE.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
+                y = game.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
+
+                explosion = Explosion(game, x, y)
+                self.ROLE.GAME.all_sprites.add(explosion)
+
+            # self if enemy
+            else:
+                game = self.ROLE.GAME
+                enemy_role = self.ROLE._get_other_role_by_name(self.ROLE.enemy_name)
+                flag_ship = enemy_role.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
+                y = game.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
+
+                explosion = Explosion(game, x, y)
+                self.ROLE.GAME.all_sprites.add(explosion)
 
     def _clear_state(self, ship):
         self.state = ''
