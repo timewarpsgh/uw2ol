@@ -4,16 +4,12 @@ by function
     trade OK
 
     fight ON
-        hot key for all ships move OK
-        hot key for set all target to 0 OK
-
-        shooting animation
-            I shoot OK
-            cannon alpha OK
-            enemy shoot OK
-        explosion animation OK
-
         explosion animation inherits pygame.sprite OK
+        cannon anim inherits sprite ON
+
+
+
+
 
     key press bugs LATER
     sounds LATER
@@ -24,11 +20,6 @@ by structure
 
 
 
-msc
-    godspeed OK
-    right graphics OK
-    fleet type wrong OK
-    npc fleet ship type rand OK
 
 
 

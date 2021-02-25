@@ -1,6 +1,11 @@
 import pygame as pg
-# from images import IMAGES
 from image_processor import get_image
+
+# add relative directory to python_path
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
+
+import constants as c
 
 class SpriteSheet():
     def __init__(self, image_name, collumns, rows, game):
@@ -51,6 +56,39 @@ class Explosion(pg.sprite.Sprite):
     def _draw(self):
         self.game.screen_surface.blit(self.image, self.rect)
 
+
+class CannonBall(pg.sprite.Sprite):
+    def __init__(self, game, x, y, d_x, d_y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = game.images['cannon']
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+        self.d_x = d_x
+        self.d_y = d_y
+
+        self.steps_to_change = 30
+        self.step_index = 0
+
+        self.unit_x_change = int(self.d_x / self.steps_to_change)
+        self.unit_y_change = int(self.d_y / self.steps_to_change)
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        self.rect.x += self.unit_x_change
+        self.rect.y += self.unit_y_change
+        self.step_index += 1
+        if self.step_index == self.steps_to_change:
+            self.kill()
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
 
 if __name__ == '__main__':
     ex = Explosion()

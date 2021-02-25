@@ -28,7 +28,7 @@ from hashes.hash_cannons import hash_cannons
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
-from sprites import Explosion
+from sprites import Explosion, CannonBall
 
 class Role:
     """
@@ -1390,6 +1390,8 @@ class Ship:
         self.state = 'shooting'
         self.cannon_frame = 0
         reactor.callLater(1, self._clear_shooting_state, ship)
+        self._show_shooting_anim(ship)
+
 
         # damage based on attributes
         damage = 0
@@ -1434,6 +1436,39 @@ class Ship:
 
         # ret
         return ship.now_hp <= 0
+
+    def _show_shooting_anim(self, ship):
+        # show explosion anim
+        if not self.ROLE.is_in_server():
+
+            # self is me
+            if self.ROLE.is_in_client_and_self():
+                game = self.ROLE.GAME
+                flag_ship = self.ROLE.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
+                y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                enemy_role = self.ROLE.get_enemy_role()
+                if self.target < len(enemy_role.ships):
+                    target_x = ship.x
+                    target_y = ship.y
+                    d_x = (target_x - self.x) * c.BATTLE_TILE_SIZE
+                    d_y = (target_y - self.y) * c.BATTLE_TILE_SIZE
+
+                    cannnon_ball = CannonBall(game, (x+8), (y+8), d_x, d_y)
+                    game.all_sprites.add(cannnon_ball)
+
+            # self if enemy
+            else:
+                pass
+                # game = self.ROLE.GAME
+                # enemy_role = self.ROLE._get_other_role_by_name(self.ROLE.enemy_name)
+                # flag_ship = enemy_role.ships[0]
+                # x = game.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
+                # y = game.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
+                #
+                # explosion = Explosion(game, x, y)
+                # self.ROLE.GAME.all_sprites.add(explosion)
 
     def engage(self, ship):
         # change states
@@ -1556,8 +1591,6 @@ class Ship:
 
     def _clear_shooting_state(self, ship):
         self.state = ''
-        ship.state = 'shot'
-        ship.explosion_frame = -1
         reactor.callLater(0.5, self._clear_state, ship)
 
         # show explosion anim
