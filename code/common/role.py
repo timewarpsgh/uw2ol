@@ -629,10 +629,16 @@ class Role:
         # choose attack method
         d_dead = False
         attack_method = self._choose_attack_method(my_ship, target_ship)
-        if attack_method == 'shoot':
-            d_dead = my_ship.try_to_shoot(target_ship)
+
+            # in good condition
+        if my_ship.now_hp >= 20 and my_ship.crew >= 50:
+            if attack_method == 'shoot':
+                d_dead = my_ship.try_to_shoot(target_ship)
+            else:
+                d_dead = my_ship.try_to_engage(target_ship)
+            # not good -> escape
         else:
-            d_dead = my_ship.try_to_engage(target_ship)
+            d_dead = my_ship.try_to_escape(target_ship)
 
         d_dead.addCallback(self._call_back_for_shoot_or_engage, enemy_ships, target_ship_id, deferred)
 
@@ -1399,6 +1405,51 @@ class Ship:
 
         return True
 
+    def move_further(self, ship, deferred):
+        if self.x < ship.x:
+            if self.can_move('left'):
+                self.move('left')
+            elif self.can_move('up'):
+                self.move('up')
+            elif self.can_move('down'):
+                self.move('down')
+            else:
+                deferred.callback(False)
+                return False
+        elif self.x > ship.x:
+            if self.can_move('right'):
+                self.move('right')
+            elif self.can_move('up'):
+                self.move('up')
+            elif self.can_move('down'):
+                self.move('down')
+            else:
+                deferred.callback(False)
+                return False
+
+        elif self.y < ship.y:
+            if self.can_move('up'):
+                self.move('up')
+            elif self.can_move('left'):
+                self.move('left')
+            elif self.can_move('right'):
+                self.move('right')
+            else:
+                deferred.callback(False)
+                return False
+        elif self.y > ship.y:
+            if self.can_move('down'):
+                self.move('down')
+            elif self.can_move('left'):
+                self.move('left')
+            elif self.can_move('right'):
+                self.move('right')
+            else:
+                deferred.callback(False)
+                return False
+
+        return True
+
     def shoot(self, ship, deferred):
         # change states
         self._show_shooting_anim(ship)
@@ -1718,6 +1769,35 @@ class Ship:
 
                 explosion = Explosion(game, x, y)
                 self.ROLE.GAME.all_sprites.add(explosion)
+
+    def try_to_escape(self, ship):
+        """returns a deferred"""
+        # inits a deffered
+        deferred = defer.Deferred()
+
+        # init max steps
+        self.steps_left = c.MAX_STEPS_IN_BATTLE
+
+        # check
+        if ship.crew > 0 and self.crew > 0:
+            self.move_away(ship, deferred)
+        else:
+            deferred.callback(False)
+
+        # ret
+        return deferred
+
+    def move_away(self, ship, deferred):
+        # move closer
+        moved = self.move_further(ship, deferred)
+
+        if moved:
+            # if have steps
+            if self.steps_left >= 1:
+                reactor.callLater(0.5, self.move_away, ship, deferred)
+            # no more steps
+            else:
+                deferred.callback(False)
 
     def add_crew(self, count):
         self.crew += count

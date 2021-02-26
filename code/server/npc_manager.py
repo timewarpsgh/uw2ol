@@ -112,7 +112,7 @@ class NpcManager:
             func = getattr(npc, protocol_name)
             func([params_list[0]])
         except:
-            print(f'invalid input!!!!!!!! {npc}')
+            print(f'invalid input!!!!!!!! {npc} {params_list} {protocol_name} {func}')
             return False
 
         # send to players

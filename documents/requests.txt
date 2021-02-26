@@ -6,6 +6,9 @@ by function
     fight ON
         npc stick to one target and one attack method OK
 
+        ship.try_to_escape OK
+
+        after battle, npc changes ON
 
 
 
