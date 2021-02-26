@@ -628,15 +628,33 @@ class Role:
 
         # choose attack method
         d_dead = False
-        if my_ship.attack_method is None or my_ship.attack_method == 'shoot':
+        attack_method = self._choose_attack_method(my_ship, target_ship)
+        if attack_method == 'shoot':
             d_dead = my_ship.try_to_shoot(target_ship)
-        elif my_ship.attack_method == 'engage':
+        else:
             d_dead = my_ship.try_to_engage(target_ship)
 
         d_dead.addCallback(self._call_back_for_shoot_or_engage, enemy_ships, target_ship_id, deferred)
 
         # ret deferred
         return deferred
+
+    def _choose_attack_method(self, my_ship, target_ship):
+        # already set
+        if my_ship.attack_method:
+            pass
+        # not set
+        else:
+            seed = my_ship.now_hp + my_ship.crew + \
+                   target_ship.now_hp + target_ship.crew
+            random.seed(seed)
+            rand_num = random.randint(0,1)
+            if rand_num:
+                my_ship.attack_method = 'engage'
+            else:
+                my_ship.attack_method = 'shoot'
+
+        return my_ship.attack_method
 
     def _call_back_for_shoot_or_engage(self, d_dead, enemy_ships, target_ship_id, deferred):
 
@@ -727,14 +745,19 @@ class Role:
         self._get_other_role_by_name(self.enemy_name).your_turn_in_battle = True
 
     def _pick_one_ship_to_attack(self, params):
-        # get params
+        # calc rand target ship id
         i = params[0]
         enemy_ships = params[1]
+        random_target_ship_id = self.__calc_rand_target_ship_id(i, enemy_ships)
 
-        # pick
+        # attack
+        d_result = self.attack_ship([i, random_target_ship_id])
+        self.ships[i].target = random_target_ship_id
+        d_result.addCallback(self._call_back_for_attack_ship, i, enemy_ships)
 
-            # calculate random target id
-        rand_seed_num = enemy_ships[0].now_hp + len(enemy_ships)
+    def __calc_rand_target_ship_id(self, i, enemy_ships):
+        # calculate random target id
+        rand_seed_num = self.ships[i].x + self.ships[i].y
         random.seed(rand_seed_num)
 
         enemy_ships_range = range(len(enemy_ships))
@@ -742,17 +765,13 @@ class Role:
         while enemy_ships[random_target_ship_id].crew <= 0:
             random_target_ship_id = random.choice(enemy_ships_range)
 
-            # reset target id if have it
+        # reset target id if have it
         target_id = self.ships[i].target
         if not (target_id is None):
             if target_id <= (len(enemy_ships) - 1) and enemy_ships[target_id].crew > 0:
                 random_target_ship_id = target_id
-                print("target id:", random_target_ship_id)
 
-        # attack
-        d_result = self.attack_ship([i, random_target_ship_id])
-        self.ships[i].target = random_target_ship_id
-        d_result.addCallback(self._call_back_for_attack_ship, i, enemy_ships)
+        return random_target_ship_id
 
     def _call_back_for_attack_ship(self, result, i, enemy_ships):
         # not won

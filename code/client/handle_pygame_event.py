@@ -239,19 +239,21 @@ def other_keys_down(self, event):
 
     # developer keys
     if c.DEVELOPER_MODE_ON:
+        pass
         # auto move
-        if event.key == ord('o'):
-            print('auto moving!')
-
-            self.timer = task.LoopingCall(move_right_and_then_back, self)
-            self.timer.start(5)
-
-        # stop timer
-        elif event.key == ord('p'):
-            self.timer.stop()
-
-        if event.key == ord('t'):
-            self.change_and_send('consume_potion', [1])
+        # if event.key == ord('o'):
+        #     pass
+        #     # print('auto moving!')
+        #     #
+        #     # self.timer = task.LoopingCall(move_right_and_then_back, self)
+        #     # self.timer.start(5)
+        #
+        # # stop timer
+        # elif event.key == ord('p'):
+        #     self.timer.stop()
+        #
+        # if event.key == ord('t'):
+        #     self.change_and_send('consume_potion', [1])
 
 def get_nearby_port_index(self):
     # get x and y in tile position

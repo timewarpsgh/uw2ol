@@ -101,12 +101,12 @@ class Database:
 
                 if c.DEVELOPER_MODE_ON:
                     ship0 = Ship('Reagan', 'Frigate')
-                    ship0.crew = 20
+                    ship0.crew = 300
                     default_role.ships.append(ship0)
                     mate0.set_as_captain_of(ship0)
 
                     ship1 = Ship('Reagan1', 'Frigate')
-                    ship1.crew = 20
+                    ship1.crew = 300
                     default_role.ships.append(ship1)
 
                     mate1 = Mate(2)

@@ -4,22 +4,13 @@ by function
     trade OK
 
     fight ON
-        engage i lose OK
-        engage inherits spriets OK
-
-        shoot damge number sprite OK
-
-        engage number sprite OK
-
-        rand shoot damage OK
-        anim based on ratio_rand ON
-
-        rand engage damage
-        anim based on ratio_rand
+        npc stick to one target and one attack method OK
 
 
 
-    key press bugs LATER
+
+
+
     sounds LATER
 
 by structure
