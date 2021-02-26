@@ -128,11 +128,11 @@ class EngageSign(pg.sprite.Sprite):
 
 
 class ShootDamageNumber(pg.sprite.Sprite):
-    def __init__(self, game, number, x, y):
+    def __init__(self, game, number, x, y, color=c.YELLOW):
         pg.sprite.Sprite.__init__(self)
         self.game = game
 
-        self.image = self.game.font.render(str(number), True, c.YELLOW)
+        self.image = self.game.font.render(str(number), True, color)
         self.rect = self.image.get_rect()
 
         self.frames = [None] * 60

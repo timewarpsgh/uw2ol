@@ -9,7 +9,9 @@ by function
 
         shoot damge number sprite OK
 
+        engage number sprite OK
 
+        rand damage ON
 
 
 

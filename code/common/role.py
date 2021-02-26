@@ -677,7 +677,7 @@ class Role:
 
     def all_ships_operate(self, params):
         # for testing
-        self.set_all_ships_attack_method([0])
+        self.set_all_ships_attack_method([1])
 
         if self.your_turn_in_battle:
             # all ships know my_role
@@ -1515,9 +1515,6 @@ class Ship:
                 game.all_sprites.add(cannnon_ball)
 
     def engage(self, ship):
-        # show animation
-        self._show_engage_anim(ship)
-
         # change values
 
             # self engage
@@ -1583,6 +1580,9 @@ class Ship:
         # self.damage_got = str(c.ENGAGE_DAMAGE)
         # ship.damage_got = str(c.ENGAGE_DAMAGE)
 
+        # show anim
+        self._show_engage_anim(ship, self_damage, enemy_damage)
+
         # no negative values
         if self.crew < 0:
             self.crew = 0
@@ -1592,7 +1592,7 @@ class Ship:
         # ret
         return ship.crew <= 0
 
-    def _show_engage_anim(self, ship):
+    def _show_engage_anim(self, ship, self_damage, enemy_damage):
         if not self.ROLE.is_in_server():
             # self is me
             if self.ROLE.is_in_client_and_self():
@@ -1603,13 +1603,19 @@ class Ship:
 
                 # target
                 engage_sign = EngageSign(game, x, y)
-                self.ROLE.GAME.all_sprites.add(engage_sign)
+                game.all_sprites.add(engage_sign)
+
+                dmg = ShootDamageNumber(game, self_damage, x, y, c.WHITE)
+                game.all_sprites.add(dmg)
 
                 # my ship
                 x_1 = x + (self.x - ship.x) * c.BATTLE_TILE_SIZE
                 y_1 = y + (self.y - ship.y) * c.BATTLE_TILE_SIZE
                 engage_sign1 = EngageSign(game, x_1, y_1)
-                self.ROLE.GAME.all_sprites.add(engage_sign1)
+                game.all_sprites.add(engage_sign1)
+
+                dmg_1 = ShootDamageNumber(game, enemy_damage, x_1, y_1, c.WHITE)
+                game.all_sprites.add(dmg_1)
 
             # self if enemy
             else:
@@ -1621,13 +1627,19 @@ class Ship:
 
                 # target
                 engage_sign = EngageSign(game, x, y)
-                self.ROLE.GAME.all_sprites.add(engage_sign)
+                game.all_sprites.add(engage_sign)
+
+                dmg = ShootDamageNumber(game, self_damage, x, y, c.WHITE)
+                game.all_sprites.add(dmg)
 
                 # my ship
                 x_1 = x + (self.x - ship.x) * c.BATTLE_TILE_SIZE
                 y_1 = y + (self.y - ship.y) * c.BATTLE_TILE_SIZE
                 engage_sign1 = EngageSign(game, x_1, y_1)
-                self.ROLE.GAME.all_sprites.add(engage_sign1)
+                game.all_sprites.add(engage_sign1)
+
+                dmg_1 = ShootDamageNumber(game, enemy_damage, x_1, y_1, c.WHITE)
+                game.all_sprites.add(dmg_1)
 
     def try_to_engage(self, ship):
         """returns a deferred"""
