@@ -1168,7 +1168,6 @@ class Ship:
         self.direction = 'up'
         self.target = None
         self.attack_method = None
-        self.damage_got = ''
 
         # mate
         self.captain = None
@@ -1421,8 +1420,12 @@ class Ship:
         # do damage
         if damage < 0:
             damage = 0
+
+        random.seed(self.x + ship.y + ship.now_hp)
+        ratio_rand = random.randint(30, 180) / 100
+        damage = int(damage * ratio_rand)
+
         ship.now_hp -= damage
-        ship.damage_got = str(damage)
         self._show_shoot_damage_number(ship, damage)
 
         # no negative hp
@@ -1573,9 +1576,6 @@ class Ship:
             enemy_damage = 5
 
         self.crew -= enemy_damage
-
-        # self.damage_got = str(c.ENGAGE_DAMAGE)
-        # ship.damage_got = str(c.ENGAGE_DAMAGE)
 
         # show anim
         self._show_engage_anim(ship, self_damage, enemy_damage)

@@ -11,7 +11,11 @@ by function
 
         engage number sprite OK
 
-        rand damage ON
+        rand shoot damage OK
+        anim based on ratio_rand ON
+
+        rand engage damage
+        anim based on ratio_rand
 
 
 
