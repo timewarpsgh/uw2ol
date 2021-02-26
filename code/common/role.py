@@ -676,9 +676,6 @@ class Role:
             # return deferred
 
     def all_ships_operate(self, params):
-        # for testing
-        self.set_all_ships_attack_method([1])
-
         if self.your_turn_in_battle:
             # all ships know my_role
             for ship in self.ships:

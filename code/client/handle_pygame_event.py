@@ -229,8 +229,11 @@ def other_keys_down(self, event):
             self.button_click_handler.menu_click_handler.battle.all_ships_move()
     elif event.key == ord('l'):
         if 'battle' in self.my_role.map:
-            self.change_and_send('set_all_ships_target', [1])
-    elif event.key == ord(';'):
+            self.change_and_send('set_all_ships_target', [0])
+    elif event.key == ord('o'):
+        if 'battle' in self.my_role.map:
+            self.change_and_send('set_all_ships_attack_method', [0])
+    elif event.key == ord('i'):
         if 'battle' in self.my_role.map:
             self.change_and_send('set_all_ships_attack_method', [1])
 
