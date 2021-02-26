@@ -2362,7 +2362,7 @@ def _exit_battle_when_enemy_is_npc(self):
     sea_map = self.factory.aoi_manager.get_map_by_player(my_role)
     sea_map.add_player_conn(self)
 
-    # new npc
+    # npc gets back strength
     new_enemy_role = _generate_new_npc_after_battle(my_role, enemy_role)
     sea_map.add_npc(new_enemy_role)
 
@@ -2389,23 +2389,19 @@ def _exit_battle_when_enemy_is_npc(self):
             conn.send('new_roles_from_battle', new_roles_from_battle)
 
 def _generate_new_npc_after_battle(my_role, enemy_role):
-    enemy_name = enemy_role.name
-    Role.FACTORY.npc_manager.npcs[enemy_name] = init_one_default_npc(enemy_name)
-    new_npc = Role.FACTORY.npc_manager.get_npc_by_name(enemy_name)
-
     # npc lost
     if my_role.ships and not enemy_role.ships:
-        pass
+        enemy_name = enemy_role.name
+        Role.FACTORY.npc_manager.npcs[enemy_name] = init_one_default_npc(enemy_name)
+        new_npc = Role.FACTORY.npc_manager.get_npc_by_name(enemy_name)
+        return new_npc
     # tie / npc won
     else:
-        new_npc.x = enemy_role.x
-        new_npc.y = enemy_role.y
-        new_npc.point_in_path_id = enemy_role.point_in_path_id
-        new_npc.out_ward = enemy_role.out_ward
-        new_npc.start_port_id = enemy_role.start_port_id
-        new_npc.end_port_id = enemy_role.end_port_id
+        for ship in enemy_role.ships:
+            ship.now_hp = ship.max_hp
+            ship.crew = ship.max_crew
 
-    return new_npc
+    return enemy_role
 
 if __name__ == '__main__':
     # new role

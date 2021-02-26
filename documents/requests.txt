@@ -8,7 +8,7 @@ by function
 
         ship.try_to_escape OK
 
-        after battle, npc changes ON
+        after battle, npc changes OK
 
 
 
