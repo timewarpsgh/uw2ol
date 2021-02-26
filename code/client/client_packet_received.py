@@ -26,6 +26,7 @@ def process_packet(self, pck_type, message_obj):
             print("trying", func_name, list, "for", name)
             func = getattr(role, func_name)
             func(list)
+            print(role, func_name, func, list)
 
 
 # register responses

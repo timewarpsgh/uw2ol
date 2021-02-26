@@ -1249,6 +1249,20 @@ class Ship:
         else:
             return False
 
+    def _calc_max_steps(self):
+        seamanship = None
+        if self.captain.chief_navigator:
+            seamanship = self.captain.chief_navigator.seamanship
+        else:
+            seamanship = self.captain.seamanship
+
+        max_steps = int((self.tacking + self.power + seamanship) / 40)
+        max_steps = max_steps * int((self.now_hp * 1.5 / self.max_hp))
+        if max_steps < 1:
+            max_steps = 1
+
+        return max_steps
+
     def get_speed(self, role=''):
         # have captain
         if self.captain:
@@ -1333,7 +1347,7 @@ class Ship:
         deferred = defer.Deferred()
 
         # init max steps
-        self.steps_left = c.MAX_STEPS_IN_BATTLE
+        self.steps_left = self._calc_max_steps()
 
         # check
         if ship.crew > 0 and self.crew > 0:
@@ -1714,7 +1728,7 @@ class Ship:
         deferred = defer.Deferred()
 
         # init max steps
-        self.steps_left = c.MAX_STEPS_IN_BATTLE
+        self.steps_left = self._calc_max_steps()
 
         # check
         if ship.crew > 0 and self.crew > 0:
@@ -1776,7 +1790,7 @@ class Ship:
         deferred = defer.Deferred()
 
         # init max steps
-        self.steps_left = c.MAX_STEPS_IN_BATTLE
+        self.steps_left = self._calc_max_steps()
 
         # check
         if ship.crew > 0 and self.crew > 0:

@@ -7,8 +7,12 @@ by function
         npc stick to one target and one attack method OK
 
         ship.try_to_escape OK
-
         after battle, npc changes OK
+
+
+        each ship has different steps to move OK
+
+        npc turn stopped issue ON
 
 
 
