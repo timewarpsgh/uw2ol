@@ -28,7 +28,7 @@ from hashes.hash_cannons import hash_cannons
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
-from sprites import Explosion, CannonBall, EngageSign
+from sprites import Explosion, CannonBall, EngageSign, ShootDamageNumber
 
 class Role:
     """
@@ -677,7 +677,7 @@ class Role:
 
     def all_ships_operate(self, params):
         # for testing
-        self.set_all_ships_attack_method([1])
+        self.set_all_ships_attack_method([0])
 
         if self.your_turn_in_battle:
             # all ships know my_role
@@ -1424,9 +1424,9 @@ class Ship:
         # do damage
         if damage < 0:
             damage = 0
-
         ship.now_hp -= damage
         ship.damage_got = str(damage)
+        self._show_shoot_damage_number(ship, damage)
 
         # no negative hp
         if ship.now_hp < 0:
@@ -1435,6 +1435,45 @@ class Ship:
         # ret
         result = ship.now_hp <= 0
         deferred.callback(result)
+
+    def _show_shoot_damage_number(self, ship, damage):
+        # show explosion anim
+        if not self.ROLE.is_in_server():
+
+            # self is me
+            if self.ROLE.is_in_client_and_self():
+                game = self.ROLE.GAME
+
+                # get start pos
+                flag_ship = self.ROLE.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
+                y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                # get target pos
+                d_x = (ship.x - self.x) * c.BATTLE_TILE_SIZE
+                d_y = (ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                # draw
+                damage_num = ShootDamageNumber(game, damage, x + d_x +8, y + d_y - 8)
+                game.all_sprites.add(damage_num)
+
+            # self if enemy
+            else:
+                game = self.ROLE.GAME
+
+                # get start pos
+                my_role = self.ROLE.get_enemy_role()
+                flag_ship = my_role.ships[0]
+                x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
+                y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                # get target pos
+                d_x = (ship.x - self.x) * c.BATTLE_TILE_SIZE
+                d_y = (ship.y - self.y) * c.BATTLE_TILE_SIZE
+
+                # draw
+                damage_num = ShootDamageNumber(game, damage, x + d_x +8, y + d_y - 8)
+                game.all_sprites.add(damage_num)
 
     def _show_shooting_anim(self, ship):
         # show explosion anim

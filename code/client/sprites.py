@@ -101,9 +101,9 @@ class EngageSign(pg.sprite.Sprite):
             image_1 = game.images['engage_sign_1']
 
             for j in range(4):
-                self.frames.append(image_0)
-            for k in range(4):
                 self.frames.append(image_1)
+            for k in range(4):
+                self.frames.append(image_0)
 
         self.frame_index = -1
 
@@ -125,6 +125,53 @@ class EngageSign(pg.sprite.Sprite):
 
     def _draw(self):
         self.game.screen_surface.blit(self.image, self.rect)
+
+
+class ShootDamageNumber(pg.sprite.Sprite):
+    def __init__(self, game, number, x, y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = self.game.font.render(str(number), True, c.YELLOW)
+        self.rect = self.image.get_rect()
+
+        self.frames = [None] * 60
+        scale = 3
+        for i in range(len(self.frames)):
+            scale -= 0.03
+            self.frames[i] = pg.transform.scale(self.image,
+                                                (int(self.rect.width * scale),
+                                                 int(self.rect.height * scale)))
+        self.frame_index = -1
+
+        self.image = self.frames[-1]
+
+        self.rect.x = x
+        self.rect.y = y
+
+        self.x_speed = 1.4
+        self.y_speed = 3
+        self.d_y = 0.15
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        if self.frame_index < len(self.frames) - 1:
+            self.frame_index += 1
+            self.image = self.frames[self.frame_index]
+
+            self.rect.y -= self.y_speed
+            self.y_speed -= self.d_y
+            self.rect.x += self.x_speed
+        else:
+            self.kill()
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
+
 
 if __name__ == '__main__':
     ex = Explosion()

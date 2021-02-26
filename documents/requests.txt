@@ -4,20 +4,10 @@ by function
     trade OK
 
     fight ON
-        explosion animation inherits pygame.sprite OK
-        cannon anim inherits sprite OK
-
-        don't shoot dead enemy OK
-        health shows later OK
-
         engage i lose OK
-
-
-
-
         engage inherits spriets OK
 
-
+        shoot damge number sprite OK
 
 
 
