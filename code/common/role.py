@@ -2,6 +2,8 @@ import random
 import time
 import copy
 import itertools
+import numpy
+
 
 from threading import Timer
 from twisted.internet import reactor, task, defer
@@ -1297,7 +1299,53 @@ class Ship:
         else:
             return 1
 
+    def move_to_right(self):
+        # basics
+        if self.direction == 'right':
+            self.move('se')
+        elif self.direction == 'left':
+            self.move('nw')
+        elif self.direction == 'up':
+            self.move('ne')
+        elif self.direction == 'down':
+            self.move('sw')
+
+        # more
+        elif self.direction == 'ne':
+            self.move('right')
+        elif self.direction == 'sw':
+            self.move('left')
+        elif self.direction == 'nw':
+            self.move('up')
+        elif self.direction == 'se':
+            self.move('down')
+
+    def move_to_left(self):
+        # basics
+        if self.direction == 'right':
+            self.move('ne')
+        elif self.direction == 'left':
+            self.move('sw')
+        elif self.direction == 'up':
+            self.move('nw')
+        elif self.direction == 'down':
+            self.move('se')
+
+        # more
+        elif self.direction == 'ne':
+            self.move('up')
+        elif self.direction == 'sw':
+            self.move('down')
+        elif self.direction == 'nw':
+            self.move('left')
+        elif self.direction == 'se':
+            self.move('right')
+
+    def move_continue(self):
+        self.move(self.direction)
+
     def move(self, direction):
+        # bsics
         if direction == 'up':
             self.y -= 1
             self.direction = 'up'
@@ -1310,6 +1358,24 @@ class Ship:
         elif direction == 'right':
             self.x += 1
             self.direction = 'right'
+
+        # more directs
+        elif direction == 'ne':
+            self.x += 1
+            self.y -= 1
+            self.direction = 'ne'
+        elif direction == 'nw':
+            self.x -= 1
+            self.y -= 1
+            self.direction = 'nw'
+        elif direction == 'se':
+            self.x += 1
+            self.y += 1
+            self.direction = 'se'
+        elif direction == 'sw':
+            self.x -= 1
+            self.y += 1
+            self.direction = 'sw'
 
         self.steps_left -= 1
 
@@ -1374,48 +1440,90 @@ class Ship:
                 else:
                     deferred.callback(False)
 
-    def move_closer(self, ship, deferred):
-        if self.x < ship.x:
-            if self.can_move('right'):
-                self.move('right')
-            elif self.can_move('up'):
-                self.move('up')
-            elif self.can_move('down'):
-                self.move('down')
-            else:
-                deferred.callback(False)
-                return False
-        elif self.x > ship.x:
-            if self.can_move('left'):
-                self.move('left')
-            elif self.can_move('up'):
-                self.move('up')
-            elif self.can_move('down'):
-                self.move('down')
-            else:
-                deferred.callback(False)
-                return False
+    def _is_point_left_of_vector(self, A, B, M):
+        """ A,B: points of the vector
+            M: point to check
+        """
+        position = numpy.sign((B.x - A.x) * (M.y - A.y) - (B.y - A.y) * (M.x - A.x))
+        return position
 
-        elif self.y < ship.y:
-            if self.can_move('down'):
-                self.move('down')
-            elif self.can_move('left'):
-                self.move('left')
-            elif self.can_move('right'):
-                self.move('right')
-            else:
-                deferred.callback(False)
-                return False
-        elif self.y > ship.y:
-            if self.can_move('up'):
-                self.move('up')
-            elif self.can_move('left'):
-                self.move('left')
-            elif self.can_move('right'):
-                self.move('right')
-            else:
-                deferred.callback(False)
-                return False
+    def move_closer(self, ship, deferred):
+
+        print("trying move closer")
+        P0 = Point(0, 0)
+        dict = {
+            'up': [P0, Point(0, 1)],
+            'down': [P0, Point(0, -1)],
+            'left': [P0, Point(-1, 0)],
+            'right': [P0, Point(1, 0)],
+            'ne': [P0, Point(1, 1)],
+            'sw': [P0, Point(-1, -1)],
+            'nw': [P0, Point(-1, 1)],
+            'se': [P0, Point(1, -1)]
+        }
+
+        target_point = Point(ship.x - self.x, ship.y - self.y)
+
+        p0 = dict[self.direction][0]
+        p1 = dict[self.direction][1]
+        print(111111)
+        is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
+        print('target left?', is_target_left)
+        print("trying to move!")
+
+        if is_target_left == 1:
+            self.move_to_left()
+        elif is_target_left == -1:
+            self.move_to_right()
+        elif is_target_left == 0:
+            self.move_continue()
+        else:
+            deferred.callback(False)
+            return False
+
+
+
+        # if self.x < ship.x:
+        #     if self.can_move('right'):
+        #         self.move('right')
+        #     elif self.can_move('up'):
+        #         self.move('up')
+        #     elif self.can_move('down'):
+        #         self.move('down')
+        #     else:
+        #         deferred.callback(False)
+        #         return False
+        # elif self.x > ship.x:
+        #     if self.can_move('left'):
+        #         self.move('left')
+        #     elif self.can_move('up'):
+        #         self.move('up')
+        #     elif self.can_move('down'):
+        #         self.move('down')
+        #     else:
+        #         deferred.callback(False)
+        #         return False
+        #
+        # elif self.y < ship.y:
+        #     if self.can_move('down'):
+        #         self.move('down')
+        #     elif self.can_move('left'):
+        #         self.move('left')
+        #     elif self.can_move('right'):
+        #         self.move('right')
+        #     else:
+        #         deferred.callback(False)
+        #         return False
+        # elif self.y > ship.y:
+        #     if self.can_move('up'):
+        #         self.move('up')
+        #     elif self.can_move('left'):
+        #         self.move('left')
+        #     elif self.can_move('right'):
+        #         self.move('right')
+        #     else:
+        #         deferred.callback(False)
+        #         return False
 
         return True
 
@@ -2215,6 +2323,14 @@ class Gun:
         self.damage = dic['damage']
 
 
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"{self.x} {self.y}"
+
 def init_one_default_npc(name):
     # now role
     npc = Role(14400, 4208, name)
@@ -2234,7 +2350,7 @@ def init_one_default_npc(name):
     # merchant
     if fleet_sequence == 0 or fleet_sequence == 1:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = random.randint(3, 5)
+        num_of_ships = random.randint(3, 3) # 3, 5
         ship_type = random.choice(['Nao', 'Carrack', 'Flemish Galleon', 'Buss', 'Sloop', 'Xebec'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
@@ -2246,7 +2362,7 @@ def init_one_default_npc(name):
     # convoy
     elif fleet_sequence == 2 or fleet_sequence == 3:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = random.randint(5, 8)
+        num_of_ships = random.randint(3, 3) # 5, 8
         ship_type = random.choice([ 'Galleon', 'Venetian Galeass'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
@@ -2259,7 +2375,7 @@ def init_one_default_npc(name):
     # battle
     else:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = random.randint(8, 10)
+        num_of_ships = random.randint(3, 3) # 8, 10
         ship_type = random.choice(['Frigate', 'Barge', 'Full Rigged Ship'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
