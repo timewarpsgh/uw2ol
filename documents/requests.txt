@@ -10,7 +10,7 @@ by function
             images for 6 directs OK
             collision OK
             escape OK
-
+            
 
             shoot range ON
 
