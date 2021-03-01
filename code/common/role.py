@@ -25,7 +25,7 @@ from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
 from hashes.look_up_tables import now_direction_to_next_left_move, now_direction_to_next_right_move
-
+from hashes.look_up_tables import ship_direction_2_vector
 from hashes.hash_cannons import hash_cannons
 
 
@@ -1431,24 +1431,14 @@ class Ship:
         return position
 
     def move_closer(self, ship, deferred):
-        P0 = Point(0, 0)
-        dict = {
-            'up': [P0, Point(0, 1)],
-            'down': [P0, Point(0, -1)],
-            'left': [P0, Point(-1, 0)],
-            'right': [P0, Point(1, 0)],
-            'ne': [P0, Point(1, 1)],
-            'sw': [P0, Point(-1, -1)],
-            'nw': [P0, Point(-1, 1)],
-            'se': [P0, Point(1, -1)]
-        }
-
+        dict = ship_direction_2_vector
         target_point = Point(ship.x - self.x, self.y - ship.y)
 
         p0 = dict[self.direction][0]
         p1 = dict[self.direction][1]
         is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
 
+        # left
         if is_target_left == 1:
             next_direct_left = now_direction_to_next_left_move[self.direction]
             next_direct_right = now_direction_to_next_right_move[self.direction]
@@ -1461,6 +1451,7 @@ class Ship:
             else:
                 deferred.callback(False)
                 return False
+        # right
         elif is_target_left == -1:
             next_direct_right = now_direction_to_next_right_move[self.direction]
             next_direct_left = now_direction_to_next_left_move[self.direction]
@@ -1473,6 +1464,7 @@ class Ship:
             else:
                 deferred.callback(False)
                 return False
+        # in line
         elif is_target_left == 0:
             next_direct = self.direction
             next_direct_right = now_direction_to_next_right_move[self.direction]
@@ -1489,24 +1481,14 @@ class Ship:
         return True
 
     def move_further(self, ship, deferred):
-        P0 = Point(0, 0)
-        dict = {
-            'up': [P0, Point(0, 1)],
-            'down': [P0, Point(0, -1)],
-            'left': [P0, Point(-1, 0)],
-            'right': [P0, Point(1, 0)],
-            'ne': [P0, Point(1, 1)],
-            'sw': [P0, Point(-1, -1)],
-            'nw': [P0, Point(-1, 1)],
-            'se': [P0, Point(1, -1)]
-        }
-
+        dict = ship_direction_2_vector
         target_point = Point(ship.x - self.x, self.y - ship.y)
 
         p0 = dict[self.direction][0]
         p1 = dict[self.direction][1]
         is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
 
+        # left
         if is_target_left == 1:
             next_direct_left = now_direction_to_next_left_move[self.direction]
             next_direct_right = now_direction_to_next_right_move[self.direction]
@@ -1519,6 +1501,7 @@ class Ship:
             else:
                 deferred.callback(False)
                 return False
+        # right
         elif is_target_left == -1:
             next_direct_right = now_direction_to_next_right_move[self.direction]
             next_direct_left = now_direction_to_next_left_move[self.direction]
@@ -1531,6 +1514,7 @@ class Ship:
             else:
                 deferred.callback(False)
                 return False
+        # in line
         elif is_target_left == 0:
             next_direct = self.direction
             next_direct_right = now_direction_to_next_right_move[self.direction]

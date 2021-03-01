@@ -365,8 +365,6 @@ def draw_my_ships(self):
             ship_image = self.images['ship_in_battle'][ship.direction]
             ship_rect = ship_image.get_rect()
 
-            # ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
-
                 # flag ship
             x = y = 1
             if index == 1:
@@ -406,7 +404,6 @@ def draw_enemy_ships(self):
             index += 1
 
             # ship
-            # ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction, others=True)
             ship_image = self.images['ship_in_battle'][ship.direction]
             ship_rect = ship_image.get_rect()
 
@@ -417,7 +414,7 @@ def draw_enemy_ships(self):
 
             # ship number
             if ship.crew > 0:
-                draw_text(self, str(index - 1), x, y, c.WHITE)
+                draw_text(self, str(index - 1), x, y, c.BLACK)
 
             # ships stats
 

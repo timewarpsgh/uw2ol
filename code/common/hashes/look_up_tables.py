@@ -1,3 +1,4 @@
+
 id_2_building_type = {
     1: 'market',
     2: 'bar',
@@ -161,3 +162,23 @@ now_direction_to_next_right_move = {
     'se': 'down',
 }
 
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"{self.x} {self.y}"
+
+
+ship_direction_2_vector = {
+    'up': [Point(0, 0), Point(0, 1)],
+    'down': [Point(0, 0), Point(0, -1)],
+    'left': [Point(0, 0), Point(-1, 0)],
+    'right': [Point(0, 0), Point(1, 0)],
+    'ne': [Point(0, 0), Point(1, 1)],
+    'sw': [Point(0, 0), Point(-1, -1)],
+    'nw': [Point(0, 0), Point(-1, 1)],
+    'se': [Point(0, 0), Point(1, -1)]
+}
