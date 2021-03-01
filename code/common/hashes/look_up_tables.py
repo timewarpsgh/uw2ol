@@ -136,3 +136,28 @@ lv_2_exp_needed_to_next_lv = {
     58:	165900,
     59:	172000,
 }
+
+now_direction_to_next_left_move = {
+    'right': 'ne',
+    'left': 'sw',
+    'up': 'nw',
+    'down': 'se',
+
+    'ne': 'up',
+    'sw': 'down',
+    'nw': 'left',
+    'se': 'right',
+}
+
+now_direction_to_next_right_move = {
+    'right': 'se',
+    'left': 'nw',
+    'up': 'ne',
+    'down': 'sw',
+
+    'ne': 'right',
+    'sw': 'left',
+    'nw': 'up',
+    'se': 'down',
+}
+

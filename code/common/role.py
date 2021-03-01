@@ -24,7 +24,11 @@ from hashes.look_up_tables import capital_2_port_id
 from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
+from hashes.look_up_tables import now_direction_to_next_left_move, now_direction_to_next_right_move
+
 from hashes.hash_cannons import hash_cannons
+
+
 
 # add relative directory to python_path
 import sys, os
@@ -1300,46 +1304,12 @@ class Ship:
             return 1
 
     def move_to_right(self):
-        # basics
-        if self.direction == 'right':
-            self.move('se')
-        elif self.direction == 'left':
-            self.move('nw')
-        elif self.direction == 'up':
-            self.move('ne')
-        elif self.direction == 'down':
-            self.move('sw')
-
-        # more
-        elif self.direction == 'ne':
-            self.move('right')
-        elif self.direction == 'sw':
-            self.move('left')
-        elif self.direction == 'nw':
-            self.move('up')
-        elif self.direction == 'se':
-            self.move('down')
+        next_direct = now_direction_to_next_right_move[self.direction]
+        self.move(next_direct)
 
     def move_to_left(self):
-        # basics
-        if self.direction == 'right':
-            self.move('ne')
-        elif self.direction == 'left':
-            self.move('sw')
-        elif self.direction == 'up':
-            self.move('nw')
-        elif self.direction == 'down':
-            self.move('se')
-
-        # more
-        elif self.direction == 'ne':
-            self.move('up')
-        elif self.direction == 'sw':
-            self.move('down')
-        elif self.direction == 'nw':
-            self.move('left')
-        elif self.direction == 'se':
-            self.move('right')
+        next_direct = now_direction_to_next_left_move[self.direction]
+        self.move(next_direct)
 
     def move_continue(self):
         self.move(self.direction)
@@ -1391,6 +1361,19 @@ class Ship:
             future_x -= 1
         elif direction == 'right':
             future_x += 1
+
+        elif direction == 'ne':
+            future_x += 1
+            future_y -= 1
+        elif direction == 'sw':
+            future_x -= 1
+            future_y += 1
+        elif direction == 'nw':
+            future_x -= 1
+            future_y -= 1
+        elif direction == 'se':
+            future_x += 1
+            future_y += 1
 
         # collide with any of my ships?
         for ship in self.ROLE.ships:
@@ -1467,59 +1450,42 @@ class Ship:
         is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
 
         if is_target_left == 1:
-            self.move_to_left()
+            next_direct_left = now_direction_to_next_left_move[self.direction]
+            next_direct_right = now_direction_to_next_right_move[self.direction]
+            if self.can_move(next_direct_left):
+                self.move_to_left()
+            elif self.can_move(self.direction):
+                self.move_continue()
+            elif self.can_move(next_direct_right):
+                self.move_to_right()
+            else:
+                deferred.callback(False)
+                return False
         elif is_target_left == -1:
-            self.move_to_right()
+            next_direct_right = now_direction_to_next_right_move[self.direction]
+            next_direct_left = now_direction_to_next_left_move[self.direction]
+            if self.can_move(next_direct_right):
+                self.move_to_right()
+            elif self.can_move(self.direction):
+                self.move_continue()
+            elif self.can_move(next_direct_left):
+                self.move_to_left()
+            else:
+                deferred.callback(False)
+                return False
         elif is_target_left == 0:
-            self.move_continue()
-        else:
-            deferred.callback(False)
-            return False
-
-
-
-        # if self.x < ship.x:
-        #     if self.can_move('right'):
-        #         self.move('right')
-        #     elif self.can_move('up'):
-        #         self.move('up')
-        #     elif self.can_move('down'):
-        #         self.move('down')
-        #     else:
-        #         deferred.callback(False)
-        #         return False
-        # elif self.x > ship.x:
-        #     if self.can_move('left'):
-        #         self.move('left')
-        #     elif self.can_move('up'):
-        #         self.move('up')
-        #     elif self.can_move('down'):
-        #         self.move('down')
-        #     else:
-        #         deferred.callback(False)
-        #         return False
-        #
-        # elif self.y < ship.y:
-        #     if self.can_move('down'):
-        #         self.move('down')
-        #     elif self.can_move('left'):
-        #         self.move('left')
-        #     elif self.can_move('right'):
-        #         self.move('right')
-        #     else:
-        #         deferred.callback(False)
-        #         return False
-        # elif self.y > ship.y:
-        #     if self.can_move('up'):
-        #         self.move('up')
-        #     elif self.can_move('left'):
-        #         self.move('left')
-        #     elif self.can_move('right'):
-        #         self.move('right')
-        #     else:
-        #         deferred.callback(False)
-        #         return False
-
+            next_direct = self.direction
+            next_direct_right = now_direction_to_next_right_move[self.direction]
+            next_direct_left = now_direction_to_next_left_move[self.direction]
+            if self.can_move(next_direct):
+                self.move_continue()
+            elif self.can_move(next_direct_left):
+                self.move_to_left()
+            elif self.can_move(next_direct_right):
+                self.move_to_right()
+            else:
+                deferred.callback(False)
+                return False
         return True
 
     def move_further(self, ship, deferred):
@@ -2343,9 +2309,10 @@ def init_one_default_npc(name):
     fleet_sequence = (int(name) - 1) % c.FLEET_COUNT_PER_NATION
 
     # merchant
+    NUM_OF_SHIPS = 10
     if fleet_sequence == 0 or fleet_sequence == 1:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = random.randint(3, 3) # 3, 5
+        num_of_ships = NUM_OF_SHIPS # random.randint(3, 5)
         ship_type = random.choice(['Nao', 'Carrack', 'Flemish Galleon', 'Buss', 'Sloop', 'Xebec'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
@@ -2357,7 +2324,7 @@ def init_one_default_npc(name):
     # convoy
     elif fleet_sequence == 2 or fleet_sequence == 3:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = random.randint(3, 3) # 5, 8
+        num_of_ships = NUM_OF_SHIPS # random.randint(5, 8)
         ship_type = random.choice([ 'Galleon', 'Venetian Galeass'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
@@ -2370,7 +2337,7 @@ def init_one_default_npc(name):
     # battle
     else:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = random.randint(3, 3) # 8, 10
+        num_of_ships = NUM_OF_SHIPS # random.randint(8, 10)
         ship_type = random.choice(['Frigate', 'Barge', 'Full Rigged Ship'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)

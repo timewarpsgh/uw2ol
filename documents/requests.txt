@@ -8,7 +8,7 @@ by function
         in battle movement ON
             6 directions OK
             images for 6 directs OK
-            collision ON
+            collision OK
 
 
 
