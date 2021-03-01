@@ -1448,8 +1448,6 @@ class Ship:
         return position
 
     def move_closer(self, ship, deferred):
-
-        print("trying move closer")
         P0 = Point(0, 0)
         dict = {
             'up': [P0, Point(0, 1)],
@@ -1462,14 +1460,11 @@ class Ship:
             'se': [P0, Point(1, -1)]
         }
 
-        target_point = Point(ship.x - self.x, ship.y - self.y)
+        target_point = Point(ship.x - self.x, self.y - ship.y)
 
         p0 = dict[self.direction][0]
         p1 = dict[self.direction][1]
-        print(111111)
         is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
-        print('target left?', is_target_left)
-        print("trying to move!")
 
         if is_target_left == 1:
             self.move_to_left()
