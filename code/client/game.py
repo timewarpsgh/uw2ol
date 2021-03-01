@@ -167,6 +167,14 @@ class Game():
         # fonts
         self.font = pygame.font.SysFont("Times New Roman", c.FONT_SIZE)
 
+        # ship in battle
+        self.images['ship_in_battle'] = {}
+        ship_in_battle = ['up', 'down', 'left', 'right', 'ne', 'sw', 'nw', 'se']
+        for name in ship_in_battle:
+            self.images['ship_in_battle'][name] = load_image(f"../../assets/images/ship_in_battle/{name}.png")
+
+
+
     def update(self):
         """called each frame"""
         self._process_input_events()

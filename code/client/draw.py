@@ -362,7 +362,10 @@ def draw_my_ships(self):
             index += 1
 
             # ship
-            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
+            ship_image = self.images['ship_in_battle'][ship.direction]
+            ship_rect = ship_image.get_rect()
+
+            # ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction)
 
                 # flag ship
             x = y = 1
@@ -370,14 +373,14 @@ def draw_my_ships(self):
                 x = self.screen_surface_rect.centerx
                 y = self.screen_surface_rect.centery
 
-                self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
+                self.screen_surface.blit(ship_image, (x, y), ship_rect)
 
                 # other ships
             else:
                 x = self.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
                 y = self.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
 
-                self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
+                self.screen_surface.blit(ship_image, (x, y), ship_rect)
 
             # ship number
             if ship.crew > 0:
@@ -403,12 +406,14 @@ def draw_enemy_ships(self):
             index += 1
 
             # ship
-            ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction, others=True)
+            # ship_rect = ship_direction_2_rect_in_sprite_sheet(self, ship.direction, others=True)
+            ship_image = self.images['ship_in_battle'][ship.direction]
+            ship_rect = ship_image.get_rect()
 
             x = self.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
             y = self.screen_surface_rect.centery - (flag_ship.y - ship.y) * c.BATTLE_TILE_SIZE
 
-            self.screen_surface.blit(self.images['ship-tileset'], (x, y), ship_rect)
+            self.screen_surface.blit(ship_image, (x, y), ship_rect)
 
             # ship number
             if ship.crew > 0:

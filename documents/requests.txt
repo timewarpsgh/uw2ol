@@ -7,7 +7,8 @@ by function
         each ship has different steps to move OK
         in battle movement ON
             6 directions OK
-            image
+            images for 6 directs OK
+            collision ON
 
 
 
