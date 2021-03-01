@@ -1489,48 +1489,61 @@ class Ship:
         return True
 
     def move_further(self, ship, deferred):
-        if self.x < ship.x:
-            if self.can_move('left'):
-                self.move('left')
-            elif self.can_move('up'):
-                self.move('up')
-            elif self.can_move('down'):
-                self.move('down')
-            else:
-                deferred.callback(False)
-                return False
-        elif self.x > ship.x:
-            if self.can_move('right'):
-                self.move('right')
-            elif self.can_move('up'):
-                self.move('up')
-            elif self.can_move('down'):
-                self.move('down')
-            else:
-                deferred.callback(False)
-                return False
+        P0 = Point(0, 0)
+        dict = {
+            'up': [P0, Point(0, 1)],
+            'down': [P0, Point(0, -1)],
+            'left': [P0, Point(-1, 0)],
+            'right': [P0, Point(1, 0)],
+            'ne': [P0, Point(1, 1)],
+            'sw': [P0, Point(-1, -1)],
+            'nw': [P0, Point(-1, 1)],
+            'se': [P0, Point(1, -1)]
+        }
 
-        elif self.y < ship.y:
-            if self.can_move('up'):
-                self.move('up')
-            elif self.can_move('left'):
-                self.move('left')
-            elif self.can_move('right'):
-                self.move('right')
-            else:
-                deferred.callback(False)
-                return False
-        elif self.y > ship.y:
-            if self.can_move('down'):
-                self.move('down')
-            elif self.can_move('left'):
-                self.move('left')
-            elif self.can_move('right'):
-                self.move('right')
-            else:
-                deferred.callback(False)
-                return False
+        target_point = Point(ship.x - self.x, self.y - ship.y)
 
+        p0 = dict[self.direction][0]
+        p1 = dict[self.direction][1]
+        is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
+
+        if is_target_left == 1:
+            next_direct_left = now_direction_to_next_left_move[self.direction]
+            next_direct_right = now_direction_to_next_right_move[self.direction]
+            if self.can_move(next_direct_right):
+                self.move_to_right()
+            elif self.can_move(self.direction):
+                self.move_continue()
+            elif self.can_move(next_direct_left):
+                self.move_to_left()
+            else:
+                deferred.callback(False)
+                return False
+        elif is_target_left == -1:
+            next_direct_right = now_direction_to_next_right_move[self.direction]
+            next_direct_left = now_direction_to_next_left_move[self.direction]
+            if self.can_move(next_direct_left):
+                self.move_to_left()
+            elif self.can_move(self.direction):
+                self.move_continue()
+            elif self.can_move(next_direct_right):
+                self.move_to_right()
+            else:
+                deferred.callback(False)
+                return False
+        elif is_target_left == 0:
+            next_direct = self.direction
+            next_direct_right = now_direction_to_next_right_move[self.direction]
+            next_direct_left = now_direction_to_next_left_move[self.direction]
+            if self.can_move(next_direct_left):
+                self.move_to_left()
+            elif self.can_move(next_direct_right):
+                self.move_to_right()
+            elif self.can_move(next_direct):
+                self.move_continue()
+            else:
+                deferred.callback(False)
+                return False
         return True
 
     def shoot(self, ship, deferred):
@@ -1616,17 +1629,18 @@ class Ship:
 
                 # get start pos
                 my_role = self.ROLE.get_enemy_role()
-                flag_ship = my_role.ships[0]
-                x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
-                y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
+                if my_role.ships:
+                    flag_ship = my_role.ships[0]
+                    x = game.screen_surface_rect.centerx - (flag_ship.x - self.x) * c.BATTLE_TILE_SIZE
+                    y = game.screen_surface_rect.centery - (flag_ship.y - self.y) * c.BATTLE_TILE_SIZE
 
-                # get target pos
-                d_x = (ship.x - self.x) * c.BATTLE_TILE_SIZE
-                d_y = (ship.y - self.y) * c.BATTLE_TILE_SIZE
+                    # get target pos
+                    d_x = (ship.x - self.x) * c.BATTLE_TILE_SIZE
+                    d_y = (ship.y - self.y) * c.BATTLE_TILE_SIZE
 
-                # draw
-                damage_num = ShootDamageNumber(game, damage, x + d_x +8, y + d_y - 8)
-                game.all_sprites.add(damage_num)
+                    # draw
+                    damage_num = ShootDamageNumber(game, damage, x + d_x +8, y + d_y - 8)
+                    game.all_sprites.add(damage_num)
 
     def _show_shooting_anim(self, ship):
         # show explosion anim

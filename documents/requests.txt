@@ -9,6 +9,11 @@ by function
             6 directions OK
             images for 6 directs OK
             collision OK
+            escape OK
+
+
+            shoot range ON
+
 
 
 
