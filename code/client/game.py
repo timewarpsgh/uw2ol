@@ -206,15 +206,10 @@ class Game():
 
         # when logged in
         if self.my_role:
-            try:
-                func = getattr(self.my_role, protocol_name)
-                func(params_list)
-            except:
-                print('invalid input!')
-                return False
-            else:
-                self.connection.send(protocol_name, params_list)
-                return True
+            func = getattr(self.my_role, protocol_name)
+            func(params_list)
+            self.connection.send(protocol_name, params_list)
+            return True
 
         # when not logged in
         else:

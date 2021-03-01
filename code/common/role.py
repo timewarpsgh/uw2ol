@@ -25,7 +25,8 @@ from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
 from hashes.look_up_tables import now_direction_to_next_left_move, now_direction_to_next_right_move
-from hashes.look_up_tables import ship_direction_2_vector
+from hashes.look_up_tables import ship_direction_2_vector, ship_direction_vector_2_in_range_vectors
+from hashes.look_up_tables import ship_direction_vector_2_not_in_range_vectors
 from hashes.hash_cannons import hash_cannons
 
 
@@ -707,6 +708,9 @@ class Role:
 
     def all_ships_operate(self, params):
         if self.your_turn_in_battle:
+            # testing
+            self.set_all_ships_attack_method([0])
+
             # all ships know my_role
             for ship in self.ships:
                 ship.ROLE = self
@@ -760,14 +764,14 @@ class Role:
         # calc rand target ship id
         i = params[0]
         enemy_ships = params[1]
-        random_target_ship_id = self.__calc_rand_target_ship_id(i, enemy_ships)
+        random_target_ship_id = self._calc_rand_target_ship_id(i, enemy_ships)
 
         # attack
         d_result = self.attack_ship([i, random_target_ship_id])
         self.ships[i].target = random_target_ship_id
         d_result.addCallback(self._call_back_for_attack_ship, i, enemy_ships)
 
-    def __calc_rand_target_ship_id(self, i, enemy_ships):
+    def _calc_rand_target_ship_id(self, i, enemy_ships):
         # calculate random target id
         rand_seed_num = self.ships[i].x + self.ships[i].y
         random.seed(rand_seed_num)
@@ -1314,6 +1318,17 @@ class Ship:
     def move_continue(self):
         self.move(self.direction)
 
+    def _can_move_to_right(self):
+        next_direct = now_direction_to_next_right_move[self.direction]
+        return self.can_move(next_direct)
+
+    def _can_move_to_left(self):
+        next_direct = now_direction_to_next_left_move[self.direction]
+        return self.can_move(next_direct)
+
+    def _can_move_continue(self):
+        return self.can_move(self.direction)
+
     def move(self, direction):
         # bsics
         if direction == 'up':
@@ -1408,20 +1423,132 @@ class Ship:
         return deferred
 
     def shoot_or_move_closer(self, ship, deferred):
-        # if in range
-        if abs(self.x - ship.x) + abs(self.y - ship.y) <= c.SHOOT_RANGE_IN_BATTLE:
+        # can shoot
+        if self._is_target_ship_in_distance_range(ship):
             self.shoot(ship, deferred)
-        # not in range
+        # can't shoot
         else:
-            # move closer
-            moved = self.move_closer(ship, deferred)
-            if moved:
-                # if have steps
-                if self.steps_left >= 1:
-                    reactor.callLater(0.5, self.shoot_or_move_closer, ship, deferred)
-                # no more steps
-                else:
-                    deferred.callback(False)
+            # not in distance range
+            if not self._is_target_ship_in_distance_range(ship):
+                # move closer
+                moved = self.move_closer(ship, deferred)
+                if moved:
+                    # if have steps
+                    if self.steps_left >= 1:
+                        reactor.callLater(0.5, self.shoot_or_move_closer, ship, deferred)
+                    # no more steps
+                    else:
+                        deferred.callback(False)
+            # # in distance range
+            # else:
+            #     # choose right direction to get in angle range
+            #     random.seed(self.x + self.y + ship.x + ship.y)
+            #     right_direction = random.choice(['left', 'right'])
+            #
+            #     # right_direction = self._get_right_direction_when_in_distance_range(ship)
+            #     print("right direction is ", right_direction)
+            #     moved = self._move_to_right_direction(right_direction, deferred)
+            #     if moved:
+            #         # if have steps
+            #         if self.steps_left >= 1:
+            #             reactor.callLater(0.5, self.shoot_or_move_closer, ship, deferred)
+            #         # no more steps
+            #         else:
+            #             deferred.callback(False)
+
+    def _move_to_right_direction(self, right_direction, deferred):
+        if right_direction == 'right':
+            if self._can_move_to_right():
+                self.move_to_right()
+            elif self._can_move_continue():
+                self.move_continue()
+            elif self._can_move_to_left():
+                self.move_to_left()
+            else:
+                pass
+        elif right_direction == 'left':
+            if self._can_move_to_left():
+                self.move_to_left()
+            elif self._can_move_continue():
+                self.move_continue()
+            elif self._can_move_to_right():
+                self.move_to_right()
+            else:
+                deferred.callback(False)
+                return False
+
+        return True
+
+    def _get_right_direction_when_in_distance_range(self, ship):
+        # choose right direction
+        not_in_range_vectors = None
+        if self.direction == 'down':
+            not_in_range_vectors = ship_direction_vector_2_not_in_range_vectors['up']
+        elif self.direction == 'right':
+            not_in_range_vectors = ship_direction_vector_2_not_in_range_vectors['left']
+        elif self.direction == 'sw':
+            not_in_range_vectors = ship_direction_vector_2_not_in_range_vectors['ne']
+        elif self.direction == 'se':
+            not_in_range_vectors = ship_direction_vector_2_not_in_range_vectors['nw']
+        else:
+            not_in_range_vectors = ship_direction_vector_2_not_in_range_vectors[self.direction]
+
+        # turn right?
+        right_vectors = not_in_range_vectors['turn_right']
+        target_point = Point(ship.x - self.x, self.y - ship.y)
+        for vector_list in right_vectors:
+            to_the_right_v_name = vector_list[0]
+            to_the_left_v_name = vector_list[1]
+            to_the_right_v = ship_direction_2_vector[to_the_right_v_name]
+            to_the_left_v = ship_direction_2_vector[to_the_left_v_name]
+
+            if self._is_point_left_of_vector(to_the_right_v[0], to_the_right_v[1], target_point) == -1 and \
+                    self._is_point_left_of_vector(to_the_left_v[0], to_the_left_v[1], target_point) == 1:
+                return 'right'
+
+        return 'left'
+
+    def _is_target_ship_in_distance_range(self, ship):
+        if abs(self.x - ship.x) + abs(self.y - ship.y) <= c.SHOOT_RANGE_IN_BATTLE:
+            return True
+        else:
+            return False
+
+    def _is_target_ship_in_angle_range(self, ship):
+        print(3333333333333)
+        # get left and right vectors
+        dict = None
+        if self.direction == 'down':
+            dict = ship_direction_vector_2_in_range_vectors['up']
+        elif self.direction == 'right':
+            dict = ship_direction_vector_2_in_range_vectors['left']
+        elif self.direction == 'sw':
+            dict = ship_direction_vector_2_in_range_vectors['ne']
+        elif self.direction == 'se':
+            dict = ship_direction_vector_2_in_range_vectors['nw']
+        else:
+            dict = ship_direction_vector_2_in_range_vectors[self.direction]
+
+        right_vectors = dict['right']
+        left_vectors = dict['left']
+
+        # is target between the vectors?
+        target_point = Point(ship.x - self.x, self.y - ship.y)
+        for i in range(2):
+            # vector 1 (point must be right of it)
+            right_vector_name = right_vectors[i]
+            right_v = ship_direction_2_vector[right_vector_name]
+
+            # vector 2 (point must be left of it)
+            left_vector_name = left_vectors[i]
+            left_v = ship_direction_2_vector[left_vector_name]
+
+            # point between the two vectors
+            if self._is_point_left_of_vector(right_v[0], right_v[1], target_point) == 1 and \
+                    self._is_point_left_of_vector(left_v[0], left_v[1], target_point) == -1:
+                return True
+
+        return False
 
     def _is_point_left_of_vector(self, A, B, M):
         """ A,B: points of the vector
