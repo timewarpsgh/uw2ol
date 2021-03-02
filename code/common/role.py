@@ -640,8 +640,10 @@ class Role:
         if my_ship.now_hp >= 20 and my_ship.crew >= 50:
             if attack_method == 'shoot':
                 d_dead = my_ship.try_to_shoot(target_ship)
-            else:
+            elif attack_method == 'engage':
                 d_dead = my_ship.try_to_engage(target_ship)
+            else:
+                d_dead = my_ship.try_to_escape(target_ship)
             # not good -> escape
         else:
             d_dead = my_ship.try_to_escape(target_ship)
@@ -708,7 +710,7 @@ class Role:
     def all_ships_operate(self, params):
         if self.your_turn_in_battle:
             # testing
-            self.set_all_ships_attack_method([0])
+            # self.set_all_ships_attack_method([0])
 
             # all ships know my_role
             for ship in self.ships:
@@ -739,6 +741,8 @@ class Role:
             ship.attack_method = 'shoot'
         elif attack_method == 1:
             ship.attack_method = 'engage'
+        elif attack_method == 2:
+            ship.attack_method = 'escape'
 
     def set_all_ships_target(self, params):
         target_id = params[0]
@@ -752,6 +756,8 @@ class Role:
             attack_method = 'shoot'
         elif attack_method_id == 1:
             attack_method = 'engage'
+        elif attack_method_id == 2:
+            attack_method = 'escape'
 
         for ship in self.ships:
             ship.attack_method = attack_method
@@ -1264,12 +1270,7 @@ class Ship:
             seamanship = self.captain.chief_navigator.seamanship
         else:
             seamanship = self.captain.seamanship
-
         max_steps = int((self.tacking + self.power + seamanship) / 40)
-        max_steps = max_steps * int((self.now_hp * 1.5 / self.max_hp))
-        if max_steps < 1:
-            max_steps = 1
-
         return max_steps
 
     def get_speed(self, role=''):
@@ -1459,7 +1460,7 @@ class Ship:
         is_target_left = self._is_point_left_of_vector(p0, p1, target_point)
 
         # left
-        if is_target_left == 1:
+        if is_target_left != -1:
             next_direct_left = now_direction_to_next_left_move[self.direction]
             next_direct_right = now_direction_to_next_right_move[self.direction]
             if self.can_move(next_direct_left):
@@ -1485,19 +1486,19 @@ class Ship:
                 deferred.callback(False)
                 return False
         # in line
-        elif is_target_left == 0:
-            next_direct = self.direction
-            next_direct_right = now_direction_to_next_right_move[self.direction]
-            next_direct_left = now_direction_to_next_left_move[self.direction]
-            if self.can_move(next_direct):
-                self.move_continue()
-            elif self.can_move(next_direct_left):
-                self.move_to_left()
-            elif self.can_move(next_direct_right):
-                self.move_to_right()
-            else:
-                deferred.callback(False)
-                return False
+        # elif is_target_left == 0:
+        #     next_direct = self.direction
+        #     next_direct_right = now_direction_to_next_right_move[self.direction]
+        #     next_direct_left = now_direction_to_next_left_move[self.direction]
+        #     if self.can_move(next_direct):
+        #         self.move_continue()
+        #     elif self.can_move(next_direct_left):
+        #         self.move_to_left()
+        #     elif self.can_move(next_direct_right):
+        #         self.move_to_right()
+        #     else:
+        #         deferred.callback(False)
+        #         return False
         return True
 
     def move_further(self, ship, deferred):
