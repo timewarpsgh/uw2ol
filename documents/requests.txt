@@ -10,7 +10,8 @@ by function
 
             escape strategy OK
 
-            flagship control ON
+            flagship control OK
+            hot keys refactor ON
 
 
 

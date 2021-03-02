@@ -64,11 +64,6 @@ def handle_pygame_event(self, event):
                             print('target set to:', name)
                             return
 
-                    # clear target
-                    # if self.menu_stack == 0:
-                    #     if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
-                    #         self.my_role.enemy_name = ''
-
         # right button
         elif event.button == 3:
             if self.other_roles_rects:
@@ -79,11 +74,6 @@ def handle_pygame_event(self, event):
                         print('target set to:', name)
                         gui.target_clicked(self)
                         return
-
-                # clear target
-                # if self.menu_stack == 0:
-                #     if self.my_role.map == 'sea' or str(self.my_role.map).isdigit():
-                #         self.my_role.enemy_name = ''
 
     # user defined events
     elif event.type == EVENT_MOVE:
@@ -134,15 +124,6 @@ def escape(self, event):
 
     # deactivate text entry
     self.text_entry_active = False
-
-# def init_key_mappings(self):
-#     """cmds that change local state and sent to server"""
-#     self.key_mappings = {
-#         # battle
-#         'b': ['try_to_fight_with', ['b']],
-#         'e': ['exit_battle', []],
-#         'k': ['shoot_ship', [0, 0]],
-#     }
 
 def other_keys_down(self, event):
 
@@ -253,20 +234,6 @@ def other_keys_down(self, event):
     # developer keys
     if c.DEVELOPER_MODE_ON:
         pass
-        # auto move
-        # if event.key == ord('o'):
-        #     pass
-        #     # print('auto moving!')
-        #     #
-        #     # self.timer = task.LoopingCall(move_right_and_then_back, self)
-        #     # self.timer.start(5)
-        #
-        # # stop timer
-        # elif event.key == ord('p'):
-        #     self.timer.stop()
-        #
-        # if event.key == ord('t'):
-        #     self.change_and_send('consume_potion', [1])
 
 def get_nearby_port_index(self):
     # get x and y in tile position
