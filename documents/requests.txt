@@ -13,7 +13,9 @@ by function
             flagship
                 show shoot mark OK
                 show engage mark OK
-                show movement sign
+                show movement LATER
+
+                shoot mark click bug  OK
 
 
 

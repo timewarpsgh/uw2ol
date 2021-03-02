@@ -785,14 +785,17 @@ class Role:
 
     def flag_ship_engage(self, params):
         target_ship_id = params[0]
-        target_ship = self.get_enemy_role().ships[target_ship_id]
-        self.ships[0].engage(target_ship)
+        enemy_ships = self.get_enemy_role().ships
+        self.ships[0].target = target_ship_id
+        self.ships[0].attack_method = 'engage'
+        self._pick_one_ship_to_attack([0, enemy_ships])
 
     def flag_ship_shoot(self, params):
         target_ship_id = params[0]
-        target_ship = self.get_enemy_role().ships[target_ship_id]
-        steps_left = 1
-        self.ships[0].try_to_shoot(target_ship, steps_left)
+        enemy_ships = self.get_enemy_role().ships
+        self.ships[0].target = target_ship_id
+        self.ships[0].attack_method = 'shoot'
+        self._pick_one_ship_to_attack([0, enemy_ships])
 
     def all_ships_operate(self, params):
         # include flagship ?
@@ -862,7 +865,8 @@ class Role:
         enemy_role = self.get_enemy_role()
         enemy_role.your_turn_in_battle = True
 
-        enemy_role.ships[0].steps_left = enemy_role.ships[0]._calc_max_steps()
+        if enemy_role.ships:
+            enemy_role.ships[0].steps_left = enemy_role.ships[0]._calc_max_steps()
 
     def _pick_one_ship_to_attack(self, params):
         # calc rand target ship id
@@ -1506,16 +1510,13 @@ class Ship:
         # return ture
         return True
 
-    def try_to_shoot(self, ship, *steps_left):
+    def try_to_shoot(self, ship):
         """returns a deferred"""
         # inits a deffered
         deferred = defer.Deferred()
 
         # init max steps
         self.steps_left = self._calc_max_steps()
-
-        if steps_left:
-            self.steps_left = steps_left
 
         # check
         if ship.crew > 0 and self.crew > 0:
