@@ -729,7 +729,10 @@ class Role:
             include_flagship = False
 
         # if my turn
+        print("doing all_ships_operate")
+
         if self.your_turn_in_battle:
+            print("is my turn")
             # testing
                 # self.set_all_ships_attack_method([0])
 
@@ -746,6 +749,9 @@ class Role:
 
             # stop my turn
             self.your_turn_in_battle = False
+
+        else:
+            print("doing all_ships_op, but not my turn")
 
     def set_one_ships_strategy(self, params):
         # params

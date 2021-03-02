@@ -22,65 +22,65 @@ def handle_pygame_event(self, event):
     # quit
     if event.type == pygame.QUIT:
         quit(self, event)
-
     # key down
     elif event.type == pygame.KEYDOWN:
-
-        # return (focus text entry)
-        if event.key == pygame.K_RETURN:
-            self.text_entry.focus()
-            self.text_entry_active = True
-
-        # escape
-        if event.key == pygame.K_ESCAPE:
-            escape(self, event)
-
-        # other keys
-        if not self.text_entry_active:
-            # in game
-            if self.my_role:
-                other_keys_down(self, event)
-
-            # not in game
-            else:
-                # logins
-                if chr(event.key).isdigit():
-                    self.connection.send('login', [chr(event.key), chr(event.key)])
-
+        key_down(self, event)
     # key up
     elif event.type == pygame.KEYUP:
-            key_up(self, event)
-
+        key_up(self, event)
     # mouse button down
     elif event.type == pygame.MOUSEBUTTONDOWN:
-        # left button
-        if event.button == 1:
-            if self.other_roles_rects:
-                if self.my_role.map == 'sea' or self.my_role.map.isdigit():
-                    # set target
-                    for name, rect in self.other_roles_rects.items():
-                        if rect.collidepoint(event.pos):
-                            self.my_role.enemy_name = name
-                            print('target set to:', name)
-                            return
+        mouse_button_down(self, event)
+    # user defined events
+    user_defined_events(self, event)
 
-        # right button
-        elif event.button == 3:
-            if self.other_roles_rects:
+def key_down(self, event):
+    # return (focus text entry)
+    if event.key == pygame.K_RETURN:
+        self.text_entry.focus()
+        self.text_entry_active = True
+    # escape
+    if event.key == pygame.K_ESCAPE:
+        escape(self, event)
+    # other keys
+    if not self.text_entry_active:
+        # in game
+        if self.my_role:
+            other_keys_down(self, event)
+        # not in game
+        else:
+            # logins
+            if chr(event.key).isdigit():
+                self.connection.send('login', [chr(event.key), chr(event.key)])
+
+def mouse_button_down(self, event):
+    # left button
+    if event.button == 1:
+        if self.other_roles_rects:
+            if self.my_role.map == 'sea' or self.my_role.map.isdigit():
                 # set target
                 for name, rect in self.other_roles_rects.items():
                     if rect.collidepoint(event.pos):
                         self.my_role.enemy_name = name
                         print('target set to:', name)
-                        gui.target_clicked(self)
                         return
 
-    # user defined events
-    elif event.type == EVENT_MOVE:
+    # right button
+    elif event.button == 3:
+        if self.other_roles_rects:
+            # set target
+            for name, rect in self.other_roles_rects.items():
+                if rect.collidepoint(event.pos):
+                    self.my_role.enemy_name = name
+                    print('target set to:', name)
+                    gui.target_clicked(self)
+                    return
+
+def user_defined_events(self, event):
+    if event.type == EVENT_MOVE:
         user_event_move(self, event)
     elif event.type == EVENT_HEART_BEAT:
         self.change_and_send('heart_beat', [])
-
     elif event.type == pygame.USEREVENT:
         if event.user_type == UI_WINDOW_CLOSE:
             self.menu_stack.pop()
@@ -126,114 +126,118 @@ def escape(self, event):
     self.text_entry_active = False
 
 def other_keys_down(self, event):
-
     # not in battle
     if not self.my_role.is_in_battle():
-
-        # start move
-        if event.key == ord('d'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
-        elif event.key == ord('a'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
-        elif event.key == ord('w'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'up'])
-        elif event.key == ord('s'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
-
-        elif event.key == ord('e'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
-
-        elif event.key == ord('q'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
-        elif event.key == ord('z'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'sw'])
-        elif event.key == ord('x'):
-            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'se'])
-
-        # change map to sea
-        if event.key == ord('n'):
-            self.button_click_handler.menu_click_handler.port.port._sail_ok()
-
-        # change map to port
-        elif event.key == ord('m'):
-            if not self.my_role.map.isdigit():
-                port_id = get_nearby_port_index(self)
-                if port_id or port_id == 0:
-                    self.connection.send('change_map', [str(port_id), self.days_spent_at_sea])
-                    self.timer_at_sea.stop()
-
-                    # make npcs
-                    if port_id < 100:
-                        self.time_of_day = random.choice(c.TIME_OF_DAY_OPTIONS)
-
-                        if self.time_of_day == 'night':
-                            self.dog = None
-                            self.old_man = None
-                            self.agent = None
-
-                            self.man = None
-                            self.woman = None
-                        else:
-                            port_npc.init_static_npcs(self, port_id)
-                            port_npc.init_dynamic_npcs(self, port_id)
-
-                    # don't make
-                    else:
-                        self.dog = None
-                        self.old_man = None
-                        self.agent = None
-
-                        self.man = None
-                        self.woman = None
-
-        # enter building
-        if event.key == ord('f'):
-            self.button_click_handler.menu_click_handler.cmds.enter_building()
-
-        # go ashore
-        if event.key == ord('g'):
-            self.button_click_handler.menu_click_handler.cmds.go_ashore()
-
-        # enter battle
-        if event.key == ord('b'):
-            if self.my_role.enemy_name:
-                enemy_role = self.my_role._get_other_role_by_name(self.my_role.enemy_name)
-                my_role = self.my_role
-                if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
-                    if enemy_role.mates[0].nation == my_role.mates[0].nation and not c.DEVELOPER_MODE_ON:
-                        self.button_click_handler.i_speak("That fleet is from my own country.")
-                    else:
-                        self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
-                else:
-                    self.button_click_handler. \
-                        make_message_box("Target too far!")
-
+        _not_in_battle_keys(self, event)
     # in battle
-    if self.my_role.is_in_battle():
-
-        if event.key == ord('b'):
-            if self.my_role.your_turn_in_battle:
-                self.connection.send('exit_battle', [])
-        elif event.key == ord('k'):
-            self.button_click_handler.menu_click_handler.battle.all_ships_move()
-        elif event.key == ord('l'):
-            self.change_and_send('set_all_ships_target', [0])
-        elif event.key == ord('o'):
-            self.change_and_send('set_all_ships_attack_method', [0])
-        elif event.key == ord('i'):
-            self.change_and_send('set_all_ships_attack_method', [1])
-
-        elif event.key == ord('w'):
-            self.change_and_send('flagship_move', ['continue'])
-        elif event.key == ord('q'):
-            self.change_and_send('flagship_move', ['left'])
-        elif event.key == ord('e'):
-            self.change_and_send('flagship_move', ['right'])
-
-
+    else:
+        _in_battle_keys(self, event)
     # developer keys
     if c.DEVELOPER_MODE_ON:
         pass
+
+def _not_in_battle_keys(self, event):
+    # start move
+    if event.key == ord('d'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
+    elif event.key == ord('a'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
+    elif event.key == ord('w'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'up'])
+    elif event.key == ord('s'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
+
+    elif event.key == ord('e'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
+
+    elif event.key == ord('q'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
+    elif event.key == ord('z'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'sw'])
+    elif event.key == ord('x'):
+        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'se'])
+
+    # change map to sea
+    if event.key == ord('n'):
+        self.button_click_handler.menu_click_handler.port.port._sail_ok()
+
+    # change map to port
+    elif event.key == ord('m'):
+        __change_map_to_port(self)
+
+    # enter building
+    if event.key == ord('f'):
+        self.button_click_handler.menu_click_handler.cmds.enter_building()
+
+    # go ashore
+    if event.key == ord('g'):
+        self.button_click_handler.menu_click_handler.cmds.go_ashore()
+
+    # enter battle
+    if event.key == ord('b'):
+        if self.my_role.enemy_name:
+            enemy_role = self.my_role._get_other_role_by_name(self.my_role.enemy_name)
+            my_role = self.my_role
+            if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
+                if enemy_role.mates[0].nation == my_role.mates[0].nation and not c.DEVELOPER_MODE_ON:
+                    self.button_click_handler.i_speak("That fleet is from my own country.")
+                else:
+                    self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
+            else:
+                self.button_click_handler. \
+                    make_message_box("Target too far!")
+
+def __change_map_to_port(self):
+    if not self.my_role.map.isdigit():
+        port_id = get_nearby_port_index(self)
+        if port_id or port_id == 0:
+            self.connection.send('change_map', [str(port_id), self.days_spent_at_sea])
+            self.timer_at_sea.stop()
+
+            # make npcs
+            if port_id < 100:
+                self.time_of_day = random.choice(c.TIME_OF_DAY_OPTIONS)
+
+                if self.time_of_day == 'night':
+                    self.dog = None
+                    self.old_man = None
+                    self.agent = None
+
+                    self.man = None
+                    self.woman = None
+                else:
+                    port_npc.init_static_npcs(self, port_id)
+                    port_npc.init_dynamic_npcs(self, port_id)
+
+            # don't make
+            else:
+                self.dog = None
+                self.old_man = None
+                self.agent = None
+
+                self.man = None
+                self.woman = None
+
+def _in_battle_keys(self, event):
+    if event.key == ord('b'):
+        if self.my_role.your_turn_in_battle:
+            self.connection.send('exit_battle', [])
+    elif event.key == ord('k'):
+        self.button_click_handler.menu_click_handler.battle.all_ships_move()
+    elif event.key == ord('l'):
+        self.change_and_send('set_all_ships_target', [0])
+    elif event.key == ord('o'):
+        self.change_and_send('set_all_ships_attack_method', [0])
+    elif event.key == ord('i'):
+        self.change_and_send('set_all_ships_attack_method', [1])
+
+    # flagship
+    elif event.key == ord('w'):
+        self.change_and_send('flagship_move', ['continue'])
+    elif event.key == ord('q'):
+        self.change_and_send('flagship_move', ['left'])
+    elif event.key == ord('e'):
+        self.change_and_send('flagship_move', ['right'])
 
 def get_nearby_port_index(self):
     # get x and y in tile position
@@ -263,7 +267,6 @@ def start_moving_left(self):
 
 def key_up(self, event):
     key = chr(event.key)
-
     # stop moving
     if key in ['w', 's', 'a', 'd', 'e', 'q', 'z', 'x']:
         try:
