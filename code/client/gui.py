@@ -466,6 +466,9 @@ class ButtonClickHandler():
                 'Set All Ships Target': self.menu_click_handler.battle.set_target,
                 'Set All Ships Strategy': self.menu_click_handler.battle.set_attack_method,
                 'Set One Ships Strategy': self.menu_click_handler.battle.set_one_ships_strategy,
+                'Flag Move Continue': self.menu_click_handler.battle.flag_move_continue,
+                'Flag Move To Left': self.menu_click_handler.battle.flag_move_to_left,
+                'Flag Move To Right': self.menu_click_handler.battle.flag_move_to_right,
             }
             self.make_menu(dict)
         else:
@@ -1050,7 +1053,7 @@ class MenuClickHandlerForBattle():
         self.game = game
 
     def all_ships_move(self):
-        self.game.change_and_send('all_ships_operate', [])
+        self.game.change_and_send('all_ships_operate', [1])
         self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
     def enemy_ships(self):
@@ -1076,6 +1079,15 @@ class MenuClickHandlerForBattle():
     def set_one_ships_strategy(self):
         self.game.button_click_handler. \
             make_input_boxes('set_one_ships_strategy', ['ship_id', 'target_id', 'attack_method'])
+
+    def flag_move_continue(self):
+        self.game.change_and_send('flagship_move', ['continue'])
+
+    def flag_move_to_left(self):
+        self.game.change_and_send('flagship_move', ['left'])
+
+    def flag_move_to_right(self):
+        self.game.change_and_send('flagship_move', ['right'])
 
 class MenuClickHandlerForPort():
     """contains handlers for all buildings in port"""

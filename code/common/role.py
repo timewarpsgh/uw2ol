@@ -707,21 +707,42 @@ class Role:
             deferred.callback('next_ship')
             # return deferred
 
+    def flagship_move(self, params):
+        movement = params[0]
+
+        flagship = self.ships[0]
+        if flagship.steps_left >= 1:
+            if movement == 'continue':
+                if flagship._can_move_continue():
+                    flagship.move_continue()
+            elif movement == 'left':
+                if flagship._can_move_to_left():
+                    flagship.move_to_left()
+            elif movement == 'right':
+                if flagship._can_move_to_right():
+                    flagship.move_to_right()
+
     def all_ships_operate(self, params):
+        # include flagship ?
+        include_flagship = True
+        if len(params) > 0:
+            include_flagship = False
+
+        # if my turn
         if self.your_turn_in_battle:
             # testing
-            # self.set_all_ships_attack_method([0])
-
-            # all ships know my_role
-            for ship in self.ships:
-                ship.ROLE = self
+                # self.set_all_ships_attack_method([0])
 
             # get my and enemy ships
             enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
             my_ships = self.ships
 
             # flag ship attacks
-            self._pick_one_ship_to_attack([0, enemy_ships])
+            if include_flagship:
+                self._pick_one_ship_to_attack([0, enemy_ships])
+            else:
+                my_ships[0].steps_left = 0
+                self._pick_one_ship_to_attack([1, enemy_ships])
 
             # stop my turn
             self.your_turn_in_battle = False
@@ -763,7 +784,10 @@ class Role:
             ship.attack_method = attack_method
 
     def _change_turn(self):
-        self._get_other_role_by_name(self.enemy_name).your_turn_in_battle = True
+        enemy_role = self.get_enemy_role()
+        enemy_role.your_turn_in_battle = True
+
+        enemy_role.ships[0].steps_left = enemy_role.ships[0]._calc_max_steps()
 
     def _pick_one_ship_to_attack(self, params):
         # calc rand target ship id

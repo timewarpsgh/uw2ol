@@ -277,6 +277,16 @@ def _try_to_fight_with_player(self, enemy_name):
         battle_map.add_player_conn(self)
         battle_map.add_player_conn(enemy_conn)
 
+        # each ship needs to know role
+        for ship in self.my_role.ships:
+            ship.ROLE = self.my_role
+        for ship in enemy_role.ships:
+            ship.ROLE = enemy_role
+
+        # flagship.steps_left
+        flagship = self.my_role.ships[0]
+        flagship.steps_left = flagship._calc_max_steps()
+
         # send roles_in_new_map to my client and enemy client
         roles_in_new_map = {}
         for name, conn in battle_map.get_all_players_inside().items():
@@ -341,6 +351,16 @@ def _try_to_fight_with_npc(self, enemy_name):
         battle_map = self.factory.aoi_manager.create_battle_map_by_name(battle_map_name)
         battle_map.add_player_conn(self)
         battle_map.add_npc(enemy_role)
+
+        # each ship needs to know role
+        for ship in self.my_role.ships:
+            ship.ROLE = self.my_role
+        for ship in enemy_role.ships:
+            ship.ROLE = enemy_role
+
+        # flagship.steps_left
+        flagship = self.my_role.ships[0]
+        flagship.steps_left = flagship._calc_max_steps()
 
         # send roles_in_new_map to my client and enemy client
         roles_in_new_map = {}
