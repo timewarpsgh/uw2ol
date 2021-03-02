@@ -134,7 +134,6 @@ class Role:
         return enemy_role
 
     def _get_other_role_by_name(self, name):
-
         # in client
         if self.GAME:
             if name in self.GAME.other_roles:
@@ -726,17 +725,17 @@ class Role:
         # include flagship ?
         include_flagship = True
         if len(params) > 0:
-            include_flagship = False
+            if params[0] == False:
+                include_flagship = False
 
         # if my turn
+        self.set_all_ships_attack_method([0])
         print("doing all_ships_operate")
 
         if self.your_turn_in_battle:
-            print("is my turn")
-            # testing
-                # self.set_all_ships_attack_method([0])
-
             # get my and enemy ships
+            print("enemy name", self.enemy_name)
+
             enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
             my_ships = self.ships
 
@@ -749,9 +748,6 @@ class Role:
 
             # stop my turn
             self.your_turn_in_battle = False
-
-        else:
-            print("doing all_ships_op, but not my turn")
 
     def set_one_ships_strategy(self, params):
         # params
@@ -849,6 +845,8 @@ class Role:
                     reactor.callLater(1, self._change_turn)
         # won battle
         else:
+            print("I won battle")
+
             # player won
             if Role.GAME and Role.GAME.my_role.ships:
                 reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
@@ -1592,10 +1590,10 @@ class Ship:
         damage = 0
         gun = Gun(self.gun)
 
-            # if no first mate
+        # if no first mate
         if not self.captain.first_mate:
             damage = c.SHOOT_DAMAGE * int(( (self.max_guns * gun.damage)  + int(self.captain.swordplay / 2) + self.captain.gunnery * 20) / 10)
-            # if have first mate
+        # if have first mate
         else:
             damage = c.SHOOT_DAMAGE * int(
                 ((self.max_guns * gun.damage) + int(self.captain.first_mate.swordplay / 2) + self.captain.first_mate.gunnery * 20) / 10)
@@ -1632,6 +1630,13 @@ class Ship:
         # no negative hp
         if ship.now_hp < 0:
             ship.now_hp = 0
+
+        print("target now hp", ship.now_hp)
+
+        my_hps = [s.now_hp for s in self.ROLE.ships]
+
+        print(f"{self.ROLE.name} ships hps:", my_hps)
+
 
         # ret
         result = ship.now_hp <= 0

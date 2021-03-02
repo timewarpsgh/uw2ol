@@ -3,6 +3,8 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import random
+from twisted.internet import reactor, task, defer
+
 
 from role import Role, Ship, Mate, init_one_default_npc, Path
 from hashes.hash_paths import hash_paths
@@ -39,6 +41,7 @@ class NpcManager:
             # in battle
             else:
                 if npc.your_turn_in_battle:
+                    # reactor.callLater(0.8, self._npc_change_and_send, 'all_ships_operate', [name], npc.map)
                     self._npc_change_and_send('all_ships_operate', [name], npc.map)
 
     def _random_move(self, npc):
@@ -105,26 +108,20 @@ class NpcManager:
     def _npc_change_and_send(self, protocol_name, params_list, broadcast_map):
         """change local state and send cmd to clients"""
         npc_name = params_list[-1]
-
         npc = self.get_npc_by_name(npc_name)
-        # local change
-        try:
-            func = getattr(npc, protocol_name)
-            func([params_list[0]])
-        except:
-            print(f'invalid input!!!!!!!! {npc} {params_list} {protocol_name} {func}')
-            return False
 
-        # send to players
-        else:
-            # tell players in same map('sea')
-            npc_map = self.aoi_manager.get_map_by_player(npc)
-            nearby_players = npc_map.get_nearby_players_by_player(npc)
-            for name, conn in nearby_players.items():
-                if name.isdigit():
-                    pass
-                else:
-                    conn.send(protocol_name, params_list)
+        # local change
+        func = getattr(npc, protocol_name)
+        func([params_list[0]])
+
+        # tell players in same map('sea')
+        npc_map = self.aoi_manager.get_map_by_player(npc)
+        nearby_players = npc_map.get_nearby_players_by_player(npc)
+        for name, conn in nearby_players.items():
+            if name.isdigit():
+                pass
+            else:
+                conn.send(protocol_name, params_list)
 
     def _npc_send_to_players(self, protocol_name, params_list, broadcast_map):
         npc_name = params_list[-1]

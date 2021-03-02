@@ -11,7 +11,9 @@ by function
             escape strategy OK
 
             flagship control OK
-            hot keys refactor ON
+            hot keys refactor OK
+
+            hp wrong bug OK
 
 
 

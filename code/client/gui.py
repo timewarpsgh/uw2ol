@@ -463,6 +463,7 @@ class ButtonClickHandler():
             dict = {
                 'View Enemy Ships': self.menu_click_handler.battle.enemy_ships,
                 'All Ships Move': self.menu_click_handler.battle.all_ships_move,
+                'Other Ships Move': self.menu_click_handler.battle.other_ships_move,
                 'Set All Ships Target': self.menu_click_handler.battle.set_target,
                 'Set All Ships Strategy': self.menu_click_handler.battle.set_attack_method,
                 'Set One Ships Strategy': self.menu_click_handler.battle.set_one_ships_strategy,
@@ -1053,8 +1054,14 @@ class MenuClickHandlerForBattle():
         self.game = game
 
     def all_ships_move(self):
-        self.game.change_and_send('all_ships_operate', [1])
-        self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
+        if self.game.my_role.your_turn_in_battle:
+            self.game.change_and_send('all_ships_operate', [])
+            self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
+
+    def other_ships_move(self):
+        if self.game.my_role.your_turn_in_battle:
+            self.game.change_and_send('all_ships_operate', [False])
+            self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
     def enemy_ships(self):
         # get enemy ships

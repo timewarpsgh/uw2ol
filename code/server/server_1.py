@@ -103,7 +103,7 @@ class Echo(Protocol):
         # get packet type and message object
         p = MyProtocol(pck)
         pck_type = p.get_str()
-        print("got pck type:", pck_type)
+        print("got pck type from client:", pck_type)
 
         message_obj = p.get_obj()
         print("message obj: ", message_obj)
@@ -127,8 +127,11 @@ class Echo(Protocol):
         """send packet to nearby players"""
         map = self.factory.aoi_manager.get_map_by_player(self.my_role)
         nearby_players = map.get_nearby_players_by_player(self.my_role)
+
         for name, conn in nearby_players.items():
             if name.isdigit():
+                pass
+            elif name == self.my_role.name:
                 pass
             else:
                 conn.send(protocol_name, content_obj)
@@ -169,7 +172,7 @@ class EchoFactory(Factory):
 
         # npc control loop
         looping_task = task.LoopingCall(self.npc_manager.update)
-        looping_task.start(0.5)
+        looping_task.start(1)
 
         # db
         self.db = Database()

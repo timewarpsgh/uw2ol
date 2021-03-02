@@ -107,6 +107,7 @@ class Database:
 
                     ship1 = Ship('Reagan1', 'Frigate')
                     ship1.crew = 300
+                    ship1.now_hp = 60
                     default_role.ships.append(ship1)
 
                     mate1 = Mate(2)

@@ -32,6 +32,11 @@ def process_packet(self, pck_type, message_obj):
         func = getattr(self.my_role, func_name)
         func(message_obj)
 
+        my_ships_hps = [s.now_hp for s in self.my_role.ships]
+
+
+        print(f"{self.my_role.name}  ships hps:", my_ships_hps)
+
         # send to other clients
         params_list = message_obj
         params_list.append(self.my_role.name)

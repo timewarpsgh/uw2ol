@@ -97,7 +97,7 @@ class Echo(Protocol):
         # get packet type and message object
         p = MyProtocol(pck)
         pck_type = p.get_str()
-        print("got pck type:", pck_type)
+        print("got pck type from server:", pck_type)
         message_obj = p.get_obj()
         print("message obj: ", message_obj)
 
