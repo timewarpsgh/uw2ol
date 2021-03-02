@@ -22,14 +22,12 @@ def process_packet(self, pck_type, message_obj):
         name = list.pop()
         func_name = pck_type
         if name in self.other_roles:
-            try:
-                role = self.other_roles[name]
-                print("trying", func_name, list, "for", name)
-                func = getattr(role, func_name)
-                func(list)
-                print(role, func_name, func, list)
-            except:
-                print(f"failed to process packet from server. {func_name}")
+            role = self.other_roles[name]
+            print("trying", func_name, list, "for", name)
+            func = getattr(role, func_name)
+            func(list)
+            print(role, func_name, func, list)
+
 
 
 # register responses
