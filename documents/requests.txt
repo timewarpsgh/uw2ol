@@ -13,9 +13,16 @@ by function
             flagship
                 show shoot mark OK
                 show engage mark OK
+
+                after flag ship, other ships move later OK
+
+
+                my turn timer less than normal ON
+
+
                 show movement LATER
 
-                shoot mark click bug  OK
+
 
 
 

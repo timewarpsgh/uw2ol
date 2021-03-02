@@ -788,14 +788,14 @@ class Role:
         enemy_ships = self.get_enemy_role().ships
         self.ships[0].target = target_ship_id
         self.ships[0].attack_method = 'engage'
-        self._pick_one_ship_to_attack([0, enemy_ships])
+        self.all_ships_operate([])
 
     def flag_ship_shoot(self, params):
         target_ship_id = params[0]
         enemy_ships = self.get_enemy_role().ships
         self.ships[0].target = target_ship_id
         self.ships[0].attack_method = 'shoot'
-        self._pick_one_ship_to_attack([0, enemy_ships])
+        self.all_ships_operate([])
 
     def all_ships_operate(self, params):
         # include flagship ?
@@ -805,7 +805,7 @@ class Role:
                 include_flagship = False
 
         # if my turn
-        self.set_all_ships_attack_method([1])
+        self.set_all_ships_attack_method([0])
         print("doing all_ships_operate")
 
         if self.your_turn_in_battle:
@@ -901,7 +901,7 @@ class Role:
         # not won
         if result == 'next_ship':
             # if self lost all crew:
-            if self.ships[0].crew <= 0:
+            if not self.ships or self.ships[0].crew <= 0:
                 # lose all my ships
                 enemy_ships.extend(self.ships)
                 self.ships.clear()

@@ -1,5 +1,7 @@
 import pygame as pg
 from image_processor import get_image
+from twisted.internet import reactor, threads, defer
+
 
 # add relative directory to python_path
 import sys, os
@@ -197,9 +199,13 @@ class EngageMark(pg.sprite.Sprite):
     def clicked(self):
         ship_id = self.ship_id
         self.game.change_and_send('flag_ship_engage', [ship_id])
-        self.game.change_and_send('all_ships_operate', [False])
+        # reactor.callLater(10, self._others_operate)
         for s in self.game.mark_sprites:
             s.kill()
+
+    # def _others_operate(self):
+    #     if self.game.my_role.is_in_battle():
+    #         self.game.change_and_send('all_ships_operate', [False])
 
 class ShootMark(pg.sprite.Sprite):
     def __init__(self, game, ship_id, x, y):
@@ -226,9 +232,13 @@ class ShootMark(pg.sprite.Sprite):
     def clicked(self):
         ship_id = self.ship_id
         self.game.change_and_send('flag_ship_shoot', [ship_id])
-        self.game.change_and_send('all_ships_operate', [False])
+        # reactor.callLater(10, self._others_operate)
         for s in self.game.mark_sprites:
             s.kill()
+
+    # def _others_operate(self):
+    #     if self.game.my_role.is_in_battle():
+    #         self.game.change_and_send('all_ships_operate', [False])
 
 if __name__ == '__main__':
     ex = Explosion()
