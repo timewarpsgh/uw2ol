@@ -10,10 +10,14 @@ by function
 
             escape strategy OK
 
-            flagship control OK
-            hot keys refactor OK
+            flagship
+                show shoot mark OK
+                show engage mark OK
+                show movement sign
 
-            hp wrong bug OK
+
+
+
 
 
 

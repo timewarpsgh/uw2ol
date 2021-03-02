@@ -34,7 +34,7 @@ from hashes.hash_cannons import hash_cannons
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
-from sprites import Explosion, CannonBall, EngageSign, ShootDamageNumber
+from sprites import Explosion, CannonBall, EngageSign, ShootDamageNumber, EngageMark, ShootMark
 
 class Role:
     """
@@ -711,6 +711,7 @@ class Role:
 
         flagship = self.ships[0]
         if flagship.steps_left >= 1:
+            # try to move
             if movement == 'continue':
                 if flagship._can_move_continue():
                     flagship.move_continue()
@@ -721,6 +722,78 @@ class Role:
                 if flagship._can_move_to_right():
                     flagship.move_to_right()
 
+            # show marks
+            self._show_shoot_mark()
+            self._show_engage_mark()
+
+    def _show_shoot_mark(self):
+        if self.is_in_client_and_self():
+            game = self.GAME
+            # clear prev marks
+            if game.mark_sprites:
+                for s in game.mark_sprites:
+                    s.kill()
+
+            # get start pos
+            flag_ship = self.ships[0]
+            x = game.screen_surface_rect.centerx
+            y = game.screen_surface_rect.centery
+
+            # get ships in range
+            ship_ids_in_shoot_range = []
+            for id, ship in enumerate(self.get_enemy_role().ships):
+                if flag_ship._is_target_ship_in_distance_range(ship):
+                    ship_ids_in_shoot_range.append(id)
+
+            # draw mark for each ship
+            for id in ship_ids_in_shoot_range:
+                d_x = (self.get_enemy_role().ships[id].x - flag_ship.x) * c.BATTLE_TILE_SIZE
+                d_y = (self.get_enemy_role().ships[id].y - flag_ship.y) * c.BATTLE_TILE_SIZE
+
+                # draw
+                shoot_mark = ShootMark(game, id, x + d_x, y + d_y)
+                game.mark_sprites.add(shoot_mark)
+
+
+    def _show_engage_mark(self):
+        if self.is_in_client_and_self():
+            game = self.GAME
+
+            # get start pos
+            flag_ship = self.ships[0]
+            x = game.screen_surface_rect.centerx
+            y = game.screen_surface_rect.centery
+
+            # get ships in range
+            ship_ids_in_engage_range = []
+            for id, ship in enumerate(self.get_enemy_role().ships):
+                if flag_ship._is_target_ship_in_engage_range(ship):
+                    ship_ids_in_engage_range.append(id)
+
+            # draw mark for each ship
+            for id in ship_ids_in_engage_range:
+                d_x = (self.get_enemy_role().ships[id].x - flag_ship.x) * c.BATTLE_TILE_SIZE
+                d_y = (self.get_enemy_role().ships[id].y - flag_ship.y) * c.BATTLE_TILE_SIZE
+
+                # kill shoot mark on same ship
+                for s in game.mark_sprites:
+                    if s.ship_id == id:
+                        s.kill()
+
+                engage_mark = EngageMark(game, id, x + d_x + 8, y + d_y - 8)
+                game.mark_sprites.add(engage_mark)
+
+    def flag_ship_engage(self, params):
+        target_ship_id = params[0]
+        target_ship = self.get_enemy_role().ships[target_ship_id]
+        self.ships[0].engage(target_ship)
+
+    def flag_ship_shoot(self, params):
+        target_ship_id = params[0]
+        target_ship = self.get_enemy_role().ships[target_ship_id]
+        steps_left = 1
+        self.ships[0].try_to_shoot(target_ship, steps_left)
+
     def all_ships_operate(self, params):
         # include flagship ?
         include_flagship = True
@@ -729,7 +802,7 @@ class Role:
                 include_flagship = False
 
         # if my turn
-        self.set_all_ships_attack_method([0])
+        self.set_all_ships_attack_method([1])
         print("doing all_ships_operate")
 
         if self.your_turn_in_battle:
@@ -1433,13 +1506,16 @@ class Ship:
         # return ture
         return True
 
-    def try_to_shoot(self, ship):
+    def try_to_shoot(self, ship, *steps_left):
         """returns a deferred"""
         # inits a deffered
         deferred = defer.Deferred()
 
         # init max steps
         self.steps_left = self._calc_max_steps()
+
+        if steps_left:
+            self.steps_left = steps_left
 
         # check
         if ship.crew > 0 and self.crew > 0:
@@ -1864,7 +1940,7 @@ class Ship:
 
     def engage_or_move_closer(self, ship, deferred):
         # if in range
-        if abs(self.x - ship.x) <= 1 and abs(self.y - ship.y) <= 1:
+        if self._is_target_ship_in_engage_range(ship):
             # engage
             result = self.engage(ship)
 
@@ -1883,6 +1959,12 @@ class Ship:
                 # no more steps
                 else:
                     deferred.callback(False)
+
+    def _is_target_ship_in_engage_range(self, ship):
+        if abs(self.x - ship.x) <= c.ENGAGE_RANGE and abs(self.y - ship.y) <= c.ENGAGE_RANGE:
+            return True
+        else:
+            return False
 
     def _show_explosion_anim(self, ship):
         if not self.ROLE.is_in_server():

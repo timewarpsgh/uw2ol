@@ -19,6 +19,7 @@ def draw(self):
     if self.my_role:
         draw_logged_in_state(self)
         self.all_sprites.update()
+        self.mark_sprites.update()
     else:
         draw_not_logged_in_state(self)
 

@@ -172,6 +172,63 @@ class ShootDamageNumber(pg.sprite.Sprite):
         self.game.screen_surface.blit(self.image, self.rect)
 
 
+class EngageMark(pg.sprite.Sprite):
+    def __init__(self, game, ship_id, x, y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = game.images['engage_sign']
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+        self.ship_id = ship_id
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        pass
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
+    def clicked(self):
+        ship_id = self.ship_id
+        self.game.change_and_send('flag_ship_engage', [ship_id])
+        self.game.change_and_send('all_ships_operate', [False])
+        for s in self.game.mark_sprites:
+            s.kill()
+
+class ShootMark(pg.sprite.Sprite):
+    def __init__(self, game, ship_id, x, y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = game.images['shoot_mark']
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+        self.ship_id = ship_id
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        pass
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
+    def clicked(self):
+        ship_id = self.ship_id
+        self.game.change_and_send('flag_ship_shoot', [ship_id])
+        self.game.change_and_send('all_ships_operate', [False])
+        for s in self.game.mark_sprites:
+            s.kill()
 
 if __name__ == '__main__':
     ex = Explosion()

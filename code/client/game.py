@@ -94,6 +94,8 @@ class Game():
 
         # sprite group
         self.all_sprites = pygame.sprite.Group()
+        self.mark_sprites = pygame.sprite.Group()
+
 
     def _load_assets(self):
         # maps
@@ -147,6 +149,9 @@ class Game():
 
         self.images['engage_sign_1'] = pygame.image.load("../../assets/engage_sign_1.png").convert_alpha()
         self.images['engage_sign_1'] = pygame.transform.scale(self.images['engage_sign_1'], (26, 26))
+
+        # shoot mark
+        self.images['shoot_mark'] = load_image("../../assets/shoot_mark.png")
 
         # ships
         file_names = os.listdir("../../assets/images/ships")

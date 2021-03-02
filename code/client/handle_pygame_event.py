@@ -56,8 +56,14 @@ def key_down(self, event):
 def mouse_button_down(self, event):
     # left button
     if event.button == 1:
-        if self.other_roles_rects:
-            if self.my_role.map == 'sea' or self.my_role.map.isdigit():
+        # in battle
+        if self.my_role.is_in_battle():
+            for s in self.mark_sprites:
+                if s.rect.collidepoint(event.pos):
+                    s.clicked()
+        # not in battle
+        else:
+            if self.other_roles_rects:
                 # set target
                 for name, rect in self.other_roles_rects.items():
                     if rect.collidepoint(event.pos):
