@@ -8,15 +8,13 @@ by function
         in battle movement ON
 
             delete unused images OK
-
             reorganise images OK
-
             refactor constants OK
-
             put Point in another folder OK
+            refactor game OK
 
+            refactor client OK
 
-            refactor game ON
 
 
 
