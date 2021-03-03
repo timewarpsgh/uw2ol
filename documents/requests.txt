@@ -16,6 +16,7 @@ by function
 
                 when my turn, show marks at once OK
 
+                when no more steps, others move OK
 
 
                 show movement LATER

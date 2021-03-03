@@ -726,6 +726,9 @@ class Role:
             self._show_shoot_mark()
             self._show_engage_mark()
 
+        else:
+            self.all_ships_operate([False])
+
     def _clear_marks(self):
         game = self.GAME
         if game.mark_sprites:
