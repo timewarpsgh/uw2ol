@@ -28,8 +28,6 @@ def process_packet(self, pck_type, message_obj):
             func(list)
             print(role, func_name, func, list)
 
-
-
 # register responses
 def register_ok(self, message_obj):
     self.login_state_text = 'Register OK. Please Login.'
@@ -75,9 +73,6 @@ def your_role_data_and_others(self, message_obj):
     for role in other_roles:
         self.other_roles[role.name] = role
     print(other_roles)
-
-    # escape
-    # handle_pygame_event.escape(self, '')
 
 # someone logged in
 def new_role(self, message_obj):
@@ -171,6 +166,7 @@ def target_too_far(self, message_obj):
         make_message_box("target too far!")
 
 def npc_info(self, message_obj):
+    """npc fleet positions"""
     dic = message_obj
 
     # get 3 lists
