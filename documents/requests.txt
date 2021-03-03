@@ -14,10 +14,8 @@ by function
                 show shoot mark OK
                 show engage mark OK
 
-                after flag ship, other ships move later OK
+                when my turn, show marks at once OK
 
-
-                my turn timer less than normal OK
 
 
                 show movement LATER

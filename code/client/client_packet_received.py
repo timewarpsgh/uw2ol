@@ -148,14 +148,19 @@ def roles_in_battle_map(self, message_obj):
     self.battle_timer.start(1)
 
 def _check_battle_timer(self):
-    if self.my_role.map == 'sea':
+    if self.my_role.map == 'sea' and self.battle_timer:
         self.battle_timer.stop()
     else:
         if self.my_role.your_turn_in_battle:
+            # show marks at the beginning of my turn
+            if self.think_time_in_battle == c.THINK_TIME_IN_BATTLE:
+                self.my_role._show_shoot_mark()
+                self.my_role._show_engage_mark()
+
+            # auto operate when timer <= 0
             self.think_time_in_battle -= 1
-            print(self.think_time_in_battle)
             if self.think_time_in_battle <= 0:
-                self.change_and_send('all_ships_operate', [])
+                self.change_and_send('all_ships_operate', [False])
                 self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
 def new_roles_from_battle(self, message_obj):

@@ -200,8 +200,7 @@ class EngageMark(pg.sprite.Sprite):
         ship_id = self.ship_id
         self.game.change_and_send('flag_ship_engage', [ship_id])
         self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
-        for s in self.game.mark_sprites:
-            s.kill()
+        self.game.my_role._clear_marks()
 
 
 class ShootMark(pg.sprite.Sprite):
@@ -230,9 +229,7 @@ class ShootMark(pg.sprite.Sprite):
         ship_id = self.ship_id
         self.game.change_and_send('flag_ship_shoot', [ship_id])
         self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
-        for s in self.game.mark_sprites:
-            s.kill()
-
+        self.game.my_role._clear_marks()
 
 if __name__ == '__main__':
     ex = Explosion()

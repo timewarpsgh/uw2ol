@@ -726,13 +726,17 @@ class Role:
             self._show_shoot_mark()
             self._show_engage_mark()
 
+    def _clear_marks(self):
+        game = self.GAME
+        if game.mark_sprites:
+            for s in game.mark_sprites:
+                s.kill()
+
     def _show_shoot_mark(self):
         if self.is_in_client_and_self():
             game = self.GAME
-            # clear prev marks
-            if game.mark_sprites:
-                for s in game.mark_sprites:
-                    s.kill()
+
+            self._clear_marks()
 
             # get start pos
             flag_ship = self.ships[0]
@@ -803,6 +807,10 @@ class Role:
         if len(params) > 0:
             if params[0] == False:
                 include_flagship = False
+
+        # clear marks
+        if self.is_in_client_and_self():
+            self._clear_marks()
 
         # if my turn
         # self.set_all_ships_attack_method([0])
