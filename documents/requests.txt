@@ -11,19 +11,11 @@ by function
             escape strategy OK
 
             flagship
-                show shoot mark OK
-                show engage mark OK
-                when my turn, show marks at once OK
-                when no more steps, others move OK
+                delete unused images OK
 
 
-                show movement mark OK
-                shoot mark too big OK
-                no move mark OK
 
-                my flagship no running OK
-
-                fleet img change OK
+                reorganise images ON
 
 
 

@@ -107,7 +107,6 @@ class Game():
         # self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
 
                 # battle
-            # self.images['sea'] = pygame.image.load("../../assets/sea.png").convert_alpha()
         self.images['battle'] = pygame.image.load("../../assets/battle.png").convert_alpha()
 
         # login backgound
@@ -131,14 +130,14 @@ class Game():
         self.images['hud_right'] = pygame.transform.scale(self.images['hud_right'], (c.HUD_WIDTH, c.HUD_HIGHT))
 
         # sprites
-        self.images['ship_at_sea'] = pygame.image.load("../../assets/ship_at_sea.png").convert_alpha()
-        self.images['person_in_port'] = pygame.image.load("../../assets/person_in_port.png").convert_alpha()
-
         self.images['ship-tileset'] = pygame.image.load("../../assets/ship-tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.image.load("../../assets/person_tileset.png").convert_alpha()
         self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
 
         self.images['explosion'] = load_image("../../assets/explosion.png")
+
+        self.images['person_in_port'] = load_image("../../assets/person_in_port.png")
+        self.images['ship_at_sea'] = load_image("../../assets/ship_at_sea.png")
 
         # cannon and engage_sign
         self.images['cannon'] = pygame.image.load("../../assets/cannon.png").convert_alpha()
