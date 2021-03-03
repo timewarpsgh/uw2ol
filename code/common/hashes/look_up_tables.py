@@ -1,3 +1,11 @@
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"{self.x} {self.y}"
+
 
 id_2_building_type = {
     1: 'market',
@@ -162,16 +170,6 @@ now_direction_to_next_right_move = {
     'se': 'down',
 }
 
-
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def __str__(self):
-        return f"{self.x} {self.y}"
-
-
 ship_direction_2_vector = {
     'up': [Point(0, 0), Point(0, 1)],
     'down': [Point(0, 0), Point(0, -1)],
@@ -226,5 +224,76 @@ ship_direction_2_next_pos_delta = {
         'continue': [1, 1],
         'left': [1, 0],
         'right': [0, 1],
+    },
+}
+
+now_direct_2_alternative_directs = {
+    'up': ['ne', 'nw'],
+    'down': ['se', 'sw'],
+    'right': ['ne', 'se'],
+    'left': ['nw', 'sw'],
+    'ne': ['up', 'right'],
+    'nw': ['up', 'left'],
+    'se': ['right', 'down'],
+    'sw': ['down', 'left'],
+}
+
+direct_2_dx_and_dy = {
+    'up': [0, -1],
+    'down': [0, 1],
+    'right': [1, 0],
+    'left': [-1, 0],
+    'ne': [1, -1],
+    'nw': [-1, -1],
+    'se': [1, 1],
+    'sw': [-1, 1],
+}
+
+direct_2_sea_move_collision_tiles = {
+    'up': [[-1, 0], [-1, 1]],
+    'down': [[2, 0], [2, 1]],
+    'right': [[0, 2], [1, 2]],
+    'left': [[0, -1], [1, -1]],
+    'ne': [[-1, 1], [-1, 2], [0, 2]],
+    'nw': [[0, -1], [-1, -1], [-1, 0]],
+    'se': [[1, 2], [2, 2], [2, 1]],
+    'sw': [[2, 0], [2, -1], [1, -1]],
+}
+
+done_basic_movements_2_new_and_delete_grids = {
+    'up': {
+        'new':['-1', -1, 1],
+        'delete':['2', -1, 1],
+    },
+    'down': {
+        'new':['1', -1, 1],
+        'delete':['-2', -1, 1],
+    },
+    'right': {
+        'new':[1, '-1', '1'],
+        'delete':[-2, '-1', '1'],
+    },
+    'left': {
+        'new':[-1, '-1', '1'],
+        'delete':[2, '-1', '1'],
+    },
+}
+
+done_additional_movements_2_new_and_delete_grids = {
+    'ne': {
+        'new':[['-1', -1], 1, 1, '1', '1'],
+        'delete':[-2, '1', '1', 1, 1],
+    },
+    'nw': {
+        'new':[[-1, '1'], '-1', '-1', 1, 1],
+        'delete':['2', 1, 1, '-1', '-1'],
+    },
+    'se': {
+        'new':[[-1, '1'], 1, 1, '-1', '-1'],
+        'delete':[-2, '-1', '-1', 1, 1],
+    },
+    'sw': {
+        'new':[[-1, '-1'], '1', '1', 1, 1],
+        'delete':['-2', 1, 1, '1', '1'],
     },
 }

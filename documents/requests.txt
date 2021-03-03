@@ -11,6 +11,10 @@ by function
 
             reorganise images OK
 
+            refactor constants OK
+
+
+
             delete stuff in battle menu ON
 
             exit battle, deletes marks ON

@@ -24,7 +24,7 @@ from port_npc import Dog
 from AOI_manager import PortMap, SeaMap
 
 from gui import SelectionListWindow, ButtonClickHandler
-from hashes.look_up_tables import id_2_building_type
+from hashes.look_up_tables import id_2_building_type, now_direct_2_alternative_directs
 from gui import mate_speak as m_speak
 from image_processor import load_image, load_all_images
 from sprites import Explosion
@@ -174,7 +174,7 @@ class Game():
                 if my_role.can_move(my_role.direction):
                     do_move = True
                 else:
-                    for alt_direction in c.ALTERNATIVE_DIRECTIONS[my_role.direction]:
+                    for alt_direction in now_direct_2_alternative_directs[my_role.direction]:
                         if my_role.can_move(alt_direction):
                             my_role.direction = alt_direction
                             do_move = True
@@ -213,7 +213,7 @@ class Game():
                     if role.can_move(role.direction):
                         do_move = True
                     else:
-                        for alt_direction in c.ALTERNATIVE_DIRECTIONS[role.direction]:
+                        for alt_direction in now_direct_2_alternative_directs[role.direction]:
                             if role.can_move(alt_direction):
                                 role.direction = alt_direction
                                 do_move = True

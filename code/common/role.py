@@ -25,7 +25,8 @@ from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
 from hashes.look_up_tables import now_direction_to_next_left_move, now_direction_to_next_right_move
-from hashes.look_up_tables import ship_direction_2_vector, ship_direction_2_next_pos_delta
+from hashes.look_up_tables import ship_direction_2_vector, ship_direction_2_next_pos_delta, \
+    direct_2_dx_and_dy, direct_2_sea_move_collision_tiles
 from hashes.hash_cannons import hash_cannons
 
 
@@ -359,8 +360,8 @@ class Role:
         direction = params[0]
 
         # dx and dy
-        dx = c.MOVE_DX_DY[direction][0]
-        dy = c.MOVE_DX_DY[direction][1]
+        dx = direct_2_dx_and_dy[direction][0]
+        dy = direct_2_dx_and_dy[direction][1]
         self.x += dx * c.PIXELS_COVERED_EACH_MOVE
         self.y += dy * c.PIXELS_COVERED_EACH_MOVE
         self.direction = direction
@@ -424,7 +425,7 @@ class Role:
             y = int(self.x / c.PIXELS_COVERED_EACH_MOVE)
             x = int(self.y / c.PIXELS_COVERED_EACH_MOVE)
 
-            tile_list = c.SEA_MOVE_COLLISION_TILES[direction]
+            tile_list = direct_2_sea_move_collision_tiles[direction]
             for tile in tile_list:
                 dx = tile[0]
                 dy = tile[1]

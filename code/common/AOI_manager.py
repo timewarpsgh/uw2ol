@@ -9,7 +9,9 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 import constants as c
-from hashes.look_up_tables import nation_2_nation_id, capital_map_id_2_nation
+from hashes.look_up_tables import nation_2_nation_id, capital_map_id_2_nation, \
+    done_additional_movements_2_new_and_delete_grids, \
+    done_basic_movements_2_new_and_delete_grids
 
 
 class Grid:
@@ -125,9 +127,9 @@ class Map:
 
     def get_new_and_delete_grids_after_movement(self, new_grid_id, direction):
         # basic 4 directions
-        if direction in c.NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS:
+        if direction in done_basic_movements_2_new_and_delete_grids:
             # new
-            new_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS[direction]['new']
+            new_deltas = done_basic_movements_2_new_and_delete_grids[direction]['new']
             for index, delta in enumerate(new_deltas):
                 if isinstance(delta, str):
                     new_deltas[index] = int(delta) * self.x_grid_count
@@ -140,7 +142,7 @@ class Map:
             new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
 
             # delete
-            delete_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_BASIC_MOVEMENTS[direction]['delete']
+            delete_deltas = done_basic_movements_2_new_and_delete_grids[direction]['delete']
             for index, delta in enumerate(delete_deltas):
                 if isinstance(delta, str):
                     delete_deltas[index] = int(delta) * self.x_grid_count
@@ -156,9 +158,9 @@ class Map:
             return new_grids, delete_grids
 
         # additional 4 directions
-        elif direction in c.NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS:
+        elif direction in done_additional_movements_2_new_and_delete_grids:
             # new
-            new_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS[direction]['new']
+            new_deltas = done_additional_movements_2_new_and_delete_grids[direction]['new']
             for index, delta in enumerate(new_deltas):
                 if index == 0:
                     list = new_deltas[index]
@@ -180,7 +182,7 @@ class Map:
             new_grids = self._possible_grid_ids_2_real_grids(possible_new_grid_ids)
 
             # delete
-            delete_deltas = c.NEW_AND_DELETE_GRIDS_AFTER_4_ADDITIONAL_MOVEMENTS[direction]['delete']
+            delete_deltas = done_additional_movements_2_new_and_delete_grids[direction]['delete']
             for index, delta in enumerate(delete_deltas):
                 if isinstance(delta, str):
                     delete_deltas[index] = int(delta) * self.x_grid_count
@@ -191,7 +193,8 @@ class Map:
             delete_grid_4 = delete_grid_3 + delete_deltas[3]
             delete_grid_5 = delete_grid_4 + delete_deltas[4]
 
-            possible_delete_grid_ids = [delete_grid_1, delete_grid_2, delete_grid_3, delete_grid_4, delete_grid_5]
+            possible_delete_grid_ids = [delete_grid_1, delete_grid_2,
+                                        delete_grid_3, delete_grid_4, delete_grid_5]
             delete_grids = self._possible_grid_ids_2_real_grids(possible_delete_grid_ids)
 
             # ret
