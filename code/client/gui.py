@@ -1056,12 +1056,10 @@ class MenuClickHandlerForBattle():
     def all_ships_move(self):
         if self.game.my_role.your_turn_in_battle:
             self.game.change_and_send('all_ships_operate', [])
-            self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
     def other_ships_move(self):
         if self.game.my_role.your_turn_in_battle:
             self.game.change_and_send('all_ships_operate', [False])
-            self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
     def enemy_ships(self):
         # get enemy ships

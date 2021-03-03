@@ -17,7 +17,8 @@ by function
                 when no more steps, others move OK
 
 
-                show movement mark ON
+                show movement mark OK
+                shoot mark too big ON
 
 
 

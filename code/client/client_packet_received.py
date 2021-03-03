@@ -160,7 +160,6 @@ def _check_battle_timer(self):
             self.think_time_in_battle -= 1
             if self.think_time_in_battle <= 0:
                 self.change_and_send('all_ships_operate', [False])
-                self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
 def new_roles_from_battle(self, message_obj):
     new_roles_from_battle = message_obj
