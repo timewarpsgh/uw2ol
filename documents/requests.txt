@@ -16,10 +16,9 @@ by function
             refactor client OK
 
             refactor aoi manager OK
+
+
             refactor role ON
-
-
-
 
             delete stuff in battle menu ON
 

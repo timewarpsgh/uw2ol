@@ -111,9 +111,6 @@ class Role:
         self.main_events_ids = list(range(1, len(events_dict) + 1))
         self.main_events_ids = list(reversed(self.main_events_ids))
 
-        # conn
-        self.conn = None
-
         # set at client, when client first gets role from server(when got packet 'your_role_data')
         self.in_client = False
 
