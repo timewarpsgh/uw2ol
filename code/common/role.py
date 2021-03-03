@@ -763,7 +763,7 @@ class Role:
                 d_y = (self.get_enemy_role().ships[id].y - flag_ship.y) * c.BATTLE_TILE_SIZE
 
                 # draw
-                shoot_mark = ShootMark(game, id, x + d_x, y + d_y)
+                shoot_mark = ShootMark(game, id, x + d_x + 4, y + d_y + 4)
                 game.mark_sprites.add(shoot_mark)
 
 
@@ -792,7 +792,7 @@ class Role:
                     if s.ship_id == id:
                         s.kill()
 
-                engage_mark = EngageMark(game, id, x + d_x, y + d_y)
+                engage_mark = EngageMark(game, id, x + d_x + 4, y + d_y + 4)
                 game.mark_sprites.add(engage_mark)
 
     def _show_move_mark(self):

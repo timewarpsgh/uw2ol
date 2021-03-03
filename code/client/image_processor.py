@@ -56,4 +56,4 @@ def load_all_gfx(directory, colorkey=(255, 0, 255), accept=('.png', '.jpg', '.bm
 
 
 if __name__ == '__main__':
-    make_white_bg_transparent('move_mark.png')
+    make_white_bg_transparent('shoot_mark.png')
