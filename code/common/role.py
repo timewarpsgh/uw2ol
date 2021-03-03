@@ -818,8 +818,12 @@ class Role:
                 d_x = dict[direct][0] * c.BATTLE_TILE_SIZE
                 d_y = dict[direct][1] * c.BATTLE_TILE_SIZE
 
-                move_mark = MoveMark(game, direct, x + d_x, y + d_y)
-                game.mark_sprites.add(move_mark)
+                if flag_ship.steps_left < 1:
+                    move_mark = MoveMark(game, 'no_move', x + d_x, y + d_y)
+                    game.mark_sprites.add(move_mark)
+                else:
+                    move_mark = MoveMark(game, direct, x + d_x, y + d_y)
+                    game.mark_sprites.add(move_mark)
 
     def flag_ship_engage(self, params):
         target_ship_id = params[0]

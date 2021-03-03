@@ -153,6 +153,7 @@ class Game():
         # shoot mark
         self.images['shoot_mark'] = load_image("../../assets/shoot_mark.png")
         self.images['move_mark'] = load_image("../../assets/move_mark.png")
+        self.images['no_move_mark'] = load_image("../../assets/no_move_mark.png")
 
         # ships
         file_names = os.listdir("../../assets/images/ships")

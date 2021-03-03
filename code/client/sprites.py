@@ -237,7 +237,10 @@ class MoveMark(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self)
         self.game = game
 
-        self.image = game.images['move_mark']
+        if direct == 'no_move':
+            self.image = game.images['no_move_mark']
+        else:
+            self.image = game.images['move_mark']
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
