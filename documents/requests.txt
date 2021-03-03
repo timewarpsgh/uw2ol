@@ -15,7 +15,8 @@ by function
 
             refactor client OK
 
-            refactor client pck received OK
+            refactor aoi manager OK
+            refactor role ON
 
 
 
