@@ -12,7 +12,6 @@ from role import Role, Ship, Mate
 from map_maker import MapMaker
 from translator import Translator
 
-
 # code relocated to these files
 import draw
 import gui
@@ -28,10 +27,6 @@ from hashes.look_up_tables import id_2_building_type, now_direct_2_alternative_d
 from gui import mate_speak as m_speak
 from image_processor import load_image, load_all_images
 from sprites import Explosion
-
-
-def test():
-    print('testing')
 
 
 class Game():

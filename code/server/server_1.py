@@ -36,9 +36,7 @@ class Echo(Protocol):
 
     def connectionLost(self, reason):
         print("connection lost!")
-
         if self.my_role:
-
             # get current map
             my_map = str(self.my_role.map)
 

@@ -30,13 +30,14 @@ from hashes.look_up_tables import ship_direction_2_vector, ship_direction_2_next
 from hashes.hash_cannons import hash_cannons
 
 
-
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
 from sprites import Explosion, CannonBall, EngageSign, ShootDamageNumber, EngageMark, ShootMark
 from sprites import MoveMark
+from helpers import Point
+
 
 class Role:
     """
@@ -2478,14 +2479,6 @@ class Gun:
         self.price = dic['price']
         self.damage = dic['damage']
 
-
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def __str__(self):
-        return f"{self.x} {self.y}"
 
 def init_one_default_npc(name):
     # now role

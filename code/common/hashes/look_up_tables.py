@@ -1,10 +1,8 @@
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
+# add relative directory to python_path
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-    def __str__(self):
-        return f"{self.x} {self.y}"
+from helpers import Point
 
 
 id_2_building_type = {

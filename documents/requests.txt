@@ -13,6 +13,11 @@ by function
 
             refactor constants OK
 
+            put Point in another folder OK
+
+
+            refactor game ON
+
 
 
             delete stuff in battle menu ON
