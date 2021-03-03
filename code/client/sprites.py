@@ -231,5 +231,30 @@ class ShootMark(pg.sprite.Sprite):
         self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
         self.game.my_role._clear_marks()
 
+
+class MoveMark(pg.sprite.Sprite):
+    def __init__(self, game, direct, x, y):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = game.images['move_mark']
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        self.direct = direct
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        pass
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
+    def clicked(self):
+        self.game.change_and_send('flagship_move', [self.direct])
+
 if __name__ == '__main__':
     ex = Explosion()

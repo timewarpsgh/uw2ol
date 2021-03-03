@@ -13,13 +13,12 @@ by function
             flagship
                 show shoot mark OK
                 show engage mark OK
-
                 when my turn, show marks at once OK
-
                 when no more steps, others move OK
 
 
-                show movement LATER
+                show movement mark ON
+
 
 
 

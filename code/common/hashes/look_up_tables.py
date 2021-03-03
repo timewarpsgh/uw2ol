@@ -183,3 +183,48 @@ ship_direction_2_vector = {
     'se': [Point(0, 0), Point(1, -1)]
 }
 
+ship_direction_2_next_pos_delta = {
+    # basic 4
+    'up': {
+        'continue': [0, -1],
+        'left': [-1, -1],
+        'right': [1, -1],
+    },
+    'down': {
+        'continue': [0, 1],
+        'left': [1, 1],
+        'right': [-1, 1],
+    },
+    'left': {
+        'continue': [-1, 0],
+        'left': [-1, 1],
+        'right': [-1, -1],
+    },
+    'right': {
+        'continue': [1, 0],
+        'left': [1, -1],
+        'right': [1, 1],
+    },
+
+    # more 4
+    'ne': {
+        'continue': [1, -1],
+        'left': [0, -1],
+        'right': [1, 0],
+    },
+    'sw': {
+        'continue': [-1, 1],
+        'left': [0, 1],
+        'right': [-1, 0],
+    },
+    'nw': {
+        'continue': [-1, -1],
+        'left': [-1, 0],
+        'right': [0, -1],
+    },
+    'se': {
+        'continue': [1, 1],
+        'left': [1, 0],
+        'right': [0, 1],
+    },
+}

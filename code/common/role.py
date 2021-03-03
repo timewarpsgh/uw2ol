@@ -25,7 +25,7 @@ from hashes.hash_maids import hash_maids
 from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp_needed_to_next_lv
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
 from hashes.look_up_tables import now_direction_to_next_left_move, now_direction_to_next_right_move
-from hashes.look_up_tables import ship_direction_2_vector
+from hashes.look_up_tables import ship_direction_2_vector, ship_direction_2_next_pos_delta
 from hashes.hash_cannons import hash_cannons
 
 
@@ -35,6 +35,7 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
 
 from sprites import Explosion, CannonBall, EngageSign, ShootDamageNumber, EngageMark, ShootMark
+from sprites import MoveMark
 
 class Role:
     """
@@ -723,11 +724,15 @@ class Role:
                     flagship.move_to_right()
 
             # show marks
-            self._show_shoot_mark()
-            self._show_engage_mark()
+            self._show_marks()
 
         else:
             self.all_ships_operate([False])
+
+    def _show_marks(self):
+        self._show_shoot_mark()
+        self._show_engage_mark()
+        self._show_move_mark()
 
     def _clear_marks(self):
         game = self.GAME
@@ -790,6 +795,32 @@ class Role:
                 engage_mark = EngageMark(game, id, x + d_x, y + d_y)
                 game.mark_sprites.add(engage_mark)
 
+    def _show_move_mark(self):
+        if self.is_in_client_and_self():
+            game = self.GAME
+
+            # get start pos
+            flag_ship = self.ships[0]
+            x = game.screen_surface_rect.centerx
+            y = game.screen_surface_rect.centery
+
+            # get ships in range
+            available_directs = []
+            if flag_ship._can_move_continue():
+                available_directs.append('continue')
+            if flag_ship._can_move_to_left():
+                available_directs.append('left')
+            if flag_ship._can_move_to_right():
+                available_directs.append('right')
+
+            dict = ship_direction_2_next_pos_delta[flag_ship.direction]
+            for direct in available_directs:
+                d_x = dict[direct][0] * c.BATTLE_TILE_SIZE
+                d_y = dict[direct][1] * c.BATTLE_TILE_SIZE
+
+                move_mark = MoveMark(game, direct, x + d_x, y + d_y)
+                game.mark_sprites.add(move_mark)
+
     def flag_ship_engage(self, params):
         target_ship_id = params[0]
         enemy_ships = self.get_enemy_role().ships
@@ -814,6 +845,7 @@ class Role:
         # clear marks
         if self.is_in_client_and_self():
             self._clear_marks()
+            self.GAME.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
         # if my turn
         # self.set_all_ships_attack_method([0])

@@ -154,8 +154,7 @@ def _check_battle_timer(self):
         if self.my_role.your_turn_in_battle:
             # show marks at the beginning of my turn
             if self.think_time_in_battle == c.THINK_TIME_IN_BATTLE:
-                self.my_role._show_shoot_mark()
-                self.my_role._show_engage_mark()
+                self.my_role._show_marks()
 
             # auto operate when timer <= 0
             self.think_time_in_battle -= 1
