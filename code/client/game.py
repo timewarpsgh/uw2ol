@@ -153,74 +153,79 @@ class Game():
         self.ship_frame *= -1
 
     def update_roles_positions(self):
+        self._update_my_role_position()
+        self._update_other_roles_positions()
+
+    def _update_my_role_position(self):
         if self.my_role:
             # my role
             my_role = self.my_role
             if my_role.moving:
-                # can i move
-                do_move = False
-                if my_role.can_move(my_role.direction):
-                    do_move = True
-                else:
-                    for alt_direction in now_direct_2_alternative_directs[my_role.direction]:
-                        if my_role.can_move(alt_direction):
-                            my_role.direction = alt_direction
-                            do_move = True
-                            continue
+                if self.__can_i_move():
+                    self.__i_do_move()
 
-                # do move
-                if do_move:
-                    my_role.speed_counter += 1
-                    if my_role.speed_counter == my_role.speed_counter_max:
-                        my_role.move([my_role.direction])
+    def __can_i_move(self):
+        can_move = False
+        # move in now direct
+        my_role = self.my_role
+        if my_role.can_move(my_role.direction):
+            can_move = True
+        # alternative directs?
+        else:
+            for alt_direction in now_direct_2_alternative_directs[my_role.direction]:
+                if my_role.can_move(alt_direction):
+                    my_role.direction = alt_direction
+                    can_move = True
+                    continue
+        return can_move
 
-                        # grid change?
-                        x_tile_pos, y_tile_pos = my_role.get_x_and_y_tile_position()
+    def __i_do_move(self):
+        my_role = self.my_role
+        my_role.speed_counter += 1
+        if my_role.speed_counter == my_role.speed_counter_max:
+            my_role.move([my_role.direction])
 
-                        now_grid_id = None
-                        if my_role.map == 'sea':
-                            now_grid_id = self.sea_map.\
-                                get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
-                        elif my_role.is_in_port():
-                            now_grid_id = self.port_map.\
-                                get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+            # grid change?
+            x_tile_pos, y_tile_pos = my_role.get_x_and_y_tile_position()
 
-                        if now_grid_id != my_role.grid_id:
-                            my_role.grid_id = now_grid_id
-                            print(f"grid change to {now_grid_id}!!!!!!")
-                            self.connection.send('grid_change',
-                                                 [now_grid_id, my_role.direction])
+            now_grid_id = None
+            if my_role.map == 'sea':
+                now_grid_id = self.sea_map. \
+                    get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
+            elif my_role.is_in_port():
+                now_grid_id = self.port_map. \
+                    get_grid_id_by_x_and_y_tile_position(x_tile_pos, y_tile_pos)
 
-                        my_role.speed_counter = 0
+            if now_grid_id != my_role.grid_id:
+                my_role.grid_id = now_grid_id
+                print(f"grid change to {now_grid_id}!!!!!!")
+                self.connection.send('grid_change',
+                                     [now_grid_id, my_role.direction])
 
-                        # update sea image
-                        self._update_sea_image()
+            my_role.speed_counter = 0
 
-            # other roles
-            for role in self.other_roles.values():
-                if role.moving:
-                    # can he move?
-                    do_move = False
-                    if role.can_move(role.direction):
-                        do_move = True
-                    else:
-                        for alt_direction in now_direct_2_alternative_directs[role.direction]:
-                            if role.can_move(alt_direction):
-                                role.direction = alt_direction
-                                do_move = True
-                                continue
-                    # do move
-                    if do_move:
-                        role.speed_counter +=1
-                        if role.speed_counter == role.speed_counter_max:
-                            role.move([role.direction])
-                            role.speed_counter = 0
-
-    def _update_my_role_position(self):
-        pass
+            # update sea image
+            self._update_sea_image()
 
     def _update_other_roles_positions(self):
-        pass
+        for role in self.other_roles.values():
+            if role.moving:
+                # can he move?
+                do_move = False
+                if role.can_move(role.direction):
+                    do_move = True
+                else:
+                    for alt_direction in now_direct_2_alternative_directs[role.direction]:
+                        if role.can_move(alt_direction):
+                            role.direction = alt_direction
+                            do_move = True
+                            continue
+                # do move
+                if do_move:
+                    role.speed_counter += 1
+                    if role.speed_counter == role.speed_counter_max:
+                        role.move([role.direction])
+                        role.speed_counter = 0
 
     def _update_sea_image(self):
         if self.my_role.map == 'sea':
