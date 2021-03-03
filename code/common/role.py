@@ -636,22 +636,32 @@ class Role:
         d_dead = False
         attack_method = self._choose_attack_method(my_ship, target_ship)
 
+        # npc or my other ships
+        if self.is_npc() or my_ship_id >= 1:
             # in good condition
-        if my_ship.now_hp >= 20 and my_ship.crew >= 50:
-            if attack_method == 'shoot':
-                d_dead = my_ship.try_to_shoot(target_ship)
-            elif attack_method == 'engage':
-                d_dead = my_ship.try_to_engage(target_ship)
+            if my_ship.now_hp >= 20 and my_ship.crew >= 50:
+                d_dead = self._operate_based_on_attack_method(my_ship, target_ship, attack_method)
+            # not good -> escape
             else:
                 d_dead = my_ship.try_to_escape(target_ship)
-            # not good -> escape
+        # my flag ship
         else:
-            d_dead = my_ship.try_to_escape(target_ship)
+            d_dead = self._operate_based_on_attack_method(my_ship, target_ship, attack_method)
 
         d_dead.addCallback(self._call_back_for_shoot_or_engage, enemy_ships, target_ship_id, deferred)
 
         # ret deferred
         return deferred
+
+    def _operate_based_on_attack_method(self, my_ship, target_ship, attack_method):
+        if attack_method == 'shoot':
+            d_dead = my_ship.try_to_shoot(target_ship)
+        elif attack_method == 'engage':
+            d_dead = my_ship.try_to_engage(target_ship)
+        else:
+            d_dead = my_ship.try_to_escape(target_ship)
+
+        return d_dead
 
     def _choose_attack_method(self, my_ship, target_ship):
         # already set
