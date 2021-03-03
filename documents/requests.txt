@@ -18,7 +18,7 @@ by function
 
 
                 show movement mark OK
-                shoot mark too big ON
+                shoot mark too big OK
 
 
 
