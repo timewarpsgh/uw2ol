@@ -17,7 +17,7 @@ by function
                 after flag ship, other ships move later OK
 
 
-                my turn timer less than normal ON
+                my turn timer less than normal OK
 
 
                 show movement LATER

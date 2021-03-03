@@ -199,13 +199,10 @@ class EngageMark(pg.sprite.Sprite):
     def clicked(self):
         ship_id = self.ship_id
         self.game.change_and_send('flag_ship_engage', [ship_id])
-        # reactor.callLater(10, self._others_operate)
+        self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
         for s in self.game.mark_sprites:
             s.kill()
 
-    # def _others_operate(self):
-    #     if self.game.my_role.is_in_battle():
-    #         self.game.change_and_send('all_ships_operate', [False])
 
 class ShootMark(pg.sprite.Sprite):
     def __init__(self, game, ship_id, x, y):
@@ -232,13 +229,10 @@ class ShootMark(pg.sprite.Sprite):
     def clicked(self):
         ship_id = self.ship_id
         self.game.change_and_send('flag_ship_shoot', [ship_id])
-        # reactor.callLater(10, self._others_operate)
+        self.game.think_time_in_battle = c.THINK_TIME_IN_BATTLE
         for s in self.game.mark_sprites:
             s.kill()
 
-    # def _others_operate(self):
-    #     if self.game.my_role.is_in_battle():
-    #         self.game.change_and_send('all_ships_operate', [False])
 
 if __name__ == '__main__':
     ex = Explosion()

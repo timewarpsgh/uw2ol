@@ -780,7 +780,7 @@ class Role:
                     if s.ship_id == id:
                         s.kill()
 
-                engage_mark = EngageMark(game, id, x + d_x + 8, y + d_y - 8)
+                engage_mark = EngageMark(game, id, x + d_x, y + d_y)
                 game.mark_sprites.add(engage_mark)
 
     def flag_ship_engage(self, params):
@@ -805,7 +805,7 @@ class Role:
                 include_flagship = False
 
         # if my turn
-        self.set_all_ships_attack_method([0])
+        # self.set_all_ships_attack_method([0])
         print("doing all_ships_operate")
 
         if self.your_turn_in_battle:
