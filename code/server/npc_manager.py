@@ -41,7 +41,6 @@ class NpcManager:
             # in battle
             else:
                 if npc.your_turn_in_battle:
-                    # reactor.callLater(0.8, self._npc_change_and_send, 'all_ships_operate', [name], npc.map)
                     self._npc_change_and_send('all_ships_operate', [name], npc.map)
 
     def _random_move(self, npc):
@@ -146,7 +145,8 @@ class NpcManager:
             map.move_npc_to_new_grid(npc, now_grid_id)
 
             # get new and delete grids
-            new_grids, delete_grids = map.get_new_and_delete_grids_after_movement(now_grid_id, npc.direction)
+            new_grids, delete_grids = map.\
+                get_new_and_delete_grids_after_movement(now_grid_id, npc.direction)
 
             # tell roles in delete grids someone disappeared
             for grid in delete_grids:

@@ -30,9 +30,9 @@ class Echo(Protocol):
         self.my_role = None
 
     def connectionMade(self):
+        print("new connection!")
         # init data buffer
         self.dataBuffer = bytes()
-        print("new connection!")
 
     def connectionLost(self, reason):
         print("connection lost!")
@@ -47,9 +47,9 @@ class Echo(Protocol):
             else:
                 server_packet_received.exit_battle(self, '')
 
-            self.log_role_out()
+            self._log_role_out()
 
-    def log_role_out(self):
+    def _log_role_out(self):
         # set online to false
         account = self.account
         d = threads.deferToThread(self.factory.db.set_online_to_false, account)
@@ -92,12 +92,12 @@ class Echo(Protocol):
             print('got packet')
 
             # 把封包交给处理函数
-            self.pck_received(pck)
+            self._pck_received(pck)
 
             # 删除已经读取的字节
             self.dataBuffer = self.dataBuffer[c.HEADER_SIZE + length_pck:]
 
-    def pck_received(self, pck):
+    def _pck_received(self, pck):
         # get packet type and message object
         p = MyProtocol(pck)
         pck_type = p.get_str()

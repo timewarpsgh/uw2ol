@@ -548,3 +548,6 @@ def on_get_character_data_got_result(self, role):
     # not ok
     else:
         self.send('no_role_yet')
+
+
+
