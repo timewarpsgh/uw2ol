@@ -1,5 +1,5 @@
 make exe
-    pyinstaller -i ../../assets/ship.ico --onefile client.pyw client_packet_received.py draw.py game.py gui.py handle_gui_event.py handle_pygame_event.py map_maker.py translator.py ../common/protocol.py ../common/role.py ../common/constants.py
+    pyinstaller -i ../../assets/images/game_icon/ship.ico --onefile client.pyw client_packet_received.py draw.py game.py gui.py handle_gui_event.py handle_pygame_event.py map_maker.py translator.py ../common/protocol.py ../common/role.py ../common/constants.py
 
 release
     set constants.py

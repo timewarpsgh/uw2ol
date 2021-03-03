@@ -1,5 +1,6 @@
 from PIL import Image
 import pygame as pg
+import os
 
 def make_white_bg_transparent(img_file):
     pic = Image.open(img_file)
@@ -40,20 +41,17 @@ def load_image(file_path, scale=1):
     return img
 
 
-def load_all_gfx(directory, colorkey=(255, 0, 255), accept=('.png', '.jpg', '.bmp', '.gif')):
-    graphics = {}
+def load_all_images(image_container, directory, accept=('.png', '.jpg', '.bmp', '.gif')):
+    """loads all imgs in dir into image_contrainer"""
     for pic in os.listdir(directory):
         name, ext = os.path.splitext(pic)
         if ext.lower() in accept:
             img = pg.image.load(os.path.join(directory, pic))
-            if img.get_alpha():
-                img = img.convert_alpha()
-            else:
-                img = img.convert()
-                img.set_colorkey(colorkey)
-            graphics[name] = img
-    return graphics
+            img = img.convert_alpha()
+            image_container[name] = img
 
+def save_pygame_img(img, file_name):
+    pg.image.save(img, file_name)
 
 if __name__ == '__main__':
-    make_white_bg_transparent('shoot_mark.png')
+    make_white_bg_transparent('cannon.png')

@@ -6,28 +6,14 @@ by function
     fight ON
         each ship has different steps to move OK
         in battle movement ON
-            escape OK
 
-            escape strategy OK
+            delete unused images OK
 
-            flagship
-                delete unused images OK
+            reorganise images OK
 
+            delete stuff in battle menu ON
 
-
-                reorganise images ON
-
-
-
-
-
-
-
-
-
-
-
-
+            exit battle, deletes marks ON
 
 
 

@@ -26,7 +26,7 @@ from AOI_manager import PortMap, SeaMap
 from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type
 from gui import mate_speak as m_speak
-from image_processor import load_image
+from image_processor import load_image, load_all_images
 from sprites import Explosion
 
 
@@ -96,90 +96,27 @@ class Game():
         self.all_sprites = pygame.sprite.Group()
         self.mark_sprites = pygame.sprite.Group()
 
-
     def _load_assets(self):
         # maps
-                # port
-            # self.port_piddle, self.images['port']  = self.map_maker.make_port_piddle_and_map(29)
-                # partial_world_map
         self.map_maker.set_world_map_tiles()
         self.map_maker.set_world_piddle()
-        # self.images['sea'] = self.map_maker.make_partial_world_map(900, 262)
-
-                # battle
-        self.images['battle'] = pygame.image.load("../../assets/battle.png").convert_alpha()
-
-        # login backgound
-        self.images['login_bg'] = pygame.image.load("../../assets/images/buildings/login_bg.png").convert_alpha()
-        self.images['login_bg'] = pygame.transform.scale(self.images['login_bg'], (c.WINDOW_WIDTH, c.WINDOW_HIGHT))
-
-        # buildings
-        self.images['building_bg'] = pygame.image.load("../../assets/images/buildings/building_bg.png").convert_alpha()
-        self.images['building_chat'] = pygame.image.load("../../assets/images/buildings/building_chat.png").convert_alpha()
-        for building in id_2_building_type.values():
-            try:
-                self.images[building] = pygame.image.load(f"../../assets/images/buildings/{building}.png").convert_alpha()
-            except:
-                pass
-
-        # huds
-        self.images['hud_left'] = pygame.image.load("../../assets/images/huds/hud-left.png").convert_alpha()
-        self.images['hud_left'] = pygame.transform.scale(self.images['hud_left'], (c.HUD_WIDTH, c.HUD_HIGHT))
-
-        self.images['hud_right'] = pygame.image.load("../../assets/images/huds/hud-right.png").convert_alpha()
-        self.images['hud_right'] = pygame.transform.scale(self.images['hud_right'], (c.HUD_WIDTH, c.HUD_HIGHT))
-
-        # sprites
-        self.images['ship-tileset'] = pygame.image.load("../../assets/ship-tileset.png").convert_alpha()
-        self.images['person_tileset'] = pygame.image.load("../../assets/person_tileset.png").convert_alpha()
-        self.images['person_tileset'] = pygame.transform.scale(self.images['person_tileset'], (1024, 32))
-
-        self.images['explosion'] = load_image("../../assets/explosion.png")
-
-        self.images['person_in_port'] = load_image("../../assets/person_in_port.png")
-        self.images['ship_at_sea'] = load_image("../../assets/ship_at_sea.png")
-
-        # cannon and engage_sign
-        self.images['cannon'] = pygame.image.load("../../assets/cannon.png").convert_alpha()
-        self.images['cannon'] = pygame.transform.scale(self.images['cannon'], (10, 10))
-
-        self.images['engage_sign'] = pygame.image.load("../../assets/engage_sign.png").convert_alpha()
-        self.images['engage_sign'] = pygame.transform.scale(self.images['engage_sign'], (26, 26))
-
-        self.images['engage_sign_1'] = pygame.image.load("../../assets/engage_sign_1.png").convert_alpha()
-        self.images['engage_sign_1'] = pygame.transform.scale(self.images['engage_sign_1'], (26, 26))
-
-        # shoot mark
-        self.images['shoot_mark'] = load_image("../../assets/shoot_mark.png")
-        self.images['move_mark'] = load_image("../../assets/move_mark.png")
-        self.images['no_move_mark'] = load_image("../../assets/no_move_mark.png")
-
+        # load all imgs in these folders to self.images
+        folder_names = ['buildings', 'huds', 'player', 'figures',
+                        'discoveries_and_items', 'in_battle']
+        for f_name in folder_names:
+            load_all_images(self.images, f"../../assets/images/{f_name}")
         # ships
-        file_names = os.listdir("../../assets/images/ships")
         self.images['ships'] = {}
-        for file_name in file_names:
-            parts = file_name.split('.')
-            self.images['ships'][parts[0]] = pygame.image.load(f"../../assets/images/ships/{file_name}").convert_alpha()
-
-        # figures
-        self.images['figures'] = pygame.image.load("../../assets/images/figures/figures.png").convert_alpha()
-
-        # discoveries_and_items
-        self.images['discoveries_and_items'] = pygame.image.load("../../assets/images/discoveries_and_items/discoveries_and_items.png").convert_alpha()
-
-        # world map grids
-        self.images['world_map_grids'] = pygame.image.load("../../assets/images/world_map/world_map_grids.png").convert_alpha()
-
-        # fonts
-        self.font = pygame.font.SysFont("Times New Roman", c.FONT_SIZE)
-
+        load_all_images(self.images['ships'], "../../assets/images/ships")
         # ship in battle
         self.images['ship_in_battle'] = {}
-        ship_in_battle = ['up', 'down', 'left', 'right', 'ne', 'sw', 'nw', 'se']
-        for name in ship_in_battle:
-            self.images['ship_in_battle'][name] = load_image(f"../../assets/images/ship_in_battle/{name}.png")
-
-
+        load_all_images(self.images['ship_in_battle'],
+                        "../../assets/images/ship_in_battle")
+        # world map grids
+        self.images['world_map_grids'] = pygame.image.load\
+            ("../../assets/images/world_map/world_map_grids.png").convert_alpha()
+        # fonts
+        self.font = pygame.font.SysFont("Times New Roman", c.FONT_SIZE)
 
     def update(self):
         """called each frame"""
