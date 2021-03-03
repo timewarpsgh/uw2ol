@@ -23,7 +23,7 @@ by function
 
                 my flagship no running OK
 
-                fleet img change ON
+                fleet img change OK
 
 
 
