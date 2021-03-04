@@ -135,9 +135,6 @@ def roles_in_battle_map(self, message_obj):
         else:
             self.other_roles[name] = role
 
-        # set game and in client to role
-        role.in_client = True
-
     # start battle timer
     self.battle_timer = LoopingCall(_check_battle_timer, self)
     self.battle_timer.start(1)

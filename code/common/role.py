@@ -47,15 +47,21 @@ class Role:
 
     """
 
-    # in server
+    # class attribute in server
     AOI_MANAGER = None
 
-    # in client
+    # classs attribute in client
     GAME = None
 
     def __init__(self, x, y, name, gold=2000):
+        self._init_basics(x, y, name, gold)
+        self._init_instance_containers()
+        self._init_quests()
 
-        # basics
+        self._init_current_ports_states()
+        self._init_path_for_npc()
+
+    def _init_basics(self, x, y, name, gold):
         self.x = x
         self.y = y
         self.direction = 'up'
@@ -66,7 +72,7 @@ class Role:
         self.person_frame = -1
         self.name = name
         self.enemy_name = None
-        self.map = random.choice(['29', '0'])
+        self.map = '29'
         self.in_building_type = None
         self.your_turn_in_battle = False
         self.max_days_at_sea = 0
@@ -76,42 +82,39 @@ class Role:
         self.bank_gold = 2000
         self.target_name = ''
 
-        # my current port's states
-        self.price_index = None
-        self.nation = None
-        self.port_economy = None
-        self.port_industry = None
-
-        # point in path id (only for npc)
-        if self.name.isdigit():
-            self.point_in_path_id = 0
-            self.out_ward = True
-            self.start_port_id = random.choice(list(hash_paths.keys()))
-            self.end_port_id = None
-
-        # assistants
-        self.accountant = None
-        self.first_mate = None
-        self.chief_navigator = None
-
-        # quests (3 types)
-        self.quest_discovery = None
-        self.quest_trade = None
-        self.quest_fight = None
-
-        # other classes i contain
+    def _init_instance_containers(self):
         self.ships = []
         self.mates = []
         self.discoveries = {}
         self.bag = Bag(self)
         self.body = Body()
 
-        # main events sequence
+        self.accountant = None
+        self.first_mate = None
+        self.chief_navigator = None
+
+    def _init_quests(self):
+        # side quests
+        self.quest_discovery = None
+        self.quest_trade = None
+        self.quest_fight = None
+
+        # main quests sequence
         self.main_events_ids = list(range(1, len(events_dict) + 1))
         self.main_events_ids = list(reversed(self.main_events_ids))
 
-        # set at client, when client first gets role from server(when got packet 'your_role_data')
-        self.in_client = False
+    def _init_current_ports_states(self):
+        self.price_index = None
+        self.nation = None
+        self.port_economy = None
+        self.port_industry = None
+
+    def _init_path_for_npc(self):
+        if self.is_npc():
+            self.point_in_path_id = 0
+            self.out_ward = True
+            self.start_port_id = random.choice(list(hash_paths.keys()))
+            self.end_port_id = None
 
     # anywhere
     def get_pending_event(self):
@@ -154,6 +157,12 @@ class Role:
                 nearby_players = my_map.get_nearby_players_by_player(self)
                 target_role = nearby_players[name].my_role
                 return target_role
+
+    def is_in_client(self):
+        if self.GAME:
+            return True
+        else:
+            return False
 
     def is_in_client_and_self(self):
         if self.GAME and self.GAME.my_role.name == self.name:
