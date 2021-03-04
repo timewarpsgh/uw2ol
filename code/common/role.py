@@ -1307,14 +1307,15 @@ class Role:
 
 class Ship:
     def __init__(self, name, type):
-        # set at role.all_ships_operate
-        self.ROLE = None
-
-        # necessary params
         self.name = name
         self.type = type
 
-        # init from hash
+        self._init_attributes_from_hash(type)
+        self._init_others()
+        self._init_cargoes_and_supplies()
+        self._init_owner_of_this_ship()
+
+    def _init_attributes_from_hash(self, type):
         ship_dict = hash_ship_name_to_attributes[type]
 
         self.now_hp = ship_dict['durability']
@@ -1324,21 +1325,20 @@ class Ship:
         self.power = ship_dict['power']
 
         self.capacity = ship_dict['capacity']
-
         self.max_guns = ship_dict['max_guns']
-        self.gun = 1
         self.min_crew = ship_dict['min_crew']
         self.max_crew = ship_dict['max_crew']
 
         self.price = ship_dict['price']
 
-        # others
+    def _init_others(self):
         self.useful_capacity = self.capacity - self.max_guns - self.max_crew
         self.x = 10
         self.y = 10
         self.direction = 'up'
         self.target = None
         self.attack_method = None
+        self.gun = 1
 
         # mate
         self.captain = None
@@ -1346,7 +1346,7 @@ class Ship:
         # crew
         self.crew = 5
 
-        # cargo and supply
+    def _init_cargoes_and_supplies(self):
         self.cargoes = {}
         self.supplies = {
             'Food':20,
@@ -1354,6 +1354,10 @@ class Ship:
             'Lumber':0,
             'Shot':0
         }
+
+    def _init_owner_of_this_ship(self):
+        """instance attribute set when entered battle"""
+        self.ROLE = None
 
     def remodel_gun(self, gun_id):
         self.gun = gun_id
