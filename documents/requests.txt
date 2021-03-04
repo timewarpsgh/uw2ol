@@ -6,15 +6,11 @@ by function
     fight ON
         in battle movement ON
             delete stuff in battle menu OK
-
             exit battle, deletes marks OK
 
+            exit battle requires distance from enemy flagship OK
 
-
-
-
-
-
+            shoot distance
 
     sounds LATER
 

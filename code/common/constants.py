@@ -12,6 +12,7 @@ ENGAGE_RANGE = 1 # 1
 SHOOT_RANGE_IN_BATTLE = 4 # 4
 ENGAGE_DAMAGE = 0.5 # 0.5
 SHOOT_DAMAGE = 1 # 1
+ESCAPE_DISTANCE = 8
 
 # world configurables
 CAPTION = 'uncharted waters 2'

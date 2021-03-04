@@ -415,7 +415,8 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
                 y_index += 1
 
 def exit_battle(self, message_obj):
-    role.exit_battle(self, message_obj)
+    if self.my_role.can_escape():
+        role.exit_battle(self, message_obj)
 
 def get_npc_info(self, message_obj):
     nation = message_obj[0]

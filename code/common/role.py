@@ -3,6 +3,7 @@ import time
 import copy
 import itertools
 import numpy
+import math
 
 
 from threading import Timer
@@ -818,6 +819,20 @@ class Role:
         self.ships[0].target = target_ship_id
         self.ships[0].attack_method = 'shoot'
         self.all_ships_operate([])
+
+    def can_escape(self):
+        enemy_flagship = self.get_enemy_role().ships[0]
+        my_flagship = self.ships[0]
+        x1 = my_flagship.x
+        y1 = my_flagship.y
+        x2 = enemy_flagship.x
+        y2 = enemy_flagship.y
+
+        dist = math.hypot(x2 - x1, y2 - y1)
+        if dist >= c.ESCAPE_DISTANCE:
+            return True
+        else:
+            return False
 
     def all_ships_operate(self, params):
         # include flagship ?
