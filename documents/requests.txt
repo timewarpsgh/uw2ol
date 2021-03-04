@@ -11,6 +11,8 @@ by function
 
         set one ship OK
 
+
+        don't show flagship targets OK
         don't set flagship ON
 
 

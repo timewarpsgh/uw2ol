@@ -396,11 +396,13 @@ def draw_my_ships(self):
                 # crew
             draw_text(self, str(ship.crew), 50, (20 + index * 20), c.WHITE)
 
+            # for non-flag ships
+            if index != 1:
                 # attack method
-            draw_text(self, str(ship.attack_method), 80, (20 + index * 20), c.ORANGE)
+                draw_text(self, str(ship.attack_method), 80, (20 + index * 20), c.ORANGE)
 
                 # target
-            draw_text(self, str(ship.target), 130, (20 + index * 20), c.CRIMSON)
+                draw_text(self, str(ship.target), 130, (20 + index * 20), c.CRIMSON)
 
 def draw_enemy_ships(self):
     # enemy ships
