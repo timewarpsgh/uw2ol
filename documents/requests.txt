@@ -5,9 +5,7 @@ by function
 
     fight ON
 
-        win npc, relieve ship captain duty OK
-
-        in battle, when ship has no captain -> escape ON
+        in battle, when ship has no captain -> escape OK
 
 
 

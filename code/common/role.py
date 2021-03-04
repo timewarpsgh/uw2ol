@@ -610,7 +610,7 @@ class Role:
         # npc or my other ships
         if self.is_npc() or my_ship_id >= 1:
             # in good condition
-            if my_ship.now_hp >= 20 and my_ship.crew >= 50:
+            if my_ship.now_hp >= 20 and my_ship.crew >= 50 and my_ship.captain:
                 d_dead = self._operate_based_on_attack_method(my_ship, target_ship, attack_method)
             # not good -> escape
             else:
@@ -948,43 +948,43 @@ class Role:
     def _call_back_for_attack_ship(self, result, i, enemy_ships):
         # not won
         if result == 'next_ship':
-            # if i lost
-            if not self.ships or self.ships[0].crew <= 0:
-                # lose all my ships
-                enemy_ships.extend(self.ships)
-                self.ships.clear()
-
-                # exit if in client and have ships left (the winner sends exit_battle message to server)
-                if Role.GAME:
-                    reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
-
-            # else
-            else:
-                # my next ship
-                if (i+1) <= (len(self.ships) - 1):
-                    reactor.callLater(1, self._pick_one_ship_to_attack, [i+1, enemy_ships])
-                # enemy turn
-                else:
-                    reactor.callLater(1, self._change_turn)
+            self._not_won_after_attack_ship(i, enemy_ships)
         # won battle
         else:
-            # player won
-            if Role.GAME and Role.GAME.my_role.ships:
+            self._won_after_attack_ship()
+
+    def _not_won_after_attack_ship(self, i, enemy_ships):
+        # if i lost
+        if not self.ships or self.ships[0].crew <= 0:
+            # lose all my ships
+            enemy_ships.extend(self.ships)
+            self.ships.clear()
+
+            # exit if in client and have ships left (the winner sends exit_battle message to server)
+            if Role.GAME:
                 reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
-            # server controled npc won
-            if self.is_in_server() and self.is_npc():
-                print('exiting battle!!!!!!!')
-                battle_map = Role.AOI_MANAGER.get_battle_map_by_player_map(self.map)
-                all_players_in_battle = battle_map.get_all_players_inside()
-                enemy_conn = all_players_in_battle[self.enemy_name]
-                exit_battle(enemy_conn, '')
-
-    def _not_won_after_attack_ship(self):
-        pass
+        # else
+        else:
+            # my next ship
+            if (i + 1) <= (len(self.ships) - 1):
+                reactor.callLater(1, self._pick_one_ship_to_attack, [i + 1, enemy_ships])
+            # enemy turn
+            else:
+                reactor.callLater(1, self._change_turn)
 
     def _won_after_attack_ship(self):
-        pass
+        # player won
+        if Role.GAME and Role.GAME.my_role.ships:
+            reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
+
+        # server controled npc won
+        if self.is_in_server() and self.is_npc():
+            print('exiting battle!!!!!!!')
+            battle_map = Role.AOI_MANAGER.get_battle_map_by_player_map(self.map)
+            all_players_in_battle = battle_map.get_all_players_inside()
+            enemy_conn = all_players_in_battle[self.enemy_name]
+            exit_battle(enemy_conn, '')
 
     # ship yard
     def buy_ship(self, params):
@@ -2041,7 +2041,10 @@ class Ship:
         deferred = defer.Deferred()
 
         # init max steps
-        self.steps_left = self._calc_max_steps()
+        if self.captain:
+            self.steps_left = self._calc_max_steps()
+        else:
+            self.steps_left = 3
 
         # check
         if ship.crew > 0 and self.crew > 0:
