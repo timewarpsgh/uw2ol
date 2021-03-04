@@ -465,6 +465,7 @@ class ButtonClickHandler():
                 'Set All Ships Target': self.menu_click_handler.battle.set_target,
                 'Set All Ships Strategy': self.menu_click_handler.battle.set_attack_method,
                 'Set One Ships Strategy': self.menu_click_handler.battle.set_one_ships_strategy,
+                'Escape Battle': self.menu_click_handler.battle.escape_battle,
             }
             self.make_menu(dict)
         else:
@@ -1074,6 +1075,15 @@ class MenuClickHandlerForBattle():
         self.game.button_click_handler. \
             make_input_boxes('set_one_ships_strategy',
                              ['ship_id', 'target_id', 'attack_method'])
+
+    def escape_battle(self):
+        game = self.game
+        if game.my_role.your_turn_in_battle:
+            if game.my_role.can_escape():
+                game.connection.send('exit_battle', [])
+            else:
+                game.button_click_handler.i_speak(
+                    "Must be far enough from enemy flagship to escape.")
 
 
 class MenuClickHandlerForPort():

@@ -226,8 +226,7 @@ def __change_map_to_port(self):
 
 def _in_battle_keys(self, event):
     if event.key == ord('b'):
-        if self.my_role.your_turn_in_battle:
-            self.connection.send('exit_battle', [])
+        self.button_click_handler.menu_click_handler.battle.escape_battle()
     elif event.key == ord('k'):
         self.button_click_handler.menu_click_handler.battle.all_ships_move()
     elif event.key == ord('l'):

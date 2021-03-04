@@ -10,7 +10,10 @@ by function
 
             exit battle requires distance from enemy flagship OK
 
-            shoot distance
+            can't escape text OK
+
+
+            shoot distance ON
 
     sounds LATER
 
