@@ -1091,7 +1091,8 @@ class MenuClickHandlerForBattle():
             'My Ships': test,
         }
         for id, s in enumerate(self.game.my_role.ships):
-            d[str(id)] = [self._choose_target, id]
+            if id != 0:
+                d[str(id)] = [self._choose_target, id]
         self.game.button_click_handler.make_menu(d)
 
     def _choose_target(self, my_ship_id):
@@ -1115,7 +1116,8 @@ class MenuClickHandlerForBattle():
     def set_one_ship_strategy(self):
         d = {}
         for id, s in enumerate(self.game.my_role.ships):
-            d[str(id)] = [self._choose_strategy, id]
+            if id != 0:
+                d[str(id)] = [self._choose_strategy, id]
         self.game.button_click_handler.make_menu(d)
 
     def _choose_strategy(self, ship_id):

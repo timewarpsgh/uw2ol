@@ -5,15 +5,9 @@ by function
 
     fight ON
 
-        show all ships target and strategy OK
+        win npc, relieve ship captain duty OK
 
-        set all ships strategy AND target OK
-
-        set one ship OK
-
-
-        don't show flagship targets OK
-        don't set flagship ON
+        in battle, when ship has no captain -> escape ON
 
 
 

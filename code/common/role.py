@@ -652,41 +652,47 @@ class Role:
         return my_ship.attack_method
 
     def _call_back_for_shoot_or_engage(self, d_dead, enemy_ships, target_ship_id, deferred):
-
         # target dead
         if d_dead:
+            # if hp <= 0
             if enemy_ships[target_ship_id].now_hp <= 0:
                 del enemy_ships[target_ship_id]
 
             # if flag ship dead
             if target_ship_id == 0:
-                # all enemy mates relieve duty
-                enemy_role = self._get_other_role_by_name(self.enemy_name)
-                for mate in enemy_role.mates:
-                    if mate.duty in ['accountant', 'first_mate', 'chief_navigator']:
-                        mate.relieve_duty(enemy_role)
-                    else:
-                        mate.relieve_duty()
-
-                # get all enemy ships
-                self.ships.extend(enemy_ships)
-                enemy_ships.clear()
-
-                # get all enemy gold
-                self.gold += enemy_role.gold
-                enemy_role.gold = 0
-                print('battle ended. press e to exit battle.')
-
-                deferred.callback(False)
-                # return deferred
+                self.__do_when_enemy_lost(enemy_ships, deferred)
             else:
                 deferred.callback('next_ship')
-                # return deferred
 
         # not dead
         else:
             deferred.callback('next_ship')
-            # return deferred
+
+    def __do_when_enemy_lost(self, enemy_ships, deferred):
+        # all enemy mates relieve duty
+        enemy_role = self._get_other_role_by_name(self.enemy_name)
+        for mate in enemy_role.mates:
+            if mate.duty in ['accountant', 'first_mate', 'chief_navigator']:
+                mate.relieve_duty(enemy_role)
+            else:
+                mate.relieve_duty()
+
+        # all npc enemy ships get rid of captain(one cap for all ships)
+        if enemy_role.is_npc():
+            for s in enemy_ships:
+                s.captain = None
+
+        # get all enemy ships
+        self.ships.extend(enemy_ships)
+        enemy_ships.clear()
+
+        # get all enemy gold
+        self.gold += enemy_role.gold
+        enemy_role.gold = 0
+        print('battle ended. press e to exit battle.')
+
+        # call deferred
+        deferred.callback(False)
 
     def flagship_move(self, params):
         movement = params[0]
@@ -844,28 +850,26 @@ class Role:
         # clear marks
         if self.is_in_client_and_self():
             self._clear_marks()
-            self.GAME.think_time_in_battle = c.THINK_TIME_IN_BATTLE
+            self.GAME.reset_think_time_in_battle()
 
-        # if my turn
-        # self.set_all_ships_attack_method([0])
-        print("doing all_ships_operate")
-
+        # do operate
         if self.your_turn_in_battle:
-            # get my and enemy ships
-            print("enemy name", self.enemy_name)
+            self._all_ships_do_operate(include_flagship)
 
-            enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
-            my_ships = self.ships
+    def _all_ships_do_operate(self, include_flagship):
+        # get my and enemy ships
+        enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
+        my_ships = self.ships
 
-            # flag ship attacks
-            if include_flagship:
-                self._pick_one_ship_to_attack([0, enemy_ships])
-            else:
-                my_ships[0].steps_left = 0
-                self._pick_one_ship_to_attack([1, enemy_ships])
+        # flag ship attacks
+        if include_flagship:
+            self._pick_one_ship_to_attack([0, enemy_ships])
+        else:
+            my_ships[0].steps_left = 0
+            self._pick_one_ship_to_attack([1, enemy_ships])
 
-            # stop my turn
-            self.your_turn_in_battle = False
+        # stop my turn
+        self.your_turn_in_battle = False
 
     def set_one_ships_strategy(self, params):
         # params
@@ -944,13 +948,11 @@ class Role:
     def _call_back_for_attack_ship(self, result, i, enemy_ships):
         # not won
         if result == 'next_ship':
-            # if self lost all crew:
+            # if i lost
             if not self.ships or self.ships[0].crew <= 0:
                 # lose all my ships
                 enemy_ships.extend(self.ships)
                 self.ships.clear()
-
-                # print('my active engage got me lost!!')
 
                 # exit if in client and have ships left (the winner sends exit_battle message to server)
                 if Role.GAME:
@@ -966,8 +968,6 @@ class Role:
                     reactor.callLater(1, self._change_turn)
         # won battle
         else:
-            print("I won battle")
-
             # player won
             if Role.GAME and Role.GAME.my_role.ships:
                 reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
@@ -979,6 +979,12 @@ class Role:
                 all_players_in_battle = battle_map.get_all_players_inside()
                 enemy_conn = all_players_in_battle[self.enemy_name]
                 exit_battle(enemy_conn, '')
+
+    def _not_won_after_attack_ship(self):
+        pass
+
+    def _won_after_attack_ship(self):
+        pass
 
     # ship yard
     def buy_ship(self, params):
