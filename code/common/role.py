@@ -865,8 +865,11 @@ class Role:
         if include_flagship:
             self._pick_one_ship_to_attack([0, enemy_ships])
         else:
-            my_ships[0].steps_left = 0
-            self._pick_one_ship_to_attack([1, enemy_ships])
+            if len(my_ships) >= 2:
+                my_ships[0].steps_left = 0
+                self._pick_one_ship_to_attack([1, enemy_ships])
+            else:
+                self._change_turn()
 
         # stop my turn
         self.your_turn_in_battle = False
@@ -1424,13 +1427,19 @@ class Ship:
             return False
 
     def _calc_max_steps(self):
-        seamanship = None
-        if self.captain.chief_navigator:
-            seamanship = self.captain.chief_navigator.seamanship
+        # has captain
+        if self.captain:
+            seamanship = None
+            if self.captain.chief_navigator:
+                seamanship = self.captain.chief_navigator.seamanship
+            else:
+                seamanship = self.captain.seamanship
+            max_steps = int((self.tacking + self.power + seamanship) / 40)
+            return max_steps
+
+        # no captain
         else:
-            seamanship = self.captain.seamanship
-        max_steps = int((self.tacking + self.power + seamanship) / 40)
-        return max_steps
+            return 1
 
     def get_speed(self, role=''):
         # have captain
@@ -1878,10 +1887,12 @@ class Ship:
 
             # enemy engage
         enemy_damage_ratio = 0
-        if not ship.captain.first_mate:
-            enemy_damage_ratio = (ship.captain.swordplay + ship.captain.gunnery * 20) / 100
-        else:
-            enemy_damage_ratio = (ship.captain.first_mate.swordplay + ship.captain.first_mate.gunnery * 20) / 100
+        if ship.captain:
+            if not ship.captain.first_mate:
+                enemy_damage_ratio = (ship.captain.swordplay + ship.captain.gunnery * 20) / 100
+            else:
+                enemy_damage_ratio = (ship.captain.first_mate.swordplay + ship.captain.first_mate.gunnery * 20) / 100
+
 
         enemy_damage = int(c.ENGAGE_DAMAGE * ship.crew * enemy_damage_ratio / 3)
 
@@ -2041,10 +2052,7 @@ class Ship:
         deferred = defer.Deferred()
 
         # init max steps
-        if self.captain:
-            self.steps_left = self._calc_max_steps()
-        else:
-            self.steps_left = 3
+        self.steps_left = self._calc_max_steps()
 
         # check
         if ship.crew > 0 and self.crew > 0:

@@ -6,7 +6,7 @@ by function
     fight ON
 
         in battle, when ship has no captain -> escape OK
-
+        only me left bug OK
 
 
     sounds LATER
