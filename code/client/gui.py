@@ -462,14 +462,9 @@ class ButtonClickHandler():
         if 'battle' in self.game.my_role.map:
             dict = {
                 'View Enemy Ships': self.menu_click_handler.battle.enemy_ships,
-                'All Ships Move': self.menu_click_handler.battle.all_ships_move,
-                'Other Ships Move': self.menu_click_handler.battle.other_ships_move,
                 'Set All Ships Target': self.menu_click_handler.battle.set_target,
                 'Set All Ships Strategy': self.menu_click_handler.battle.set_attack_method,
                 'Set One Ships Strategy': self.menu_click_handler.battle.set_one_ships_strategy,
-                'Flag Move Continue': self.menu_click_handler.battle.flag_move_continue,
-                'Flag Move To Left': self.menu_click_handler.battle.flag_move_to_left,
-                'Flag Move To Right': self.menu_click_handler.battle.flag_move_to_right,
             }
             self.make_menu(dict)
         else:
@@ -1053,14 +1048,6 @@ class MenuClickHandlerForBattle():
     def __init__(self, game):
         self.game = game
 
-    def all_ships_move(self):
-        if self.game.my_role.your_turn_in_battle:
-            self.game.change_and_send('all_ships_operate', [])
-
-    def other_ships_move(self):
-        if self.game.my_role.your_turn_in_battle:
-            self.game.change_and_send('all_ships_operate', [False])
-
     def enemy_ships(self):
         # get enemy ships
         enemy_ships = self.game.other_roles[self.game.my_role.enemy_name].ships
@@ -1075,24 +1062,19 @@ class MenuClickHandlerForBattle():
 
     def set_target(self):
         self.game.button_click_handler. \
-            make_input_boxes('set_all_ships_target', ['target_id'])
+            make_input_boxes('set_all_ships_target',
+                             ['target_id'])
 
     def set_attack_method(self):
         self.game.button_click_handler. \
-            make_input_boxes('set_all_ships_attack_method', ['attack_method_id'])
+            make_input_boxes('set_all_ships_attack_method',
+                             ['attack_method_id'])
 
     def set_one_ships_strategy(self):
         self.game.button_click_handler. \
-            make_input_boxes('set_one_ships_strategy', ['ship_id', 'target_id', 'attack_method'])
+            make_input_boxes('set_one_ships_strategy',
+                             ['ship_id', 'target_id', 'attack_method'])
 
-    def flag_move_continue(self):
-        self.game.change_and_send('flagship_move', ['continue'])
-
-    def flag_move_to_left(self):
-        self.game.change_and_send('flagship_move', ['left'])
-
-    def flag_move_to_right(self):
-        self.game.change_and_send('flagship_move', ['right'])
 
 class MenuClickHandlerForPort():
     """contains handlers for all buildings in port"""

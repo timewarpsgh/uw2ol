@@ -4,25 +4,8 @@ by function
     trade OK
 
     fight ON
-        each ship has different steps to move OK
         in battle movement ON
-
-            delete unused images OK
-            reorganise images OK
-            refactor constants OK
-            put Point in another folder OK
-            refactor game OK
-
-            refactor client OK
-
-            refactor aoi manager OK
-
-            refactor role OK
-
-
-
-
-            delete stuff in battle menu ON
+            delete stuff in battle menu OK
 
             exit battle, deletes marks ON
 
