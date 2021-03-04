@@ -9,7 +9,9 @@ by function
 
         set all ships strategy AND target OK
 
-        set one ships
+        set one ship OK
+
+        don't set flagship ON
 
 
 

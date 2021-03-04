@@ -884,6 +884,8 @@ class Role:
             ship.attack_method = 'engage'
         elif attack_method == 2:
             ship.attack_method = 'escape'
+        else:
+            pass
 
     def set_all_ships_target(self, params):
         target_id = params[0]

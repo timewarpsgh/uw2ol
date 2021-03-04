@@ -462,9 +462,10 @@ class ButtonClickHandler():
         if 'battle' in self.game.my_role.map:
             dict = {
                 'View Enemy Ships': self.menu_click_handler.battle.view_enemy_ships,
-                'Set All Ships Target': self.menu_click_handler.battle.set_all_ships_target,
-                'Set All Ships Strategy': self.menu_click_handler.battle.set_attack_method,
-                'Set One Ships Strategy': self.menu_click_handler.battle.set_one_ships_strategy,
+                'All Ships Target': self.menu_click_handler.battle.set_all_ships_target,
+                'All Ships Strategy': self.menu_click_handler.battle.set_all_ships_attack_method,
+                'One Ship Target': self.menu_click_handler.battle.set_one_ship_target,
+                'One Ship Strategy': self.menu_click_handler.battle.set_one_ship_strategy,
                 'Escape Battle': self.menu_click_handler.battle.escape_battle,
             }
             self.make_menu(dict)
@@ -1072,7 +1073,7 @@ class MenuClickHandlerForBattle():
         self.game.change_and_send('set_all_ships_target', [id])
         self.game.button_click_handler.escape()
 
-    def set_attack_method(self):
+    def set_all_ships_attack_method(self):
         d = {
             'Shoot': [self._do_set_all_ships_strategy, 0],
             'Engage': [self._do_set_all_ships_strategy, 1],
@@ -1081,13 +1082,58 @@ class MenuClickHandlerForBattle():
         self.game.button_click_handler.make_menu(d)
 
     def _do_set_all_ships_strategy(self, attack_method_id):
-        self.game.change_and_send('set_all_ships_attack_method', [attack_method_id])
+        self.game.change_and_send('set_all_ships_attack_method',
+                                  [attack_method_id])
         self.game.button_click_handler.escape()
 
-    def set_one_ships_strategy(self):
-        self.game.button_click_handler. \
-            make_input_boxes('set_one_ships_strategy',
-                             ['ship_id', 'target_id', 'attack_method'])
+    def set_one_ship_target(self):
+        d = {
+            'My Ships': test,
+        }
+        for id, s in enumerate(self.game.my_role.ships):
+            d[str(id)] = [self._choose_target, id]
+        self.game.button_click_handler.make_menu(d)
+
+    def _choose_target(self, my_ship_id):
+        d = {
+            'Targets': test,
+        }
+        enemy_ships = self.game.my_role.get_enemy_role().ships
+        for id, s in enumerate(enemy_ships):
+            d[str(id)] = [self.__do_set_target_for_one_ship, [my_ship_id, id]]
+        self.game.button_click_handler.make_menu(d)
+
+    def __do_set_target_for_one_ship(self, params):
+        my_ship_id = params[0]
+        target_ship_id = params[1]
+        attack_method_id = None
+
+        self.game.change_and_send('set_one_ships_strategy',
+                                  [my_ship_id, target_ship_id, attack_method_id])
+        self.game.button_click_handler.escape()
+
+    def set_one_ship_strategy(self):
+        d = {}
+        for id, s in enumerate(self.game.my_role.ships):
+            d[str(id)] = [self._choose_strategy, id]
+        self.game.button_click_handler.make_menu(d)
+
+    def _choose_strategy(self, ship_id):
+        d = {
+            'Shoot': [self.__do_set_strategy_for_one_ship, [ship_id, 0]],
+            'Engage': [self.__do_set_strategy_for_one_ship, [ship_id, 1]],
+            'Escape': [self.__do_set_strategy_for_one_ship, [ship_id, 2]],
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def __do_set_strategy_for_one_ship(self, params):
+        ship_id = params[0]
+        attack_method_id = params[1]
+        target_id = self.game.my_role.ships[ship_id].target
+
+        self.game.change_and_send('set_one_ships_strategy',
+                                  [ship_id, target_id, attack_method_id])
+        self.game.button_click_handler.escape()
 
     def escape_battle(self):
         game = self.game
