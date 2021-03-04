@@ -7,7 +7,9 @@ by function
 
         show all ships target and strategy OK
 
+        set all ships strategy AND target OK
 
+        set one ships
 
 
 
