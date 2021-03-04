@@ -1590,7 +1590,8 @@ class Ship:
                     deferred.callback(False)
 
     def _is_target_ship_in_distance_range(self, ship):
-        if abs(self.x - ship.x) + abs(self.y - ship.y) <= c.SHOOT_RANGE_IN_BATTLE:
+        dist = math.hypot(self.x - ship.x, self.y - ship.y)
+        if dist <= c.SHOOT_RANGE_IN_BATTLE:
             return True
         else:
             return False
