@@ -68,7 +68,6 @@ class Role:
         self.enemy_name = None
         self.map = random.choice(['29', '0'])
         self.in_building_type = None
-        self.battle_timer = 0
         self.your_turn_in_battle = False
         self.max_days_at_sea = 0
         self.additioanl_days_at_sea = 0
@@ -557,44 +556,6 @@ class Role:
             else:
                 if self.is_in_client_and_self():
                     self.GAME.button_click_handler.i_speak("Can't find anything.")
-
-    def enter_battle_with(self, params):
-
-        # enemy
-        enemy_name = params[0]
-        enemy_role = self._get_other_role_by_name(enemy_name)
-        enemy_role.map = 'battle'
-        enemy_role.target_name = self.name
-        enemy_role.battle_timer = 0
-
-        # me
-        self.map = 'battle'
-        self.battle_timer = 50
-        self.target_name = enemy_name
-
-        # timer
-        timer = Timer(1, self._change_battle_timer, args=[enemy_role])
-        timer.start()
-
-    def _change_battle_timer(self, enemy_role):
-
-        # while in battle
-        while self.map == 'battle':
-
-            # self
-            if self.battle_timer > 0:
-                self.battle_timer -= 1
-                if self.battle_timer == 0:
-                    enemy_role.battle_timer = 50
-
-            # enemy
-            if enemy_role.battle_timer > 0:
-                enemy_role.battle_timer -= 1
-                if enemy_role.battle_timer == 0:
-                    self.battle_timer = 50
-
-            # sleep 1s
-            time.sleep(1)
 
     def consume_potion(self, params):
         potion_id = params[0]
