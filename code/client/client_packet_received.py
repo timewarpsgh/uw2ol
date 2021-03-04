@@ -102,6 +102,10 @@ def roles_in_new_map(self, message_obj):
 
     # if at sea
     if self.my_role.map == 'sea':
+        # clear marks
+        self.my_role._clear_marks()
+        self.reset_think_time_in_battle()
+
         # if just lost from battle
         if not self.my_role.ships:
             self.connection.send('change_map', ['29'])
@@ -109,7 +113,10 @@ def roles_in_new_map(self, message_obj):
     # if in port
     elif self.my_role.map.isdigit():
         port_index = int(self.my_role.map)
-        self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index, self.time_of_day)
+        self.port_piddle, self.images['port'] = self.map_maker.\
+            make_port_piddle_and_map(port_index, self.time_of_day)
+
+
 
 def roles_disappeared(self, message_obj):
     """in delete grids"""

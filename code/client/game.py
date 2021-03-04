@@ -251,7 +251,8 @@ class Game():
                             make_partial_world_map(my_tile_x, my_tile_y, time_of_day)
 
 
-
+    def reset_think_time_in_battle(self):
+        self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
 
 

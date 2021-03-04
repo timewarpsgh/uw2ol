@@ -7,7 +7,7 @@ by function
         in battle movement ON
             delete stuff in battle menu OK
 
-            exit battle, deletes marks ON
+            exit battle, deletes marks OK
 
 
 

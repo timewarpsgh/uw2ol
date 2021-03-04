@@ -2542,7 +2542,6 @@ def exit_battle(self, message_obj):
     if self.my_role.is_in_battle():
         # if enemy is npc
         if self.my_role.is_enemy_npc():
-            print('enemy is npc!!!!')
             _exit_battle_when_enemy_is_npc(self)
         # if enemy is player
         else:
