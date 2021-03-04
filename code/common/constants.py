@@ -113,6 +113,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 YELLOW = (255, 255, 0)
 RED = (255, 0, 0)
+ORANGE = (255, 69, 0)
+CRIMSON = (139, 0, 0)
 
 if __name__ == '__main__':
     print(SAILABLE_TILES)

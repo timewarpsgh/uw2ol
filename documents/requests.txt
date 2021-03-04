@@ -4,15 +4,11 @@ by function
     trade OK
 
     fight ON
-        in battle movement ON
-            delete stuff in battle menu OK
-            exit battle, deletes marks OK
-            exit battle requires distance from enemy flagship OK
-            can't escape text OK
+
+        show all ships target and strategy OK
 
 
-            shoot distance OK
-            normal exit battle  OK
+
 
 
     sounds LATER
