@@ -89,6 +89,7 @@ class Role:
         self.bag = Bag(self)
         self.body = Body()
 
+        # both role and mates[0] have these
         self.accountant = None
         self.first_mate = None
         self.chief_navigator = None
@@ -1620,20 +1621,6 @@ class Ship:
             else:
                 deferred.callback(False)
                 return False
-        # in line
-        # elif is_target_left == 0:
-        #     next_direct = self.direction
-        #     next_direct_right = now_direction_to_next_right_move[self.direction]
-        #     next_direct_left = now_direction_to_next_left_move[self.direction]
-        #     if self.can_move(next_direct):
-        #         self.move_continue()
-        #     elif self.can_move(next_direct_left):
-        #         self.move_to_left()
-        #     elif self.can_move(next_direct_right):
-        #         self.move_to_right()
-        #     else:
-        #         deferred.callback(False)
-        #         return False
         return True
 
     def move_further(self, ship, deferred):
@@ -1699,11 +1686,15 @@ class Ship:
 
         # if no first mate
         if not self.captain.first_mate:
-            damage = c.SHOOT_DAMAGE * int(( (self.max_guns * gun.damage)  + int(self.captain.swordplay / 2) + self.captain.gunnery * 20) / 10)
+            damage = c.SHOOT_DAMAGE * int(( (self.max_guns * gun.damage) +
+                                            int(self.captain.swordplay / 2) +
+                                            self.captain.gunnery * 20) / 10)
         # if have first mate
         else:
             damage = c.SHOOT_DAMAGE * int(
-                ((self.max_guns * gun.damage) + int(self.captain.first_mate.swordplay / 2) + self.captain.first_mate.gunnery * 20) / 10)
+                ((self.max_guns * gun.damage) +
+                 int(self.captain.first_mate.swordplay / 2) +
+                 self.captain.first_mate.gunnery * 20) / 10)
 
         # damage based on equipments
 
@@ -2086,23 +2077,26 @@ class Ship:
 
 class Mate:
     def __init__(self, id):
+        self._init_basics(id)
+        self._init_attributes(id)
+        self._init_skills_and_assistants(id)
+
+    def _init_basics(self, id):
         mate_dict = hash_mates[id]
 
-        # basics
         self.name = mate_dict['name']
         self.nation = mate_dict['nation']
-
         self.image_x = mate_dict['image_x']
         self.image_y = mate_dict['image_y']
 
         self.exp = 0
         self.lv = mate_dict['lv']
-
+        self.points = 0
         self.duty = None
 
-        self.points = 0
+    def _init_attributes(self, id):
+        mate_dict = hash_mates[id]
 
-        # attributes
         self.leadership = mate_dict['leadership']
 
         self.seamanship = mate_dict['seamanship']
@@ -2111,6 +2105,9 @@ class Mate:
         self.intuition = mate_dict['intuition']
         self.courage = mate_dict['courage']
         self.swordplay = mate_dict['swordplay']
+
+    def _init_skills_and_assistants(self, id):
+        mate_dict = hash_mates[id]
 
         # skills
         self.accounting = mate_dict['accounting']
