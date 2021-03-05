@@ -685,6 +685,8 @@ class Role:
         # get all enemy ships
         self.ships.extend(enemy_ships)
         enemy_ships.clear()
+        if len(self.ships) > 10:
+            self.ships = self.ships[:10]
 
         # get all enemy gold
         self.gold += enemy_role.gold
@@ -962,6 +964,9 @@ class Role:
             # lose all my ships
             enemy_ships.extend(self.ships)
             self.ships.clear()
+
+            if len(enemy_ships) > 10:
+                enemy_ships = enemy_ships[:10]
 
             # exit if in client and have ships left (the winner sends exit_battle message to server)
             if Role.GAME:
@@ -2500,7 +2505,7 @@ def init_one_default_npc(name):
     fleet_sequence = (int(name) - 1) % c.FLEET_COUNT_PER_NATION
 
     # merchant
-    NUM_OF_SHIPS = 3
+    NUM_OF_SHIPS = 10
     if fleet_sequence == 0 or fleet_sequence == 1:
         cargo_name = _generate_rand_cargo_name()
         num_of_ships = NUM_OF_SHIPS # random.randint(3, 5)
