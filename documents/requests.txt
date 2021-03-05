@@ -3,15 +3,18 @@ by function
     discover OK
     trade OK
 
+
     fight ON
 
-        normal battle 10 v 10 ON
 
-        login scene 1 OK
+        normal battle 10 v 10 OK
+        npc equipments OK
 
-        create character bug OK
 
-        password can't see OK
+
+        initial dist ON
+
+        walk in disappear bug ON
 
 
     sounds LATER

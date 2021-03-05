@@ -171,7 +171,7 @@ class EchoFactory(Factory):
 
         # npc control loop
         looping_task = task.LoopingCall(self.npc_manager.update)
-        looping_task.start(1)
+        looping_task.start(0.5)
 
         # db
         self.db = Database()

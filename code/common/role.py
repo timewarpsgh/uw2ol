@@ -2517,6 +2517,12 @@ def init_one_default_npc(name):
             npc.ships.append(ship)
             ship.captain = mate0
 
+            # equipments
+            armor = Item(35)
+            weapon = Item(39)
+            npc.body.equip(armor)
+            npc.body.equip(weapon)
+
     # convoy
     elif fleet_sequence == 2 or fleet_sequence == 3:
         cargo_name = _generate_rand_cargo_name()
@@ -2530,6 +2536,12 @@ def init_one_default_npc(name):
             npc.ships.append(ship)
             ship.captain = mate0
 
+            # equipments
+            armor = Item(36)
+            weapon = Item(43)
+            npc.body.equip(armor)
+            npc.body.equip(weapon)
+
     # battle
     else:
         cargo_name = _generate_rand_cargo_name()
@@ -2542,6 +2554,12 @@ def init_one_default_npc(name):
             ship.add_cargo(cargo_name, ship.useful_capacity)
             npc.ships.append(ship)
             ship.captain = mate0
+
+            # equipments
+            armor = Item(37)
+            weapon = Item(48)
+            npc.body.equip(armor)
+            npc.body.equip(weapon)
 
 
     # diff based on nation

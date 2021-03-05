@@ -403,20 +403,26 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
     for role in roles_in_battle.values():
         # my role
         if role.name == my_name:
-            y_index = 1
-            for ship in role.ships:
-                ship.x = 1
-                ship.y = y_index
+            for id, ship in enumerate(role.ships):
+                if id <= 4:
+                    ship.x = 1
+                    ship.y = id
+                else:
+                    ship.x = 0
+                    ship.y = id - 5
+
                 ship.direction = role.direction
-                y_index += 1
         # enemy role
         else:
-            y_index = 1
-            for ship in role.ships:
-                ship.x = 6
-                ship.y = y_index
+            for id, ship in enumerate(role.ships):
+                if id <= 4:
+                    ship.x = 8
+                    ship.y = id
+                else:
+                    ship.x = 9
+                    ship.y = id - 5
+
                 ship.direction = role.direction
-                y_index += 1
 
 def exit_battle(self, message_obj):
     my_ships = self.my_role.ships

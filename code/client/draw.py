@@ -482,6 +482,13 @@ def draw_not_logged_in_state(self):
     self.ui_manager.draw_ui(self.screen_surface)
 
     # hide password
+    _hide_password(self)
+
+    # hide parts of ui
+    self.screen_surface.blit(self.images['login_bg'], (200 + 55, c.WINDOW_HIGHT - 30))
+    self.screen_surface.blit(self.images['login_bg'], (-c.WINDOW_WIDTH + 145 + 55, c.WINDOW_HIGHT - 30))
+
+def _hide_password(self):
     if len(self.active_input_boxes) == 2:
         # surface covering passwords
         entry_box_width = 150
@@ -502,12 +509,6 @@ def draw_not_logged_in_state(self):
         else:
             asterisks_text = '*' * len(text_in_entry_box)
         draw_text(self, asterisks_text, 300 - 70, 300 - 160, c.WHITE)
-
-
-
-    # hide parts of ui
-    self.screen_surface.blit(self.images['login_bg'], (200 + 55, c.WINDOW_HIGHT - 30))
-    self.screen_surface.blit(self.images['login_bg'], (-c.WINDOW_WIDTH + 145 + 55, c.WINDOW_HIGHT - 30))
 
 def blit_text(surface, text, pos, font, color=pygame.Color('black')):
     """draws text block in multiple lines"""
