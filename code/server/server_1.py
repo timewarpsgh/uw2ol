@@ -28,6 +28,7 @@ class Echo(Protocol):
         super(Echo).__init__()
         self.factory = factory
         self.my_role = None
+        self.account = None
 
     def connectionMade(self):
         print("new connection!")

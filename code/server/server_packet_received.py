@@ -54,10 +54,14 @@ def register(self, message_obj):
 
 def create_new_role(self, message_obj):
     name = message_obj[0]
-    account = self.account
 
-    d = threads.deferToThread(self.factory.db.create_character, account, name)
-    d.addCallback(self.on_create_character_got_result)
+    # already logged in
+    if self.account:
+        account = self.account
+        d = threads.deferToThread(self.factory.db.create_character, account, name)
+        d.addCallback(self.on_create_character_got_result)
+    else:
+        self.send('must_login_first', '')
 
 def login(self, message_obj):
     # get ac and psw

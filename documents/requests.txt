@@ -9,6 +9,9 @@ by function
 
         login scene 1 OK
 
+        create character bug OK
+
+        password can't see ON
 
 
     sounds LATER

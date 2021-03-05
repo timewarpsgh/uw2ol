@@ -38,6 +38,9 @@ def account_exists(self, message_obj):
     print('account_exists')
 
 # make character response
+def must_login_first(self, message_obj):
+    self.login_state_text = "Must login first to create character."
+
 def new_role_created(self, message_obj):
     self.login_state_text = 'Character created! Please login again.'
 
