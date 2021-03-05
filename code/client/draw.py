@@ -380,6 +380,8 @@ def draw_my_ships(self):
                 self.screen_surface.blit(ship_image, (x, y), ship_rect)
 
             # ship number
+            draw_ship_number_bg(ship_image)
+
             if ship.crew > 0:
                 draw_text(self, str(index-1), x, y, c.WHITE)
 
@@ -402,6 +404,12 @@ def draw_my_ships(self):
                 # target
                 draw_text(self, str(ship.target), 130, (20 + index * 20), c.CRIMSON)
 
+def draw_ship_number_bg(ship_image):
+    ship_number_bg = pygame.Surface((10, 20))
+    ship_number_bg.fill(c.BLUE)
+    number_bg_rect = ship_number_bg.get_rect()
+    ship_image.blit(ship_number_bg, number_bg_rect)
+
 def draw_enemy_ships(self):
     # enemy ships
     index = 0
@@ -411,7 +419,7 @@ def draw_enemy_ships(self):
             index += 1
 
             # ship
-            ship_image = self.images['ship_in_battle'][ship.direction]
+            ship_image = self.images['enemy_ship_in_battle'][ship.direction]
             ship_rect = ship_image.get_rect()
 
             x = self.screen_surface_rect.centerx - (flag_ship.x - ship.x) * c.BATTLE_TILE_SIZE
@@ -420,8 +428,10 @@ def draw_enemy_ships(self):
             self.screen_surface.blit(ship_image, (x, y), ship_rect)
 
             # ship number
+            draw_ship_number_bg(ship_image)
+
             if ship.crew > 0:
-                draw_text(self, str(index - 1), x, y, c.BLACK)
+                draw_text(self, str(index - 1), x, y, c.YELLOW)
 
             # ships stats
 

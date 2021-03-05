@@ -9,10 +9,15 @@ by function
 
         normal battle 10 v 10 OK
         npc equipments OK
+        initial dist OK
+
+        enemy ships look different ON
+
+        draw battle states after ships ON
+
+        trying all_ships_operate for 1 issue ON
 
 
-
-        initial dist ON
 
         walk in disappear bug ON
 

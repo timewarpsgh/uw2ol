@@ -100,6 +100,11 @@ class Game():
         self.images['ship_in_battle'] = {}
         load_all_images(self.images['ship_in_battle'],
                         "../../assets/images/ship_in_battle")
+
+        self.images['enemy_ship_in_battle'] = {}
+        load_all_images(self.images['enemy_ship_in_battle'],
+                        "../../assets/images/ship_in_battle/enemy")
+
         # world map grids
         self.images['world_map_grids'] = pygame.image.load\
             ("../../assets/images/world_map/world_map_grids.png").convert_alpha()
