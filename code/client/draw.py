@@ -480,14 +480,14 @@ def draw_not_logged_in_state(self):
 
     # arrow
     arrow_surface = self.font.render('V', True, c.BLACK)
-    self.screen_surface.blit(arrow_surface, (160, c.WINDOW_HIGHT - 50))
+    self.screen_surface.blit(arrow_surface, (160 + 55, c.WINDOW_HIGHT - 50))
 
     # ui
     self.ui_manager.draw_ui(self.screen_surface)
 
     # hide parts of ui
-    self.screen_surface.blit(self.images['login_bg'], (200, c.WINDOW_HIGHT - 30))
-    self.screen_surface.blit(self.images['login_bg'], (-c.WINDOW_WIDTH + 145, c.WINDOW_HIGHT - 30))
+    self.screen_surface.blit(self.images['login_bg'], (200 + 55, c.WINDOW_HIGHT - 30))
+    self.screen_surface.blit(self.images['login_bg'], (-c.WINDOW_WIDTH + 145 + 55, c.WINDOW_HIGHT - 30))
 
 def blit_text(surface, text, pos, font, color=pygame.Color('black')):
     """draws text block in multiple lines"""

@@ -49,9 +49,10 @@ def init_gui(self):
     _init_button(self, {'Items': self.button_click_handler.on_button_click_items}, 3)
     _init_button(self, {'Cmds': self.button_click_handler.cmds}, 4)
     _init_button(self, {'Options': self.button_click_handler.options}, 5)
-    _init_button(self, {'Port': self.button_click_handler.port}, 6)
-    _init_button(self, {'Battle': self.button_click_handler.battle}, 7)
-    _init_button(self, {'Login': self.button_click_handler.login}, 8)
+    _init_button(self, {'Battle': self.button_click_handler.battle}, 6)
+    _init_button(self, {'Login': self.button_click_handler.login}, 7)
+    if c.DEVELOPER_MODE_ON:
+        _init_button(self, {'Port': self.button_click_handler.port}, 8)
 
     self.buttons_in_windows = {}
 
@@ -76,6 +77,7 @@ def _init_button(self, dict, position):
 
     # add to buttons dict
     self.buttons[button] = function
+
 
 class MessageWindow(pygame_gui.elements.UIWindow):
     def __init__(self, rect, ui_manager, text, game):
@@ -481,7 +483,7 @@ class ButtonClickHandler():
             dict = {
                 'Login': self.menu_click_handler.login.login,
                 'Register': self.menu_click_handler.login.register,
-                'Make Character': self.menu_click_handler.login.make_character,
+                'Create Character': self.menu_click_handler.login.make_character,
             }
             self.make_menu(dict)
 

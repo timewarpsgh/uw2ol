@@ -50,7 +50,9 @@ def login_failed(self, message_obj):
     print('account_exists')
 
 def no_role_yet(self, message_obj):
-    self.login_state_text = "Login successful! Please create a character. Don't use a number as your name."
+    self.login_state_text = "Login successful! " \
+                            "Please create a character. " \
+                            "Don't use a number as your name."
 
 def your_role_data_and_others(self, message_obj):
     # my role

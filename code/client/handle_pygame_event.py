@@ -54,33 +54,34 @@ def key_down(self, event):
                 self.connection.send('login', [chr(event.key), chr(event.key)])
 
 def mouse_button_down(self, event):
-    # left button
-    if event.button == 1:
-        # in battle
-        if self.my_role.is_in_battle():
-            for s in self.mark_sprites:
-                if s.rect.collidepoint(event.pos):
-                    s.clicked()
-        # not in battle
-        else:
+    if self.my_role:
+        # left button
+        if event.button == 1:
+            # in battle
+            if self.my_role.is_in_battle():
+                for s in self.mark_sprites:
+                    if s.rect.collidepoint(event.pos):
+                        s.clicked()
+            # not in battle
+            else:
+                if self.other_roles_rects:
+                    # set target
+                    for name, rect in self.other_roles_rects.items():
+                        if rect.collidepoint(event.pos):
+                            self.my_role.enemy_name = name
+                            print('target set to:', name)
+                            return
+
+        # right button
+        elif event.button == 3:
             if self.other_roles_rects:
                 # set target
                 for name, rect in self.other_roles_rects.items():
                     if rect.collidepoint(event.pos):
                         self.my_role.enemy_name = name
                         print('target set to:', name)
+                        gui.target_clicked(self)
                         return
-
-    # right button
-    elif event.button == 3:
-        if self.other_roles_rects:
-            # set target
-            for name, rect in self.other_roles_rects.items():
-                if rect.collidepoint(event.pos):
-                    self.my_role.enemy_name = name
-                    print('target set to:', name)
-                    gui.target_clicked(self)
-                    return
 
 def user_defined_events(self, event):
     if event.type == EVENT_MOVE:
@@ -236,14 +237,6 @@ def _in_battle_keys(self, event):
     elif event.key == ord('i'):
         self.change_and_send('set_all_ships_attack_method', [1])
 
-    # flagship
-    elif event.key == ord('w'):
-        self.change_and_send('flagship_move', ['continue'])
-    elif event.key == ord('q'):
-        self.change_and_send('flagship_move', ['left'])
-    elif event.key == ord('e'):
-        self.change_and_send('flagship_move', ['right'])
-
 def get_nearby_port_index(self):
     # get x and y in tile position
     x_tile = self.my_role.x / c.PIXELS_COVERED_EACH_MOVE
@@ -271,13 +264,14 @@ def start_moving_left(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
 
 def key_up(self, event):
-    key = chr(event.key)
-    # stop moving
-    if key in ['w', 's', 'a', 'd', 'e', 'q', 'z', 'x']:
-        try:
-            self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])
-        except:
-            pass
+    if not self.text_entry_active:
+        key = chr(event.key)
+        # stop moving
+        if key in ['w', 's', 'a', 'd', 'e', 'q', 'z', 'x']:
+            try:
+                self.change_and_send('stop_move', [self.my_role.x, self.my_role.y])
+            except:
+                pass
 
 def user_event_move(self, event):
     if self.my_role:

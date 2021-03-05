@@ -6,6 +6,10 @@ by function
     fight ON
 
         draw gui after sprites OK
+        normal battle 10 v 10 ON
+
+        speak conflict hot keys OK
+
 
 
     sounds LATER
