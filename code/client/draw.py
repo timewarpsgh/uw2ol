@@ -481,6 +481,30 @@ def draw_not_logged_in_state(self):
     # ui
     self.ui_manager.draw_ui(self.screen_surface)
 
+    # hide password
+    if len(self.active_input_boxes) == 2:
+        # surface covering passwords
+        entry_box_width = 150
+        entry_box_height = 25
+        surface = pygame.Surface((entry_box_width, entry_box_height))
+        surface.fill(c.BLACK)
+        rect = surface.get_rect()
+        rect.x = 300 - 70 - 3
+        rect.y = 300 - 160 - 5
+        self.screen_surface.blit(surface, rect)
+
+        # asterisks
+        pwd_entry_box = self.active_input_boxes[-1]
+        text_in_entry_box = pwd_entry_box.get_text()
+
+        if pwd_entry_box.focused:
+            asterisks_text = '*' * len(text_in_entry_box) + '|'
+        else:
+            asterisks_text = '*' * len(text_in_entry_box)
+        draw_text(self, asterisks_text, 300 - 70, 300 - 160, c.WHITE)
+
+
+
     # hide parts of ui
     self.screen_surface.blit(self.images['login_bg'], (200 + 55, c.WINDOW_HIGHT - 30))
     self.screen_surface.blit(self.images['login_bg'], (-c.WINDOW_WIDTH + 145 + 55, c.WINDOW_HIGHT - 30))

@@ -132,6 +132,9 @@ def escape(self, event):
     # deactivate text entry
     self.text_entry_active = False
 
+    # clear input boxes
+    self.active_input_boxes.clear()
+
 def other_keys_down(self, event):
     # not in battle
     if not self.my_role.is_in_battle():

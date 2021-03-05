@@ -1,6 +1,2 @@
-a = list(range(10))
-
-
-a = a[:8]
-
+a = '*' * 3
 print(a)

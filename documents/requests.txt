@@ -11,7 +11,7 @@ by function
 
         create character bug OK
 
-        password can't see ON
+        password can't see OK
 
 
     sounds LATER
