@@ -20,6 +20,7 @@ def draw(self):
         draw_logged_in_state(self)
         self.all_sprites.update()
         self.mark_sprites.update()
+        self.ui_manager.draw_ui(self.screen_surface)
     else:
         draw_not_logged_in_state(self)
 
@@ -114,9 +115,6 @@ def draw_logged_in_state(self):
 
     # draw speach
     draw_speech(self)
-
-    # draw ui
-    self.ui_manager.draw_ui(self.screen_surface)
 
 def draw_hud(self):
     # left hud

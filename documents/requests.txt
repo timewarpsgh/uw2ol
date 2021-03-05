@@ -5,10 +5,7 @@ by function
 
     fight ON
 
-        in battle, when ship has no captain -> escape OK
-        only me left bug OK
-
-        can't win more than 10 ships OK
+        draw gui after sprites OK
 
 
     sounds LATER
