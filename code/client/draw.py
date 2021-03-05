@@ -478,10 +478,6 @@ def draw_not_logged_in_state(self):
     text_surface = self.font.render(self.login_state_text, True, c.BLACK)
     self.screen_surface.blit(text_surface, (5, 5))
 
-    # arrow
-    arrow_surface = self.font.render('V', True, c.BLACK)
-    self.screen_surface.blit(arrow_surface, (160 + 55, c.WINDOW_HIGHT - 50))
-
     # ui
     self.ui_manager.draw_ui(self.screen_surface)
 

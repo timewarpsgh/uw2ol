@@ -72,7 +72,7 @@ class Game():
         self.days_spent_at_sea = 0
         self.time_of_day = 'day'
         self.building_text = ''
-        self.login_state_text = 'Please login or register.'
+        self.login_state_text = ''
         self.other_roles_rects = {}
 
     def _init_maps(self):

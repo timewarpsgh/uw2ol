@@ -50,7 +50,7 @@ def init_gui(self):
     _init_button(self, {'Cmds': self.button_click_handler.cmds}, 4)
     _init_button(self, {'Options': self.button_click_handler.options}, 5)
     _init_button(self, {'Battle': self.button_click_handler.battle}, 6)
-    _init_button(self, {'Login': self.button_click_handler.login}, 7)
+    _init_button(self, {'Sail': self.button_click_handler.login}, 7)
     if c.DEVELOPER_MODE_ON:
         _init_button(self, {'Port': self.button_click_handler.port}, 8)
 
@@ -2287,8 +2287,10 @@ def target_clicked(self):
     dict = {
         'View Fleet': self.button_click_handler.menu_click_handler.target.view_fleet,
         'View Ships': self.button_click_handler.menu_click_handler.target.view_ships,
-        'Gossip': self.button_click_handler.menu_click_handler.target.gossip,
     }
+    if self.my_role.get_enemy_role().is_npc():
+        dict['Gossip'] = self.button_click_handler.menu_click_handler.target.gossip
+
     self.button_click_handler.make_menu(dict)
 
 def figure_x_y_2_image(game, x=8, y=8):
