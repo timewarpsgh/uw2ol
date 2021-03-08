@@ -248,11 +248,11 @@ def _change_map_to_port(self, target_map, message_obj):
 def try_to_fight_with(self, message_obj):
     """enter battle with someone"""
     enemy_name = message_obj[0]
+
     if enemy_name.isdigit():
         _try_to_fight_with_npc(self, enemy_name)
     else:
         _try_to_fight_with_player(self, enemy_name)
-
 
 def _try_to_fight_with_player(self, enemy_name):
     # gets
@@ -267,7 +267,7 @@ def _try_to_fight_with_player(self, enemy_name):
     enemy_role.enemy_name = my_role.name
 
     # can fight
-    if 1:
+    if enemy_role.ships:
         '''both enter battle map'''
         print('can go battle!')
 

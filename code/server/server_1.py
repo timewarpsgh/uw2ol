@@ -1,5 +1,6 @@
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet import reactor, threads, defer, task
+from twisted.internet.task import LoopingCall
 
 # add relative directory to python_path
 import sys, os
@@ -37,20 +38,45 @@ class Echo(Protocol):
 
     def connectionLost(self, reason):
         print("connection lost!")
-        if self.my_role:
-            # get current map
-            my_map = str(self.my_role.map)
+        my_role = self.my_role
+        if my_role:
+            if my_role.is_in_port():
+                self._log_role_out()
 
-            # if not in battle
-            if my_map.isdigit() or my_map == 'sea':
-                pass
-            # if in battle
-            else:
-                server_packet_received.exit_battle(self, '')
+            elif my_role.is_at_sea():
+                reactor.callLater(5, self._lost_conn_when_at_sea)
 
+            elif my_role.is_in_battle():
+                self.auto_fight_loop = LoopingCall(self.__auto_fight)
+                self.auto_fight_loop.start(10)
+
+    def _lost_conn_when_at_sea(self):
+        my_role = self.my_role
+        if my_role.is_at_sea() or my_role.is_in_port():
+            # back to prev port
+            server_packet_received.change_map(self, ['29'])
             self._log_role_out()
+        elif my_role.is_in_battle:
+            self.auto_fight_loop = LoopingCall(self.__auto_fight)
+            self.auto_fight_loop.start(10)
+
+    def __auto_fight(self):
+        if self.auto_fight_loop.running:
+            my_role = self.my_role
+
+            if my_role.is_in_battle():
+                if my_role.your_turn_in_battle:
+                    server_packet_received.process_packet(self, 'all_ships_operate', [])
+            elif my_role.is_in_port():
+                self._log_role_out()
+                self.auto_fight_loop.stop()
+            elif my_role.is_at_sea():
+                server_packet_received.change_map(self, ['29'])
+                self._log_role_out()
+                self.auto_fight_loop.stop()
 
     def _log_role_out(self):
+        print(f'logging role out. {self.my_role.name}')
         # set online to false
         account = self.account
         d = threads.deferToThread(self.factory.db.set_online_to_false, account)

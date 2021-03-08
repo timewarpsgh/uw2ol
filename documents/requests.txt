@@ -3,18 +3,34 @@ by function
     discover OK
     trade OK
 
-
     fight ON
-
         enemy ships look different OK
         trying all_ships_operate for 1 issue OK
         walk in disappear bug OK
 
 
-	lost connection 
+    move faster in battle ON
+
+	lost connection  OK
 		in port
+		    save
 		at sea
+
+		    10s later:
+		        if still at sea:
+                    back to prev port
+                if in battle:
+                    auto fight
+		                win-> back to prev port, log out
+		                lost -> back to port, log out
+
 		in battle
+		    auto fight
+                    win-> back to prev port, log out
+                    lost -> back to port, log out
+
+
+    prev port ON
 
     sounds LATER
 

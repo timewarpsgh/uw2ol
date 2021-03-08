@@ -987,7 +987,15 @@ class Role:
             reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
 
         # server controled npc won
-        if self.is_in_server() and self.is_npc():
+        elif self.is_in_server() and self.is_npc():
+            print('exiting battle!!!!!!!')
+            battle_map = Role.AOI_MANAGER.get_battle_map_by_player_map(self.map)
+            all_players_in_battle = battle_map.get_all_players_inside()
+            enemy_conn = all_players_in_battle[self.enemy_name]
+            exit_battle(enemy_conn, '')
+
+        # server controlled player won
+        elif self.is_in_server() and not self.is_npc():
             print('exiting battle!!!!!!!')
             battle_map = Role.AOI_MANAGER.get_battle_map_by_player_map(self.map)
             all_players_in_battle = battle_map.get_all_players_inside()
