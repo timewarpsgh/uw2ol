@@ -74,6 +74,11 @@ class Game():
         self.building_text = ''
         self.login_state_text = ''
         self.other_roles_rects = {}
+        self.my_role_rect = pygame.Rect(self.screen_surface_rect.width/2,
+                                        self.screen_surface_rect.height/2,
+                                        c.SHIP_SIZE_IN_PIXEL,
+                                        c.SHIP_SIZE_IN_PIXEL
+                                        )
 
     def _init_maps(self):
         # maps

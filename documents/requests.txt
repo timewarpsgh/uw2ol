@@ -11,7 +11,9 @@ by function
 
     set target to none OK
 
+    view enemy ships ON
 
+    npc fleet rebirth, same fleet ON
 
 
 
