@@ -428,13 +428,16 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
         else:
             x_positions = set(range(10))
             y_positions = set(range(10))
+            x_sign = random.choice([1, -1])
+            y_sign = random.choice([1, -1])
+
             for id, ship in enumerate(role.ships):
                 x_pos = random.choice(list(x_positions))
                 x_positions.remove(x_pos)
-                ship.x = x_pos + 10
+                ship.x = x_pos + 10 * x_sign
 
                 y_pos = random.choice(list(y_positions))
-                ship.y = y_pos + 10
+                ship.y = y_pos + 10 * y_sign
 
                 ship.direction = role.direction
 

@@ -5,9 +5,10 @@ by function
 
     fight ON
 
-        initial positions ON
+        initial positions OK
 
-    best ship image OK
+
+
 
 
     sounds LATER
