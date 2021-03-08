@@ -75,6 +75,8 @@ def login(self, message_obj):
 def grid_change(self, messgage_obj):
     new_grid_id = messgage_obj[0]
     direction = messgage_obj[1]
+    now_x = messgage_obj[2]
+    now_y = messgage_obj[3]
 
     # change my grid
     map = self.factory.aoi_manager.get_map_by_player(self.my_role)
@@ -123,6 +125,10 @@ def grid_change(self, messgage_obj):
                 pass
             else:
                 conn.send('new_role', self.my_role)
+
+    # tell roles in new grids that i started moving
+    process_packet(self, 'start_move', [now_x, now_y, direction])
+
 
 def change_map(self, message_obj):
     # get now_map and target_map

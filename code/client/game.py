@@ -205,7 +205,9 @@ class Game():
                 my_role.grid_id = now_grid_id
                 print(f"grid change to {now_grid_id}!!!!!!")
                 self.connection.send('grid_change',
-                                     [now_grid_id, my_role.direction])
+                                     [now_grid_id, my_role.direction,
+                                      x_tile_pos * c.PIXELS_COVERED_EACH_MOVE,
+                                      y_tile_pos * c.PIXELS_COVERED_EACH_MOVE])
 
             my_role.speed_counter = 0
 

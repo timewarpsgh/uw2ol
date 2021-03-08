@@ -7,13 +7,8 @@ by function
     fight ON
 
         enemy ships look different OK
-
-
         trying all_ships_operate for 1 issue OK
-
-
-
-        walk in disappear bug ON
+        walk in disappear bug OK
 
 
 	lost connection 
