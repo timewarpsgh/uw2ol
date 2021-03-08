@@ -413,8 +413,8 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
     for role in roles_in_battle.values():
         # my role
         if role.name == my_name:
-            x_positions = set(range(10))
-            y_positions = set(range(10))
+            x_positions = set(range(45, 55))
+            y_positions = set(range(45, 55))
             for id, ship in enumerate(role.ships):
                 x_pos = random.choice(list(x_positions))
                 x_positions.remove(x_pos)
@@ -426,8 +426,8 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
                 ship.direction = role.direction
         # enemy role
         else:
-            x_positions = set(range(10))
-            y_positions = set(range(10))
+            x_positions = set(range(45, 55))
+            y_positions = set(range(45, 55))
             x_sign = random.choice([1, -1])
             y_sign = random.choice([1, -1])
 

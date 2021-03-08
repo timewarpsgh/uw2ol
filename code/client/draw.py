@@ -404,6 +404,33 @@ def draw_my_ships(self):
                 # target
                 draw_text(self, str(ship.target), 130, (20 + index * 20), c.CRIMSON)
 
+            # battle map
+            battle_map_surface = pygame.Surface((100, 100))
+            battle_map_rect = battle_map_surface.get_rect()
+
+                # my ships
+            SHIP_DOT_SIZE = 2
+            ship_dot_surface = pygame.Surface((SHIP_DOT_SIZE, SHIP_DOT_SIZE))
+            ship_dot_rect = ship_dot_surface.get_rect()
+            ship_dot_surface.fill(c.YELLOW)
+            for ship in self.my_role.ships:
+                x = (ship.x - 35) * 3
+                y = (ship.y - 35) * 3
+
+                battle_map_surface.blit(ship_dot_surface, (x, y), ship_dot_rect)
+
+                # enemy ships
+            ship_dot_surface_1 = pygame.Surface((SHIP_DOT_SIZE, SHIP_DOT_SIZE))
+            ship_dot_rect_1 = ship_dot_surface.get_rect()
+            ship_dot_surface_1.fill(c.RED)
+            for ship in self.my_role.get_enemy_role().ships:
+                x = (ship.x - 35) * 3
+                y = (ship.y - 35) * 3
+                battle_map_surface.blit(ship_dot_surface_1, (x, y), ship_dot_rect_1)
+
+                # draw battle map
+            self.screen_surface.blit(battle_map_surface, (15, 250), battle_map_rect)
+
 def draw_ship_number_bg(ship_image):
     ship_number_bg = pygame.Surface((10, 20))
     ship_number_bg.fill(c.BLUE)

@@ -1455,7 +1455,7 @@ class Ship:
                 seamanship = self.captain.chief_navigator.seamanship
             else:
                 seamanship = self.captain.seamanship
-            max_steps = int((self.tacking + self.power + seamanship) / 40)
+            max_steps = int((self.tacking + self.power + seamanship) / 40) - 1
             return max_steps
 
         # no captain
@@ -1519,7 +1519,12 @@ class Ship:
         return self.can_move(self.direction)
 
     def move(self, direction):
-        # bsics
+        if direction in {'up', 'down', 'left', 'right'}:
+            self._basic_move(direction)
+        else:
+            self._additional_move(direction)
+
+    def _basic_move(self, direction):
         if direction == 'up':
             self.y -= 1
             self.direction = 'up'
@@ -1533,8 +1538,10 @@ class Ship:
             self.x += 1
             self.direction = 'right'
 
-        # more directs
-        elif direction == 'ne':
+        self.steps_left -= 1
+
+    def _additional_move(self, direction):
+        if direction == 'ne':
             self.x += 1
             self.y -= 1
             self.direction = 'ne'
@@ -1551,7 +1558,7 @@ class Ship:
             self.y += 1
             self.direction = 'sw'
 
-        self.steps_left -= 1
+        self.steps_left -= 1.5
 
     def can_move(self, direction):
         # get future x,y

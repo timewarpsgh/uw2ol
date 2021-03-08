@@ -9,6 +9,7 @@ by function
         escape distance ++ OK
         next ship interval OK
 
+        in battle map 1
 
 
 
