@@ -6,6 +6,8 @@ by function
     fight ON
 
         initial positions OK
+        escape distance ++ OK
+        next ship interval OK
 
 
 

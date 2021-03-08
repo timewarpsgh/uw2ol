@@ -975,16 +975,19 @@ class Role:
 
             # exit if in client and have ships left (the winner sends exit_battle message to server)
             if Role.GAME:
-                reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
+                reactor.callLater(1, Role.GAME.connection.send,
+                                  'exit_battle', [])
 
         # else
         else:
             # my next ship
             if (i + 1) <= (len(self.ships) - 1):
-                reactor.callLater(1, self._pick_one_ship_to_attack, [i + 1, enemy_ships])
+                reactor.callLater(c.NEXT_SHIP_TIME_INVERVAL,
+                                  self._pick_one_ship_to_attack,
+                                  [i + 1, enemy_ships])
             # enemy turn
             else:
-                reactor.callLater(1, self._change_turn)
+                reactor.callLater(c.NEXT_SHIP_TIME_INVERVAL, self._change_turn)
 
     def _won_after_attack_ship(self):
         # player won
