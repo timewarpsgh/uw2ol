@@ -6,21 +6,20 @@ by function
 
     fight ON
 
+        enemy ships look different OK
 
-        normal battle 10 v 10 OK
-        npc equipments OK
-        initial dist OK
 
-        enemy ships look different ON
-
-        draw battle states after ships ON
-
-        trying all_ships_operate for 1 issue ON
+        trying all_ships_operate for 1 issue OK
 
 
 
         walk in disappear bug ON
 
+
+	lost connection 
+		in port
+		at sea
+		in battle
 
     sounds LATER
 

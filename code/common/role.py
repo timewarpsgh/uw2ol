@@ -859,6 +859,9 @@ class Role:
             self._all_ships_do_operate(include_flagship)
 
     def _all_ships_do_operate(self, include_flagship):
+        # stop my turn
+        self.your_turn_in_battle = False
+
         # get my and enemy ships
         enemy_ships = self._get_other_role_by_name(self.enemy_name).ships
         my_ships = self.ships
@@ -872,9 +875,6 @@ class Role:
                 self._pick_one_ship_to_attack([1, enemy_ships])
             else:
                 self._change_turn()
-
-        # stop my turn
-        self.your_turn_in_battle = False
 
     def set_one_ships_strategy(self, params):
         # params

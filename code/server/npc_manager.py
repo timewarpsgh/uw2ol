@@ -41,7 +41,9 @@ class NpcManager:
             # in battle
             else:
                 if npc.your_turn_in_battle:
-                    self._npc_change_and_send('all_ships_operate', [name], npc.map)
+                    reactor.callLater(1, self._npc_change_and_send, 'all_ships_operate', [name], npc.map)
+                    # self._npc_change_and_send('all_ships_operate', [name], npc.map)
+
 
     def _random_move(self, npc):
         random_direction = random.choice(['up', 'down', 'right', 'left'])
