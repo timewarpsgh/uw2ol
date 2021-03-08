@@ -54,7 +54,8 @@ class Echo(Protocol):
         my_role = self.my_role
         if my_role.is_at_sea() or my_role.is_in_port():
             # back to prev port
-            server_packet_received.change_map(self, ['29'])
+            prev_port_str = str(my_role.prev_port_map_id)
+            server_packet_received.change_map(self, [prev_port_str])
             self._log_role_out()
         elif my_role.is_in_battle:
             self.auto_fight_loop = LoopingCall(self.__auto_fight)
@@ -71,7 +72,8 @@ class Echo(Protocol):
                 self._log_role_out()
                 self.auto_fight_loop.stop()
             elif my_role.is_at_sea():
-                server_packet_received.change_map(self, ['29'])
+                prev_port_str = str(my_role.prev_port_map_id)
+                server_packet_received.change_map(self, [prev_port_str])
                 self._log_role_out()
                 self.auto_fight_loop.stop()
 

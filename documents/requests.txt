@@ -8,9 +8,6 @@ by function
         trying all_ships_operate for 1 issue OK
         walk in disappear bug OK
 
-
-    move faster in battle OK
-
 	lost connection  OK
 		in port
 		    save
@@ -30,7 +27,10 @@ by function
                     lost -> back to port, log out
 
 
-    prev port ON
+    go back to prev port OK
+        just logged in
+        entered port
+            role.prev_port_map_id = ...
 
     sounds LATER
 

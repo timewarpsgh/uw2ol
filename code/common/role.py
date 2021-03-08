@@ -74,6 +74,7 @@ class Role:
         self.name = name
         self.enemy_name = None
         self.map = '29'
+        self.prev_port_map_id = int(self.map)
         self.in_building_type = None
         self.your_turn_in_battle = False
         self.max_days_at_sea = 0
@@ -82,6 +83,7 @@ class Role:
         self.gold = gold
         self.bank_gold = 2000
         self.target_name = ''
+
 
     def _init_instance_containers(self):
         self.ships = []

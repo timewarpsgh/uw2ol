@@ -245,6 +245,9 @@ def _change_map_to_port(self, target_map, message_obj):
     # set additional days at sea to 0 (so that potions can be used again)
     self.my_role.additioanl_days_at_sea = 0
 
+    # store prev port map id
+    self.my_role.prev_port_map_id = int(target_map)
+
 def try_to_fight_with(self, message_obj):
     """enter battle with someone"""
     enemy_name = message_obj[0]

@@ -66,6 +66,7 @@ def your_role_data_and_others(self, message_obj):
 
     if my_role.map.isdigit():
         port_index = int(my_role.map)
+        my_role.prev_port_map_id = port_index
         self.port_piddle, self.images['port'] = self.map_maker.make_port_piddle_and_map(port_index, self.time_of_day)
 
         # normal ports
