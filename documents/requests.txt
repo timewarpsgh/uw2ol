@@ -7,7 +7,7 @@ by function
 
         initial positions ON
 
-
+    best ship image OK
 
 
     sounds LATER
