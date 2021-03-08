@@ -607,7 +607,10 @@ class Role:
 
         # choose attack method
         d_dead = False
-        attack_method = self._choose_attack_method(my_ship, target_ship)
+        if self.is_npc():
+            attack_method = 'shoot'
+        else:
+            attack_method = self._choose_attack_method(my_ship, target_ship)
 
         # npc or my other ships
         if self.is_npc() or my_ship_id >= 1:

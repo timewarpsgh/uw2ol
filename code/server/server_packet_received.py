@@ -1,5 +1,6 @@
 from twisted.internet.protocol import Protocol, Factory
 from twisted.internet import reactor, threads, defer
+import random
 
 # add relative directory to python_path
 import sys, os
@@ -412,24 +413,28 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
     for role in roles_in_battle.values():
         # my role
         if role.name == my_name:
+            x_positions = set(range(10))
+            y_positions = set(range(10))
             for id, ship in enumerate(role.ships):
-                if id <= 4:
-                    ship.x = 1
-                    ship.y = id
-                else:
-                    ship.x = 0
-                    ship.y = id - 5
+                x_pos = random.choice(list(x_positions))
+                x_positions.remove(x_pos)
+                ship.x = x_pos
+
+                y_pos = random.choice(list(y_positions))
+                ship.y = y_pos
 
                 ship.direction = role.direction
         # enemy role
         else:
+            x_positions = set(range(10))
+            y_positions = set(range(10))
             for id, ship in enumerate(role.ships):
-                if id <= 4:
-                    ship.x = 8
-                    ship.y = id
-                else:
-                    ship.x = 9
-                    ship.y = id - 5
+                x_pos = random.choice(list(x_positions))
+                x_positions.remove(x_pos)
+                ship.x = x_pos + 10
+
+                y_pos = random.choice(list(y_positions))
+                ship.y = y_pos + 10
 
                 ship.direction = role.direction
 

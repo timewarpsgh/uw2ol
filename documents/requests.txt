@@ -4,16 +4,9 @@ by function
     trade OK
 
     fight ON
-        enemy ships look different OK
-        trying all_ships_operate for 1 issue OK
-        walk in disappear bug OK
 
+        initial positions ON
 
-    set target to none OK
-
-    view enemy ships ON
-
-    npc fleet rebirth, same fleet ON
 
 
 
