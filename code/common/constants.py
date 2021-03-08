@@ -16,6 +16,7 @@ SHOOT_RANGE_IN_BATTLE = 400 # 4
 SHOOT_DAMAGE = 100 # 1
 
 ESCAPE_DISTANCE = 10
+BATTLE_MOVE_TIME_INVERVAL = 0.2
 
 # world configurables
 CAPTION = 'Uncharted Waters 2 Online'

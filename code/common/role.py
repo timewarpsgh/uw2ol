@@ -1614,7 +1614,7 @@ class Ship:
             if moved:
                 # if have steps
                 if self.steps_left >= 1:
-                    reactor.callLater(0.5, self.shoot_or_move_closer, ship, deferred)
+                    reactor.callLater(c.BATTLE_MOVE_TIME_INVERVAL, self.shoot_or_move_closer, ship, deferred)
                 # no more steps
                 else:
                     deferred.callback(False)
@@ -2025,7 +2025,7 @@ class Ship:
             if moved:
                 # if have steps
                 if self.steps_left >= 1:
-                    reactor.callLater(0.5, self.engage_or_move_closer, ship, deferred)
+                    reactor.callLater(c.BATTLE_MOVE_TIME_INVERVAL, self.engage_or_move_closer, ship, deferred)
                 # no more steps
                 else:
                     deferred.callback(False)
@@ -2083,7 +2083,7 @@ class Ship:
         if moved:
             # if have steps
             if self.steps_left >= 1:
-                reactor.callLater(0.5, self.move_away, ship, deferred)
+                reactor.callLater(c.BATTLE_MOVE_TIME_INVERVAL, self.move_away, ship, deferred)
             # no more steps
             else:
                 deferred.callback(False)

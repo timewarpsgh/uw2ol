@@ -9,7 +9,7 @@ by function
         walk in disappear bug OK
 
 
-    move faster in battle ON
+    move faster in battle OK
 
 	lost connection  OK
 		in port
