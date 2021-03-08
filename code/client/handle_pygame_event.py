@@ -66,11 +66,17 @@ def mouse_button_down(self, event):
             else:
                 if self.other_roles_rects:
                     # set target
+                    role_clicked = False
                     for name, rect in self.other_roles_rects.items():
                         if rect.collidepoint(event.pos):
                             self.my_role.enemy_name = name
                             print('target set to:', name)
-                            return
+                            role_clicked = True
+                            break
+
+                    if not role_clicked:
+                        self.my_role.enemy_name = None
+
 
         # right button
         elif event.button == 3:

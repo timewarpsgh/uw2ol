@@ -8,27 +8,12 @@ by function
         trying all_ships_operate for 1 issue OK
         walk in disappear bug OK
 
-	lost connection  OK
-		in port
-		    save
-		at sea
 
-		    10s later:
-		        if still at sea:
-                    back to prev port
-                if in battle:
-                    auto fight
-		                win-> back to prev port, log out
-		                lost -> back to port, log out
-
-		in battle
-		    auto fight
-                    win-> back to prev port, log out
-                    lost -> back to port, log out
+    set target to none OK
 
 
-    go back to prev port if starved OK
-            role.prev_port_map_id = ...
+
+
 
     sounds LATER
 
