@@ -1372,7 +1372,8 @@ class Harbor():
             # starved!
             else:
                 game.timer_at_sea.stop()
-                game.connection.send('change_map', ['29'])
+                prev_port_map_str = str(game.my_role.prev_port_map_id)
+                game.connection.send('change_map', [prev_port_map_str])
 
     def load_supply(self):
         self.game.building_text = "Everything is 5 coins each. " \

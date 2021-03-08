@@ -27,9 +27,7 @@ by function
                     lost -> back to port, log out
 
 
-    go back to prev port OK
-        just logged in
-        entered port
+    go back to prev port if starved OK
             role.prev_port_map_id = ...
 
     sounds LATER
