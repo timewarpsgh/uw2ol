@@ -2613,13 +2613,14 @@ def _generate_rand_cargo_name():
 
 def exit_battle(self, message_obj):
     """self is server echo"""
-    if self.my_role.is_in_battle():
-        # if enemy is npc
-        if self.my_role.is_enemy_npc():
-            _exit_battle_when_enemy_is_npc(self)
-        # if enemy is player
-        else:
-            _exit_battle_when_enemy_is_player(self)
+    if not type(self) is Role:
+        if self.my_role.is_in_battle():
+            # if enemy is npc
+            if self.my_role.is_enemy_npc():
+                _exit_battle_when_enemy_is_npc(self)
+            # if enemy is player
+            else:
+                _exit_battle_when_enemy_is_player(self)
 
 def _exit_battle_when_enemy_is_player(self):
     # gets

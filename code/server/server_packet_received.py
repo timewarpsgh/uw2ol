@@ -442,15 +442,16 @@ def _init_all_ships_positions_in_battle(my_name, roles_in_battle):
                 ship.direction = role.direction
 
 def exit_battle(self, message_obj):
-    my_ships = self.my_role.ships
-    enemy_ships = self.my_role.get_enemy_role().ships
+    if self.my_role.is_in_battle():
+        my_ships = self.my_role.ships
+        enemy_ships = self.my_role.get_enemy_role().ships
 
-    # won or lost
-    if not my_ships or not enemy_ships:
-        role.exit_battle(self, message_obj)
-    # in battle escape
-    elif self.my_role.can_escape():
-        role.exit_battle(self, message_obj)
+        # won or lost
+        if not my_ships or not enemy_ships:
+            role.exit_battle(self, message_obj)
+        # in battle escape
+        elif self.my_role.can_escape():
+            role.exit_battle(self, message_obj)
 
 def get_npc_info(self, message_obj):
     nation = message_obj[0]
