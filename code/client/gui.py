@@ -348,10 +348,14 @@ class ButtonClickHandler():
             reactor.callLater(delay, handle_pygame_event.escape, game, '')
 
     def make_menu(self, dict):
+        # make window
         SelectionListWindow(pygame.Rect((c.SELECTION_LIST_X, c.SELECTION_LIST_Y),
                                         (c.SELECTION_LIST_WIDTH, c.SELECTION_LIST_HIGHT)),
                             self.ui_manager,
                             dict, self.game)
+
+        # sound
+        self.game.sounds['wave'].play()
 
     def make_input_boxes(self, prtocol_name, params_list, values_list=[]):
         InputBoxWindow(pygame.Rect((59, 50), (350, 400)),

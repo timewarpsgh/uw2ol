@@ -6,16 +6,16 @@ by function
     fight LATER
 
 
-    sounds ON
+    sounds OK
         music OK
             login scene
             port
             sea
             battle
-        effect ON
+        effect OK
             shoot OK
             engage OK
-            buy, sell
+            buy, sell OK
 
 
 

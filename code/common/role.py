@@ -566,6 +566,7 @@ class Role:
                     item = Item(item_id)
                     self.GAME.button_click_handler.i_speak(f'We found {discovery.name} '
                                       f'and {item.name}! Got {c.EXP_PER_DISCOVERY} exp.')
+                    self.GAME.sounds['deal'].play()
             else:
                 if self.is_in_client_and_self():
                     self.GAME.button_click_handler.i_speak("Can't find anything.")
@@ -1023,8 +1024,14 @@ class Role:
                 ship = Ship(name, type)
                 # if can afford
                 if ship.price <= self.gold:
+                    # buy
                     self.ships.append(ship)
                     self.gold -= ship.price
+
+                    # sound
+                    if self.is_in_client_and_self():
+                        self.GAME.sounds['deal'].play()
+
                 # can't afford
                 else:
                     if self.is_in_client_and_self():
@@ -1038,6 +1045,11 @@ class Role:
             if self.ships[num].captain:
                 self.ships[num].captain.relieve_duty()
             del self.ships[num]
+
+            # sound
+            if self.is_in_client_and_self():
+                self.GAME.sounds['deal'].play()
+
             print('now ships:', len(self.ships))
 
     def repair_all(self, params):
@@ -1200,23 +1212,36 @@ class Role:
             # if ship has space to add cargo
             ship = self.ships[to_which_ship]
             if ship.can_add_cargo_or_supply(count):
-                # add cargo
-                ship.add_cargo(cargo_name, count)
-
-                # cut gold
+                # get total_cost
                 unit_price = port.get_commodity_buy_price(cargo_name)
                 buy_price_modifier = self.get_buy_price_modifier()
                 unit_price = int(unit_price * buy_price_modifier)
 
-                # has the right tax permit
+                    # has the right tax permit
                 right_tax_permit_id = nation_2_tax_permit_id[self.nation]
-
+                total_cost = 0
                 if right_tax_permit_id in self.bag.get_all_items_dict() and \
                         self.nation == self.mates[0].nation:
-                    self.gold -= count * unit_price
+                    total_cost = count * unit_price
                     self.bag.remove_item(right_tax_permit_id)
                 else:
-                    self.gold -= int(count * unit_price * 1.2)
+                    total_cost = int(count * unit_price * 1.2)
+
+                # can afford
+                if self.gold >= total_cost:
+                    self.gold -= total_cost
+                    ship.add_cargo(cargo_name, count)
+
+                    if self.is_in_client_and_self():
+                        self.GAME.sounds['deal'].play()
+                        msg = "Thank you!"
+                        self.GAME.button_click_handler.building_speak(msg)
+                # can't afford
+                else:
+                    if self.is_in_client_and_self():
+                        msg = "You don't have enough gold."
+                        self.GAME.button_click_handler.building_speak(msg)
+
 
                 print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
                 print(self.name, "gold:", self.gold)
@@ -1250,6 +1275,8 @@ class Role:
                 if self.is_in_client_and_self():
                     msg = f"Got {total_gold} gold coins and {total_exp} exp for {count} {cargo_name}"
                     self.GAME.button_click_handler.i_speak(msg)
+                    self.GAME.sounds['deal'].play()
+
 
 
     # harbor
@@ -1357,9 +1384,14 @@ class Role:
         item_id = params[0]
 
         if item_id in self.bag.get_all_items_dict():
+            # sell
             self.bag.remove_item(item_id)
             item = Item(item_id)
             self.gold += int(item.price / 2)
+
+            # sound
+            if self.is_in_client_and_self():
+                self.GAME.sounds['deal'].play()
 
     def buy_items(self, params):
         item_id = params[0]
@@ -1371,6 +1403,8 @@ class Role:
             if self.gold >= total_charge:
                 if self.bag.add_multiple_items(item_id, count):
                     self.gold -= total_charge
+                    if self.is_in_client_and_self():
+                        self.GAME.sounds['deal'].play()
 
 
 class Ship:
