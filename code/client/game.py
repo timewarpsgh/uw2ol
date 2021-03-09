@@ -135,6 +135,7 @@ class Game():
         self.sounds['shoot'] = pygame.mixer.Sound('../../assets/sounds/effect/shoot.ogg')
         self.sounds['engage'] = pygame.mixer.Sound('../../assets/sounds/effect/engage.ogg')
         self.sounds['explosion'] = pygame.mixer.Sound('../../assets/sounds/effect/explosion.ogg')
+        self.sounds['wave'] = pygame.mixer.Sound('../../assets/sounds/effect/wave.ogg')
 
     def _play_music(self):
         pygame.mixer.music.load('../../assets/sounds/music/login.ogg')

@@ -1539,6 +1539,7 @@ class Ship:
         return self.can_move(self.direction)
 
     def move(self, direction):
+        # move
         if direction in {'up', 'down', 'left', 'right'}:
             self._basic_move(direction)
         else:

@@ -3,28 +3,18 @@ by function
     discover OK
     trade OK
 
-    fight ON
-
-        initial positions OK
-        escape distance ++ OK
-        next ship interval OK
-
-        in battle map -> sprite OK
-        battle states -> sprite OK
-        developer can always escape OK
-        repair costs OK
+    fight LATER
 
 
-
-    sounds LATER
-        music
+    sounds ON
+        music OK
             login scene
             port
             sea
             battle
-        effect
-            shoot
-            engage
+        effect ON
+            shoot OK
+            engage OK
             buy, sell
 
 
