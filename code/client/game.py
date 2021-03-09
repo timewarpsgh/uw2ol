@@ -48,6 +48,8 @@ class Game():
         # load assets
         self._init_maps()
         self._load_assets()
+        self._load_sound_effects()
+        self._play_music()
 
         # sprite group
         self.all_sprites = pygame.sprite.Group()
@@ -127,6 +129,16 @@ class Game():
             ("../../assets/images/world_map/world_map_grids.png").convert_alpha()
         # fonts
         self.font = pygame.font.SysFont("Times New Roman", c.FONT_SIZE)
+
+    def _load_sound_effects(self):
+        self.sounds = {}
+        self.sounds['shoot'] = pygame.mixer.Sound('../../assets/sounds/effect/shoot.ogg')
+        self.sounds['engage'] = pygame.mixer.Sound('../../assets/sounds/effect/engage.ogg')
+        self.sounds['explosion'] = pygame.mixer.Sound('../../assets/sounds/effect/explosion.ogg')
+
+    def _play_music(self):
+        pygame.mixer.music.load('../../assets/sounds/music/login.ogg')
+        pygame.mixer.music.play()
 
     def update(self):
         """called each frame"""

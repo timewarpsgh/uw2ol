@@ -1362,6 +1362,10 @@ class Harbor():
             if len(self.game.menu_stack) >= 1:
                 escape_twice(self.game)
 
+            # music
+            pygame.mixer.music.load('../../assets/sounds/music/sea.ogg')
+            pygame.mixer.music.play(-1)
+
     def __pass_one_day_at_sea(self, game):
         if game.my_role.map == 'sea':
 

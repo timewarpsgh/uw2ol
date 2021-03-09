@@ -231,6 +231,10 @@ def __change_map_to_port(self):
                 self.man = None
                 self.woman = None
 
+            # music
+            pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+            pygame.mixer.music.play()
+
 def _in_battle_keys(self, event):
     if event.key == ord('b'):
         self.button_click_handler.menu_click_handler.battle.escape_battle()

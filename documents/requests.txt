@@ -11,9 +11,7 @@ by function
 
         in battle map -> sprite OK
         battle states -> sprite OK
-
         developer can always escape OK
-
         repair costs OK
 
 

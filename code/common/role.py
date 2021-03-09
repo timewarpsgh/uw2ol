@@ -1900,6 +1900,9 @@ class Ship:
                 cannnon_ball = CannonBall(game, (x + 8), (y + 8), d_x, d_y)
                 game.all_sprites.add(cannnon_ball)
 
+            # sound
+            reactor.callLater(0.02, self.ROLE.GAME.sounds['shoot'].play)
+
     def engage(self, ship):
         # change values
 
@@ -2026,6 +2029,9 @@ class Ship:
                 dmg_1 = ShootDamageNumber(game, enemy_damage, x_1, y_1, c.WHITE)
                 game.all_sprites.add(dmg_1)
 
+            # sound
+            self.ROLE.GAME.sounds['engage'].play()
+
     def try_to_engage(self, ship):
         """returns a deferred"""
         # inits a deffered
@@ -2093,6 +2099,9 @@ class Ship:
 
                 explosion = Explosion(game, x, y)
                 self.ROLE.GAME.all_sprites.add(explosion)
+
+            # sound
+            self.ROLE.GAME.sounds['explosion'].play()
 
     def try_to_escape(self, ship):
         """returns a deferred"""

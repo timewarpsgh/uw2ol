@@ -1,3 +1,5 @@
+import pygame
+
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
@@ -80,6 +82,10 @@ def your_role_data_and_others(self, message_obj):
         self.other_roles[role.name] = role
     print(other_roles)
 
+    # music
+    pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+    pygame.mixer.music.play()
+
 # someone logged in
 def new_role(self, message_obj):
     new_role = message_obj
@@ -112,6 +118,10 @@ def roles_in_new_map(self, message_obj):
         self.my_role._clear_marks()
         self.reset_think_time_in_battle()
 
+        # music
+        pygame.mixer.music.load('../../assets/sounds/music/sea.ogg')
+        pygame.mixer.music.play(-1)
+
         # if just lost from battle
         if not self.my_role.ships:
             self.connection.send('change_map', ['29'])
@@ -140,6 +150,7 @@ def roles_appeared(self, message_obj):
 # enter battle responses
 def roles_in_battle_map(self, message_obj):
     """in battle now"""
+    # get roles
     roles_in_battle_map = message_obj
     self.other_roles = {}
     for name, role in roles_in_battle_map.items():
@@ -151,6 +162,10 @@ def roles_in_battle_map(self, message_obj):
     # start battle timer
     self.battle_timer = LoopingCall(_check_battle_timer, self)
     self.battle_timer.start(1)
+
+    # music
+    pygame.mixer.music.load('../../assets/sounds/music/battle.ogg')
+    pygame.mixer.music.play(-1)
 
 def _check_battle_timer(self):
     if self.my_role.map == 'sea' and self.battle_timer:
