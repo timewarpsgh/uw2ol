@@ -450,7 +450,7 @@ def exit_battle(self, message_obj):
         if not my_ships or not enemy_ships:
             role.exit_battle(self, message_obj)
         # in battle escape
-        elif self.my_role.can_escape():
+        elif self.my_role.can_escape() or c.DEVELOPER_MODE_ON:
             role.exit_battle(self, message_obj)
 
 def get_npc_info(self, message_obj):

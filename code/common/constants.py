@@ -122,7 +122,7 @@ RED = (255, 0, 0)
 ORANGE = (255, 69, 0)
 CRIMSON = (139, 0, 0)
 BLUE = (0,0,128)
-TRANS_GRAY = (50, 50, 50, 30)
+TRANS_GRAY = (50, 50, 50, 35)
 TRANS_BLANK = (0, 0, 0, 0)
 
 if __name__ == '__main__':

@@ -1142,7 +1142,7 @@ class MenuClickHandlerForBattle():
     def escape_battle(self):
         game = self.game
         if game.my_role.your_turn_in_battle:
-            if game.my_role.can_escape():
+            if game.my_role.can_escape() or c.DEVELOPER_MODE_ON:
                 game.connection.send('exit_battle', [])
             else:
                 game.button_click_handler.i_speak(
