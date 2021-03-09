@@ -1780,13 +1780,20 @@ class DryDock():
 
         # if need
         if need_to_repair:
-            self.game.change_and_send('repair_all', [])
-            self.game.building_text = "All your ships have been repaired! " \
-                                      "It's free. Just remember to " \
-                                      "come back to me when you want more ships."
+            cost = self.game.my_role._calc_repair_all_cost()
+            self.game.building_text = f"Repairing all your ships will cost you {cost} coins. " \
+                                      f"Are you sure?"
+
+            d = {
+                'OK': self._do_repair,
+            }
+            self.game.button_click_handler.make_menu(d)
+
         else:
             self.game.building_text = "All your ships are in perfect shape."
 
+    def _do_repair(self):
+        self.game.change_and_send('repair_all', [])
 
     def sell_ship(self):
         dict = {}

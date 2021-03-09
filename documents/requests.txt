@@ -14,10 +14,23 @@ by function
 
         developer can always escape OK
 
+        repair costs OK
 
 
 
     sounds LATER
+        music
+            login scene
+            port
+            sea
+            battle
+        effect
+            shoot
+            engage
+            buy, sell
+
+
+
 
 by structure
     buttons on interface OK

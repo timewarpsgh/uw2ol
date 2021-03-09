@@ -1041,8 +1041,28 @@ class Role:
             print('now ships:', len(self.ships))
 
     def repair_all(self, params):
+        cost = self._calc_repair_all_cost()
+        if self.gold >= cost:
+            self.gold -= cost
+            for ship in self.ships:
+                ship.now_hp = ship.max_hp
+
+            if self.is_in_client_and_self():
+                msg = "Thank you!"
+                self.GAME.button_click_handler.building_speak(msg)
+        else:
+            if self.is_in_client_and_self():
+                msg = "You can't afford to repair them."
+                self.GAME.button_click_handler.building_speak(msg)
+
+    def _calc_repair_all_cost(self):
+        total_cost = 0
         for ship in self.ships:
-            ship.now_hp = ship.max_hp
+            unit_cost = int((ship.price / ship.max_hp) *
+                            (ship.max_hp - ship.now_hp) *
+                            0.5)
+            total_cost += unit_cost
+        return total_cost
 
     def remodel_ship_capacity(self, params):
         ship_num = params[0]
