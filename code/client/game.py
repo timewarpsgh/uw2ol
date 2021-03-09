@@ -108,10 +108,19 @@ class Game():
         self.images['ship_in_battle'] = {}
         load_all_images(self.images['ship_in_battle'],
                         "../../assets/images/ship_in_battle")
+        for k,v in self.images['ship_in_battle'].items():
+            self.images['ship_in_battle'][k] = pygame.transform.scale(v,
+                                    (c.SHIP_SIZE_IN_PIXEL,
+                                     c.SHIP_SIZE_IN_PIXEL))
+
 
         self.images['enemy_ship_in_battle'] = {}
         load_all_images(self.images['enemy_ship_in_battle'],
                         "../../assets/images/ship_in_battle/enemy")
+        for k,v in self.images['enemy_ship_in_battle'].items():
+            self.images['enemy_ship_in_battle'][k] = pygame.transform.scale(v,
+                                    (c.SHIP_SIZE_IN_PIXEL,
+                                     c.SHIP_SIZE_IN_PIXEL))
 
         # world map grids
         self.images['world_map_grids'] = pygame.image.load\

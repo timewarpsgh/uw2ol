@@ -414,5 +414,30 @@ class BattleStates(pg.sprite.Sprite):
     def _draw(self):
         self.game.screen_surface.blit(self.image, self.rect)
 
+
+class ShipInBattle(pg.sprite.Sprite):
+    """not used"""
+    def __init__(self, game, id, direction, x, y, is_enemy=False):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.id = id
+        self.direction = direction
+
+        self.image = self.game.images['ship_in_battle'][direction]
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        pass
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
 if __name__ == '__main__':
     ex = Explosion()
