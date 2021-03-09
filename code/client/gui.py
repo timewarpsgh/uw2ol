@@ -51,8 +51,7 @@ def init_gui(self):
     _init_button(self, {'Options': self.button_click_handler.options}, 5)
     _init_button(self, {'Battle': self.button_click_handler.battle}, 6)
     _init_button(self, {'Sail': self.button_click_handler.login}, 7)
-    if c.DEVELOPER_MODE_ON:
-        _init_button(self, {'Port': self.button_click_handler.port}, 8)
+    _init_button(self, {'Test': self.button_click_handler.port}, 8)
 
     self.buttons_in_windows = {}
 
@@ -1015,10 +1014,9 @@ class MenuClickHandlerForCmds():
         if village_id:
             self.game.change_and_send('discover', [village_id])
         else:
-            discovery_id = random.randint(0, 90)
-            self.game.change_and_send('discover', [discovery_id])
-            # self.game.button_click_handler.make_message_box("Can't find anything.")
-
+            # discovery_id = random.randint(0, 90)
+            # self.game.change_and_send('discover', [discovery_id])
+            self.game.button_click_handler.make_message_box("Can't find anything.")
 
 
     def battle(self):

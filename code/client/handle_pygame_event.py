@@ -172,7 +172,8 @@ def _not_in_battle_keys(self, event):
 
     # change map to sea
     if event.key == ord('n'):
-        self.button_click_handler.menu_click_handler.port.port._sail_ok()
+        if c.DEVELOPER_MODE_ON:
+            self.button_click_handler.menu_click_handler.port.port._sail_ok()
 
     # change map to port
     elif event.key == ord('m'):

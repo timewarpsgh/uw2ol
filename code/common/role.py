@@ -1451,8 +1451,8 @@ class Ship:
     def _init_cargoes_and_supplies(self):
         self.cargoes = {}
         self.supplies = {
-            'Food':20,
-            'Water':20,
+            'Food':5,
+            'Water':5,
             'Lumber':0,
             'Shot':0
         }
@@ -2341,25 +2341,30 @@ class Bag:
     """owned by role, contains a list of item_ids"""
     def __init__(self, role):
         self.role = role
-        self.container = {
-            1:3,
-            2:2,
-            3:5,
-            10:2,
+        if c.DEVELOPER_MODE_ON:
+            self.container = {
+                1:3,
+                2:2,
+                3:5,
+                10:2,
 
-            4:1,
-            5:1,
-            6:1,
-            7:1,
-            8:1,
-            9:1,
+                4:1,
+                5:1,
+                6:1,
+                7:1,
+                8:1,
+                9:1,
 
-            32:1,
-            37:1,
+                32:1,
+                37:1,
 
-            38:1,
-            48:1,
-        }
+                38:1,
+                48:1,
+            }
+        else:
+            self.container = {
+                3: 1,
+            }
 
     def add_item(self, item_id):
         if self.get_all_items_count() < c.MAX_ITEMS_IN_BAG:

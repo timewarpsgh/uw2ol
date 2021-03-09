@@ -2,21 +2,14 @@ by function
     travel OK
     discover OK
     trade OK
+    fight OK
 
-    fight LATER
+    player mode test ON
+        initial items OK
+        discover OK
+        days OK
 
-
-    sounds OK
-        music OK
-            login scene
-            port
-            sea
-            battle
-        effect OK
-            shoot OK
-            engage OK
-            buy, sell OK
-
+        don't escape thrice when hiring quest mate ON
 
 
 

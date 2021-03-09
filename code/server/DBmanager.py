@@ -58,7 +58,6 @@ class Database:
 
     # data table
     def create_character(self, account, character_name):
-
         # exists?
         try:
             player = pickle.load(open("data/save." + account, "rb"))
@@ -87,45 +86,61 @@ class Database:
                 self.cursor.execute(sql_update)
                 self.db.commit()
 
-                x = y = c.PIXELS_COVERED_EACH_MOVE
-                default_role = Role(x, y, character_name)
-
-                # ship0 = Ship('Reagan', 'Frigate')
-                # ship0.crew = 20
-                # ship1 = Ship('Reagan11', 'Balsa')
-                # default_role.ships.append(ship0)
-                # default_role.ships.append(ship1)
-                mate0 = Mate(1)
-                mate0.name = character_name
-                default_role.mates.append(mate0)
-
+                # developer mode
                 if c.DEVELOPER_MODE_ON:
-                    ship0 = Ship('Reagan', 'Frigate')
-                    ship0.crew = 300
-                    default_role.ships.append(ship0)
-                    mate0.set_as_captain_of(ship0)
+                    self._make_developer_mode_role(account, character_name)
+                else:
+                    self._make_normal_role(account, character_name)
 
-                    for i in range(9):
-                        # add ship
-                        ship1 = Ship('Reagan1', 'Frigate')
-                        ship1.crew = 300
-                        ship1.now_hp = 60
-                        default_role.ships.append(ship1)
-
-                        # add mate
-                        mate1 = Mate(i+2)
-                        default_role.mates.append(mate1)
-                        mate1.set_as_captain_of(ship1)
-
-                    default_role.mates[0].exp = 10000
-
-                default_role.discoveries[2] = 1
-
-
-                pickle.dump(default_role, open("data/save." + account, "wb"))
-                print("new player created!")
                 return True
 
+    def _make_developer_mode_role(self, account, character_name):
+        x = y = c.PIXELS_COVERED_EACH_MOVE
+        default_role = Role(x, y, character_name)
+
+        mate0 = Mate(1)
+        mate0.name = character_name
+        default_role.mates.append(mate0)
+        default_role.discoveries[2] = 1
+
+        ship0 = Ship('Reagan', 'Frigate')
+        ship0.crew = 300
+        default_role.ships.append(ship0)
+        mate0.set_as_captain_of(ship0)
+
+        for i in range(9):
+            # add ship
+            ship1 = Ship('Reagan1', 'Frigate')
+            ship1.crew = 300
+            ship1.now_hp = 60
+            default_role.ships.append(ship1)
+
+            # add mate
+            mate1 = Mate(i + 2)
+            default_role.mates.append(mate1)
+            mate1.set_as_captain_of(ship1)
+
+        default_role.mates[0].exp = 10000
+
+        pickle.dump(default_role, open("data/save." + account, "wb"))
+        print("new player created!")
+
+    def _make_normal_role(self, account, character_name):
+        x = y = c.PIXELS_COVERED_EACH_MOVE
+        default_role = Role(x, y, character_name)
+
+        mate0 = Mate(1)
+        mate0.name = character_name
+        default_role.mates.append(mate0)
+        default_role.discoveries[2] = 1
+
+        ship0 = Ship('Sheep', 'Balsa')
+        ship0.crew = 5
+        default_role.ships.append(ship0)
+        mate0.set_as_captain_of(ship0)
+
+        pickle.dump(default_role, open("data/save." + account, "wb"))
+        print("new player created!")
 
     def get_character_data(self, account):
         try:

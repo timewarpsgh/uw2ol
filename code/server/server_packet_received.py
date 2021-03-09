@@ -215,7 +215,8 @@ def _change_map_to_sea(self, now_map):
     # set speed
     fleet_speed = self.my_role.get_fleet_speed([])
     self.my_role.set_speed([str(fleet_speed)])
-    self.my_role.set_speed([str(40)])
+    if c.DEVELOPER_MODE_ON:
+        self.my_role.set_speed([str(40)])
 
 def _change_map_to_port(self, target_map, message_obj):
     # if days at sea is sent as a param
