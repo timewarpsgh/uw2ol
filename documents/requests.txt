@@ -9,7 +9,8 @@ by function
         escape distance ++ OK
         next ship interval OK
 
-        in battle map 1
+        in battle map -> sprite OK
+        battle states -> sprite OK
 
 
 

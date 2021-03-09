@@ -350,7 +350,7 @@ def person_direction_2_rect_in_sprite_sheet(self, direction, frame):
 def draw_in_battle(self):
     draw_my_ships(self)
     draw_enemy_ships(self)
-    draw_battle_timer(self)
+    self.battle_state_sprites.update()
 
 def draw_my_ships(self):
     # my ships
@@ -385,52 +385,6 @@ def draw_my_ships(self):
             if ship.crew > 0:
                 draw_text(self, str(index-1), x, y, c.WHITE)
 
-            # ships stats
-
-                # ship num
-            draw_text(self, str(index - 1), 10, (20 + index * 20), c.BLACK)
-
-                # hp
-            draw_text(self, str(ship.now_hp), 30, (20 + index * 20), c.YELLOW)
-
-                # crew
-            draw_text(self, str(ship.crew), 50, (20 + index * 20), c.WHITE)
-
-            # for non-flag ships
-            if index != 1:
-                # attack method
-                draw_text(self, str(ship.attack_method), 80, (20 + index * 20), c.ORANGE)
-
-                # target
-                draw_text(self, str(ship.target), 130, (20 + index * 20), c.CRIMSON)
-
-            # battle map
-            battle_map_surface = pygame.Surface((100, 100))
-            battle_map_rect = battle_map_surface.get_rect()
-
-                # my ships
-            SHIP_DOT_SIZE = 2
-            ship_dot_surface = pygame.Surface((SHIP_DOT_SIZE, SHIP_DOT_SIZE))
-            ship_dot_rect = ship_dot_surface.get_rect()
-            ship_dot_surface.fill(c.YELLOW)
-            for ship in self.my_role.ships:
-                x = (ship.x - 35) * 3
-                y = (ship.y - 35) * 3
-
-                battle_map_surface.blit(ship_dot_surface, (x, y), ship_dot_rect)
-
-                # enemy ships
-            ship_dot_surface_1 = pygame.Surface((SHIP_DOT_SIZE, SHIP_DOT_SIZE))
-            ship_dot_rect_1 = ship_dot_surface.get_rect()
-            ship_dot_surface_1.fill(c.RED)
-            for ship in self.my_role.get_enemy_role().ships:
-                x = (ship.x - 35) * 3
-                y = (ship.y - 35) * 3
-                battle_map_surface.blit(ship_dot_surface_1, (x, y), ship_dot_rect_1)
-
-                # draw battle map
-            self.screen_surface.blit(battle_map_surface, (15, 250), battle_map_rect)
-
 def draw_ship_number_bg(ship_image):
     ship_number_bg = pygame.Surface((10, 20))
     ship_number_bg.fill(c.BLUE)
@@ -459,38 +413,6 @@ def draw_enemy_ships(self):
 
             if ship.crew > 0:
                 draw_text(self, str(index - 1), x, y, c.YELLOW)
-
-            # ships stats
-
-                # ship num
-            draw_text(self, str(index - 1), (c.WINDOW_WIDTH - 80), (20 + index * 20), c.BLACK)
-
-                # hp
-            draw_text(self, str(ship.now_hp), (c.WINDOW_WIDTH - 80 + 20), (20 + index * 20), c.YELLOW)
-
-                # crew
-            draw_text(self, str(ship.crew), (c.WINDOW_WIDTH - 80 + 40), (20 + index * 20), c.WHITE)
-
-def draw_battle_timer(self):
-    # me
-    my_timer_text = None
-    if self.my_role.your_turn_in_battle:
-        my_timer_text = 'Your Turn ' + str(self.think_time_in_battle)
-    else:
-        my_timer_text = 'Please Wait...'
-
-    my_timer_img = self.font.render(my_timer_text, True, c.YELLOW)
-    self.screen_surface.blit(my_timer_img, (20, 5))
-
-    # enemy
-    enemy_timer_text = None
-    if self.other_roles[self.my_role.enemy_name].your_turn_in_battle:
-        enemy_timer_text = 'Enemy Turn'
-    else:
-        enemy_timer_text = 'Please Wait...'
-
-    enemy_timer_img = self.font.render(enemy_timer_text, True, c.YELLOW)
-    self.screen_surface.blit(enemy_timer_img, (c.WINDOW_WIDTH - 150, 5))
 
 def draw_speech(self):
     # my

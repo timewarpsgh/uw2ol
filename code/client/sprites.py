@@ -259,5 +259,160 @@ class MoveMark(pg.sprite.Sprite):
     def clicked(self):
         self.game.change_and_send('flagship_move', [self.direct])
 
+
+class ShipDot():
+    def __init__(self, color):
+        self.image = pg.Surface((c.SHIP_DOT_SIZE, c.SHIP_DOT_SIZE))
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+
+class BattleMiniMap(pg.sprite.Sprite):
+    def __init__(self, game):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = pg.Surface((100, 100)).convert_alpha()
+        self.image.fill(c.TRANS_GRAY)
+
+        self.rect = self.image.get_rect()
+        self.rect.x = 15
+        self.rect.y = 250
+
+        self.my_ship_dot = ShipDot(c.YELLOW)
+        self.enemy_ship_dot = ShipDot(c.RED)
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        # clear
+        self.image.fill(c.TRANS_GRAY)
+
+        # draw my ships dots
+        for ship in self.game.my_role.ships:
+            x = (ship.x - 35) * 3
+            y = (ship.y - 35) * 3
+
+            self.image.blit(self.my_ship_dot.image,
+                            (x, y), self.my_ship_dot.rect)
+
+        # draw enemy ships dots
+        for ship in self.game.my_role.get_enemy_role().ships:
+            x = (ship.x - 35) * 3
+            y = (ship.y - 35) * 3
+
+            self.image.blit(self.enemy_ship_dot.image,
+                            (x, y), self.enemy_ship_dot.rect)
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
+
+class Text():
+    def __init__(self, game, text, color=c.BLACK):
+        self.image = game.font.render(text, True, color)
+        self.rect = self.image.get_rect()
+
+class BattleStates(pg.sprite.Sprite):
+    def __init__(self, game):
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        self.image = pg.Surface((c.WINDOW_WIDTH, c.WINDOW_HIGHT)).convert_alpha()
+        self.image.fill(c.TRANS_BLANK)
+
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.y = 0
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        self.image.fill(c.TRANS_BLANK)
+        self.__draw_my_ships_states()
+        self.__draw_enemy_ships_states()
+
+    def __draw_my_ships_states(self):
+        # my timer
+        my_timer_text = None
+        if self.game.my_role.your_turn_in_battle:
+            my_timer_text = 'Your Turn ' + str(self.game.think_time_in_battle)
+        else:
+            my_timer_text = 'Please Wait...'
+
+        timer_text = Text(self.game, my_timer_text, c.YELLOW)
+        timer_text.rect.x = 20
+        timer_text.rect.y = 5
+        self.image.blit(timer_text.image, timer_text.rect)
+
+        # ships states
+        for id, ship in enumerate(self.game.my_role.ships):
+            # all ships
+            num_text = Text(self.game, str(id), c.BLACK)
+            num_text.rect.x = 10
+            num_text.rect.y = (id + 2) * 20
+
+            hp_text = Text(self.game, str(ship.now_hp), c.YELLOW)
+            hp_text.rect.x = 30
+            hp_text.rect.y = (id + 2) * 20
+
+            crew_text = Text(self.game, str(ship.crew), c.WHITE)
+            crew_text.rect.x = 50
+            crew_text.rect.y = (id + 2) * 20
+
+            for item in [num_text, hp_text, crew_text]:
+                self.image.blit(item.image,
+                                item.rect)
+
+            # non flag ships
+            if id != 0:
+                strategy_text = Text(self.game, str(ship.attack_method), c.ORANGE)
+                strategy_text.rect.x = 80
+                strategy_text.rect.y = (id + 2) * 20
+
+                target_text = Text(self.game, str(ship.target), c.CRIMSON)
+                target_text.rect.x = 130
+                target_text.rect.y = (id + 2) * 20
+
+                for item in [strategy_text, target_text]:
+                    self.image.blit(item.image,
+                                    item.rect)
+
+    def __draw_enemy_ships_states(self):
+        # timer
+        enemy_timer_text = None
+        if self.game.other_roles[self.game.my_role.enemy_name].your_turn_in_battle:
+            enemy_timer_text = 'Enemy Turn'
+        else:
+            enemy_timer_text = 'Please Wait...'
+
+        enemy_timer_img = self.game.font.render(enemy_timer_text, True, c.YELLOW)
+        self.image.blit(enemy_timer_img, (c.WINDOW_WIDTH - 150, 5))
+
+
+        # ships states
+        for id, ship in enumerate(self.game.my_role.get_enemy_role().ships):
+            num_text = Text(self.game, str(id), c.BLACK)
+            num_text.rect.x = c.WINDOW_WIDTH - 80
+            num_text.rect.y = (id + 2) * 20
+
+            hp_text = Text(self.game, str(ship.now_hp), c.YELLOW)
+            hp_text.rect.x = c.WINDOW_WIDTH - 80 + 20
+            hp_text.rect.y = (id + 2) * 20
+
+            crew_text = Text(self.game, str(ship.crew), c.WHITE)
+            crew_text.rect.x = c.WINDOW_WIDTH - 80 + 40
+            crew_text.rect.y = (id + 2) * 20
+
+            for item in [num_text, hp_text, crew_text]:
+                self.image.blit(item.image,
+                                item.rect)
+
+    def _draw(self):
+        self.game.screen_surface.blit(self.image, self.rect)
+
 if __name__ == '__main__':
     ex = Explosion()
