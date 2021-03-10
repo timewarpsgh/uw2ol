@@ -9,6 +9,13 @@ by function
         supply low alert OK
         defect requirement OK
 
+        starve to death OK
+
+        starve to death image ON
+        win battle image
+        lose battle image
+
+
 
 
     p V e

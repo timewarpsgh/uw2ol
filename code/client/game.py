@@ -100,7 +100,7 @@ class Game():
 
         # load all imgs in these folders to self.images
         folder_names = ['buildings', 'huds', 'player', 'figures',
-                        'discoveries_and_items', 'in_battle']
+                        'discoveries_and_items', 'in_battle', 'conditions']
         for f_name in folder_names:
             load_all_images(self.images, f"../../assets/images/{f_name}")
         # ships

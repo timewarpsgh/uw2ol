@@ -231,6 +231,11 @@ def _change_map_to_port(self, target_map, message_obj):
                          c.SUPPLY_CONSUMPTION_PER_PERSON * c.SUPPLY_UNIT_COST)
         self.my_role.gold -= total_cost
 
+    # starved to death
+    if days_spent_at_sea == -1:
+        self.my_role.gold = 0
+        self.my_role.ships.clear()
+
     # normal ports
     if int(target_map) <= 99:
         self.my_role.x = hash_ports_meta_data[int(target_map) + 1]['buildings'][4]['x'] * c.PIXELS_COVERED_EACH_MOVE
@@ -272,7 +277,7 @@ def _try_to_fight_with_player(self, enemy_name):
     enemy_role.enemy_name = my_role.name
 
     # can fight
-    if enemy_role.ships and enemy_role.mates[0].lv >= 15:
+    if enemy_role.ships and enemy_role.mates[0].lv >= c.DEFECT_LV:
         '''both enter battle map'''
         print('can go battle!')
 

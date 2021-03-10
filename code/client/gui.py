@@ -1383,18 +1383,23 @@ class Harbor():
             # pass peacefully
             if game.days_spent_at_sea <= game.max_days_at_sea:
 
-                game.days_spent_at_sea += 1
+                game.days_spent_at_sea += 10
 
                 # low supply alert
-                if (game.max_days_at_sea - game.days_spent_at_sea) == 5:
-                    msg = "Our supply is low. We can only last for 5 more days!"
+                if (game.max_days_at_sea - game.days_spent_at_sea) == c.SUPPLY_LOW_ALERT_DAYS:
+                    msg = f"Our supply is low. We can only last for {c.SUPPLY_LOW_ALERT_DAYS} more days!"
                     game.button_click_handler.i_speak(msg)
 
             # starved!
             else:
                 game.timer_at_sea.stop()
                 prev_port_map_str = str(game.my_role.prev_port_map_id)
-                game.connection.send('change_map', [prev_port_map_str])
+                game.connection.send('change_map', [prev_port_map_str, -1])
+
+                # show image
+                # rect = pygame.Rect(300, 300)
+                # text = "You starved."
+                # sunk_window = PanelWindow(rect, game.ui_manager, text, game, image='none')
 
     def load_supply(self):
         self.game.building_text = "Everything is 5 coins each. " \
