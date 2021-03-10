@@ -16,7 +16,7 @@ by function
         lose battle image OK
 
         invalid input handling OK
-
+        less speed OK
 
 
 

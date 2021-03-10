@@ -1587,7 +1587,7 @@ class Ship:
                 if speed < 1:
                     speed = 1
 
-            return speed
+            return speed - c.SHIP_SPEED_CUT
         # no captain
         else:
             return 1
