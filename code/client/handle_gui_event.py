@@ -58,7 +58,7 @@ def button_pressed(self, event):
             for input_box in self.active_input_boxes:
                 text = input_box.get_text()
 
-                if text.isdigit():
+                if str(text).isdigit():
                     text = int(text)
 
                 params_list.append(text)

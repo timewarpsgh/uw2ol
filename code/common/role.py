@@ -2628,11 +2628,11 @@ def init_one_default_npc(name):
     NUM_OF_SHIPS = 10
     if fleet_sequence == 0 or fleet_sequence == 1:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = NUM_OF_SHIPS # random.randint(3, 5)
+        num_of_ships = random.randint(3, 5)
         ship_type = random.choice(['Nao', 'Carrack', 'Flemish Galleon', 'Buss', 'Sloop', 'Xebec'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
-            ship.crew = ship.max_crew
+            ship.crew = int(ship.max_crew / 2)
             ship.add_cargo(cargo_name, ship.useful_capacity)
             npc.ships.append(ship)
             ship.captain = mate0
@@ -2646,7 +2646,7 @@ def init_one_default_npc(name):
     # convoy
     elif fleet_sequence == 2 or fleet_sequence == 3:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = NUM_OF_SHIPS # random.randint(5, 8)
+        num_of_ships = random.randint(5, 8)
         ship_type = random.choice([ 'Galleon', 'Venetian Galeass'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)
@@ -2665,7 +2665,7 @@ def init_one_default_npc(name):
     # battle
     else:
         cargo_name = _generate_rand_cargo_name()
-        num_of_ships = NUM_OF_SHIPS # random.randint(8, 10)
+        num_of_ships = random.randint(8, 10)
         ship_type = random.choice(['Frigate', 'Barge', 'Full Rigged Ship'])
         for i in range(num_of_ships):
             ship = Ship(str(i), ship_type)

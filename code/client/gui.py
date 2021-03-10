@@ -1319,7 +1319,7 @@ class Harbor():
 
         self.game.building_text = f"You can sail for {max_days} days " \
                                   f"at an average speed of {fleet_speed} knots. " \
-                                  f"Are you sure you wnat to set sail?"
+                                  f"Are you sure you want to set sail?"
 
         # make menu
         dict = {
@@ -1328,7 +1328,7 @@ class Harbor():
         self.game.button_click_handler.make_menu(dict)
 
     def _sail_ok(self):
-        # mate0 must be on the flag ship
+        # can't sail
         role = self.game.my_role
         if not role.ships:
             mate_speak(self.game, role.mates[0], "How do I sail without a ship?")
@@ -1342,6 +1342,7 @@ class Harbor():
             mate_speak(self.game, role.mates[0], 'I need to be on the flag ship.')
             return
 
+        # can sail
         if self.game.my_role.map != 'sea' and self.game.my_role.ships:
             # delete dynamic npcs
             self.game.man = None
@@ -1381,7 +1382,13 @@ class Harbor():
 
             # pass peacefully
             if game.days_spent_at_sea <= game.max_days_at_sea:
+
                 game.days_spent_at_sea += 1
+
+                # low supply alert
+                if (game.max_days_at_sea - game.days_spent_at_sea) == 5:
+                    msg = "Our supply is low. We can only last for 5 more days!"
+                    game.button_click_handler.i_speak(msg)
 
             # starved!
             else:
@@ -1848,8 +1855,28 @@ class DryDock():
         self.game.button_click_handler.make_menu(dict)
 
     def _remodel_capacity(self):
+        my_ships = self.game.my_role.ships
+        d = {}
+        for id, s in enumerate(my_ships):
+            d[str(id) + " " + s.name] = [self.__do_remodel_capacity, id]
+
+        self.game.button_click_handler.make_menu(d)
+
+    def __do_remodel_capacity(self, id):
+        # building speaks max guns and max crew
+        ship = self.game.my_role.ships[id]
+        model_ship = Ship('x', ship.type)
+        model_ship.max_guns
+        model_ship.max_crew
+
+        msg = f"This ship can have at most {model_ship.max_guns} " \
+              f"guns and {model_ship.max_crew} crew."
+        self.game.button_click_handler.building_speak(msg)
+
+        # show input boxes
         self.game.button_click_handler. \
-            make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'])
+            make_input_boxes('remodel_ship_capacity', ['ship_num', 'max_crew', 'max_guns'],
+                             [id])
 
     def _remodel_weapon(self):
         ships = self.game.my_role.ships

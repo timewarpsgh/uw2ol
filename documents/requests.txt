@@ -5,13 +5,14 @@ by function
     fight OK
 
     player mode test ON
-        initial items OK
-        discover OK
-        days OK
+        supply shows all ships ON
+        new player protect lv 15 ON
+        supply low alert OK
 
-        don't escape thrice when hiring quest mate OK
+    p V e
 
-        main quest log OK
+    p V p
+
 
 
 by structure
