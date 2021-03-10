@@ -67,7 +67,7 @@ events_dict = {
             'I': [1, 1],
             'Tommy': [16, 4],
         },
-        'action_to_perform':['hire_mate', [2]],
+        'action_to_perform':['quest_hire_mate', [2]],
     },
 
     4: {
@@ -116,7 +116,7 @@ events_dict = {
                       "Just remember to do some exploration when you have time."],
 
             ['I', "I promise I will. But for the moment, I guess I'm interested in the Navy draft."],
-            ['I', "Did you see the ad? It basicly says the Navy's in urgent need of personel. "
+            ['I', "Did you see the ad? It basically says the Navy's in urgent need of personnel. "
                   "Anyone interested is encouraged to apply at the Palace in London."],
             ['Tommy', "Sounds like a good idea. After we join the Navy, We'll be safe to explore anywhere. "
                       "Let's move then."],
@@ -149,7 +149,7 @@ events_dict = {
     7: {
         'port': 'London',
         'building': 'bar',
-        'action_to_perform':['hire_mate', [3]],
+        'action_to_perform':['quest_hire_mate', [3]],
 
         'figure_images': {
             'I': [1, 1],
@@ -172,7 +172,7 @@ events_dict = {
             ['Tommy', "No I'm not."],
             ['Tommy', "Bar tending? Am I suppose to bar tend my whole life? I'm a born bar tender."],
             ['Charlie', "You surely are."],
-            ['I', "Who hell are you? Quit speaking to my friend like that!"],
+            ['I', "Who the hell are you? Quit speaking to my friend like that!"],
             ['Charlie', "Oops... Sorry. I thought I was just thinking."],
             ['Charlie', "I'm Charlie. Charlie Stephens."],
             ['Charlie', "I saw you at the palace earlier. You guys also got rejected?"],
@@ -262,7 +262,7 @@ events_dict = {
     11: {
         'port': 'Venice',
         'building': 'inn',
-        'action_to_perform': ['hire_mate', [4]],
+        'action_to_perform': ['quest_hire_mate', [4]],
         'figure_images': {
             'I': [1, 1],
             'Charlie': [15, 3],

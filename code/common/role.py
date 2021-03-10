@@ -547,9 +547,11 @@ class Role:
     def discover(self, params):
         # discovery_id = random.randint(0, 10)
         discovery_id = params[0]
+        # have seen
         if discovery_id in self.discoveries:
             if self.is_in_client_and_self():
                 self.GAME.button_click_handler.i_speak("Have seen this.")
+        # have not seen
         else:
             if self.quest_discovery == discovery_id or True:
                 self.discoveries[discovery_id] = 1
@@ -559,8 +561,12 @@ class Role:
                 rand_seed_num = self.x + self.y + discovery_id
                 random.seed(rand_seed_num)
                 item_id = random.choice(range(1,len(hash_items) + 1))
+                if item_id in c.EXPENSIVE_EQUIPMENTS_IDS:
+                    item_id = 1
+
                 self.bag.add_item(item_id)
 
+                # client alert
                 if self.is_in_client_and_self():
                     discovery = Discovery(discovery_id)
                     item = Item(item_id)
@@ -1167,6 +1173,12 @@ class Role:
             msg = "Thank you, captain. I'll do my best."
             reactor.callLater(0.3, self.GAME.button_click_handler.mate_speak, mate, msg)
 
+    def quest_hire_mate(self, params):
+        id = params[0]
+        if id in {2, 3, 4}:
+            mate = Mate(id)
+            self.mates.append(mate)
+
     def fire_mate(self, params):
         num = params[0]
 
@@ -1245,6 +1257,12 @@ class Role:
 
                 print(self.name, "ship", to_which_ship, "cargoes", self.ships[to_which_ship].cargoes)
                 print(self.name, "gold:", self.gold)
+
+            # inventory full
+            else:
+                if self.is_in_client_and_self():
+                    msg = "This ship dosen't have enough room."
+                    self.GAME.button_click_handler.i_speak(msg)
 
     def sell_cargo(self, params):
         cargo_name = params[0]

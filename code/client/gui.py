@@ -1509,7 +1509,7 @@ class Market():
             mate = role.accountant
         else:
             mate = role.mates[0]
-        mate_speak(self.game, mate, f'I think {unit_price} is a reasonable price here for {cargo_name}.'
+        mate_speak(self.game, mate, f'I think {unit_price} is a reasonable price here for {cargo_name}. '
                                     f'What do you say?')
 
         # sell button
