@@ -46,6 +46,9 @@ NPC_COUNT = 36
 TIME_OF_DAY_OPTIONS = ['dawn', 'day', 'dusk', 'night']
 PORT_COUNT = 130
 
+DEFECT_COST = 200000
+DEFECT_LV = 15
+
 # tiles
 WALKABLE_TILES = set(range(1, 40))
 SAILABLE_TILES = set(range(1, 33))

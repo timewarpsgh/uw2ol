@@ -2116,7 +2116,8 @@ class Palace:
         self.game.connection.send('get_allied_ports_and_pi', [])
 
     def defect(self):
-        msg = "You do wish to join us? "
+        msg = "You do wish to join us? " \
+              "You need to be over lv 15 and contribute 20 gold ingots."
         self.game.button_click_handler.building_speak(msg)
 
         d = {
@@ -2126,8 +2127,6 @@ class Palace:
 
     def _do_defect(self):
         self.game.change_and_send('defect', [])
-        msg = "You are one of us now!"
-        self.game.button_click_handler.building_speak(msg)
         self.game.button_click_handler.escape()
 
     def ship_aid(self):

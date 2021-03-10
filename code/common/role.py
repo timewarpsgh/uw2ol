@@ -551,7 +551,20 @@ class Role:
             ships[from_ship_num], ships[to_ship_num] = ships[to_ship_num], ships[from_ship_num]
 
     def defect(self, params):
-        self.mates[0].nation = capital_map_id_2_nation[self.get_map_id()]
+        # can
+        if self.gold >= c.DEFECT_COST and self.mates[0].lv >= c.DEFECT_LV:
+            self.mates[0].nation = capital_map_id_2_nation[self.get_map_id()]
+            self.gold -= c.DEFECT_COST
+
+            if self.is_in_client_and_self():
+                msg = "You are one of us now!"
+                self.GAME.button_click_handler.building_speak(msg)
+
+        # can't
+        else:
+            if self.is_in_client_and_self():
+                msg = "You don't qualify to be one of us. Sorry."
+                self.GAME.button_click_handler.building_speak(msg)
 
     # at sea
     def discover(self, params):

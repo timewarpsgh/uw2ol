@@ -7,6 +7,9 @@ by function
     player mode test ON
         new player protect lv 15 OK
         supply low alert OK
+        defect requirement OK
+
+
 
     p V e
 
