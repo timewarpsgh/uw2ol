@@ -5,8 +5,7 @@ by function
     fight OK
 
     player mode test ON
-        supply shows all ships ON
-        new player protect lv 15 ON
+        new player protect lv 15 OK
         supply low alert OK
 
     p V e

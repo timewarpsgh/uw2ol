@@ -272,7 +272,7 @@ def _try_to_fight_with_player(self, enemy_name):
     enemy_role.enemy_name = my_role.name
 
     # can fight
-    if enemy_role.ships:
+    if enemy_role.ships and enemy_role.mates[0].lv >= 15:
         '''both enter battle map'''
         print('can go battle!')
 
