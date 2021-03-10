@@ -1023,6 +1023,7 @@ class Role:
         # player won
         if Role.GAME and Role.GAME.my_role.ships:
             reactor.callLater(1, Role.GAME.connection.send, 'exit_battle', [])
+            reactor.callLater(1.5, Role.GAME.button_click_handler.show_victory_window)
 
         # server controled npc won
         elif self.is_in_server() and self.is_npc():

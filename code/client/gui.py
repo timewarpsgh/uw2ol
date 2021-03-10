@@ -397,6 +397,27 @@ class ButtonClickHandler():
         mate = self.game.my_role.mates[0]
         reactor.callLater(0.1, mate_speak, self.game, mate, msg)
 
+    def show_sunk_window(self):
+        game = self.game
+        rect = pygame.Rect(0, 0, c.WINDOW_WIDTH, c.WINDOW_HIGHT)
+        text = "Your fleet starved."
+        image = game.images['sunk']
+        sunk_window = PanelWindow(rect, game.ui_manager, text, game, image)
+
+    def show_victory_window(self):
+        game = self.game
+        rect = pygame.Rect(0, 0, c.WINDOW_WIDTH, c.WINDOW_HIGHT)
+        text = "The enemy fleet was defeated!"
+        image = game.images['win_battle']
+        sunk_window = PanelWindow(rect, game.ui_manager, text, game, image)
+
+    def show_defeat_window(self):
+        game = self.game
+        rect = pygame.Rect(0, 0, c.WINDOW_WIDTH, c.WINDOW_HIGHT)
+        text = "We tried our best."
+        image = game.images['lose_battle']
+        sunk_window = PanelWindow(rect, game.ui_manager, text, game, image)
+
     def on_button_click_ships(self):
         dict = {
             'Fleet Info': self.menu_click_handler.ships.fleet_info,
@@ -1383,7 +1404,7 @@ class Harbor():
             # pass peacefully
             if game.days_spent_at_sea <= game.max_days_at_sea:
 
-                game.days_spent_at_sea += 10
+                game.days_spent_at_sea += c.EACH_DAY_PASS
 
                 # low supply alert
                 if (game.max_days_at_sea - game.days_spent_at_sea) == c.SUPPLY_LOW_ALERT_DAYS:
@@ -1397,9 +1418,7 @@ class Harbor():
                 game.connection.send('change_map', [prev_port_map_str, -1])
 
                 # show image
-                # rect = pygame.Rect(300, 300)
-                # text = "You starved."
-                # sunk_window = PanelWindow(rect, game.ui_manager, text, game, image='none')
+                game.button_click_handler.show_sunk_window()
 
     def load_supply(self):
         self.game.building_text = "Everything is 5 coins each. " \

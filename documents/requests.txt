@@ -11,9 +11,9 @@ by function
 
         starve to death OK
 
-        starve to death image ON
-        win battle image
-        lose battle image
+        starve to death image OK
+        win battle image OK
+        lose battle image OK
 
 
 

@@ -125,6 +125,7 @@ def roles_in_new_map(self, message_obj):
         # if just lost from battle
         if not self.my_role.ships:
             self.connection.send('change_map', ['29'])
+            self.button_click_handler.show_defeat_window()
 
     # if in port
     elif self.my_role.map.isdigit():
