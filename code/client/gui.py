@@ -863,10 +863,18 @@ class MenuClickHandlerForItems():
 
     def diary(self):
         dict = {
+            'Main Objective': self._main_objective,
             'Quest Log': self._quest_log,
             'Abandon Quest': self._abandon_quest,
         }
         self.game.button_click_handler.make_menu(dict)
+
+    def _main_objective(self):
+        port = self.game.my_role.main_quest_port
+        building = self.game.my_role.main_quest_building
+
+        msg = f"Go to {port} {building}."
+        self.game.button_click_handler.i_speak(msg)
 
     def _quest_log(self):
         discovery_quest_id = self.game.my_role.quest_discovery

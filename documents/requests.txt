@@ -11,11 +11,7 @@ by function
 
         don't escape thrice when hiring quest mate OK
 
-        quest log ON
-
-        shouldn't discover * items OK
-
-
+        main quest log OK
 
 
 by structure

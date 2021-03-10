@@ -103,9 +103,11 @@ class Role:
         self.quest_trade = None
         self.quest_fight = None
 
-        # main quests sequence
+        # main quests sequence, last one is the next event
         self.main_events_ids = list(range(1, len(events_dict) + 1))
         self.main_events_ids = list(reversed(self.main_events_ids))
+        self.main_quest_port = None
+        self.main_quest_building = None
 
     def _init_current_ports_states(self):
         self.price_index = None
@@ -132,7 +134,15 @@ class Role:
     def trigger_quest(self, params):
         """when an event is triggered, delete event id"""
         if self.main_events_ids:
+            # delete this event
             self.main_events_ids.pop()
+
+            # set next quest tip
+            if self.main_events_ids:
+                next_event_id = self.main_events_ids[-1]
+                next_event = Event(next_event_id)
+                self.main_quest_port = next_event.port
+                self.main_quest_building = next_event.building
 
     def get_enemy_role(self):
         enemy_name = self.enemy_name

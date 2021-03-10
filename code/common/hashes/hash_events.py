@@ -385,7 +385,7 @@ events_dict = {
                   "Ships are real expensive."],
             ['Charlie', "But can we get a slightly bigger one? My face is about to revolt."],
             ['I', "We can probably afford a slightly bigger ship."],
-            ['Amy', "Captain, I think we should start builing a fleet. "
+            ['Amy', "Captain, I think we should start building a fleet. "
                     "If you want max profit, building a fleet of small ships costs less than having a large ship."],
             ['I', "That's true."],
             ['Tommy', "I think we are rich enough to start exploring the world. We don't need a feet to explore. "
