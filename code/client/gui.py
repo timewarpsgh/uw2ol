@@ -923,6 +923,7 @@ class MenuClickHandlerForItems():
             i_speak(self.game, msg)
 
     def world_map(self):
+        # image
         world_map_grids_image = self.game.images['world_map_grids']
         image_rect = world_map_grids_image.get_rect()
         text = ''
@@ -930,13 +931,20 @@ class MenuClickHandlerForItems():
         PanelWindow(pygame.Rect((10, 10), (image_rect.width, (image_rect.height + 60))),
                     self.game.ui_manager, text, self.game, world_map_grids_image)
 
+        # sound
+        self.game.sounds['map'].play()
+
     def port_map(self):
+        # image
         if self.game.images['port']:
             port_map = pygame.transform.scale(self.game.images['port'], (c.PORT_MAP_SIZE, c.PORT_MAP_SIZE))
             text = ''
 
             PanelWindow(pygame.Rect((10, 10), ((c.PORT_MAP_SIZE + 30), (c.PORT_MAP_SIZE + 60))),
                     self.game.ui_manager, text, self.game, port_map)
+
+        # sound
+        self.game.sounds['map'].play()
 
 class MenuClickHandlerForCmds():
     def __init__(self, game):

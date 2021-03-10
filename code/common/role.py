@@ -331,12 +331,20 @@ class Role:
             self.body.equip(item)
             self.bag.remove_item(item_id)
 
+        # sound
+        if self.is_in_client_and_self():
+            self.GAME.sounds['equip'].play()
+
     def unequip(self, params):
         item_id = params[0]
 
         item = Item(item_id)
         self.body.unequip(item)
         self.bag.add_item(item_id)
+
+        # sound
+        if self.is_in_client_and_self():
+            self.GAME.sounds['equip'].play()
 
     # in port
     def start_move(self, params):
@@ -526,12 +534,18 @@ class Role:
         mate = self.mates[mate_num]
         mate.add_lv()
 
+        if self.is_in_client_and_self():
+            self.GAME.sounds['lv_up'].play()
+
     def add_mates_attribute(self, params):
         mate_num = params[0]
         attribute = params[1]
 
         mate = self.mates[mate_num]
         mate.add_attribute(attribute)
+
+        if self.is_in_client_and_self():
+            self.GAME.sounds['attribute_up'].play()
 
     def give_exp_to_other_mates(self, params):
         mate_num = params[0]
@@ -595,7 +609,7 @@ class Role:
                     item = Item(item_id)
                     self.GAME.button_click_handler.i_speak(f'We found {discovery.name} '
                                       f'and {item.name}! Got {c.EXP_PER_DISCOVERY} exp.')
-                    self.GAME.sounds['deal'].play()
+                    self.GAME.sounds['discover'].play()
             else:
                 if self.is_in_client_and_self():
                     self.GAME.button_click_handler.i_speak("Can't find anything.")
@@ -1112,6 +1126,9 @@ class Role:
         max_guns = params[2]
 
         self.ships[ship_num].remodel_capacity(max_crew, max_guns)
+
+        if self.is_in_client_and_self():
+            self.GAME.sounds['remodel'].play()
 
     def remodel_ship_name(self, params):
         ship_num = params[0]
@@ -2331,6 +2348,7 @@ class Mate:
             value = getattr(self, attribute_name)
             value += 1
             setattr(self, attribute_name, value)
+
 
 class Discovery:
     def __init__(self, discovery_id):

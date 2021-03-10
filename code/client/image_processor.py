@@ -50,6 +50,15 @@ def load_all_images(image_container, directory, accept=('.png', '.jpg', '.bmp', 
             img = img.convert_alpha()
             image_container[name] = img
 
+def load_all_sounds(sounds_container, directory, accept=('.ogg')):
+    """loads all imgs in dir into image_contrainer"""
+    for sound in os.listdir(directory):
+        name, ext = os.path.splitext(sound)
+        if ext.lower() in accept:
+            sounds_container[name] = pg.mixer.Sound(os.path.join(directory, sound))
+
+
+
 def save_pygame_img(img, file_name):
     pg.image.save(img, file_name)
 

@@ -24,7 +24,7 @@ from AOI_manager import PortMap, SeaMap
 from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type, now_direct_2_alternative_directs
 from gui import mate_speak as m_speak
-from image_processor import load_image, load_all_images
+from image_processor import load_image, load_all_images, load_all_sounds
 from sprites import Explosion, BattleMiniMap, BattleStates
 
 
@@ -132,11 +132,7 @@ class Game():
 
     def _load_sound_effects(self):
         self.sounds = {}
-        self.sounds['shoot'] = pygame.mixer.Sound('../../assets/sounds/effect/shoot.ogg')
-        self.sounds['engage'] = pygame.mixer.Sound('../../assets/sounds/effect/engage.ogg')
-        self.sounds['explosion'] = pygame.mixer.Sound('../../assets/sounds/effect/explosion.ogg')
-        self.sounds['wave'] = pygame.mixer.Sound('../../assets/sounds/effect/wave.ogg')
-        self.sounds['deal'] = pygame.mixer.Sound('../../assets/sounds/effect/deal.ogg')
+        load_all_sounds(self.sounds, f"../../assets/sounds/effect")
 
     def _play_music(self):
         pygame.mixer.music.load('../../assets/sounds/music/login.ogg')
