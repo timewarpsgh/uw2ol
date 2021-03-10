@@ -133,8 +133,6 @@ def roles_in_new_map(self, message_obj):
         self.port_piddle, self.images['port'] = self.map_maker.\
             make_port_piddle_and_map(port_index, self.time_of_day)
 
-
-
 def roles_disappeared(self, message_obj):
     """in delete grids"""
     names_of_roles_that_disappeared = message_obj
