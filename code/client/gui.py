@@ -1395,7 +1395,8 @@ class Harbor():
                 escape_twice(self.game)
 
             # music
-            pygame.mixer.music.load('../../assets/sounds/music/sea.ogg')
+            file_name = random.choice(['sea', 'sea_1'])
+            pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
             pygame.mixer.music.play(-1)
 
     def __pass_one_day_at_sea(self, game):

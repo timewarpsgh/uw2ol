@@ -1,4 +1,5 @@
 import pygame
+import random
 
 # add relative directory to python_path
 import sys, os
@@ -119,7 +120,8 @@ def roles_in_new_map(self, message_obj):
         self.reset_think_time_in_battle()
 
         # music
-        pygame.mixer.music.load('../../assets/sounds/music/sea.ogg')
+        file_name = random.choice(['sea', 'sea_1'])
+        pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
         pygame.mixer.music.play(-1)
 
         # if just lost from battle
