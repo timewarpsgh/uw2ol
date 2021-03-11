@@ -8,7 +8,7 @@ by function
         version check before login OK
 
 
-        hide assets ON
+        hide assets OK
 
 
 
