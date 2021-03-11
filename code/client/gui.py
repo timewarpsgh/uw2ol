@@ -381,7 +381,14 @@ class ButtonClickHandler():
         print(len(self.game.buttons.keys()))
 
     def make_message_box(self, text):
-        if self.game.my_role.is_in_client_and_self():
+        do = False
+        if self.game.my_role:
+            if self.game.my_role.is_in_client_and_self():
+                do = True
+        else:
+            do =True
+
+        if do:
             MessageWindow(pygame.Rect((200, 50),
                                       (350, 350)),
                           self.ui_manager,

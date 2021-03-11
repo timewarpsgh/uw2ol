@@ -6,9 +6,9 @@ by function
 
     player mode test ON
         version check before login OK
-
-
         hide assets OK
+
+        failed to connect OK
 
 
 
