@@ -1,6 +1,5 @@
 import os
 os.chdir("code/client")
-print(os.getcwd())
 
 from twisted.internet.protocol import Protocol, ClientFactory
 from twisted.internet import reactor, threads, defer
@@ -10,7 +9,6 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'code', 'common'))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'code', 'client'))
 
-print(sys.path)
 
 # import from common(dir)
 from protocol import MyProtocol

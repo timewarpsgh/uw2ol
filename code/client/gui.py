@@ -1346,15 +1346,15 @@ class MenuClickHandlerForTarget():
         self.game = game
 
     def view_fleet(self):
-        if self.game.my_role.get_enemy_role():
+        if not self.game.my_role.get_enemy_role().name == self.game.my_role.name:
             self.game.button_click_handler.menu_click_handler.ships.fleet_info(True)
 
     def view_ships(self):
-        if self.game.my_role.get_enemy_role():
+        if not self.game.my_role.get_enemy_role().name == self.game.my_role.name:
             self.game.button_click_handler.menu_click_handler.ships.ship_info(True)
 
     def gossip(self):
-        if self.game.my_role.get_enemy_role():
+        if not self.game.my_role.get_enemy_role().name == self.game.my_role.name:
             enemy_name = self.game.my_role.enemy_name
             enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
             target_mate = enemy_role.mates[0]
@@ -1369,10 +1369,11 @@ class MenuClickHandlerForTarget():
             mate_speak(self.game, target_mate, message)
 
     def captain_info(self):
-        enemy_role = self.game.my_role.get_enemy_role()
-        if enemy_role:
-            mate = enemy_role.mates[0]
-            self._show_captain(mate)
+        if not self.game.my_role.get_enemy_role().name == self.game.my_role.name:
+            enemy_role = self.game.my_role.get_enemy_role()
+            if enemy_role:
+                mate = enemy_role.mates[0]
+                self._show_captain(mate)
 
     def _show_captain(self, mate):
         # dict

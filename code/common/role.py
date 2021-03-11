@@ -156,7 +156,7 @@ class Role:
                 target_role = self.GAME.other_roles[name]
                 return target_role
             else:
-                return None
+                return self.GAME.my_role
 
         # in server
         else:
@@ -2863,9 +2863,7 @@ def _generate_new_npc_after_battle(my_role, enemy_role):
 
 if __name__ == '__main__':
     # new role
-    alex = init_one_default_npc('alex')
-    print(alex.name)
-    alex.gold += 1
+    pass
 
 
 

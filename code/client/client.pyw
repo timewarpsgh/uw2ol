@@ -5,8 +5,6 @@ from twisted.internet import reactor, threads, defer
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
-print(sys.path)
-
 # import from common(dir)
 from protocol import MyProtocol
 from role import Role, Ship, Mate

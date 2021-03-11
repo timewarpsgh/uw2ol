@@ -440,4 +440,4 @@ class ShipInBattle(pg.sprite.Sprite):
         self.game.screen_surface.blit(self.image, self.rect)
 
 if __name__ == '__main__':
-    ex = Explosion()
+    pass
