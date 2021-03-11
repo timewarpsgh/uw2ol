@@ -1495,6 +1495,11 @@ class Harbor():
                     msg = f"Our supply is low. We can only last for {c.SUPPLY_LOW_ALERT_DAYS} more days!"
                     game.button_click_handler.i_speak(msg)
 
+                # rand lighting and rain?
+                if random.random() < 4 / 100:
+                    game.sounds['lightning'].play()
+                    reactor.callLater(2, game.sounds['rain'].play)
+
             # starved!
             else:
                 game.timer_at_sea.stop()
