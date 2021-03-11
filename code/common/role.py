@@ -488,7 +488,11 @@ class Role:
             all_crew += ship.crew
 
         # calculate max days
-        max_days = int(all_supply / (all_crew * c.SUPPLY_CONSUMPTION_PER_PERSON))
+        max_days = None
+        if c.DEVELOPER_MODE_ON:
+            max_days = 1000
+        else:
+            max_days = int(all_supply / (all_crew * c.SUPPLY_CONSUMPTION_PER_PERSON))
 
         # equipments
         if self.body.container['pet']:
