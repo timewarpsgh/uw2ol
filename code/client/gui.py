@@ -456,7 +456,7 @@ class ButtonClickHandler():
     def options(self):
         dict = {
             'Language': test,
-            'Sounds': test,
+            'Sounds': self.menu_click_handler.options.sounds,
             'Hot Keys': test,
             'Exit': [handle_pygame_event.quit, self.game]
         }
@@ -1067,6 +1067,35 @@ class MenuClickHandlerForCmds():
 class MenuClickHandlerForOptions():
     def __init__(self, game):
         self.game = game
+
+    def sounds(self):
+        d = {
+            'Music': self._music,
+            'Effect': self._effect,
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def _music(self):
+        d = {
+            'Pause': [pygame.mixer.music.set_volume, 0],
+            'Resume': [pygame.mixer.music.set_volume, 1],
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def _effect(self):
+        d = {
+            'Pause': self.__stop_all_sound_effects,
+            'Resume': self.__resume_all_sound_effects,
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def __stop_all_sound_effects(self):
+        for sound in self.game.sounds.values():
+            sound.set_volume(0)
+
+    def __resume_all_sound_effects(self):
+        for sound in self.game.sounds.values():
+            sound.set_volume(1)
 
 class MenuClickHandlerForLogin():
     def __init__(self, game):
