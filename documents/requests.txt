@@ -18,10 +18,7 @@ by function
         invalid input handling OK
         less speed OK
         sound settings OK
-
         more sound effects OK
-
-
 
 
     p V e
