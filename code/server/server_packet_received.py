@@ -44,6 +44,14 @@ def process_packet(self, pck_type, message_obj):
         self.send_to_other_clients(func_name, params_list)
 
 ####################### packet types ###########################
+def version(self, message_obj):
+    print('got client version!')
+    version = message_obj[0]
+    if version == c.VERSION:
+        pass
+    else:
+        self.send('version_wrong', '')
+
 def register(self, message_obj):
     # get ac and psw
     account = message_obj[0]

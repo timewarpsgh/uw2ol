@@ -5,6 +5,8 @@ make exe
     ### in uw2ol folder
     pyinstaller -i assets/images/game_icon/ship.ico --onefile run_client.pyw code/client/client_packet_received.py code/client/draw.py code/client/game.py code/client/gui.py code/client/handle_gui_event.py code/client/handle_pygame_event.py code/client/map_maker.py code/client/port_npc.py code/client/sprites.py code/common/protocol.py code/common/role.py code/common/constants.py code/common/helpers.py code/common/AOI_manager.py
     pyinstaller -i assets/images/game_icon/ship.ico --onefile run_client.pyw code/client/game.py code/common/protocol.py code/common/role.py code/common/constants.py
+
+
 release
     set constants.py
     update server (cloud)

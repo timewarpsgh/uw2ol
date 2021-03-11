@@ -891,11 +891,12 @@ class MenuClickHandlerForItems():
         self.game.button_click_handler.make_menu(dict)
 
     def _main_objective(self):
-        port = self.game.my_role.main_quest_port
-        building = self.game.my_role.main_quest_building
+        if self.game.my_role.main_quest_port:
+            port = self.game.my_role.main_quest_port
+            building = self.game.my_role.main_quest_building
 
-        msg = f"Go to {port} {building}."
-        self.game.button_click_handler.i_speak(msg)
+            msg = f"Go to {port} {building}."
+            self.game.button_click_handler.i_speak(msg)
 
     def _quest_log(self):
         discovery_quest_id = self.game.my_role.quest_discovery

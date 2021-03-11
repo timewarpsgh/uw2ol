@@ -8,6 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # import from common(dir)
 from role import Role, Ship, Mate, Port
 from twisted.internet.task import LoopingCall
+from twisted.internet import reactor
 import port_npc
 import handle_pygame_event
 import constants as c
@@ -32,6 +33,11 @@ def process_packet(self, pck_type, message_obj):
             print(role, func_name, func, list)
 
 # register responses
+def version_wrong(self, message_obj):
+    self.login_state_text = 'Please download the latest version! ' \
+                            'Exiting in 5 seconds.'
+    reactor.callLater(2, handle_pygame_event.quit, self)
+
 def register_ok(self, message_obj):
     self.login_state_text = 'Register OK. Please Login.'
     print('register_ok')

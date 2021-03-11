@@ -36,6 +36,9 @@ class Echo(Protocol):
         d = self._get_deferred_user_input()
         d.addCallback(self._send_and_get_next_input)
 
+        # send version
+        self.send('version', [c.VERSION])
+
     def _get_deferred_user_input(self):
         d = threads.deferToThread(self._get_input)
         return d

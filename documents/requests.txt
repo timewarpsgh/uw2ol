@@ -5,27 +5,9 @@ by function
     fight OK
 
     player mode test ON
-        new player protect lv 15 OK
-        supply low alert OK
-        defect requirement OK
 
-        starve to death OK
+        version check before login OK
 
-        starve to death image OK
-        win battle image OK
-        lose battle image OK
-
-        invalid input handling OK
-        less speed OK
-        sound settings OK
-        more sound effects OK
-
-
-    p V e
-        see npc mate OK
-    p V p
-        see other players captain OK
-        don't show npc number OK
 
 
 
