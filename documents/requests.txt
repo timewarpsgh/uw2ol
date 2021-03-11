@@ -20,11 +20,12 @@ by function
         sound settings OK
 
 
-
     p V e
         see npc mate OK
     p V p
         see other players captain OK
+
+        don't show npc number OK
 
 
 

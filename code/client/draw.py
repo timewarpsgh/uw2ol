@@ -205,7 +205,7 @@ def draw_in_port(self):
     self.screen_surface.blit(self.images['person_tileset'], self.screen_surface_rect.center, person_rect)
 
         # name
-    draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
+        # draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
 
     # draw other roles
     self.other_roles_rects = {}
@@ -241,7 +241,7 @@ def draw_at_sea(self):
     self.screen_surface.blit(self.images['ship-tileset'], self.screen_surface_rect.center, ship_rect)
 
         # name
-    draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
+        # draw_text(self, str(self.my_role.name), c.WINDOW_WIDTH / 2, -15 + c.WINDOW_HIGHT / 2, c.YELLOW)
 
     # draw other roles
     self.other_roles_rects = {}
@@ -265,7 +265,10 @@ def draw_at_sea(self):
             self.other_roles_rects[role.name] = image_rect
 
             # name
-            draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
+            if role.is_npc():
+                pass
+            else:
+                draw_text(self, str(role.name), x, -15 + y, c.YELLOW)
 
             # target sign
             if self.my_role.enemy_name and role.name == self.my_role.enemy_name:
