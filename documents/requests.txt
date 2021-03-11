@@ -17,19 +17,12 @@ by function
 
         invalid input handling OK
         less speed OK
-
-
         sound settings OK
 
 
 
-
-
-
-
-
     p V e
-        see npc mate
+        see npc mate OK
     p V p
         see other players mates
 

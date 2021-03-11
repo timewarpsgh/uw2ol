@@ -156,7 +156,7 @@ class Role:
                 target_role = self.GAME.other_roles[name]
                 return target_role
             else:
-                return self.GAME.my_role
+                return None
 
         # in server
         else:

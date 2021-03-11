@@ -1346,23 +1346,65 @@ class MenuClickHandlerForTarget():
         self.game = game
 
     def view_fleet(self):
-        self.game.button_click_handler.menu_click_handler.ships.fleet_info(True)
+        if self.game.my_role.get_enemy_role():
+            self.game.button_click_handler.menu_click_handler.ships.fleet_info(True)
 
     def view_ships(self):
-        self.game.button_click_handler.menu_click_handler.ships.ship_info(True)
+        if self.game.my_role.get_enemy_role():
+            self.game.button_click_handler.menu_click_handler.ships.ship_info(True)
 
     def gossip(self):
-        enemy_name = self.game.my_role.enemy_name
-        enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
-        target_mate = enemy_role.mates[0]
-        destination_port = None
-        if enemy_role.out_ward:
-            destination_port = Port((enemy_role.end_port_id - 1))
-        else:
-            destination_port = Port((enemy_role.start_port_id - 1))
-        fleet_type = enemy_role.get_npc_fleet_type()
-        message = f"I'm {target_mate.name} directing a {fleet_type} fleet from {target_mate.nation}. We are heading to {destination_port.name}."
-        mate_speak(self.game, target_mate, message)
+        if self.game.my_role.get_enemy_role():
+            enemy_name = self.game.my_role.enemy_name
+            enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
+            target_mate = enemy_role.mates[0]
+            destination_port = None
+            if enemy_role.out_ward:
+                destination_port = Port((enemy_role.end_port_id - 1))
+            else:
+                destination_port = Port((enemy_role.start_port_id - 1))
+            fleet_type = enemy_role.get_npc_fleet_type()
+            message = f"I'm {target_mate.name} directing a {fleet_type} fleet " \
+                      f"from {target_mate.nation}. We are heading to {destination_port.name}."
+            mate_speak(self.game, target_mate, message)
+
+    def captain_info(self):
+        enemy_role = self.game.my_role.get_enemy_role()
+        if enemy_role:
+            mate = enemy_role.mates[0]
+            self._show_captain(mate)
+
+    def _show_captain(self, mate):
+        # dict
+        dict = {
+            'name': f"{mate.name} nation:{mate.nation}",
+            '1': '',
+            'lv': f"{mate.lv}",
+            '2': '',
+            'leadership': mate.leadership,
+            'seamanship': f"{mate.seamanship} luck:{mate.luck}",
+            'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
+            'courage': f"{mate.courage} swordplay:{mate.swordplay}",
+            '3': '',
+            'accounting': mate.accounting,
+            'gunnery': mate.gunnery,
+            'navigation': mate.navigation,
+        }
+
+        # make text from dict
+        text = ''
+        for k, v in dict.items():
+            if k.isdigit():
+                text += f'<br>'
+            else:
+                text += f'{k}:{v}<br>'
+
+        # get figure image
+        figure_surface = figure_x_y_2_image(self.game, mate.image_x, mate.image_y)
+
+        # make window
+        PanelWindow(pygame.Rect((59, 12), (350, 400)),
+                    self.game.ui_manager, text, self.game, figure_surface)
 
 
 class Harbor():
@@ -2400,6 +2442,7 @@ def target_clicked(self):
     }
     if self.my_role.get_enemy_role().is_npc():
         dict['Gossip'] = self.button_click_handler.menu_click_handler.target.gossip
+        dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
 
     self.button_click_handler.make_menu(dict)
 
