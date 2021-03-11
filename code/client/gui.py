@@ -1406,6 +1406,10 @@ class MenuClickHandlerForTarget():
         PanelWindow(pygame.Rect((59, 12), (350, 400)),
                     self.game.ui_manager, text, self.game, figure_surface)
 
+    def view_mates(self):
+
+
+        pass
 
 class Harbor():
     """menu options under building port"""
@@ -2435,14 +2439,20 @@ def escape_thrice(game):
     reactor.callLater(0.2, handle_pygame_event.escape, game, '')
 
 def target_clicked(self):
-    # self is game [self.button_click_handler.menu_click_handler.ships.fleet_info, True],
+    # self is game
     dict = {
         'View Fleet': self.button_click_handler.menu_click_handler.target.view_fleet,
         'View Ships': self.button_click_handler.menu_click_handler.target.view_ships,
     }
+
+    # if npc
     if self.my_role.get_enemy_role().is_npc():
         dict['Gossip'] = self.button_click_handler.menu_click_handler.target.gossip
         dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
+    # if player
+    else:
+        dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
+
 
     self.button_click_handler.make_menu(dict)
 

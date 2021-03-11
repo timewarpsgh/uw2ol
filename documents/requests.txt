@@ -24,7 +24,7 @@ by function
     p V e
         see npc mate OK
     p V p
-        see other players mates
+        see other players captain OK
 
 
 
