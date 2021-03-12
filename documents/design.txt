@@ -1,6 +1,37 @@
+run in another machine
+    python
+        # ins python
+        install Python 3.6.5 (have)
+	    # ins all modules
+	    python -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+    mysql
+        # ins mysql
+        MySQL 5.7.22 (have)
+        use guide from jianshu
+        install visial c++
+
+        # give remote access to sqlyog
+            # to one ip only
+            mysql -uroot -pdab9901025
+            use mysql;
+            GRANT ALL ON *.* to root@'223.104.250.161' IDENTIFIED BY 'dab9901025';
+            FLUSH PRIVILEGES;
+
+            # to any ip
+            GRANT ALL ON *.* to root@'%' IDENTIFIED BY 'dab9901025';
+
+        # init db and table
+
 make exe
+    # make spec file
     pyi-makespec -F run_client.pyw code/client/game.py code/common/protocol.py code/common/role.py code/common/constants.py
+
+    # make exe from spec
     pyinstaller -F run_client.spec
+
+    # hide assets and code folder using winRAR
+
 
 release
     set constants.py
@@ -8,16 +39,6 @@ release
     make exe
     update client (legend)
 
-access mysql remote
-    mysql -uroot -pdab9901025
-    use mysql;
-    GRANT ALL ON *.* to root@'183.228.98.188' IDENTIFIED BY 'dab9901025';
-    FLUSH PRIVILEGES;
-
-frameworks used
-	twisted(event driven network engine)
-	pygame(game engine)
-	pygame_gui(GUI engine)
 
 
 
