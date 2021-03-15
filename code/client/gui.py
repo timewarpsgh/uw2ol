@@ -11,7 +11,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # import from common(dir)
 import constants as c
 from role import Port, Mate, Ship, Discovery, Item, Gun
-from hashes import hash_villages
+
+from image_processor import load_image
 
 import handle_pygame_event
 
@@ -23,7 +24,7 @@ from hashes.hash_items import hash_items
 from hashes.hash_villages import villages_dict
 from hashes.hash_bible_quotes import hash_bible_quotes
 from hashes.hash_cannons import hash_cannons
-
+from hashes import hash_villages
 
 def test():
     print('testing')
@@ -1290,6 +1291,7 @@ class MenuClickHandlerForPort():
             'Check In': self.inn.check_in,
             'Gossip': self.inn.gossip,
             'Port Info': self.inn.port_info,
+            'Walk Around': self.inn.walk_around,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -2388,6 +2390,27 @@ class Inn:
     def port_info(self):
         msg = f"This port is allied to {self.game.my_role.nation}."
         self.game.button_click_handler.building_speak(msg)
+
+    def walk_around(self):
+        port = self.game.my_role.get_port()
+        port_name = port.name
+        port_name = port_name.lower()
+
+        # load img
+        sketch = None
+        try:
+            sketch = load_image(f"../../assets/images/port_sketches/{port_name}.png")
+            sketch = pygame.transform.scale(sketch,
+                                     (c.WINDOW_WIDTH,
+                                      c.WINDOW_HIGHT))
+        except:
+            msg = "Didn't see anything interesting."
+            self.game.button_click_handler.i_speak(msg)
+        else:
+            sketch_rect = sketch.get_rect()
+            PanelWindow(sketch_rect, self.game.ui_manager,
+                        None, self.game, image=sketch)
+
 
 class Msc:
     def __init__(self, game):
