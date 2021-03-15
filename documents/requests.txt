@@ -1,25 +1,19 @@
 by function
     travel OK
     discover OK
+        sketches ON
+            for capitals ON
+                london
+                amsterdam
+                lisbon
+                seville
+                genoa
+                istanbul
+
+
     trade OK
     fight OK
 
-    player mode test ON
-        version check before login OK
-        hide assets OK
-        failed to connect OK
-
-        put server on cloud ON
-		buy cloud server OK
-		
-		install mysql OK
-		init mysql record OK
-
-		install python (ven) OK
-
-		install all modules OK
-		
-		run server OK
 
 
 
