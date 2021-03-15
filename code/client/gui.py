@@ -2400,9 +2400,9 @@ class Inn:
         sketch = None
         try:
             sketch = load_image(f"../../assets/images/port_sketches/{port_name}.png")
-            sketch = pygame.transform.scale(sketch,
-                                     (c.WINDOW_WIDTH,
-                                      c.WINDOW_HIGHT))
+            # sketch = pygame.transform.scale(sketch,
+            #                          (c.WINDOW_WIDTH,
+            #                           c.WINDOW_HIGHT))
         except:
             msg = "Didn't see anything interesting."
             self.game.button_click_handler.i_speak(msg)
