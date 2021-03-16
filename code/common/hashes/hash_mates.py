@@ -341,8 +341,8 @@ hash_mates = {
     },
 
     18: {
-        'image_x': 13,
-        'image_y': 6,
+        'image_x': 2,
+        'image_y': 3,
         'name': 'Fritz Ramsey',
         'nation': 'Holland',
         'lv': 2,

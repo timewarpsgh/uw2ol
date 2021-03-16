@@ -2654,7 +2654,7 @@ def init_one_default_npc(name):
         mate0 = Mate(1)
         npc.mates.append(mate0)
     else:
-        mate0 = Mate(int(name))
+        mate0 = Mate(int(name) + 4)
         npc.mates.append(mate0)
 
     # 3 types of fleet

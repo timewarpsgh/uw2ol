@@ -2408,6 +2408,7 @@ class Inn:
             self.game.button_click_handler.i_speak(msg)
         else:
             sketch_rect = sketch.get_rect()
+            sketch_rect.height += 50
             PanelWindow(sketch_rect, self.game.ui_manager,
                         None, self.game, image=sketch)
 

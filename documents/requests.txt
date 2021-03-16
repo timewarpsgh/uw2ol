@@ -1,14 +1,8 @@
 by function
     travel OK
     discover OK
-        sketches ON
-            for capitals ON
-                london
-                amsterdam
-                lisbon
-                seville
-                genoa
-                istanbul
+        sketches OK
+        npc fleet captains OK
 
 
     trade OK
