@@ -1,7 +1,12 @@
 by function
     travel OK
     discover OK
-        sketches OK
+        sketches ON
+            pisa
+
+
+
+
         npc fleet captains OK
 
 
