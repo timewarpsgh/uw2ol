@@ -6,6 +6,10 @@ by function
 
         can buy star equipments OK
 
+        website register instruction OK
+
+        block bad packet to server ON
+
 
 
 
