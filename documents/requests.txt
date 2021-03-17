@@ -4,9 +4,6 @@ by function
         sketches ON
             pisa
 
-
-
-
         npc fleet captains OK
 
 
