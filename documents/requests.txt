@@ -1,10 +1,13 @@
 by function
     travel OK
     discover OK
-        sketches ON
-            pisa
-
+        sketches OK
         npc fleet captains OK
+
+        can buy star equipments OK
+
+
+
 
 
     trade OK

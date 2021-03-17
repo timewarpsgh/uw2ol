@@ -261,7 +261,7 @@ class Role:
         self.speak_msg = msg
 
         # clear msg after 1s
-        reactor.callLater(1, self._speak_clear_msg)
+        reactor.callLater(3, self._speak_clear_msg)
 
     def _speak_clear_msg(self):
         self.speak_msg = ''
@@ -2610,6 +2610,8 @@ class Port:
 
     def get_available_items_ids_for_sale(self):
         id_list = hash_ports_meta_data[self.id]['itemShop']['regular']
+        secret_id_list = hash_ports_meta_data[self.id]['itemShop']['secret']
+        id_list.extend(secret_id_list)
         return id_list
 
 
