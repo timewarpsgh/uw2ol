@@ -8,11 +8,6 @@ by function
 
         website register instruction OK
 
-        block bad packet to server ON
-
-
-
-
 
     trade OK
     fight OK
