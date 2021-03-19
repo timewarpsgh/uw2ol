@@ -3,11 +3,11 @@ by function
     discover OK
         sketches OK
         npc fleet captains OK
-
         can buy star equipments OK
-
         website register instruction OK
 
+        read a book
+            learn python the hard way ON
 
     trade OK
     fight OK
