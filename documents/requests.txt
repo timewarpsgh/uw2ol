@@ -6,8 +6,16 @@ by function
         can buy star equipments OK
         website register instruction OK
 
-        read a book
-            learn python the hard way ON
+        chinese version ON
+            buttons
+            make_menu
+
+            login scene OK
+            hud OK
+
+            make_panel
+
+
 
     trade OK
     fight OK

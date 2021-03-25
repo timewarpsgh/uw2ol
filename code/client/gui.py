@@ -9,6 +9,7 @@ import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 
 # import from common(dir)
+
 import constants as c
 from role import Port, Mate, Ship, Discovery, Item, Gun
 
@@ -66,6 +67,7 @@ def _init_button(self, dict, position):
     text_list = list(dict.keys())
     text = text_list[0]
     function = dict[text]
+    text = self.translator.translate(text)
 
     # make button
     button = pygame_gui.elements.UIButton(pygame.Rect((c.WINDOW_WIDTH - c.BUTTON_WIDTH * position,
@@ -306,6 +308,7 @@ class SelectionListWindow(pygame_gui.elements.UIWindow):
         self.game = game
 
         # gets
+        dict = {self.game.translator.translate(k): dict[k] for k in dict.keys()}
         self.dict = dict
         item_list = dict.keys()
 

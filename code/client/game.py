@@ -26,12 +26,13 @@ from hashes.look_up_tables import id_2_building_type, now_direct_2_alternative_d
 from gui import mate_speak as m_speak
 from image_processor import load_image, load_all_images, load_all_sounds
 from sprites import Explosion, BattleMiniMap, BattleStates
-
+from translator import Translator
 
 class Game():
     def __init__(self):
         # pygame and gui
         self._init_pygame()
+        self.translator = Translator()
         gui.init_gui(self)
 
         # loop to change ship frame state
@@ -128,7 +129,7 @@ class Game():
         self.images['world_map_grids'] = pygame.image.load\
             ("../../assets/images/world_map/world_map_grids.png").convert_alpha()
         # fonts
-        self.font = pygame.font.SysFont("Times New Roman", c.FONT_SIZE)
+        self.font = pygame.font.SysFont("microsoftyaheimicrosoftyaheiui", c.FONT_SIZE)
 
     def _load_sound_effects(self):
         self.sounds = {}

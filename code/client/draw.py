@@ -96,17 +96,17 @@ def draw_logged_in_state(self):
             draw_hud(self)
 
                 # at sea text
-            draw_text(self, 'At Sea', c.WINDOW_WIDTH - 100, 15)
+            draw_text(self, self.translator.translate('At Sea'), c.WINDOW_WIDTH - 100, 15)
 
                 # max days at sea
-            draw_text(self, 'Max Days', c.WINDOW_WIDTH - 100, 120)
+            draw_text(self, self.translator.translate('Max Days'), c.WINDOW_WIDTH - 100, 120)
             if self.my_role.additioanl_days_at_sea:
                 draw_text(self, str(self.max_days_at_sea) + '*', c.WINDOW_WIDTH - 100, 140)
             else:
                 draw_text(self, str(self.max_days_at_sea), c.WINDOW_WIDTH - 100, 140)
 
                 # days spent at sea
-            draw_text(self, 'Days Spent', c.WINDOW_WIDTH - 100, 160)
+            draw_text(self, self.translator.translate('Days Spent'), c.WINDOW_WIDTH - 100, 160)
             draw_text(self, str(self.days_spent_at_sea), c.WINDOW_WIDTH - 100, 180)
 
             # in battle
@@ -122,8 +122,9 @@ def draw_hud(self):
     hud_left_rect = self.images['hud_left'].get_rect()
 
         # year and time of day
-    draw_text(self, 'A.D. 1492', 10, 25)
-    draw_text(self, 'Godspeed', 10, 139)
+    trans = self.translator
+    draw_text(self, trans.translate('A.D. 1492'), 10, 25)
+    draw_text(self, trans.translate('Godspeed'), 10, 139)
 
         # LV
     draw_text(self, 'Lv', 10, c.WINDOW_HIGHT - 120 - 40)
@@ -133,11 +134,11 @@ def draw_hud(self):
     gold_ingots = int(self.my_role.gold / 10000)
     gold_coins = self.my_role.gold - (gold_ingots * 10000)
 
-    draw_text(self, 'Gold Ingots', 10, c.WINDOW_HIGHT - 120)
+    draw_text(self, trans.translate('Gold Ingots'), 10, c.WINDOW_HIGHT - 120)
     draw_text(self, str(gold_ingots), 10, c.WINDOW_HIGHT - 120 + 20)
 
         # gold coins
-    draw_text(self, 'Gold Coins', 10, c.WINDOW_HIGHT - 120 +40)
+    draw_text(self, trans.translate('Gold Coins'), 10, c.WINDOW_HIGHT - 120 +40)
     draw_text(self, str(gold_coins), 10, c.WINDOW_HIGHT - 120 + 60)
 
     # right hud
@@ -154,16 +155,16 @@ def draw_hud(self):
 
             economy_id = hash_ports_meta_data[int(self.my_role.map) + 1]['economyId']
             region_name = hash_ports_meta_data['markets'][economy_id]
-            draw_text(self, region_name, c.WINDOW_WIDTH - 100, 20)
+            draw_text(self, self.translator.translate(region_name), c.WINDOW_WIDTH - 100, 20)
 
             # index
             economy_index = self.my_role.port_economy
             industry_index = self.my_role.port_industry
 
-            draw_text(self, 'Economy', c.WINDOW_WIDTH - 100, 80)
+            draw_text(self, self.translator.translate('Economy'), c.WINDOW_WIDTH - 100, 80)
             draw_text(self, str(economy_index), c.WINDOW_WIDTH - 100, 100)
 
-            draw_text(self, 'Industry', c.WINDOW_WIDTH - 100, 120)
+            draw_text(self, self.translator.translate('Industry'), c.WINDOW_WIDTH - 100, 120)
             draw_text(self, str(industry_index), c.WINDOW_WIDTH - 100, 140)
 
         # supply ports
@@ -173,8 +174,9 @@ def draw_hud(self):
 
         # at sea
     else:
-        draw_text(self, 'Speed', c.WINDOW_WIDTH - 100, 80)
-        draw_text(self, str(self.my_role.speed) + ' knots', c.WINDOW_WIDTH - 100, 100)
+        draw_text(self, self.translator.translate('Speed'), c.WINDOW_WIDTH - 100, 80)
+        draw_text(self, str(self.my_role.speed) + ' ' +
+                  self.translator.translate('knots'), c.WINDOW_WIDTH - 100, 100)
 
 def draw_text(self, text, x, y, color=c.BLACK):
     text_img = self.font.render(text, True, color)

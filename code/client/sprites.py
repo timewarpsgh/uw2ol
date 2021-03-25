@@ -339,9 +339,10 @@ class BattleStates(pg.sprite.Sprite):
         # my timer
         my_timer_text = None
         if self.game.my_role.your_turn_in_battle:
-            my_timer_text = 'Your Turn ' + str(self.game.think_time_in_battle)
+            my_timer_text = self.game.translator.translate('Your Turn ') + \
+                            str(self.game.think_time_in_battle)
         else:
-            my_timer_text = 'Please Wait...'
+            my_timer_text = self.game.translator.translate('Please Wait...')
 
         timer_text = Text(self.game, my_timer_text, c.YELLOW)
         timer_text.rect.x = 20
@@ -369,7 +370,8 @@ class BattleStates(pg.sprite.Sprite):
 
             # non flag ships
             if id != 0:
-                strategy_text = Text(self.game, str(ship.attack_method), c.ORANGE)
+                show_text = self.game.translator.translate(str(ship.attack_method))
+                strategy_text = Text(self.game, show_text, c.ORANGE)
                 strategy_text.rect.x = 80
                 strategy_text.rect.y = (id + 2) * 20
 
@@ -385,9 +387,9 @@ class BattleStates(pg.sprite.Sprite):
         # timer
         enemy_timer_text = None
         if self.game.other_roles[self.game.my_role.enemy_name].your_turn_in_battle:
-            enemy_timer_text = 'Enemy Turn'
+            enemy_timer_text = self.game.translator.translate('Enemy Turn')
         else:
-            enemy_timer_text = 'Please Wait...'
+            enemy_timer_text = self.game.translator.translate('Please Wait...')
 
         enemy_timer_img = self.game.font.render(enemy_timer_text, True, c.YELLOW)
         self.image.blit(enemy_timer_img, (c.WINDOW_WIDTH - 150, 5))

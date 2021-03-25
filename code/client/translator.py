@@ -12,7 +12,12 @@ class Translator():
 
     def translate(self, content):
         if self.to_langguage == 'CN':
-            return  chinese.dic[content.lower()]
+            if content.lower() in chinese.dic:
+                return  chinese.dic[content.lower()]
+            elif content in chinese.dic:
+                return chinese.dic[content]
+            else:
+                return content
         elif self.to_langguage == 'EN':
             return content
 
