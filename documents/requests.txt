@@ -10,10 +10,10 @@ by function
             buttons
             make_menu
 
-            login scene OK
-            hud OK
 
-            make_panel
+            make_panel(UItextbox) OK
+
+            input box LATER
 
 
 

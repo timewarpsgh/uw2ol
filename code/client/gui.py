@@ -123,6 +123,7 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
         input_box_list = []
         line_distance = 40
 
+        params_names_list = [self.game.translator.translate(name) for name in params_names_list]
         for i, name in enumerate(params_names_list):
             # text box
             text_box = pygame_gui.elements.UITextBox(html_text=name,
@@ -201,10 +202,15 @@ class FleetPanelWindow(pygame_gui.elements.UIWindow):
         types = [ship.type for ship in ships]
         text = ''
         for type in types:
-            text += f'{type}, '
+            type_text = self.game.translator.translate(type)
+            text += f'{type_text}, '
 
-        text += f'<br>Fleet Speed: {speed} knots'
-        text += f'<br>Flag: {nation}'
+        fleet_speed_text = self.game.translator.translate('Fleet Speed')
+        flag_text = self.game.translator.translate('Flag')
+        knots_text = self.game.translator.translate('knots')
+        nation_text = self.game.translator.translate(nation)
+        text += f'<br>{fleet_speed_text}: {speed} {knots_text}'
+        text += f'<br>{flag_text}: {nation_text}'
 
         # show bg
         bg_image = game.images['ships']['fleet_info']
@@ -597,6 +603,7 @@ class MenuClickHandlerForMates():
         text = ''
         for k, v in dict.items():
             if v:
+                k = self.game.translator.translate(k)
                 text += f'{k}:{v}<br>'
             else:
                 text += '<br>'
@@ -629,20 +636,19 @@ class MenuClickHandlerForMates():
             else:
                 duty_name = 'captain of ' + mate.duty.name
 
+        nation_text = self.game.translator.translate(mate.nation)
         dict = {
-            'name': f"{mate.name} nation:{mate.nation}",
+            'name/nation': f"{mate.name}/{nation_text}",
             'duty': duty_name,
             '1': '',
-            'lv': f"{mate.lv} exp/to_next_lv:{mate.exp}/{lv_2_exp_needed_to_next_lv[mate.lv]} points:{mate.points}",
+            'lv/points': f"{mate.lv}/{mate.points}",
+            'exp/to_next_lv': f"{mate.exp}/{lv_2_exp_needed_to_next_lv[mate.lv]}",
             '2': '',
-            'leadership': mate.leadership,
-            'seamanship': f"{mate.seamanship} luck:{mate.luck}",
-            'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
-            'courage': f"{mate.courage} swordplay:{mate.swordplay}",
+            'leadership/seamanship/luck': f"{mate.leadership}/{mate.seamanship}/{mate.luck}",
+            'knowledge/intuition': f"{mate.knowledge}/{mate.intuition}",
+            'courage/swordplay': f"{mate.courage}/{mate.swordplay}",
             '3': '',
-            'accounting': mate.accounting,
-            'gunnery': mate.gunnery,
-            'navigation': mate.navigation,
+            'accounting/gunnery/navigation': f"{mate.accounting}/{mate.gunnery}/{mate.navigation}",
         }
 
         # make text from dict
@@ -651,6 +657,7 @@ class MenuClickHandlerForMates():
             if k.isdigit():
                 text += f'<br>'
             else:
+                k = self.game.translator.translate(k)
                 text += f'{k}:{v}<br>'
 
         # get figure image
@@ -2598,14 +2605,15 @@ def _show_one_ship(params):
 
     gun = Gun(ship.gun)
     gun_name = gun.name
+    knots_text = self.game.translator.translate('knots')
     dict = {
-        'name': f'{ship.name}  type:{ship.type}  captain:{captain_name}',
+        'name/type/captain': f'{ship.name}/{ship.type}/{captain_name}',
         '1': '',
-        'tacking': f'{ship.tacking}  power:{ship.power}  speed:{speed} knots',
+        'tacking/power/speed': f'{ship.tacking}/{ship.power}/{speed} {knots_text}',
         'durability': f'{ship.now_hp}/{ship.max_hp}',
         '2': '',
         'capacity': f'{ship.capacity}',
-        'max_guns': f'{ship.max_guns}, guns:{ship.max_guns} {gun_name}',
+        'max_guns/guns': f'{ship.max_guns}/{ship.max_guns} {gun_name}',
         'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
         '3': '',
         'affective_capacity': f'{ship.useful_capacity}',
@@ -2614,7 +2622,9 @@ def _show_one_ship(params):
     # if no target selected
     if not target:
         # supply
-        dict['supplies'] = f"F{ship.supplies['Food']} W{ship.supplies['Water']} "
+        food_text = self.game.translator.translate('F')
+        water_text = self.game.translator.translate('W')
+        dict['supplies'] = f"{food_text}{ship.supplies['Food']} {water_text}{ship.supplies['Water']} "
 
         # cargo
         cargoes_dict = ship.cargoes
@@ -2627,6 +2637,7 @@ def _show_one_ship(params):
         if k.isdigit():
             text += f'<br>'
         else:
+            k = self.game.translator.translate(k)
             text += f'{k}:{v}<br>'
 
     # make window
