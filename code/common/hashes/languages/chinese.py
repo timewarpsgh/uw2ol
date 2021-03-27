@@ -96,6 +96,53 @@ dic = {
             'courage/swordplay': '勇气/剑术',
             'accounting/gunnery/navigation': '会计/炮术/导航',
 
+    # items
+    'Equipments': '装备',
+        'weapon': '武器',
+        'armor': '护甲',
+        'instrument': '仪器',
+        'telescope': '望远镜',
+        'watch': '钟表',
+        'pet': '宠物',
+            'equip': '装备',
+            'unequip': '卸下',
+            'use': '使用',
+
+    'Discoveries': '发现物',
+    'Diary': '日志',
+        'Main Objective': '主要任务',
+        'Quest Log': '次要任务',
+        'Abandon Quest': '放弃次要任务',
+    'World Map': '世界地图',
+    'Port Map': '港口地图',
+
+    # cmds
+    'Enter Building (F)': '进入建筑 (F)',
+    'Enter Port (M)': '进入港口 (M)',
+    'Go Ashore (G)': '探索村落 (G)',
+    'Battle (B)': '战斗 (B)',
+
+    # options
+    'Language': '语言',
+    'Sounds': '音频',
+        'music': '音乐',
+        'effect': '音效',
+            'pause': '暂停',
+            'resume': '恢复',
+    'Hot Keys': '快捷键',
+    'Exit': '退出游戏',
+
+    # battle
+    'View Enemy Ships': '观察敌方船只',
+    'All Ships Target': '所有船只目标',
+    'All Ships Strategy': '所有船只策略',
+        'escape': '撤退',
+    'One Ship Target': '单船目标',
+        'My Ships': '我方船只',
+        'Targets': '目标',
+    'One Ship Strategy': '单船策略',
+    'Escape Battle': '撤离战场',
+
     # ...
 
     # sail

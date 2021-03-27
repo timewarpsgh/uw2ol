@@ -812,6 +812,7 @@ class MenuClickHandlerForItems():
         dict = {}
         for k in equipments_dict.keys():
             item_id = equipments_dict[k]
+            k = self.game.translator.translate(k)
             if item_id == None:
                 dict[f'{k}: {item_id}'] = test
             else:
@@ -1176,8 +1177,9 @@ class MenuClickHandlerForBattle():
         self.game.button_click_handler.escape()
 
     def set_one_ship_target(self):
+        my_ships_text = self.game.translator.translate('My Ships')
         d = {
-            'My Ships': test,
+            my_ships_text: test,
         }
         for id, s in enumerate(self.game.my_role.ships):
             if id != 0:
@@ -1185,8 +1187,9 @@ class MenuClickHandlerForBattle():
         self.game.button_click_handler.make_menu(d)
 
     def _choose_target(self, my_ship_id):
+        targets_text = self.game.translator.translate('Targets')
         d = {
-            'Targets': test,
+            targets_text: test,
         }
         enemy_ships = self.game.my_role.get_enemy_role().ships
         for id, s in enumerate(enemy_ships):
