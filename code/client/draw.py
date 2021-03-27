@@ -456,7 +456,7 @@ def _hide_password(self):
     if len(self.active_input_boxes) == 2:
         # surface covering passwords
         entry_box_width = 150
-        entry_box_height = 25
+        entry_box_height = 28
         surface = pygame.Surface((entry_box_width, entry_box_height))
         surface.fill(c.BLACK)
         rect = surface.get_rect()

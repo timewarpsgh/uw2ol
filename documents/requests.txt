@@ -7,11 +7,13 @@ by function
         website register instruction OK
 
         chinese version ON
-            buttons
-            make_menu
+            buildings menus OK
 
 
-            make_panel(UItextbox) OK
+            buildings chats ON
+
+
+
 
             input box LATER
 

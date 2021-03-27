@@ -1,5 +1,5 @@
 dic = {
-    # buttons
+    # buttons (entrance for all ui)
     'ships': '船只',
     'mates': '船员',
     'items': '物品',
@@ -155,11 +155,59 @@ dic = {
         'role_name': '角色名',
 
     # test(buildings)
+        # all buildings
+        'market': '市场',
+        'bar': '酒吧',
+        'dry dock': '造船厂',
+        'harbor': '港口',
+        'inn': '旅馆',
+        'palace': '皇宫',
+        'job house': '职业介绍所',
+        'misc': '其它',
+        'bank': '银行',
+        'item shop': '物品店',
+        'church': '教堂',
+        'fortune house': '占卜屋',
 
         # market
         'buy': '买入',
         'sell': '卖出',
         'price index': '物价指数',
+
+        # bar
+        'Recruit Crew': '招募船员',
+            'count': '数量',
+            'ship_num': '船只编号',
+        'Dismiss Crew': '解散船员',
+        'Treat': '请客',
+        'Meet': '闲聊',
+            'Gossip': '聊天',
+            'Hire': '雇佣',
+        'Fire Mate': '解雇船长',
+        'Waitress': '酒吧女郎',
+            'ask info': '问询情况',
+                'merchant fleet': '商船队',
+                'convoy fleet': '护卫舰队',
+                'battle fleet': '战舰队',
+            'investigate': '调查',
+            'tell story': '讲故事',
+
+        # dry dock
+        'New Ship': '造新船',
+        'Used Ship': '买旧船',
+        'Repair': '修理',
+        'Sell': '卖出',
+        'Remodel': '改造',
+            'max_crew': '最大船员数',
+            'max_guns': '最大炮位数',
+
+                'Cannon': '加农炮',
+                'Demicannon': '轻型加农炮',
+                'Cannon Pedrero': '加农曲射炮',
+                'Culverin': '曲射炮',
+                'Demiculverin': '轻型曲射炮',
+                'Saker': '散弹炮',
+
         # harbor
         'load supply': '装载补给',
         'unload supply': '卸下补给',
@@ -167,7 +215,49 @@ dic = {
         'water': '淡水',
         'ok': '确定',
 
+        # inn
+        'Check In': '入住',
+        'Gossip': '闲聊',
+        'Port Info': '港口情况',
+        'Walk Around': '四处走走',
 
+        # palace
+        'Meet Ruler': '召见国王',
+            'country info': '国家情况',
+        'Defect': '投诚',
+        'Gold Aid': '金钱支持',
+        'Ship Aid': '船只支持',
+
+        # job house
+        'Job Assignment': '找工作',
+            'Discover': '探索任务',
+            'Trade': '贸易任务',
+            'Fight': '战斗任务',
+        'Country Info': '国家情况',
+
+        # misc
+
+        # bank
+        'Check Balance': '查看余额',
+        'Deposit': '存入',
+             'amount': '数量',
+        'Withdraw': '取出',
+        'Borrow': '贷款',
+        'Repay': '还贷',
+
+        # item shop
+
+        # church
+        'Pray': '祈祷',
+        'Donate': '捐赠',
+
+        # fortune house
+        'Life': '生命',
+            'talents': '天赋',
+            'skills': '技能',
+        'Career': '事业',
+        'Love': '爱情',
+        'Mates': '船员',
 
     # huds
         # left hud
