@@ -8,9 +8,11 @@ by function
 
         chinese version ON
             buildings menus OK
+            npc fleet OK
 
 
             buildings chats ON
+                market
 
 
 

@@ -154,6 +154,11 @@ dic = {
         'password': '密码',
         'role_name': '角色名',
 
+    # target
+    'View Fleet': '观察舰队',
+    'View Ships': '观察船只',
+    'Captain Info': '提督情况',
+
     # test(buildings)
         # all buildings
         'market': '市场',

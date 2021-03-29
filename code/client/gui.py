@@ -1400,19 +1400,17 @@ class MenuClickHandlerForTarget():
 
     def _show_captain(self, mate):
         # dict
+        nation_text = self.game.translator.translate(mate.nation)
         dict = {
-            'name': f"{mate.name} nation:{mate.nation}",
+            'name/nation': f"{mate.name}/{nation_text}",
             '1': '',
             'lv': f"{mate.lv}",
             '2': '',
-            'leadership': mate.leadership,
-            'seamanship': f"{mate.seamanship} luck:{mate.luck}",
-            'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
-            'courage': f"{mate.courage} swordplay:{mate.swordplay}",
+            'leadership/seamanship/luck': f"{mate.leadership}/{mate.seamanship}/{mate.luck}",
+            'knowledge/intuition': f"{mate.knowledge}/{mate.intuition}",
+            'courage/swordplay': f"{mate.courage}/{mate.swordplay}",
             '3': '',
-            'accounting': mate.accounting,
-            'gunnery': mate.gunnery,
-            'navigation': mate.navigation,
+            'accounting/gunnery/navigation': f"{mate.accounting}/{mate.gunnery}/{mate.navigation}",
         }
 
         # make text from dict
@@ -1421,6 +1419,7 @@ class MenuClickHandlerForTarget():
             if k.isdigit():
                 text += f'<br>'
             else:
+                k = self.game.translator.translate(k)
                 text += f'{k}:{v}<br>'
 
         # get figure image
