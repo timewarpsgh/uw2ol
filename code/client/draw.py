@@ -80,7 +80,8 @@ def draw_logged_in_state(self):
             # dialog box
         self.screen_surface.blit(self.images['building_chat'], (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10, 0))
             # dialog
-        blit_text(self.screen_surface, self.building_text, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5), self.font)
+        building_text_trans = self.translator.translate(self.building_text)
+        blit_text(self.screen_surface, building_text_trans, (c.HUD_WIDTH + c.BUILDING_PERSON_WIDTH + 10 + 10, 5), self.font)
         draw_hud(self)
 
         # not in building

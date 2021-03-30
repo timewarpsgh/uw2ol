@@ -12,7 +12,8 @@ by function
 
 
             buildings chats ON
-                market
+                market OK
+
 
 
 

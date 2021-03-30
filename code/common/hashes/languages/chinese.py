@@ -176,8 +176,25 @@ dic = {
 
         # market
         'buy': '买入',
+            'Welcome! What can I do for you?': '欢迎！我能为您做点什么？',
+            "Alright. Since you have a tax free permit, the price would be": '好吧。因为您有免税证，价格是',
+            "Alright. As you don't have a tax free permit, a 20% tax is applied to the price.": '好吧。因为您没有免税证，'
+                                                                                       '价格会高出20%',
+            "So it would be": '算下来价格是',
+            "I think": '我认为',
+            "is a reasonable price for": '是比较合理的价格，对于',
+            "You can still make good profits.": '您仍然可以赚不少吧',
+            'ship num': '船只编号',
+            'thank you!': '感谢您!',
+
         'sell': '卖出',
+            "Alright. Alright... I'm willing to pay": '好吧。好吧。。。我愿意支付',
+            "each": '每个',
+            'What do you say?': '您怎么看?',
         'price index': '物价指数',
+        'The price index of this port is': '本港的物价指数是',
+        'Any cargo you buy or sell will be affected by this index.': "您购买或卖出任何商品的价格均"
+                                                                     "会受此指数影响。",
 
         # bar
         'Recruit Crew': '招募船员',

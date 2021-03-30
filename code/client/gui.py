@@ -1594,11 +1594,15 @@ class Market():
         # if have permit
         right_tax_permit_id = nation_2_tax_permit_id[role.nation]
         if right_tax_permit_id in role.bag.get_all_items_dict() and role.nation == role.mates[0].nation:
-            self.game.building_text = f"Since you have a tax free permit, the price would be {buy_price}."
+            text = self.game.translator.translate("Alright. Since you have a tax free permit, the price would be")
+            self.game.building_text = f"{text} {buy_price}."
         else:
             buy_price = int(buy_price * 1.2)
-            self.game.building_text = f"As you don't have a tax free permit, a 20% tax is applied to the price. " \
-                                      f"So it would be {buy_price}."
+            text1 = self.game.translator.translate("Alright. As you don't have a tax free permit, a 20% tax is applied to the price.")
+            text2 = self.game.translator.translate("So it would be")
+            self.game.building_text = f'{text1} ' \
+                                      f"{text2} {buy_price}."
+
 
         # i or my accountant speaks
         mate = None
@@ -1606,8 +1610,12 @@ class Market():
             mate = role.accountant
         else:
             mate = role.mates[0]
-        mate_speak(self.game, mate, f'I think {buy_price} is a reasonable price for {cargo_name}.'
-                                                          f'You can still make good profits.')
+        text1 = self.game.translator.translate("I think")
+        text2 = self.game.translator.translate("is a reasonable price for")
+        text3 = self.game.translator.translate("You can still make good profits.")
+        msg = f"{text1} {buy_price} {text2} {cargo_name}. <br>"\
+              f"{text3}."
+        mate_speak(self.game, mate, msg)
 
         # buy button
         def buy(cargo_name):
@@ -1654,14 +1662,20 @@ class Market():
         sell_price_modifier = role.get_sell_price_modifier()
         unit_price = int(unit_price * sell_price_modifier)
 
-        self.game.building_text = f"Alright. Alright... I'm willing to pay {unit_price} each ."
+        text1 = self.game.translator.translate("Alright. Alright... I'm willing to pay")
+        text2 = self.game.translator.translate("each")
+        self.game.building_text = f"{text1} {unit_price} {text2}."
         mate = None
         if role.accountant:
             mate = role.accountant
         else:
             mate = role.mates[0]
-        mate_speak(self.game, mate, f'I think {unit_price} is a reasonable price here for {cargo_name}. '
-                                    f'What do you say?')
+
+        text3 = self.game.translator.translate('I think')
+        text4 = self.game.translator.translate('is a reasonable price for')
+        text5 = self.game.translator.translate('What do you say?')
+        mate_speak(self.game, mate, f'{text3} {unit_price} {text4} {cargo_name}. <br>'
+                                    f'{text5}')
 
         # sell button
         def sell(cargo_name):
@@ -1678,8 +1692,13 @@ class Market():
         self.game.button_click_handler.make_menu(dict)
 
     def price_index(self):
-        msg = f"The price index of this port is {self.game.my_role.price_index}%. " \
-              f"Any cargo you buy or sell will be affected by this index."
+        text_1_trans = self.game.translator.translate('The price index of this port is')
+        text_2_trans = self.game.translator.translate('Any cargo you buy or sell will be affected by this index.')
+        msg = f"{text_1_trans} {self.game.my_role.price_index}%. " \
+              f"{text_2_trans[:8]} " \
+              f"{text_2_trans[8:]}"
+
+
         self.game.button_click_handler.building_speak(msg)
 
 class Bar():
