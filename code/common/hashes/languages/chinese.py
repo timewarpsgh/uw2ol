@@ -200,19 +200,40 @@ dic = {
         'Recruit Crew': '招募船员',
             'count': '数量',
             'ship_num': '船只编号',
+            'Who wants to sail with Captain': '谁想跟着船长',
+            'Each of you will get': '每个人都将获得',
+            'coins': '金币',
         'Dismiss Crew': '解散船员',
+            'Is your ship too crowded?': '您的船太挤了吗？',
         'Treat': '请客',
+            'Thank you for your hospitality, Captain': '感谢您的款待，船长',
         'Meet': '闲聊',
             'Gossip': '聊天',
+                'Thank you!': '感谢您!',
+                "I miss the high seas. Just can't sleep well on land.": '好怀念海上的感觉。在这儿简直睡不着。',
             'Hire': '雇佣',
+                "lv": "等级",
+                "Your level is too low. Maybe I'll sail with you the next time.": "您等级低了点儿。<br>可能下次我们就能共事了。",
+                "I don't have enough leadership to handle so many people.": "我没有足够的领导力来处理这么多人。",
+            "No one's availabale here.": '这儿好像没什么人嘛。',
         'Fire Mate': '解雇船长',
+            "Did I do anything wrong? Are you sure?": "我做错了什么吗？您真的不要我了？",
         'Waitress': '酒吧女郎',
+            "We don't have a maid here. Sorry.": "我们这儿没有。抱歉。",
+            "I'm": "我叫",
+            "How are you?": "你好呀！",
             'ask info': '问询情况',
+                "Uhh... That's too personal.": "额。。。这个问题太私人了喔~",
+            'investigate': '调查',
                 'merchant fleet': '商船队',
                 'convoy fleet': '护卫舰队',
                 'battle fleet': '战舰队',
-            'investigate': '调查',
+                    "'s fleet": "的舰队",
+                    "carrying": "载着",
+                    "is heading to": "正前往",
+                    "and his current location is about": "当前的位置大概是",
             'tell story': '讲故事',
+                "Wow! Interesting...": "哇！真有趣。。。",
 
         # dry dock
         'New Ship': '造新船',
@@ -276,6 +297,18 @@ dic = {
         # fortune house
         'Life': '生命',
             'talents': '天赋',
+                "Each of us in this world is born with three talents. " \
+                    "Navigation allows you to sail faster. " \
+                    "Gunnery makes you a natural fighter. " \
+                    "Accounting makes you comfortable doing business. " \
+                    "You don't seem to have any of them. " \
+                    "I'm afraid you can't have them even if you pay me.": "每个人都有三种天赋。<br>"
+                                                                          "导航让您航行更快。<br>"  
+                                                                          "炮术让您更加善战。<br>"
+                                                                           "会计让您更会做生意。<br>"
+                                                                            "您好像都没有嘛。<br>"
+                                                                            "没办法，就算您贿赂我也没办法让你拥有它们。<br>",
+
             'skills': '技能',
         'Career': '事业',
         'Love': '爱情',

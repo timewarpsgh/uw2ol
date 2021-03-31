@@ -1191,15 +1191,17 @@ class Role:
         # lv not enough
         if self.mates[0].lv + 10 < mate.lv:
             if self.is_in_client_and_self():
-                self.GAME.button_click_handler.mate_speak(mate, "Your level is too low. "
-                                                                "Maybe I'll sail with you the next time.")
+                msg = "Your level is too low. Maybe I'll sail with you the next time."
+                msg = self.GAME.translator.translate(msg)
+                self.GAME.button_click_handler.mate_speak(mate, msg)
             return
 
         # leadership must be enough
         if int(self.mates[0].leadership / 10) <= len(self.mates):
             if self.is_in_client_and_self():
-                self.GAME.button_click_handler.i_speak("I don't have enough "
-                                                       "leadership to handle so many people.")
+                msg = "I don't have enough leadership to handle so many people."
+                msg = self.GAME.translator.translate(msg)
+                self.GAME.button_click_handler.i_speak(msg)
             return
 
         # can't hire same mate twice

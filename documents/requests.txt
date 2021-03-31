@@ -13,6 +13,12 @@ by function
 
             buildings chats ON
                 market OK
+                bar OK
+
+
+
+                fortune house ON
+
 
 
 

@@ -221,10 +221,14 @@ def npc_info(self, message_obj):
         pos[1] = latitude
 
     # maid speak
-    speak_str = f"{names[0]}'s fleet, carrying {cargoes[0]}, is heading to {destinations[0]} " \
-                f"and his current location is about {positions[0][0]} {positions[0][1]}. <br><br>" \
-                f"{names[1]}'s fleet, carrying {cargoes[1]}, is heading to {destinations[1]} " \
-                f"and his current location is about {positions[1][0]} {positions[1][1]}."
+    t1 = self.trans("'s fleet")
+    t2 = self.trans("carrying")
+    t3 = self.trans("is heading to")
+    t4 = self.trans("and his current location is about")
+    speak_str = f"{names[0]}{t1}, {t2} {cargoes[0]}, <br>{t3} {destinations[0]} " \
+                f"<br>{t4} {positions[0][0]} {positions[0][1]}. <br><br>" \
+                f"{names[1]}{t1}, {t2} {cargoes[1]}, <br>{t3} {destinations[1]} " \
+                f"<br>{t4} {positions[1][0]} {positions[1][1]}."
     self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)
 
 def _calc_longitude_and_latitude(x, y):

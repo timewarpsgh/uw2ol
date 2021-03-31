@@ -294,6 +294,9 @@ class Game():
     def reset_think_time_in_battle(self):
         self.think_time_in_battle = c.THINK_TIME_IN_BATTLE
 
+    def trans(self, msg):
+        """translate"""
+        return  self.translator.translate(msg)
 
 
 

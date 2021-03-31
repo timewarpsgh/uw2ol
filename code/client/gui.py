@@ -399,6 +399,7 @@ class ButtonClickHandler():
             do =True
 
         if do:
+            text = self.game.translator.translate(text)
             MessageWindow(pygame.Rect((200, 50),
                                       (350, 350)),
                           self.ui_manager,
@@ -604,7 +605,7 @@ class MenuClickHandlerForMates():
         for k, v in dict.items():
             if v:
                 k = self.game.translator.translate(k)
-                text += f'{k}:{v}<br>'
+                text += f'{k}: {v}<br>'
             else:
                 text += '<br>'
 
@@ -658,7 +659,7 @@ class MenuClickHandlerForMates():
                 text += f'<br>'
             else:
                 k = self.game.translator.translate(k)
-                text += f'{k}:{v}<br>'
+                text += f'{k}: {v}<br>'
 
         # get figure image
         figure_surface = figure_x_y_2_image(self.game ,mate.image_x, mate.image_y)
@@ -1706,23 +1707,29 @@ class Bar():
         self.game = game
 
     def recruit_crew(self):
-        self.game.building_text = f"Who wants to sail with Captain {self.game.my_role.name}? " \
-                                  f"Each of you will get {c.CREW_UNIT_COST} coins."
+        text1 = self.game.translator.translate('Who wants to sail with Captain')
+        text2 = self.game.translator.translate('Each of you will get')
+        text3 = self.game.translator.translate('coins')
+        self.game.building_text = f"{text1} {self.game.my_role.name}? " \
+                                  f"{text2} {c.CREW_UNIT_COST} {text3}."
         self.game.button_click_handler. \
             make_input_boxes('hire_crew', ['count', 'ship_num'])
 
     def dismiss_crew(self):
-        self.game.button_click_handler.building_speak("Is your ship too crowded?")
+        text1 = self.game.translator.translate('Is your ship too crowded?')
+        self.game.button_click_handler.building_speak(text1)
         self.game.button_click_handler. \
             make_input_boxes('fire_crew', ['count', 'ship_num'])
 
     def treat(self):
-        self.game.building_text = f"Thank you for your hospitality, Captain {self.game.my_role.name}"
+        text1 = self.game.translator.translate('Thank you for your hospitality, Captain')
+        self.game.building_text = f"{text1} {self.game.my_role.name}"
 
     def meet(self):
         # no mate
         if int(self.game.my_role.map) % 2 == 0:
-            self.game.button_click_handler.building_speak("No one's availabale here.")
+            text1 = self.game.translator.translate("No one's availabale here.")
+            self.game.button_click_handler.building_speak(text1)
 
         # have mate
         else:
@@ -1742,24 +1749,21 @@ class Bar():
         if mate.duty:
             duty_name = 'captain of ' + mate.duty.name
 
+        nation_text = self.game.trans(mate.nation)
         dict = {
-            'name': mate.name,
-            'nation': mate.nation,
-            'duty': duty_name,
-            'lv': f"{mate.lv} exp:{mate.exp} points:{mate.points}",
-            'leadership': mate.leadership,
-            'seamanship': f"{mate.seamanship} luck:{mate.luck}",
-            'knowledge': f"{mate.knowledge} intuition:{mate.intuition}",
-            'courage': f"{mate.courage} swordplay:{mate.swordplay}",
-            'accounting': mate.accounting,
-            'gunnery': mate.gunnery,
-            'navigation': mate.navigation,
+            'name/nation': f"{mate.name}/{nation_text}",
+            'lv': mate.lv,
+            'leadership/seamanship/luck': f"{mate.leadership}/{mate.seamanship}/{mate.luck}",
+            'knowledge/intuition': f"{mate.knowledge}/{mate.intuition}",
+            'courage/swordplay': f"{mate.courage}/{mate.swordplay}",
+            'accounting/gunnery/navigation': f"{mate.accounting}/{mate.gunnery}/{mate.navigation}",
         }
 
         # make text from dict
         text = ''
         for k, v in dict.items():
-            text += f'{k}:{v}<br>'
+            k = self.game.trans(k)
+            text += f'{k}: {v}<br>'
 
         # get figure image
         figure_surface = figure_x_y_2_image(self.game, mate.image_x, mate.image_y)
@@ -1777,11 +1781,11 @@ class Bar():
         self.game.button_click_handler.make_menu(dict1)
 
     def _treat_mate(self, mate):
-        message = 'Thank you!'
+        message = self.game.translator.translate('Thank you!')
         mate_speak(self.game, mate, message)
 
     def _gossip(self, mate):
-        message = "I miss the high seas. Just can't sleep well on land."
+        message = self.game.translator.translate("I miss the high seas. Just can't sleep well on land.")
         mate_speak(self.game, mate, message)
 
     def _hire_mate(self, mate_id):
@@ -1807,7 +1811,9 @@ class Bar():
         mate = params[0]
         mate_num = params[1]
 
-        mate_speak(self.game, mate, "Did I do anything wrong? Are you sure?")
+        msg = "Did I do anything wrong? Are you sure?"
+        msg = self.game.translator.translate(msg)
+        mate_speak(self.game, mate, msg)
 
         def do_fire():
             self.game.change_and_send('fire_mate', [mate_num])
@@ -1826,7 +1832,9 @@ class Bar():
         maid = port.get_maid()
         if maid:
             # speak
-            self._maid_speak(f"I'm {maid.name}. How are you?")
+            t1 = self.game.trans("I'm")
+            t2 = self.game.trans("How are you?")
+            self._maid_speak(f"{t1} {maid.name}. {t2}")
 
             # menu
             dict = {
@@ -1836,7 +1844,8 @@ class Bar():
             }
             self.game.button_click_handler.make_menu(dict)
         else:
-            self.game.building_text = "We don't have a maid here. Sorry."
+            t1 = self.game.trans("We don't have a maid here. Sorry.")
+            self.game.building_text = t1
 
     def _maid_speak(self, msg):
         port = self.game.my_role.get_port()
@@ -1844,7 +1853,8 @@ class Bar():
         figure_image_speak(self.game, maid.image[0], maid.image[1], msg)
 
     def _ask_info(self):
-        self._maid_speak(f"Uhh... That's too personal.")
+        msg = self.game.trans("Uhh... That's too personal.")
+        self._maid_speak(msg)
 
     def _investigate(self):
         dict = {
@@ -1872,7 +1882,8 @@ class Bar():
         self.game.connection.send('get_npc_info', [nation, fleet_type])
 
     def _tell_story(self):
-        self._maid_speak(f"Wow! Interesting...")
+        msg = self.game.trans("Wow! Interesting...")
+        self._maid_speak(msg)
 
 class DryDock():
     def __init__(self, game):
@@ -2659,7 +2670,7 @@ def _show_one_ship(params):
             text += f'<br>'
         else:
             k = self.game.translator.translate(k)
-            text += f'{k}:{v}<br>'
+            text += f'{k}: {v}<br>'
 
     # make window
     ship_image = self.game.images['ships'][ship.type.lower()]
