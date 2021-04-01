@@ -2306,7 +2306,9 @@ class Palace:
         self.game = game
 
     def meet_ruler(self):
-        msg = f"Hello, {self.game.my_role.name}. Are you interested in our allied ports?"
+        t1 = self.game.trans("Hello")
+        t2 = self.game.trans("Are you interested in our allied ports")
+        msg = f"{t1}, {self.game.my_role.name}. <br>{t2}?"
         image_x, image_y = capital_map_id_2_ruler_image[self.game.my_role.get_map_id()]
         figure_image_speak(self.game, image_x, image_y, msg)
 
@@ -2319,8 +2321,10 @@ class Palace:
         self.game.connection.send('get_allied_ports_and_pi', [])
 
     def defect(self):
-        msg = "You do wish to join us? " \
-              "You need to be over lv 15 and contribute 20 gold ingots."
+        t1 = self.game.trans("You do wish to join us?")
+        t2 = self.game.trans("You need to be over lv 15 and contribute 20 gold ingots.")
+        msg = f"{t1} " \
+              f"{t2}"
         self.game.button_click_handler.building_speak(msg)
 
         d = {

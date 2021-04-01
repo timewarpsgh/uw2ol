@@ -296,10 +296,16 @@ def _show_allied_ports_for_one_economy_id(params):
     list_of_dict = params[2]
     port_count = len(list_of_dict)
 
-    msg = f"In {region_name}, the number of ports allied to us is {port_count}. <br><br>"
+    t1 = self.trans("In")
+    t2 = self.trans("the number of ports allied to us is")
+    t3 = self.trans("PI-")
+    t4 = self.trans("E-")
+    t5 = self.trans("I-")
+    t6 = self.trans(region_name)
+    msg = f"{t1}{t6}, {t2} {port_count}. <br><br>"
     for d in list_of_dict:
-        msg += f"{d['port_name']}: PI-{d['pi']}, " \
-               f"E-{d['economy']}, " \
-               f"I-{d['industry']}<br>"
+        msg += f"{d['port_name']}: {t3}{d['pi']}, " \
+               f"{t4}{d['economy']}, " \
+               f"{t5}{d['industry']}<br>"
 
     self.button_click_handler.make_message_box(msg)

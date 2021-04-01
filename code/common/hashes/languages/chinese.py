@@ -310,8 +310,19 @@ dic = {
 
         # palace
         'Meet Ruler': '召见国王',
+            "Hello": "你好",
+            "Are you interested in our allied ports": "对我们的同盟港感兴趣？",
+
             'country info': '国家情况',
+                "In": "在",
+                "the number of ports allied to us is": "与我国同盟的港口数量是",
+                "PI-": "价-",
+                "E-": "商-",
+                "I-": "工-",
         'Defect': '投诚',
+            "You do wish to join us?": "你真的想要加入我们？",
+
+
         'Gold Aid': '金钱支持',
         'Ship Aid': '船只支持',
 
