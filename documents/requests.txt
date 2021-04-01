@@ -20,7 +20,7 @@ by function
                 palace OK
                 job house OK
                 msc OK
-                bank ON
+                bank OK
                 item shop
                 church
                 fortune house ON

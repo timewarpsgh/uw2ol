@@ -2378,37 +2378,52 @@ class Bank:
 
     def check_balance(self):
         balance = self.game.my_role.bank_gold
-        self.game.building_text = f"Your current balance is {balance}."
+        t1 = self.game.trans("Your current balance is")
+        self.game.building_text = f"{t1} {balance}."
 
     def deposit(self):
-        self.game.building_text = "Dear customer, How much would you like to deposit?"
+        msg = "Dear customer, how much would you like to deposit?"
+        msg = self.game.trans(msg)
+        self.game.building_text = msg
         self.game.button_click_handler.make_input_boxes('deposit_gold', ['amount'])
 
     def withdraw(self):
-        self.game.building_text = "Dear customer, How much would you like to withdraw from your account?"
+        msg = "Dear customer, how much would you like to withdraw from your account?"
+        msg = self.game.trans(msg)
+        self.game.building_text = msg
         self.game.button_click_handler.make_input_boxes('withdraw_gold', ['amount'])
 
     def borrow(self):
         # can borrow
         if self.game.my_role.bank_gold <= 0:
             max_credit = self.game.my_role.get_max_credit()
-            self.game.building_text = f"Yes. We're happy to lend you up to {max_credit} gold coins. " \
-                                      f"Kindly remind you, your current balance is {self.game.my_role.bank_gold}."
+
+            t1 = self.game.trans("Yes. We're happy to lend you up to")
+            t2 = self.game.trans("gold coins")
+            t3 = self.game.trans("Kindly remind you, your current balance is")
+            self.game.building_text = f"{t1} {max_credit} {t2}. " \
+                                      f"{t3} {self.game.my_role.bank_gold}."
             self.game.button_click_handler.make_input_boxes('borrow', ['amount'])
 
         # still have in bank gold
         else:
-            self.game.building_text = "It seems you still have some left in your account."
+            msg = "It seems you still have some left in your account."
+            msg = self.game.trans(msg)
+            self.game.building_text = msg
 
     def repay(self):
         # can repay
         if self.game.my_role.bank_gold < 0:
-            self.game.building_text = f"How much would you like to repay your debt?"
+            msg = "How much would you like to repay your debt?"
+            msg = self.game.trans(msg)
+            self.game.building_text = msg
             self.game.button_click_handler.make_input_boxes('repay', ['amount'])
 
         # no need to repay
         else:
-            self.game.building_text = "Oh. But you don't owe us anything."
+            msg = "Oh. But you don't owe us anything."
+            msg = self.game.trans(msg)
+            self.game.building_text = msg
 
 
 class ItemShop:

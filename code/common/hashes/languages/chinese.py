@@ -423,11 +423,20 @@ dic = {
             "enter": "进入",
         # bank
         'Check Balance': '查看余额',
+            "Your current balance is": "您当前的余额是",
         'Deposit': '存入',
+            "Dear customer, how much would you like to deposit?": "亲爱的顾客， 您需要存入多少呢？",
              'amount': '数量',
         'Withdraw': '取出',
+            "Dear customer, how much would you like to withdraw from your account?": "亲爱的顾客， 您想要取出多少？",
         'Borrow': '贷款',
+            "It seems you still have some left in your account.": "好像您还有存款未用吧。",
+            "Yes. We're happy to lend you up to": "是的，我们很乐意贷款给您最多",
+            "gold coins": "金币",
+            "Kindly remind you, your current balance is": "提醒您，您当前的余额是",
         'Repay': '还贷',
+            "Oh. But you don't owe us anything.": "嗯~~但是您并不欠我们什么。",
+            "How much would you like to repay your debt?": "您想要还多少呢？",
 
         # item shop
 
