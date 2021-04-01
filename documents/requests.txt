@@ -18,7 +18,7 @@ by function
                 harbor OK
                 inn OK
                 palace OK
-                job house
+                job house OK
                 msc
                 bank
                 item shop

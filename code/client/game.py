@@ -297,6 +297,3 @@ class Game():
     def trans(self, msg):
         """translate"""
         return  self.translator.translate(msg)
-
-
-

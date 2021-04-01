@@ -915,14 +915,16 @@ class MenuClickHandlerForItems():
             port = self.game.my_role.main_quest_port
             building = self.game.my_role.main_quest_building
 
-            msg = f"Go to {port} {building}."
+            t1 = self.game.trans("Go to")
+            msg = f"{t1} {port} {building}."
             self.game.button_click_handler.i_speak(msg)
 
     def _quest_log(self):
         discovery_quest_id = self.game.my_role.quest_discovery
         if discovery_quest_id:
             discovery = Discovery(discovery_quest_id)
-            msg = f"On quest to investigate {discovery.longitude} {discovery.latitude}"
+            t1 = self.game.trans("On quest to investigate")
+            msg = f"{t1} {discovery.longitude} {discovery.latitude}"
             i_speak(self.game, msg)
         else:
             msg = f"I have no quest."
@@ -2134,7 +2136,9 @@ class JobHouse:
         self.game = game
 
     def job_assignment(self):
-        self.game.building_text = "Don't know what to do? I have a few suggestions for you."
+        msg = "Don't know what to do? I have a few suggestions for you."
+        msg = self.game.trans(msg)
+        self.game.building_text = msg
 
         dict = {
             'Discover':self._discover,
@@ -2153,7 +2157,9 @@ class JobHouse:
 
             # quest not finished
             else:
-                self.game.building_text = "Oh! Have you finished your quest?"
+                msg = "Oh! Have you finished your quest?"
+                msg = self.game.trans(msg)
+                self.game.building_text = msg
 
         # no quest
         else:
@@ -2168,9 +2174,10 @@ class JobHouse:
                 discovery = Discovery(discovery_id)
 
                 # show message
-                self.game.building_text = f"I heard there's something interesting " \
-                                          f"at {discovery.longitude} {discovery.latitude}. " \
-                                          f"Would you like to go and investigate? "
+                t1 = self.game.trans("I heard there's something interesting at")
+                t2 = self.game.trans("Would you like to go and investigate? ")
+                self.game.building_text = f"{t1} {discovery.longitude} {discovery.latitude}. " \
+                                          f"{t2} "
 
                 # make menu
                 dict = {
@@ -2184,7 +2191,9 @@ class JobHouse:
 
     def __start_discovery_quest(self, discovery_id):
         self.game.change_and_send('start_discovery_quest', [discovery_id])
-        self.game.button_click_handler.i_speak("Quest accepted.")
+        msg = "Quest accepted."
+        msg = self.game.trans(msg)
+        self.game.button_click_handler.i_speak(msg)
 
     def _trade(self):
         dict = {
@@ -2193,7 +2202,7 @@ class JobHouse:
             'C':self.__c,
             'D': self.__d,
             'E': self.__e,
-            'F': self.__f,
+            'F ': self.__f,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -2201,8 +2210,11 @@ class JobHouse:
         glass_beads_text = "Kids in West and East Africa are crazy about glass beads. " \
                            "Amsterdam produces tons of them. You can also get " \
                            "them from the mediterranean."
+        glass_beads_text = self.game.trans(glass_beads_text)
+
         spice_text = "You can get spice from South East Asia for about 3 gold coins each " \
                      "and sell them for more than 100 in Northern Europe."
+        spice_text = self.game.trans(spice_text)
 
         dict = {
             'Glass Beads':[self.game.button_click_handler.make_message_box, glass_beads_text],
@@ -2218,9 +2230,11 @@ class JobHouse:
                      "and sell them for about 220 in Northern Europe. " \
                       "You can get coffee from the Middle East for about 35 gold coins each " \
                       "and sell them for about 340 in the Ottoman Empire. "
+        sleepy_text = self.game.trans(sleepy_text)
 
         feels_good_text = "You can get silk from Zeiton for about 30 gold coins each " \
              "and sell them for about 250 in Northern Europe."
+        feels_good_text = self.game.trans(feels_good_text)
 
         dict = {
             'Sleepy?':[self.game.button_click_handler.make_message_box, sleepy_text],
@@ -2236,6 +2250,7 @@ class JobHouse:
                     "and sell them for about 300 in the Far East. Do you know Timbuktu?" \
                "You can get pearl from the Far East for about 60 gold coins each " \
                     "and sell them for about 320 in Northern Europe. "
+        text = self.game.trans(text)
 
         dict = {
             'Luxury':[self.game.button_click_handler.make_message_box, text],
@@ -2250,6 +2265,7 @@ class JobHouse:
                     "and sell them for about 320 in the Mediterranean" \
                "You can get art from the Far East for about 120 gold coins each " \
                     "and sell them for about 400 in Europe. Athens and Cairo also sells art."
+        text = self.game.trans(text)
 
         dict = {
             'Mixed':[self.game.button_click_handler.make_message_box, text],
@@ -2259,7 +2275,8 @@ class JobHouse:
 
     def __e(self):
         text = "You can get glassware from Venice or Copenhagen for about 180 gold coins each " \
-                    "and sell them for about 450 in the Far East. " \
+                    "and sell them for about 450 in the Far East. "
+        text = self.game.trans(text)
 
         dict = {
             'Delicate':[self.game.button_click_handler.make_message_box, text],
@@ -2271,6 +2288,7 @@ class JobHouse:
         text = "You can get gold from Africa, Veracruz or Rio de Janeiro " \
                     "and sell them for about 1100 in Northern Europe. " \
                     "But, please be cautious. There are pirates out there."
+        text = self.game.trans(text)
 
         dict = {
             'Shiny':[self.game.button_click_handler.make_message_box, text],
@@ -2279,12 +2297,14 @@ class JobHouse:
         self.game.button_click_handler.make_menu(dict)
 
     def _fight(self):
-        text = "I don't have much information on that. " \
+        msg = "I don't have much information on that. " \
                "But why don't you talk with the bar girls?"
-        self.game.building_text = text
+        msg = self.game.trans(msg)
+        self.game.building_text = msg
 
     def contry_info(self):
         msg = "Go to your capital and ask your ruler about this. "
+        msg = self.game.trans(msg)
         self.game.button_click_handler.building_speak(msg)
 
 
