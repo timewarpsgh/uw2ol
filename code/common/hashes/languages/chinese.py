@@ -321,10 +321,16 @@ dic = {
                 "I-": "工-",
         'Defect': '投诚',
             "You do wish to join us?": "你真的想要加入我们？",
-
+            "You need to be over lv 15 and contribute 20 gold ingots.": "你需要等级15以上并且向我们贡献20个金块。",
+            "You don't qualify to be one of us. Sorry.": "你还不具备加入我们的资格。抱歉。",
+            "You are one of us now!": "您现在是我们中的一员了",
 
         'Gold Aid': '金钱支持',
+            "We'd like to help, but doing so " \
+              "might be detrimental to the value you're trying to prove.": "我们希望能够帮上忙，"\
+                                                                           "但是这样做的话可能反而对你不利。",
         'Ship Aid': '船只支持',
+            "If you want a ship, go earn it.": "想要一艘船？那你要自己想办法了。",
 
         # job house
         'Job Assignment': '找工作',

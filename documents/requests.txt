@@ -17,7 +17,7 @@ by function
                 dry dock OK
                 harbor OK
                 inn OK
-                palace ON
+                palace OK
                 job house
                 msc
                 bank

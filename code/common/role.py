@@ -576,12 +576,16 @@ class Role:
 
             if self.is_in_client_and_self():
                 msg = "You are one of us now!"
+                smg = self.GAME.trans(msg)
                 self.GAME.button_click_handler.building_speak(msg)
 
         # can't
         else:
             if self.is_in_client_and_self():
                 msg = "You don't qualify to be one of us. Sorry."
+                msg = self.GAME.trans(msg)
+                msg = f"{msg[:12]} " \
+                      f"{msg[12:]}"
                 self.GAME.button_click_handler.building_speak(msg)
 
     # at sea

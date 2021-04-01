@@ -2324,7 +2324,8 @@ class Palace:
         t1 = self.game.trans("You do wish to join us?")
         t2 = self.game.trans("You need to be over lv 15 and contribute 20 gold ingots.")
         msg = f"{t1} " \
-              f"{t2}"
+              f"{t2[:12]} " \
+              f"{t2[12:]}"
         self.game.button_click_handler.building_speak(msg)
 
         d = {
@@ -2337,11 +2338,19 @@ class Palace:
         self.game.button_click_handler.escape()
 
     def ship_aid(self):
-        self.game.building_text = "If you want a ship, go earn it."
+        msg = "If you want a ship, go earn it."
+        msg = self.game.trans(msg)
+        msg = f"{msg[:12]} "\
+              f"{msg[12:]}"
+        self.game.building_text = msg
 
     def gold_aid(self):
-        self.game.building_text = "We'd like to help, but doing so " \
-                                  "might be detrimental to the value you're trying to prove."
+        msg = "We'd like to help, but doing so " \
+              "might be detrimental to the value you're trying to prove."
+        msg = self.game.trans(msg)
+        msg = f"{msg[:12]} "\
+              f"{msg[12:]}"
+        self.game.building_text = msg
 
 class Bank:
     def __init__(self, game):
