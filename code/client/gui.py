@@ -2538,6 +2538,7 @@ class Msc:
 
     def enter(self):
         msg = "Entry is by invitation only."
+        msg = self.game.trans(msg)
         self.game.button_click_handler.building_speak(msg)
 
 

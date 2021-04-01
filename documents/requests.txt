@@ -19,8 +19,8 @@ by function
                 inn OK
                 palace OK
                 job house OK
-                msc
-                bank
+                msc OK
+                bank ON
                 item shop
                 church
                 fortune house ON

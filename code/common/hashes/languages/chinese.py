@@ -419,7 +419,8 @@ dic = {
             "Go to your capital and ask your ruler about this. ": "这个嘛。 你要去问下你的国王了。",
 
         # misc
-
+            "Entry is by invitation only.": "需要有邀请才能进入。",
+            "enter": "进入",
         # bank
         'Check Balance': '查看余额',
         'Deposit': '存入',
