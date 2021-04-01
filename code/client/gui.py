@@ -1445,9 +1445,15 @@ class Harbor():
         max_days = self.game.my_role.calculate_max_days_at_sea()
         fleet_speed = self.game.my_role.get_fleet_speed([])
 
-        self.game.building_text = f"You can sail for {max_days} days " \
-                                  f"at an average speed of {fleet_speed} knots. " \
-                                  f"Are you sure you want to set sail?"
+        t1 = self.game.trans("You can sail for")
+        t2 = self.game.trans("days")
+        t3 = self.game.trans("at an average speed of")
+        t4 = self.game.trans("knots")
+        t5 = self.game.trans("Are you sure you want to set sail?")
+        msg = f"{t1} {max_days} {t2} " \
+              f"{t3} {fleet_speed} {t4}. " \
+              f"{t5}"
+        self.game.button_click_handler.building_speak(msg)
 
         # make menu
         dict = {
@@ -1459,15 +1465,21 @@ class Harbor():
         # can't sail
         role = self.game.my_role
         if not role.ships:
-            mate_speak(self.game, role.mates[0], "How do I sail without a ship?")
+            msg = "How do I sail without a ship?"
+            msg = self.game.trans(msg)
+            mate_speak(self.game, role.mates[0], msg)
             return
 
         if not role.ships[0].captain:
-            mate_speak(self.game, role.mates[0], 'I need to be the captain of the flag ship.')
+            msg = 'I need to be the captain of the flag ship.'
+            msg = self.game.trans(msg)
+            mate_speak(self.game, role.mates[0], msg)
             return
 
         if role.ships[0].captain and role.name != role.ships[0].captain.name:
-            mate_speak(self.game, role.mates[0], 'I need to be on the flag ship.')
+            msg = 'I need to be on the flag ship.'
+            msg = self.game.trans(msg)
+            mate_speak(self.game, role.mates[0], msg)
             return
 
         # can sail
@@ -1534,9 +1546,12 @@ class Harbor():
                 game.button_click_handler.show_sunk_window()
 
     def load_supply(self):
-        self.game.building_text = "Everything is 5 coins each. " \
-                                  "Once set, we refill your ships based on the configurations " \
-                                  "immediately after you enter any port."
+        t1 = self.game.trans("Everything is 5 coins each")
+        t2 = self.game.trans("Once set, we refill your ships based on the configurations immediately after you enter any port")
+        msg = f"{t1}. " \
+              f"{t2[:12]} " \
+              f"{t2[12:]}. "
+        self.game.button_click_handler.building_speak(msg)
         dict = {
             'Food':[self._load, 'Food'],
             'Water':[self._load, 'Water'],

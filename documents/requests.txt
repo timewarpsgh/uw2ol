@@ -15,7 +15,7 @@ by function
                 market OK
                 bar OK
                 dry dock OK
-                harbor
+                harbor OK
                 inn
                 palace
                 job house

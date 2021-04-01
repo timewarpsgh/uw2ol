@@ -280,11 +280,24 @@ dic = {
                 'Saker': '散弹炮',
 
         # harbor
+        # sail
+            "You can sail for": "您的舰队可以航行",
+            "days": "天",
+            "at an average speed of": "平均航速为",
+            "Are you sure you want to set sail?": "确定要出发了吗？",
+
+            "How do I sail without a ship?": "我的船呢？",
+            'I need to be the captain of the flag ship.': "我需要是旗舰的船长才行",
+            'I need to be on the flag ship.': "我要在旗舰上才行",
+
         'load supply': '装载补给',
+            "Everything is 5 coins each": "单价是5金币",
+            "Once set, we refill your ships based on the configurations immediately after you enter any port": "设定好后，我们会在您每次靠港时帮您补充到设定的值",
+
         'unload supply': '卸下补给',
-        'food': '食物',
-        'water': '淡水',
-        'ok': '确定',
+            'food': '食物',
+            'water': '淡水',
+            'ok': '确定',
 
         # inn
         'Check In': '入住',
