@@ -1890,12 +1890,16 @@ class DryDock():
         self.game = game
 
     def new_ship(self):
-        self.game.building_text = "No, kid. You don't want to build a ship from scratch. " \
-                                  "It takes too much time and resource. Just grab a used one."
+        msg = "No, kid. You don't want to build a ship from scratch. " \
+              "It takes too much time and resource. Just grab a used one."
+        msg = self.game.trans(msg)
+        self.game.button_click_handler.make_message_box(msg)
 
     def used_ship(self):
         # speak
-        self.game.building_text = "Have a look. These are the kinds of ships we offer."
+        msg = "Have a look. These are the kinds of ships we offer."
+        msg = self.game.trans(msg)
+        self.game.button_click_handler.building_speak(msg)
 
         # prepare dict
         dict = {}
@@ -1934,8 +1938,9 @@ class DryDock():
         ship = Ship('', ship_type)
 
         # dict
+        type_text = self.game.trans(ship.type)
         dict = {
-            'type': ship.type,
+            'type': type_text,
             'durability': f'{ship.now_hp}/{ship.max_hp}',
             'tacking': f'{ship.tacking}',
             'power': f'{ship.power}',
@@ -1949,7 +1954,8 @@ class DryDock():
         # make text from dict
         text = ''
         for k, v in dict.items():
-            text += f'{k}:{v}<br>'
+            k = self.game.trans(k)
+            text += f'{k}: {v}<br>'
 
         # make window
         ship_image = self.game.images['ships'][ship.type.lower()]
@@ -1968,8 +1974,11 @@ class DryDock():
         # if need
         if need_to_repair:
             cost = self.game.my_role._calc_repair_all_cost()
-            self.game.building_text = f"Repairing all your ships will cost you {cost} coins. " \
-                                      f"Are you sure?"
+            t1 = self.game.trans("Repairing all your ships will cost you")
+            t2 = self.game.trans("coins")
+            t3 = self.game.trans("Are you sure?")
+            self.game.building_text = f"{t1} {cost} {t2}. " \
+                                      f"{t3}"
 
             d = {
                 'OK': self._do_repair,
@@ -1977,7 +1986,8 @@ class DryDock():
             self.game.button_click_handler.make_menu(d)
 
         else:
-            self.game.building_text = "All your ships are in perfect shape."
+            t1 = self.game.trans("All your ships are in perfect shape.")
+            self.game.building_text = t1
 
     def _do_repair(self):
         self.game.change_and_send('repair_all', [])
@@ -1995,7 +2005,10 @@ class DryDock():
         params = [self, self.game.my_role.ships[ship_id], False, ship_id]
         _show_one_ship(params)
         price = int(self.game.my_role.ships[ship_id].price / 2)
-        self.game.building_text = f"I can pay {price} for this one."
+
+        t1 = self.game.trans("I can pay")
+        t2 = self.game.trans("for this one")
+        self.game.building_text = f"{t1} {price} {t2} ."
 
         # show ok menu
         dict = {
@@ -2007,9 +2020,11 @@ class DryDock():
         escape_thrice(self.game)
         reactor.callLater(0.3, self.sell_ship)
         if id == 0:
-            self.game.building_text = "You can't sell your flag ship."
+            t1 = self.game.trans("You can't sell your flag ship.")
+            self.game.building_text = t1
         else:
-            self.game.building_text = "We'll take good care of her!"
+            t1 = self.game.trans("We'll take good care of her!")
+            self.game.building_text = t1
             self.game.change_and_send('sell_ship', [id])
 
     def remodel(self):
@@ -2035,8 +2050,11 @@ class DryDock():
         model_ship.max_guns
         model_ship.max_crew
 
-        msg = f"This ship can have at most {model_ship.max_guns} " \
-              f"guns and {model_ship.max_crew} crew."
+        t1 = self.game.trans("This ship can have at most")
+        t2 = self.game.trans("guns and")
+        t3 = self.game.trans("crew")
+        msg = f"{t1} {model_ship.max_guns} " \
+              f"{t2} {model_ship.max_crew} {t3}."
         self.game.button_click_handler.building_speak(msg)
 
         # show input boxes
@@ -2071,9 +2089,13 @@ class DryDock():
         ship = self.game.my_role.ships[ship_id]
         gun = Gun(gun_id)
 
-        msg = f"{gun.name} costs {gun.price} each. " \
-              f"{ship.max_guns} of them will cost you {ship.max_guns * gun.price}. " \
-              f"Are you sure?"
+        t1 = self.game.trans("costs")
+        t2 = self.game.trans("each")
+        t3 = self.game.trans("of them will cost you")
+        t4 = self.game.trans("Are you sure?")
+        msg = f"{gun.name} {t1} {gun.price} {t2}. " \
+              f"{ship.max_guns} {t3} {ship.max_guns * gun.price}. " \
+              f"{t4}"
         self.game.button_click_handler.make_message_box(msg)
 
         d = {

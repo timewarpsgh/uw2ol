@@ -1109,10 +1109,12 @@ class Role:
 
             if self.is_in_client_and_self():
                 msg = "Thank you!"
+                msg = self.GAME.trans(msg)
                 self.GAME.button_click_handler.building_speak(msg)
         else:
             if self.is_in_client_and_self():
                 msg = "You can't afford to repair them."
+                msg = self.GAME.trans(msg)
                 self.GAME.button_click_handler.building_speak(msg)
 
     def _calc_repair_all_cost(self):

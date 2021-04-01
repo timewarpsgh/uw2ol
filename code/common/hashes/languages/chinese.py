@@ -237,12 +237,40 @@ dic = {
 
         # dry dock
         'New Ship': '造新船',
+            "No, kid. You don't want to build a ship from scratch. " \
+              "It takes too much time and resource. Just grab a used one.": "不，孩子。 你不会想造新船的。<br>"\
+                                                                            "时间成本太高了。买个二手的它不好吗？",
         'Used Ship': '买旧船',
+            "Have a look. These are the kinds of ships we offer.": "看看吧。我们现在有这些船。",
+
+            'type': "类型",
+            'durability': "耐久",
+            'tacking': "转向",
+            'power': "推进",
+            'capacity': "载重",
+            'useful_capacity': "有效载重",
+            'max_guns': "炮位",
+            'min_crew/max_crew': "必要船员/最大船员数",
+            'price': "价格",
+
         'Repair': '修理',
+            "Repairing all your ships will cost you": "修好您所有的船需要",
+            "Are you sure?": "确定吗？",
+            "All your ships are in perfect shape.": "您没有需要修理的船。",
+            "You can't afford to repair them.": "您好像钱不够嘛。",
         'Sell': '卖出',
+            "I can pay": "我愿意支付",
+            "for this one": "为这个",
+            "You can't sell your flag ship.": "您的旗舰不要啦？",
+            "We'll take good care of her!": "我们会好好待她的!",
+
         'Remodel': '改造',
             'max_crew': '最大船员数',
-            'max_guns': '最大炮位数',
+                "This ship can have at most": "这条船最多可以装",
+                "guns and": "门大炮和",
+                "crew": "船员",
+                    "costs": "需要",
+                    "of them will cost you": "门这个需要",
 
                 'Cannon': '加农炮',
                 'Demicannon': '轻型加农炮',
