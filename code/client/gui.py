@@ -2460,14 +2460,21 @@ class Inn:
         self.game = game
 
     def check_in(self):
-        self.game.button_click_handler.building_speak("Sweet dreams.")
+        msg = "Sweet dreams."
+        msg = self.game.trans(msg)
+        self.game.button_click_handler.building_speak(msg)
 
     def gossip(self):
         msg = "I've no idea why this port keeps allying to different nations."
+        msg = self.game.trans(msg)
+        msg = f"{msg[:12]} " \
+              f"{msg[12:]} "
         self.game.button_click_handler.building_speak(msg)
 
     def port_info(self):
-        msg = f"This port is allied to {self.game.my_role.nation}."
+        t1 = self.game.trans("This port is allied to")
+        t2 = self.game.trans(self.game.my_role.nation)
+        msg = f"{t1}{t2}."
         self.game.button_click_handler.building_speak(msg)
 
     def walk_around(self):

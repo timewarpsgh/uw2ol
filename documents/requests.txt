@@ -16,7 +16,7 @@ by function
                 bar OK
                 dry dock OK
                 harbor OK
-                inn
+                inn OK
                 palace
                 job house
                 msc

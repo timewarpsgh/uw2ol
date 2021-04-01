@@ -301,8 +301,11 @@ dic = {
 
         # inn
         'Check In': '入住',
+            "Sweet dreams.": "做个好梦.",
         'Gossip': '闲聊',
+            "I've no idea why this port keeps allying to different nations.": "我也不知道这港的同盟国为啥一直在变.",
         'Port Info': '港口情况',
+            "This port is allied to": "本港的同盟国是",
         'Walk Around': '四处走走',
 
         # palace
