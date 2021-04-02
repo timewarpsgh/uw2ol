@@ -445,6 +445,9 @@ dic = {
         # church
         'Pray': '祈祷',
         'Donate': '捐赠',
+            'Thank you for your generosity. ' \
+              'But please take good care of yourself at the moment.': "感谢您的慷慨。 "
+                                                                      "不过目前请您照顾好您自己。",
 
         # fortune house
         'Life': '生命',

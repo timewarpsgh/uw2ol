@@ -2318,8 +2318,10 @@ class Church:
         self.game.button_click_handler.make_message_box(quote_str)
 
     def donate(self):
-        self.game.building_text = 'Thank you for your generosity. ' \
-                                  'But please take good care of yourself at the moment.'
+        msg = 'Thank you for your generosity. ' \
+              'But please take good care of yourself at the moment.'
+        msg = self.game.trans(msg)
+        self.game.building_text = msg
 
 class Palace:
     def __init__(self, game):

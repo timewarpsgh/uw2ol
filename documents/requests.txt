@@ -22,7 +22,7 @@ by function
                 msc OK
                 bank OK
                 item shop OK
-                church ON
+                church OK
                 fortune house ON
 
 
