@@ -6226,6 +6226,13 @@ hash_ports_meta_data = {
 }
 
 if __name__ == '__main__':
-	for i in range(1,101):
+	for i in range(1,131):
 		name = hash_ports_meta_data[i]['name']
 		print(i, ':', name)
+
+	# text = "["
+	# for i in range(1,131):
+	# 	name = hash_ports_meta_data[i]['name']
+	#
+	# 	text += f"'{name}', "
+	# print(text,']')

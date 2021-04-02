@@ -7,26 +7,8 @@ by function
         website register instruction OK
 
         chinese version ON
-            buildings menus OK
-            npc fleet OK
-
-
-            buildings chats ON
-                market OK
-                bar OK
-                dry dock OK
-                harbor OK
-                inn OK
-                palace OK
-                job house OK
-                msc OK
-                bank OK
-                item shop OK
-                church OK
-                fortune house OK
-
-
-
+            ports
+            goods
 
 
 
