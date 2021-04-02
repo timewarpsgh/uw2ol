@@ -462,12 +462,33 @@ dic = {
                                                                           "炮术让您更加善战。<br>"
                                                                            "会计让您更会做生意。<br>"
                                                                             "您好像都没有嘛。<br>"
-                                                                            "没办法，就算您贿赂我也没办法让你拥有它们。<br>",
+                                                                            "没办法，就算您贿赂我也没办法让您拥有它们。<br>",
 
             'skills': '技能',
+                "There are six skills you can acquire. " \
+                  "Leadership allows you to find more company. " \
+                  "Seamanship allows you to sail faster. " \
+                  "Luck? Do you believe it? " \
+                  "Knowledge allows you to buy cargo with less cost. " \
+                  "Intuition allows you to sell cargo for more profit. " \
+                  "Courage makes your shooting more effective in battle. " \
+                  "Swordplay makes your engaging more effective. ": "您可以练习六种技能。<br>"
+                                                                    "领导力让您更容易找到伙伴。<br> "
+                                                                    "航海术让您的船开得更快。<br>"
+                                                                    "运气？这东西真的有用？<br>"
+                                                                    "知识让您以更低的价格购入商品。<br>"
+                                                                    "灵感让您以更高的价格卖出商品。<br>"
+                                                                    "勇气让您的炮火更具威力。<br>"
+                                                                    "剑术让您的肉搏更有效。<br>",
         'Career': '事业',
+            "If you need advice on acreer development, " \
+              "go consult the guy at the job house.": "如果您需要事业上的建议， "
+                                                      "去职业介绍所问问吧。",
         'Love': '爱情',
+            "Bar girls know a lot, but there aren't many of them.": "酒吧女郎们啥都知道， "
+                                                                    "珍惜她们吧。",
         'Mates': '船员',
+            "Have you found good company?": "找到合适的伙伴了吗？",
 
     # huds
         # left hud

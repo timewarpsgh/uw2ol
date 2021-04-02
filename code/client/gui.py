@@ -2597,14 +2597,17 @@ class FortuneHouse:
     def career(self):
         msg = "If you need advice on acreer development, " \
               "go consult the guy at the job house."
+        msg = self.game.trans(msg)
         self.game.button_click_handler.building_speak(msg)
 
     def love(self):
         msg = "Bar girls know a lot, but there aren't many of them."
+        msg = self.game.trans(msg)
         self.game.button_click_handler.building_speak(msg)
 
     def mates(self):
         msg = "Have you found good company?"
+        msg = self.game.trans(msg)
         self.game.button_click_handler.building_speak(msg)
 
 

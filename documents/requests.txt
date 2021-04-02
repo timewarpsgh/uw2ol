@@ -23,7 +23,7 @@ by function
                 bank OK
                 item shop OK
                 church OK
-                fortune house ON
+                fortune house OK
 
 
 
