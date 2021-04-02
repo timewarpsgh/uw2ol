@@ -2448,7 +2448,8 @@ class ItemShop:
     def buy_item_name_clicked(self, item_id):
         # building speak
         item = Item(item_id)
-        self.game.building_text = f'{item.name}? I charge {item.price} for this.'
+        t1 = self.game.trans("The price for this is")
+        self.game.building_text = f'{item.name}? {t1} {item.price}.'
 
         # show item image
         show_one_item([self, item])
@@ -2482,7 +2483,8 @@ class ItemShop:
         # building speak
         item = Item(item_id)
         sell_price = int(item.price / 2)
-        self.game.building_text = f'{item.name}? I can pay {sell_price}.'
+        t1 = self.game.trans("I can pay")
+        self.game.building_text = f'{item.name}? {t1} {sell_price}.'
 
         # show item image
         show_one_item([self, item])
@@ -2500,7 +2502,9 @@ class ItemShop:
         reactor.callLater(0.3, self.sell)
 
         # building speak
-        self.game.building_text = 'Thank you!'
+        msg = 'Thank you!'
+        msg = self.game.trans(msg)
+        self.game.building_text = msg
 
 
 class Inn:

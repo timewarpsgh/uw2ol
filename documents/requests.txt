@@ -21,8 +21,8 @@ by function
                 job house OK
                 msc OK
                 bank OK
-                item shop
-                church
+                item shop OK
+                church ON
                 fortune house ON
 
 

@@ -439,6 +439,8 @@ dic = {
             "How much would you like to repay your debt?": "您想要还多少呢？",
 
         # item shop
+        "The price for this is": "这个的价格是",
+        "I can pay": "我愿意支付",
 
         # church
         'Pray': '祈祷',
