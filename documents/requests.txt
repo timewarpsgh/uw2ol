@@ -16,7 +16,7 @@ by function
             maids OK
 
             english language option OK
-            click on X
+            click on X OK
 
             village descriptions
             item descriptions

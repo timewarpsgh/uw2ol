@@ -7,18 +7,3 @@
 
 
 # print(len(en), len(cn))
-d = {
-    'ships': '船只',
-    'mates': '船员',
-    'items': '物品',
-    'cmds': '命令',
-    'options': '选项',
-    'battle': '战斗',
-    'sail': '启航',
-    'test': '测试',
-
-}
-
-# res = dict((v,k) for k,v in d.items())
-res = {v:k for k,v in d.items()}
-print(res)

@@ -329,6 +329,7 @@ class SelectionListWindow(pygame_gui.elements.UIWindow):
         game.menu_stack.append(self)
         game.selection_list_stack.append(self.selection_list)
 
+
 class ButtonClickHandler():
     """ function 1: make menu, input box, msg box, speak ...
         function 2: menu text for most outside interfaces(buttons)

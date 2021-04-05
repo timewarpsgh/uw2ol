@@ -97,6 +97,13 @@ def user_defined_events(self, event):
             self.selection_list_stack.pop()
             print('event ui window close!')
             print('stack length:', len(self.menu_stack))
+            # not in building
+            if self.my_role.in_building_type == None:
+                pass
+            # in building
+            elif len(self.menu_stack) == 0:
+                self.my_role.in_building_type = None
+
 
 def quit(self, *event):
     # when in game
