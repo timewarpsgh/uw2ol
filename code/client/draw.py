@@ -37,19 +37,19 @@ def draw_logged_in_state(self):
         y = self.screen_surface_rect.centery - self.my_role.y
         self.screen_surface.blit(self.images['port'], (x, y))
 
-        # to cover port edges
+            # to cover port edges
 
-            # bottom
+                # bottom
         self.screen_surface.blit(self.images['building_bg'],
                                  (50, y + (c.PORT_TILES_COUNT * c.PIXELS_COVERED_EACH_MOVE)))
-            # top
+                # top
         self.screen_surface.blit(self.images['building_bg'],
                                  (50, y - c.BUILDING_BG_SIZE))
-            # left
+                # left
         self.screen_surface.blit(self.images['building_bg'],
                                  (x - c.BUILDING_BG_SIZE, 0))
 
-            # right
+                # right
         self.screen_surface.blit(self.images['building_bg'],
                                  (x + (c.PORT_TILES_COUNT * c.PIXELS_COVERED_EACH_MOVE), 0))
 
@@ -152,6 +152,7 @@ def draw_hud(self):
         if int(self.my_role.map) <= 99:
             # port name
             port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
+            port_name = self.trans(port_name)
             draw_text(self, port_name, c.WINDOW_WIDTH - 100, 5)
 
             economy_id = hash_ports_meta_data[int(self.my_role.map) + 1]['economyId']
@@ -171,6 +172,7 @@ def draw_hud(self):
         # supply ports
         else:
             port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']
+            port_name = self.trans(port_name)
             draw_text(self, port_name, c.WINDOW_WIDTH - 100, 5)
 
         # at sea

@@ -7,8 +7,10 @@ by function
         website register instruction OK
 
         chinese version ON
-            ports
-            goods
+            ports OK
+            trade goods ON
+            villages ON
+            items ON
 
 
 

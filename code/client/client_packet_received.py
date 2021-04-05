@@ -304,7 +304,8 @@ def _show_allied_ports_for_one_economy_id(params):
     t6 = self.trans(region_name)
     msg = f"{t1}{t6}, {t2} {port_count}. <br><br>"
     for d in list_of_dict:
-        msg += f"{d['port_name']}: {t3}{d['pi']}, " \
+        port_name = self.trans(d['port_name'])
+        msg += f"{port_name}: {t3}{d['pi']}, " \
                f"{t4}{d['economy']}, " \
                f"{t5}{d['industry']}<br>"
 
