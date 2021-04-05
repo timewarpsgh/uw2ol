@@ -1015,4 +1015,7 @@ hash_markets_price_details = {
 }
 
 if __name__ == '__main__':
-    print(hash_markets_price_details[1])
+    d = hash_markets_price_details[0]
+    del d['Available_items']
+    l = list(d.keys())
+    print(l)

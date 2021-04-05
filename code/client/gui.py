@@ -1602,7 +1602,8 @@ class Market():
         dict = {}
         for item_name in available_goods_dict:
             buy_price = port.get_commodity_buy_price(item_name)
-            show_text = item_name + ' ' + str(buy_price)
+            item_name_text = self.game.trans(item_name)
+            show_text = item_name_text + ' ' + str(buy_price)
             dict[show_text] = [self._negotiate_for_price, [item_name,buy_price]]
 
         self.game.button_click_handler.make_menu(dict)
@@ -1639,7 +1640,8 @@ class Market():
         text1 = self.game.translator.translate("I think")
         text2 = self.game.translator.translate("is a reasonable price for")
         text3 = self.game.translator.translate("You can still make good profits.")
-        msg = f"{text1} {buy_price} {text2} {cargo_name}. <br>"\
+        text4 = self.game.trans(cargo_name)
+        msg = f"{text1} {buy_price} {text2} {text4}. <br>"\
               f"{text3}."
         mate_speak(self.game, mate, msg)
 
@@ -1671,7 +1673,8 @@ class Market():
         dict = {}
 
         for cargo_name, amount in self.game.my_role.ships[index].cargoes.items():
-            dict[(str(amount) + ' ' + cargo_name)] = [self.__negotiate_for_sell_price, [cargo_name, index]]
+            cargo_name_text = self.game.trans(cargo_name)
+            dict[(str(amount) + ' ' + cargo_name_text)] = [self.__negotiate_for_sell_price, [cargo_name, index]]
 
         self.game.button_click_handler.make_menu(dict)
 
@@ -1700,7 +1703,8 @@ class Market():
         text3 = self.game.translator.translate('I think')
         text4 = self.game.translator.translate('is a reasonable price for')
         text5 = self.game.translator.translate('What do you say?')
-        mate_speak(self.game, mate, f'{text3} {unit_price} {text4} {cargo_name}. <br>'
+        text6 = self.game.trans(cargo_name)
+        mate_speak(self.game, mate, f'{text3} {unit_price} {text4} {text6}. <br>'
                                     f'{text5}')
 
         # sell button
@@ -2771,6 +2775,7 @@ def _show_one_ship(params):
         # cargo
         cargoes_dict = ship.cargoes
         for cargo_name, count in cargoes_dict.items():
+            cargo_name = self.game.trans(cargo_name)
             dict['supplies'] += cargo_name + ':' + str(count)
 
     # make text from dict

@@ -8,7 +8,7 @@ by function
 
         chinese version ON
             ports OK
-            trade goods ON
+            trade goods OK
             villages ON
             items ON
 

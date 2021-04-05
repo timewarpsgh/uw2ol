@@ -225,9 +225,13 @@ def npc_info(self, message_obj):
     t2 = self.trans("carrying")
     t3 = self.trans("is heading to")
     t4 = self.trans("and his current location is about")
-    speak_str = f"{names[0]}{t1}, {t2} {cargoes[0]}, <br>{t3} {destinations[0]} " \
+    t5 = self.trans(cargoes[0])
+    t6 = self.trans(cargoes[1])
+    t7 = self.trans(destinations[0])
+    t8 = self.trans(destinations[1])
+    speak_str = f"{names[0]}{t1}, {t2} {t5}, <br>{t3} {t7} " \
                 f"<br>{t4} {positions[0][0]} {positions[0][1]}. <br><br>" \
-                f"{names[1]}{t1}, {t2} {cargoes[1]}, <br>{t3} {destinations[1]} " \
+                f"{names[1]}{t1}, {t2} {t6}, <br>{t3} {t8} " \
                 f"<br>{t4} {positions[1][0]} {positions[1][1]}."
     self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)
 

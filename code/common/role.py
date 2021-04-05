@@ -1344,7 +1344,11 @@ class Role:
                 self.mates[0].exp += total_exp
 
                 if self.is_in_client_and_self():
-                    msg = f"Got {total_gold} gold coins and {total_exp} exp for {count} {cargo_name}"
+                    t1 = self.GAME.trans("Got")
+                    t2 = self.GAME.trans("gold coins and")
+                    t3 = self.GAME.trans("exp for")
+                    t4 = self.GAME.trans(cargo_name)
+                    msg = f"{t1} {total_gold} {t2} {total_exp} {t3} {count} {t4}"
                     self.GAME.button_click_handler.i_speak(msg)
                     self.GAME.sounds['deal'].play()
 
