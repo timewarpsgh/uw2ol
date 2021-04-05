@@ -880,7 +880,8 @@ class MenuClickHandlerForItems():
         dict = {}
         for id in my_discoveries:
             discovery = Discovery(id)
-            dict[discovery.name] = [self._show_one_discovery, discovery]
+            name_text = self.game.trans(discovery.name)
+            dict[name_text] = [self._show_one_discovery, discovery]
         self.game.button_click_handler.make_menu(dict)
 
     def _show_one_discovery(self, discovery):
@@ -893,6 +894,7 @@ class MenuClickHandlerForItems():
         # make text from dict
         text = ''
         for k, v in dict.items():
+            v = self.game.trans(v)
             text += f'{v}<br>'
 
         # get figure image
@@ -1398,8 +1400,9 @@ class MenuClickHandlerForTarget():
             t5 = self.game.trans("We are heading to")
             t6 = self.game.trans(fleet_type)
             t7 = self.game.trans(target_mate.nation)
+            t8 = self.game.trans(destination_port.name)
             message = f"{t1} {target_mate.name} {t2} {t6} {t3} <br>" \
-                      f"{t4} {t7}. {t5} {destination_port.name}."
+                      f"{t4} {t7}. {t5} {t8}."
             mate_speak(self.game, target_mate, message)
 
     def captain_info(self):

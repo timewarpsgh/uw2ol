@@ -1,3 +1,4 @@
+# 98 total
 villages_dict = {
     39: {
         'name': 'Prairie Dog',
@@ -1128,5 +1129,8 @@ villages_dict = {
 }
 
 if __name__ == '__main__':
-    a = villages_dict[1]
-    print(a)
+    l = []
+    for i in range(1,99):
+        name = villages_dict[i]['name']
+        l.append(name)
+    print(l)

@@ -9,7 +9,9 @@ by function
         chinese version ON
             ports OK
             trade goods OK
-            villages ON
+
+
+            villages names OK
             items ON
 
 
