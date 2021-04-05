@@ -605,6 +605,7 @@ class MenuClickHandlerForMates():
         for k, v in dict.items():
             if v:
                 k = self.game.translator.translate(k)
+                v = self.game.trans(v)
                 text += f'{k}: {v}<br>'
             else:
                 text += '<br>'
@@ -620,7 +621,8 @@ class MenuClickHandlerForMates():
         dict = {}
         index = 0
         for mate in self.game.my_role.mates:
-            dict[mate.name] = [self._show_one_mate, [mate, index]]
+            mate_text = self.game.trans(mate.name)
+            dict[mate_text] = [self._show_one_mate, [mate, index]]
             index += 1
         self.game.button_click_handler.make_menu(dict)
 
@@ -1403,7 +1405,8 @@ class MenuClickHandlerForTarget():
             t6 = self.game.trans(fleet_type)
             t7 = self.game.trans(target_mate.nation)
             t8 = self.game.trans(destination_port.name)
-            message = f"{t1} {target_mate.name} {t2} {t6} {t3} <br>" \
+            t9 = self.game.trans(target_mate.name)
+            message = f"{t1} {t9} {t2} {t6} {t3} <br>" \
                       f"{t4} {t7}. {t5} {t8}."
             mate_speak(self.game, target_mate, message)
 

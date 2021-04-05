@@ -1003,4 +1003,8 @@ hash_mates = {
 }
 
 if __name__ == '__main__':
-    print(hash_mates[50])
+    li = []
+    for i in range(1, 51):
+        name = hash_mates[i]['name']
+        li.append(name)
+    print(li)

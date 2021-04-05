@@ -9,11 +9,12 @@ by function
         chinese version ON
             ports OK
             trade goods OK
-
-
             villages names OK
             items names OK
 
+
+            mates ON
+            maids
 
 
             input box LATER
