@@ -21,6 +21,8 @@ class Translator():
         elif self.to_langguage == 'EN':
             return content
 
+    def set_to_language(self, lan):
+        self.to_langguage = lan
 
 if __name__ == '__main__':
     trans = Translator()

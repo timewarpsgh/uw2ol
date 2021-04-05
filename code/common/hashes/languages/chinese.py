@@ -16,7 +16,7 @@ dic = {
     'items': '物品',
     'cmds': '命令',
     'options': '选项',
-    'battle': '战斗',
+    'fight': '战斗',
     'sail': '启航',
     'test': '测试',
 
@@ -144,6 +144,8 @@ dic = {
 
     # options
     'Language': '语言',
+        'English': '英语',
+        'Chinese': '中文',
     'Sounds': '音频',
         'music': '音乐',
         'effect': '音效',
@@ -909,7 +911,7 @@ dic = {
     'Amerigo Bassio' : '阿梅里戈·巴西奥',
     'Anthony Morgan' : '安东尼·摩根',
     'Antoine Fitch' : '安东尼·费奇',
-    'Antonio Pintado' : '安东尼奥·平塔多',
+    'Antonio Pintado' : '安东尼奥·品塔多',
     'Benito Gomez' : '贝尼托·戈麦斯',
     'Bernando Sanchez' : '伯南多·桑切斯',
     'Carmine Ragussa' : '卡门·拉古萨',

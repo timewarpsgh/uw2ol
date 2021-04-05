@@ -15,6 +15,15 @@ by function
             mates OK
             maids OK
 
+            english language option OK
+            click on X
+
+            village descriptions
+            item descriptions
+
+            event dialogues
+
+
 
             input box LATER
 

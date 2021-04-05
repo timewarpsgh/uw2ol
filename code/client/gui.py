@@ -51,7 +51,7 @@ def init_gui(self):
     _init_button(self, {'Items': self.button_click_handler.on_button_click_items}, 3)
     _init_button(self, {'Cmds': self.button_click_handler.cmds}, 4)
     _init_button(self, {'Options': self.button_click_handler.options}, 5)
-    _init_button(self, {'Battle': self.button_click_handler.battle}, 6)
+    _init_button(self, {'Fight': self.button_click_handler.battle}, 6)
     _init_button(self, {'Sail': self.button_click_handler.login}, 7)
     _init_button(self, {'Test': self.button_click_handler.port}, 8)
 
@@ -473,7 +473,7 @@ class ButtonClickHandler():
 
     def options(self):
         dict = {
-            'Language': test,
+            'Language': self.menu_click_handler.options.language,
             'Sounds': self.menu_click_handler.options.sounds,
             'Hot Keys': test,
             'Exit': [handle_pygame_event.quit, self.game]
@@ -1100,6 +1100,46 @@ class MenuClickHandlerForCmds():
 class MenuClickHandlerForOptions():
     def __init__(self, game):
         self.game = game
+
+    def language(self):
+        t1 = self.game.trans('English')
+        t2 = self.game.trans('Chinese')
+        d = {
+            t1: self._set_to_english,
+            t2: self._set_to_chinese,
+        }
+        self.game.button_click_handler.make_menu(d)
+
+    def _set_to_english(self):
+        self.game.translator.set_to_language('EN')
+        self.__reset_buttons_texts()
+
+    def _set_to_chinese(self):
+        self.game.translator.set_to_language('CN')
+        self.__reset_buttons_texts()
+
+    def __reset_buttons_texts(self):
+        for button in self.game.buttons.keys():
+            prev_text = button.text
+            print(prev_text)
+            now_text = self.game.trans(prev_text)
+            print(now_text)
+
+            if self.game.translator.to_langguage == 'EN':
+                d = {
+                    'Ships': '船只',
+                    'Mates': '船员',
+                    'Items': '物品',
+                    'Cmds': '命令',
+                    'Options': '选项',
+                    'Fight': '战斗',
+                    'Sail': '启航',
+                    'Test': '测试',
+                }
+                d_reversed = {v: k for k, v in d.items()}
+                button.set_text(d_reversed[prev_text])
+            else:
+                button.set_text(now_text)
 
     def sounds(self):
         d = {
