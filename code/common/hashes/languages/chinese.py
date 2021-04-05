@@ -1,10 +1,14 @@
 dic = {
     # table of contents
+
         # buttons (entrance for all ui)
         # huds
         # ports
-
-
+        # goods
+        # villages
+        # items
+        # mate names
+        # maid names
 
     # buttons (entrance for all ui)
     'ships': '船只',
@@ -947,5 +951,34 @@ dic = {
     'Kirk Churchill' : '柯克·丘吉尔',
     'York Wagner' : '约克·瓦格纳',
     'Lester Walkley' : '莱斯特·沃克里',
+
     # maid names
+    'Layla' : '莱拉',
+    'Melanie' : '梅兰妮',
+    'Johanna' : '乔安娜',
+    'Tisa' : '蒂莎',
+    'Helen' : '海伦',
+    'Titis' : '提蒂斯',
+    'Leticia' : '莱蒂西亚',
+    'Elaine' : '伊莱恩',
+    'Jamila' : '贾米拉',
+    'Mei-Yi' : '梅伊',
+    'Theresa' : '特蕾莎',
+    'Aruna' : '阿露纳',
+    'Claudia' : '克劳迪娅',
+    'Isabella' : '伊莎贝拉',
+    'Ladia' : '拉迪亚',
+    'Lucia' : '露琪亚',
+    'Lillian' : '莉莉安',
+    'Rukia' : '鲁奇亚',
+    'Mathilda' : '玛蒂尔达',
+    'Lupe' : '卢佩',
+    'Salma' : '萨尔玛',
+    'Onatsu' : '奥纳苏',
+    'Natasha' : '娜塔莎',
+    'Silvia' : '西尔维娅',
+    'Tobia' : '托比亚',
+    'Shani' : '沙尼',
+    'Viveka' : '维卡',
+    'Francesca' : '弗兰西丝卡',
 }

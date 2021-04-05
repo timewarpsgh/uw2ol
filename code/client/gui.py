@@ -1877,7 +1877,8 @@ class Bar():
             # speak
             t1 = self.game.trans("I'm")
             t2 = self.game.trans("How are you?")
-            self._maid_speak(f"{t1} {maid.name}. {t2}")
+            t3 = self.game.trans(maid.name)
+            self._maid_speak(f"{t1} {t3}. {t2}")
 
             # menu
             dict = {

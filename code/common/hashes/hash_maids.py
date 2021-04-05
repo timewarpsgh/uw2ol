@@ -112,3 +112,10 @@ hash_maids = {
         'image': [13, 7],
     },
 }
+
+if __name__ == '__main__':
+    li = []
+    for i in range(1, 29):
+        n = hash_maids[i]['name']
+        li.append(n)
+    print(li)

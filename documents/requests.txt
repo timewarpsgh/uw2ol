@@ -12,9 +12,8 @@ by function
             villages names OK
             items names OK
 
-
             mates OK
-            maids
+            maids OK
 
 
             input box LATER
