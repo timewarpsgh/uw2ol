@@ -97,12 +97,14 @@ def user_defined_events(self, event):
             self.selection_list_stack.pop()
             print('event ui window close!')
             print('stack length:', len(self.menu_stack))
-            # not in building
-            if self.my_role.in_building_type == None:
-                pass
-            # in building
-            elif len(self.menu_stack) == 0:
-                self.my_role.in_building_type = None
+
+            if self.my_role:
+                # not in building
+                if self.my_role.in_building_type == None:
+                    pass
+                # in building
+                elif len(self.menu_stack) == 0:
+                    self.my_role.in_building_type = None
 
 
 def quit(self, *event):
@@ -207,6 +209,13 @@ def _not_in_battle_keys(self, event):
             else:
                 self.button_click_handler. \
                     make_message_box("Target too far!")
+
+    # change language
+    if event.key == ord('l'):
+        if self.translator.to_langguage == 'EN':
+            self.button_click_handler.menu_click_handler.options._set_to_chinese()
+        else:
+            self.button_click_handler.menu_click_handler.options._set_to_english()
 
 def __change_map_to_port(self):
     if not self.my_role.map.isdigit():

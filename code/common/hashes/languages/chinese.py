@@ -143,7 +143,7 @@ dic = {
     'Battle (B)': '战斗 (B)',
 
     # options
-    'Language': '语言',
+    'Language(L)': '语言(L)',
         'English': '英语',
         'Chinese': '中文',
     'Sounds': '音频',

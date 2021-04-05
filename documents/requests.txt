@@ -17,8 +17,11 @@ by function
 
             english language option OK
             click on X OK
+            hot key to change language OK
+
 
             village descriptions
+
             item descriptions
 
             event dialogues

@@ -474,7 +474,7 @@ class ButtonClickHandler():
 
     def options(self):
         dict = {
-            'Language': self.menu_click_handler.options.language,
+            'Language(L)': self.menu_click_handler.options.language,
             'Sounds': self.menu_click_handler.options.sounds,
             'Hot Keys': test,
             'Exit': [handle_pygame_event.quit, self.game]
