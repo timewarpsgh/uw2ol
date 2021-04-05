@@ -77,7 +77,9 @@ dic = {
         'name': '名字',
         'accountant': '会计',
         'first mate': '大副',
+        'first_mate': '大副',
         'chief navigator': '水手长',
+        'chief_navigator': '水手长',
     'Mate Info': '船长情况',
         'Set as Captain of': '任命为船长',
         'Relieve Duty': '解除职务',
@@ -944,6 +946,6 @@ dic = {
     'Perry Frederick' : '佩里·弗雷德里克',
     'Kirk Churchill' : '柯克·丘吉尔',
     'York Wagner' : '约克·瓦格纳',
-    'Lester Walkley' : '莱斯特·沃克利',
+    'Lester Walkley' : '莱斯特·沃克里',
     # maid names
 }

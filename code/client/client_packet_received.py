@@ -229,9 +229,11 @@ def npc_info(self, message_obj):
     t6 = self.trans(cargoes[1])
     t7 = self.trans(destinations[0])
     t8 = self.trans(destinations[1])
-    speak_str = f"{names[0]}{t1}, {t2} {t5}, <br>{t3} {t7} " \
+    t9 = self.trans(names[0])
+    t10 = self.trans(names[1])
+    speak_str = f"{t9}{t1}, {t2} {t5}, <br>{t3} {t7} " \
                 f"<br>{t4} {positions[0][0]} {positions[0][1]}. <br><br>" \
-                f"{names[1]}{t1}, {t2} {t6}, <br>{t3} {t8} " \
+                f"{t10}{t1}, {t2} {t6}, <br>{t3} {t8} " \
                 f"<br>{t4} {positions[1][0]} {positions[1][1]}."
     self.button_click_handler.menu_click_handler.port.bar._maid_speak(speak_str)
 

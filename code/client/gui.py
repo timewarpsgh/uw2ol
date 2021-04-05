@@ -636,12 +636,14 @@ class MenuClickHandlerForMates():
         if mate.duty:
             if mate.duty in ['accountant', 'first_mate', 'chief_navigator']:
                 duty_name = mate.duty
+                duty_name = self.game.trans(duty_name)
             else:
                 duty_name = 'captain of ' + mate.duty.name
 
         nation_text = self.game.translator.translate(mate.nation)
+        name_text = self.game.trans(mate.name)
         dict = {
-            'name/nation': f"{mate.name}/{nation_text}",
+            'name/nation': f"{name_text}/{nation_text}",
             'duty': duty_name,
             '1': '',
             'lv/points': f"{mate.lv}/{mate.points}",
@@ -817,7 +819,9 @@ class MenuClickHandlerForItems():
             item_id = equipments_dict[k]
             k = self.game.translator.translate(k)
             if item_id == None:
-                dict[f'{k}: {item_id}'] = test
+                item_id = 'None'
+                item_text = self.game.trans(item_id)
+                dict[f'{k}: {item_text}'] = test
             else:
                 item = Item(item_id)
                 item_text = self.game.trans(item.name)
@@ -1420,8 +1424,9 @@ class MenuClickHandlerForTarget():
     def _show_captain(self, mate):
         # dict
         nation_text = self.game.translator.translate(mate.nation)
+        name_text = self.game.trans(mate.name)
         dict = {
-            'name/nation': f"{mate.name}/{nation_text}",
+            'name/nation': f"{name_text}/{nation_text}",
             '1': '',
             'lv': f"{mate.lv}",
             '2': '',
@@ -1439,7 +1444,7 @@ class MenuClickHandlerForTarget():
                 text += f'<br>'
             else:
                 k = self.game.translator.translate(k)
-                text += f'{k}:{v}<br>'
+                text += f'{k}: {v}<br>'
 
         # get figure image
         figure_surface = figure_x_y_2_image(self.game, mate.image_x, mate.image_y)
@@ -1787,8 +1792,9 @@ class Bar():
             duty_name = 'captain of ' + mate.duty.name
 
         nation_text = self.game.trans(mate.nation)
+        name_text = self.game.trans(mate.name)
         dict = {
-            'name/nation': f"{mate.name}/{nation_text}",
+            'name/nation': f"{name_text}/{nation_text}",
             'lv': mate.lv,
             'leadership/seamanship/luck': f"{mate.leadership}/{mate.seamanship}/{mate.luck}",
             'knowledge/intuition': f"{mate.knowledge}/{mate.intuition}",
@@ -2762,9 +2768,12 @@ def _show_one_ship(params):
 
     gun = Gun(ship.gun)
     gun_name = gun.name
+    gun_name = self.game.trans(gun_name)
     knots_text = self.game.translator.translate('knots')
+    type_text = self.game.trans(ship.type)
+    captain_name = self.game.trans(captain_name)
     dict = {
-        'name/type/captain': f'{ship.name}/{ship.type}/{captain_name}',
+        'name/type/captain': f'{ship.name}/{type_text}/{captain_name}',
         '1': '',
         'tacking/power/speed': f'{ship.tacking}/{ship.power}/{speed} {knots_text}',
         'durability': f'{ship.now_hp}/{ship.max_hp}',
