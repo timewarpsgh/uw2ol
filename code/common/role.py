@@ -615,8 +615,14 @@ class Role:
                 if self.is_in_client_and_self():
                     discovery = Discovery(discovery_id)
                     item = Item(item_id)
-                    self.GAME.button_click_handler.i_speak(f'We found {discovery.name} '
-                                      f'and {item.name}! Got {c.EXP_PER_DISCOVERY} exp.')
+                    t1 = self.GAME.trans('We found')
+                    t2 = self.GAME.trans(discovery.name)
+                    t3 = self.GAME.trans('and')
+                    t4 = self.GAME.trans(item.name)
+                    t5 = self.GAME.trans('Got')
+                    t6 = self.GAME.trans('exp')
+                    self.GAME.button_click_handler.i_speak(f'{t1} {t2} '
+                                      f'{t3} {t4}! {t5} {c.EXP_PER_DISCOVERY} {t6}.')
                     self.GAME.sounds['discover'].play()
             else:
                 if self.is_in_client_and_self():

@@ -12,7 +12,7 @@ by function
 
 
             villages names OK
-            items ON
+            items names OK
 
 
 

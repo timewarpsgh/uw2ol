@@ -495,12 +495,9 @@ hash_items = {
 
 
 if __name__ == '__main__':
-    prices = {}
-    for i in range(38, 54):
-        p = hash_items[i]['price']
+    li = []
+    for i in range(1, 56):
         name = hash_items[i]['name']
-        prices[name] = p
-
-    d = dict(sorted(prices.items(), key=lambda item: item[1]))
-    print(d)
-
+        li.append(name)
+    print(li)
+    print(len(li))

@@ -818,7 +818,8 @@ class MenuClickHandlerForItems():
                 dict[f'{k}: {item_id}'] = test
             else:
                 item = Item(item_id)
-                dict[f'{k}: {item.name}'] = [self._unequip_item_name_clicked, item]
+                item_text = self.game.trans(item.name)
+                dict[f'{k}: {item_text}'] = [self._unequip_item_name_clicked, item]
 
         self.game.button_click_handler.make_menu(dict)
 
@@ -847,7 +848,8 @@ class MenuClickHandlerForItems():
         items_dict = self.game.my_role.bag.container
         for k in items_dict.keys():
             item = Item(k)
-            dict[f'{item.name} {items_dict[k]}'] = [self._item_name_clicked, item]
+            item_text = self.game.trans(item.name)
+            dict[f'{item_text} {items_dict[k]}'] = [self._item_name_clicked, item]
 
         self.game.button_click_handler.make_menu(dict)
 
@@ -2466,7 +2468,8 @@ class ItemShop:
         # building speak
         item = Item(item_id)
         t1 = self.game.trans("The price for this is")
-        self.game.building_text = f'{item.name}? {t1} {item.price}.'
+        t2 = self.game.trans(item.name)
+        self.game.building_text = f'{t2}? {t1} {item.price}.'
 
         # show item image
         show_one_item([self, item])
@@ -2492,7 +2495,8 @@ class ItemShop:
         items_dict = self.game.my_role.bag.container
         for k in items_dict.keys():
             item = Item(k)
-            dict[f'{item.name} {items_dict[k]}'] = [self.item_name_clicked, k]
+            item_text = self.game.trans(item.name)
+            dict[f'{item_text} {items_dict[k]}'] = [self.item_name_clicked, k]
 
         self.game.button_click_handler.make_menu(dict)
 
@@ -2501,7 +2505,8 @@ class ItemShop:
         item = Item(item_id)
         sell_price = int(item.price / 2)
         t1 = self.game.trans("I can pay")
-        self.game.building_text = f'{item.name}? {t1} {sell_price}.'
+        t2 = self.game.trans(item.name)
+        self.game.building_text = f'{t2}? {t1} {sell_price}.'
 
         # show item image
         show_one_item([self, item])

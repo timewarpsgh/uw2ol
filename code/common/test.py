@@ -1,13 +1,17 @@
 # prepare list
-en = ['Kiwi', 'Koala', 'Ayers Rock', 'Tasmanian Devil', 'Frilled Lizard', 'Kangaroo', 'Popol Vuh', 'Jade Mask', 'Guatavita Lake', 'Monument of the Sun', 'Crystal Skull', 'Mexican Beaded Lizard', 'Stone Face', 'Mural of Marnalico', 'Stone Ball', 'Mandrill', 'Panda', 'Great Wall', 'Qian Ling', 'Hedgehog', 'Namahage', 'Toro Ruins', 'Plant Worm', 'King Cobra', 'Mohenio-Daro', 'Inle Lake', 'Chameleon', 'Dodo', 'Burning Water', 'Papyrus', 'Rosetta Stone', 'Crocodile', 'Pteranodon', 'Nubia Pyramid', 'Tessisat Falls', 'Baobab', 'Khufu Pyramid', 'Victoria Falls', 'Prairie Dog', 'Bison', 'Passenger Pigeon', 'Totem Pole', 'Niagara Falls', "Venus' Flytrap", 'Great Auk', 'Mammoth', 'Saber-toothed Tiger', 'Stonehenge', 'Blue Whale', "Stellar's Sea Cow", 'Big Zimbabwe', "Diaz's Monument", 'Vampire Bat', 'Terracotta Figure', 'Lake Titicaca', 'Temple of the Sun', 'Giant Ground Sloth', 'Clay Monster', 'Anteater', 'Leon Penguin', 'Archaeopteryx', 'Balsa', 'Gold Frog', 'Matamata', 'Pororoca', 'Tarantula', 'Anaconda', 'Amazon Water Lily', 'Piranha', 'Iguana', 'Toucan', 'Cactus', 'Pitcher Plant', 'Stone Buddha', 'Komodo Dragon', 'Borobudur', 'Python', 'Greater Bird of Paradise', 'Hornbill', 'Angkor Wat', "Ayutthaya's Buddha", 'Durian', 'Tree Snake', 'Kalavinka', 'Moai', 'Nasiped', 'Giant Tortoise', 'Indo-Pacific Cowrie', 'Moa', 'Fruit Bat', 'Armadillo', "Diogo's Monument", 'Moquele Mubembe', 'Quagga', 'Ant Hill', 'Clay Mosque', 'Moonbow', 'Aurora']
-cn = ['猕猴桃’,‘考拉’,‘艾尔斯岩’,‘塔斯马尼亚魔鬼’,‘褶边蜥蜴’,‘袋鼠’,‘波波尔·武’,‘玉面具’,‘瓜塔维塔湖’,‘太阳纪念碑’,‘水晶骷髅’,‘墨西哥珠蜥蜴’,‘石头脸’,‘马纳利科壁画’,‘石球’,‘山楂’,‘熊猫’,‘长城’,‘钱灵’,‘刺猬’,‘纳玛哈格’,‘托罗遗址’,‘植物蠕虫’，‘眼镜王蛇’,‘莫赫尼奥达罗’,‘因勒湖’,‘变色龙’,‘渡渡鸟’,‘烧水’,‘纸草’,‘罗塞塔石’,‘鳄鱼’,‘翼龙’,‘努比亚金字塔’,‘泰西萨特瀑布’,‘猴面包树’,‘胡夫金字塔’,‘维多利亚瀑布’,‘草原狗’,‘野牛’,‘客鸽’,‘图腾柱’,‘尼亚加拉瀑布’,‘维纳斯‘捕蝇器’,‘大海雀’,‘猛犸象’，‘剑齿虎’,‘巨石阵’,‘蓝鲸’,‘恒星海牛’,‘大津巴布韦’,‘迪亚兹纪念碑’,‘吸血鬼蝙蝠’,‘陶俑’,‘提提卡卡湖’,‘太阳神庙’,‘巨土树懒’,‘粘土怪兽’,‘食蚁兽’,‘利昂企鹅’,‘始祖鸟’,‘巴尔萨’,‘金蛙’,‘马塔玛塔’,‘波罗卡’,‘狼蛛’,‘水蟒’,‘亚马逊水百合花','食人鱼','鬣蜥','巨嘴鸟','仙人掌','猪笼草','石佛','科莫多龙','婆罗浮屠','蟒蛇','天堂大鸟','犀鸟','吴哥窟','大城府大佛','榴莲','树蛇','卡拉文卡','摩艾','纳赛伯','巨龟','印度-太平洋海牛','摩押','果蝠','犰狳','迪奥戈纪念碑',"Moquele Mubembe","Quagga","Ant Hill","Clay Mosque","Moonbow",'Aurora']
+en = ['Balm', 'Lime Juice', 'Rat Poison', 'Quadrant', 'Sextant', 'Theodolite', 'Pocket Watch', 'Telescope', 'Cat', 'Tax Free Permit (E)', 'Tax Free Permit (H)', 'Tax Free Permit (I)', 'Tax Free Permit (P)', 'Tax Free Permit (S)', 'Tax Free Permit (T)', 'Candleholder', 'Crown of Glory', 'Garnet Brooch', 'Gold Bracelet', 'Malachite Box', 'Mermaid Bangle', 'Ruby Scepter', 'Aqua Tiara', 'China Dress', 'Circlet', 'Ermine Coat', 'Peacock Fan', 'Platinum Comb', 'Silk Scarf', 'Silk Shawl', 'Velvet Coat', 'Leather Armor', 'Chain Mail', 'Half Plate', 'Plate Mail', "Errol's Plate", 'Crusader Armor (*)', 'Short Saber', 'Scimitar', 'Japanese Sword', 'Saber', 'Magic Muramasa(*)', "Siva's Sword(*)", 'Flamberge', 'Rapier', 'Epee', 'Estock', 'Crusader Sword (*)', 'Cutlass', 'Broad Sword', 'Blue Crescent(*)', 'Claymore', 'Golden Dragon(*)', 'Treasure Box', 'Diamond Ring']
+cn = ['香脂','酸橙汁','老鼠毒','象限','六分仪','经纬仪','怀表','望远镜','猫','免税许可证（E）','免税许可证（H）','免税许可证（I）','免税许可证（P）','免税许可证（S）','免税许可证（T）','烛台','荣耀之冠','石榴石胸针','金手镯','孔雀石盒','美人鱼手镯','红宝石权杖','水族头饰','中国裙','圆环','貂皮大衣','孔雀扇','白金梳子','丝巾','丝巾','丝绒大衣','皮甲','链甲','半板','板甲','埃罗尔板','十字军盔甲（*）','短刀','弯刀','日本剑','军刀','魔法村上春树（*）','湿婆之剑（*）','弗拉姆伯格','剑器','重剑','埃斯托克','十字军之剑（*）','弯刀','宽剑','蓝新月（*）','克莱默','金龙（*）','宝箱','钻戒']
+
 # do
 # if len(en) == len(cn):
-# for id, item in enumerate(en):
-#     print(f"'{item}'", ":", f"'{cn[id]}',")
+
+for id, item in enumerate(en):
+    print(f"'{item}'", ":", f"'{cn[id]}',")
+
 # else:
 #     print("the 2 lists have diff length!")
 #     print(len(en), len(cn))
-for id, item in enumerate(en):
-    print(f"'{item}'", ":", f" ,")
+# for id, item in enumerate(en):
+#     print(f"'{item}'", ":", f" ,")
+# print(len(en), len(cn))
 
