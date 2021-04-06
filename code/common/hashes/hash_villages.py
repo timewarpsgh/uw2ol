@@ -1132,5 +1132,6 @@ if __name__ == '__main__':
     l = []
     for i in range(1, 99):
         name = villages_dict[i]['description']
-        l.append(name)
-    print(l)
+        print(name)
+        # l.append(name)
+    # print(l)
