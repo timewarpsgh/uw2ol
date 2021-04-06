@@ -21,7 +21,7 @@ by function
 
 
             item effects OK
-            item names ON
+            item names OK
             item descriptions ON
 
             event dialogues

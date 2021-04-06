@@ -2802,6 +2802,7 @@ def show_one_item(params):
     # make text from dict
     text = ''
     for k, v in dict.items():
+        v = self.game.trans(v)
         text += f'{v}<br>'
 
     # get figure image
