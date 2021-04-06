@@ -121,6 +121,18 @@ dic = {
             'unequip': '卸下',
             'use': '使用',
 
+    'Items': '物品',
+        'Equip:': '装备:',
+        'damage': '伤害',
+        'damage reduction': '减伤',
+        '(shoot and engage)': '(炮击与肉搏)',
+        'Use:': '使用:',
+        'max days at sea': '续航天数',
+        'fleet speed': '舰队航速',
+        'Equip: +2 max days at sea.': '装备：+2 续航天数.',
+        'Equip: +1 fleet speed.': '装备：+1 舰队航速.',
+        'Equip: +2 max days at sea.': '装备： +2 续航天数.',
+
     'Discoveries': '发现物',
     'Diary': '日志',
         'Main Objective': '主要任务',

@@ -20,11 +20,13 @@ by function
             hot key to change language OK
 
 
-            village descriptions
-
-            item descriptions
+            item effects OK
+            item names ON
+            item descriptions ON
 
             event dialogues
+
+            village descriptions
 
 
 

@@ -2764,7 +2764,6 @@ def figure_image_speak(game, image_x, image_y, message):
     PanelWindow(pygame.Rect((59, 50), (350, 400)),
                 game.ui_manager, text, game, figure_surface)
 
-
 def show_one_item(params):
     # accepts a list
     self = params[0]
@@ -2775,8 +2774,30 @@ def show_one_item(params):
         'name': item.name,
         'description': item.description,
     }
+
+    # if have effects
     if hasattr(item, 'effects_description'):
-        dict['effects_description'] = item.effects_description
+        if item.type == 'weapon':
+            t1 = self.game.trans('Equip:')
+            t2 = self.game.trans('damage')
+            t3 = self.game.trans('(shoot and engage)')
+            dict['effects_description'] = f"{t1} +{item.effects}% {t2} {t3}"
+        elif item.type == 'armor':
+            t1 = self.game.trans('Equip:')
+            t2 = self.game.trans('damage reduction')
+            t3 = self.game.trans('(shoot and engage)')
+            dict['effects_description'] = f"{t1} +{item.effects}% {t2} {t3}"
+        elif item.type == 'consumable':
+            t1 = self.game.trans('Use:')
+            t2 = self.game.trans('max days at sea')
+            dict['effects_description'] = f"{t1} +{item.effects} {t2}."
+        elif item.type == 'instrument':
+            t1 = self.game.trans('Equip:')
+            t2 = self.game.trans('fleet speed')
+            dict['effects_description'] = f"{t1} +{item.effects} {t2}."
+        else:
+            t1 = self.game.trans(item.effects_description)
+            dict['effects_description'] = t1
 
     # make text from dict
     text = ''
