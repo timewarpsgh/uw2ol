@@ -22,11 +22,12 @@ by function
 
             item effects OK
             item names OK
-            item descriptions ON
+            item descriptions OK
+            village descriptions ON
 
             event dialogues
 
-            village descriptions
+
 
 
 
