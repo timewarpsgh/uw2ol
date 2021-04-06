@@ -497,7 +497,7 @@ hash_items = {
 if __name__ == '__main__':
     li = []
     for i in range(1, 56):
-        name = hash_items[i]['name']
+        name = hash_items[i]['description']
         li.append(name)
     print(li)
     print(len(li))
