@@ -195,6 +195,7 @@ def new_roles_from_battle(self, message_obj):
 
 def target_too_far(self, message_obj):
     msg = "target too far or lv too low!"
+    msg = self.trans(msg)
     self.button_click_handler.i_speak(msg)
 
 def npc_info(self, message_obj):

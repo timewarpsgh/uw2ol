@@ -427,6 +427,7 @@ class ButtonClickHandler():
         game = self.game
         rect = pygame.Rect(0, 0, c.WINDOW_WIDTH, c.WINDOW_HIGHT)
         text = "The enemy fleet was defeated!"
+        text = self.game.trans(text)
         image = game.images['win_battle']
         sunk_window = PanelWindow(rect, game.ui_manager, text, game, image)
 
@@ -434,6 +435,7 @@ class ButtonClickHandler():
         game = self.game
         rect = pygame.Rect(0, 0, c.WINDOW_WIDTH, c.WINDOW_HIGHT)
         text = "We tried our best."
+        text = self.game.trans(text)
         image = game.images['lose_battle']
         sunk_window = PanelWindow(rect, game.ui_manager, text, game, image)
 
@@ -715,7 +717,9 @@ class MenuClickHandlerForMates():
 
         mate = self.game.my_role.mates[mate_num]
         if mate.duty:
-            mate_speak(self.game, mate, "I already have a duty.")
+            msg = "I already have a duty."
+            msg = self.game.trans(msg)
+            mate_speak(self.game, mate, msg)
         else:
             self.game.button_click_handler.make_menu(dict1)
 
@@ -740,7 +744,9 @@ class MenuClickHandlerForMates():
         exp_needed = lv_2_exp_needed_to_next_lv[mate.lv]
 
         if mate.exp < exp_needed:
-            mate_speak(self.game, mate, "I don't have enough experience to reach the next level.")
+            msg = "I don't have enough experience to reach the next level."
+            msg = self.game.trans(msg)
+            mate_speak(self.game, mate, msg)
         else:
             self.game.button_click_handler.make_menu(dict)
 
@@ -752,7 +758,9 @@ class MenuClickHandlerForMates():
 
             mate = self.game.my_role.mates[mate_num]
             if mate.points == 0:
-                mate_speak(self.game, mate, "I have 0 point.")
+                msg = "I have 0 point."
+                msg = self.game.trans(msg)
+                mate_speak(self.game, mate, msg)
             else:
                 self.game.change_and_send('add_mates_attribute', [mate_num, attribute_name])
                 escape_thrice(self.game)
@@ -777,7 +785,8 @@ class MenuClickHandlerForMates():
             ship = self.game.my_role.ships[ship_id]
             if ship.captain:
                 mate = self.game.my_role.mates[mate_num]
-                mate_speak(self.game, mate, f"{ship.name} has a captain.")
+                t1 = self.game.trans("has a captain")
+                mate_speak(self.game, mate, f"{ship.name} {t1}.")
             else:
                 self.game.change_and_send('set_mates_duty', [mate_num, ship_id])
                 escape_thrice(self.game)
@@ -790,7 +799,9 @@ class MenuClickHandlerForMates():
 
         mate = self.game.my_role.mates[mate_num]
         if mate.duty:
-            mate_speak(self.game, mate, "I already have a duty.")
+            msg = "I already have a duty."
+            msg = self.game.trans(msg)
+            mate_speak(self.game, mate, msg)
         else:
             self.game.button_click_handler.make_menu(d)
 
@@ -1907,9 +1918,11 @@ class Bar():
         def do_fire():
             self.game.change_and_send('fire_mate', [mate_num])
             escape_thrice(self.game)
+            msg = "Farewell. I'll miss you captain."
+            msg = self.game.trans(msg)
             reactor.callLater(0.3,
                               self.game.button_click_handler.mate_speak,
-                              mate, "Farewell. I'll miss you captain.")
+                              mate, msg)
 
         dic = {
             'OK': do_fire

@@ -89,8 +89,11 @@ dic = {
         'chief_navigator': '水手长',
     'Mate Info': '船长情况',
         'Set as Captain of': '任命为船长',
+            "I already have a duty.": '我已经有职务了',
+            "has a captain": '已经有船长了',
         'Relieve Duty': '解除职务',
         'Level Up': '提升等级',
+            "I don't have enough experience to reach the next level.": "我没有足够的经验来升级。",
         'Add Attribute': '增加属性',
             'Leadership': '领导力',
             'Seamanship': '航海术',
@@ -99,6 +102,7 @@ dic = {
             'Courage': '勇气',
             'Swordplay': '剑术',
             'Luck': '运气',
+                "I have 0 point.": '我的可用属性点数为0。',
 
         'Distribute Exp': '分配经验',
         'Set as hand': '任命为助手',
@@ -151,13 +155,17 @@ dic = {
     'Enter Building (F)': '进入建筑 (F)',
     'Enter Port (M)': '进入港口 (M)',
     'Go Ashore (G)': '探索村落 (G)',
-    'We found': "发现了",
-    'and': "和",
-    'Got': "获得了",
-    'exp': "经验值",
+        'We found': "发现了",
+        'and': "和",
+        'Got': "获得了",
+        'exp': "经验值",
 
     'Battle (B)': '战斗 (B)',
-
+        "Target too far!": '目标太远了！',
+        "target too far or lv too low!": "目标太远或者等级太低了！",
+        "The enemy fleet was defeated!": "敌方舰队被击败了！",
+        "We tried our best.": "我们已经尽力了。",
+        "Your fleet starved.": '您的舰队因补给不足，在海上永远消失了。',
     # options
     'Language(L)': '语言(L)',
         'English': '英语',
@@ -222,6 +230,7 @@ dic = {
 
         # market
         'buy': '买入',
+            "You don't have enough gold.": "您钱不够吧。",
             'Welcome! What can I do for you?': '欢迎！我能为您做点什么？',
             "Alright. Since you have a tax free permit, the price would be": '好吧。因为您有免税证，价格是',
             "Alright. As you don't have a tax free permit, a 20% tax is applied to the price.": '好吧。因为您没有免税证，'
@@ -269,6 +278,7 @@ dic = {
             "No one's availabale here.": '这儿好像没什么人嘛。',
         'Fire Mate': '解雇船长',
             "Did I do anything wrong? Are you sure?": "我做错了什么吗？您真的不要我了？",
+            "Farewell. I'll miss you captain.": "再见，船长。我会想念您的。",
         'Waitress': '酒吧女郎',
             "We don't have a maid here. Sorry.": "我们这儿没有。抱歉。",
             "I'm": "我叫",

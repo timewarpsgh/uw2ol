@@ -1311,6 +1311,7 @@ class Role:
                 else:
                     if self.is_in_client_and_self():
                         msg = "You don't have enough gold."
+                        msg = self.GAME.trans(msg)
                         self.GAME.button_click_handler.building_speak(msg)
 
 

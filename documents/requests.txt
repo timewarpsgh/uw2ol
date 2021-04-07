@@ -27,7 +27,7 @@ by function
 
             event dialogues OK
 
-            main objective
+            minor translations OK
 
 
 

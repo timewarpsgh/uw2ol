@@ -207,8 +207,10 @@ def _not_in_battle_keys(self, event):
                 else:
                     self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
             else:
+                msg = "Target too far!"
+                msg = self.trans(msg)
                 self.button_click_handler. \
-                    make_message_box("Target too far!")
+                    make_message_box(msg)
 
     # change language
     if event.key == ord('l'):
