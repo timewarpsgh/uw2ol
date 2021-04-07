@@ -10,6 +10,8 @@ dic = {
         # mate names
         # maid names
         # items descriptions
+        # villages
+        # events
 
     # buttons (entrance for all ui)
     'ships': '船只',
@@ -1153,5 +1155,17 @@ dic = {
     "Supposedly, the ruins of a golden city in the Sahara. Time has taken its toll, but the work of conscientious desert dwellers have helped preserve the ancient structure." : '据推测，这是撒哈拉沙漠中一座黄金城市的废墟。<br>时间使其风化，<br>但尽职尽责的沙漠居民们一直在保护这座古老的建筑。',
     "A rainbow that shines gold and white in the dark night. Legend says that this beautiful, mysterious vision brings good luck to those who see it." : '一道在黑夜中闪耀着金色和白色的彩虹。<br>传说这美丽而神秘的景象给看到它的人带来好运。',
     "A luminous atmospheric phenomenon seen in the night sky. Its awesome curtain-like display is constantly changing. While it's something special to see, the magnetic storms that occur with it can disturb your compass." : '夜空中出现的明亮的大气现象。<br>它令人敬畏的帘幕不断地变化。<br>它虽然好看，但随之而来的磁暴会干扰你的指南针。',
+
+    # events
+    "John, what are you doing here? Head to the port quickly. Your father is back.": '约翰，你在这里干什么？快去港口。你父亲回来了。',
+    "He's back? Alright. I'll be there right away. Thank you.": '他回来了？好的。我马上就去。谢谢您。',
+
+    "You are John, right?": '你是约翰，对吗？',
+    "Yes, I am.": '是的。',
+    "I'm the captain of Eagle... You two look so much alike... I'm sorry to inform you that your father, carpenter on board Eagle, died bravely during battle with the Spanish Navy. He was buried at sea. We found this letter in his wardrobe, which must have been written in advance. Here, take it and be strong.": '我是猎鹰号的船长。。。你们两个看起来真像。。。我很遗憾地告诉你，你的父亲，鹰号上的木匠，在与西班牙海军的战斗中英勇牺牲。他被海葬了。我们在他的衣柜里发现了这封信，应该是事先写好的。来，拿着它，坚强一点。',
+    "He? .... Thank you.": '他?。。。。谢谢您。',
+    "Dear John, my son, when you are reading this letter,that means I've gone to the moon to meet your mom. Poor kid. I will no longer be able to guide you nor protect you. I will no longer kick you in an attempt to get you right. You are on yourself now. I have not been a successful sailor, serving as a carpenter for the majority of my life. Don't be like me.": '亲爱的约翰，我的孩子，当你读到这封信的时候，那意味着我已经去天上见你的母亲了。可怜的孩子。我再也不能指导你，保护你了。你再也不会受到我的责罚了。你现在只能靠自己。我并不是一个成功的水手，我只是个木匠。别像我一样。',
+    "I saved my wage as much as possible so that the figure in my bank account might some day be able to fund a ship. Now, it's yours. Use it wisely.": '我把收入都存了起来，以便将来有一天能买一艘自己的船。现在，这些钱是你的了。你要明智地使用。去银行就能取到。',
+    "Do you remember Tommy Branson? He's father is an old friend of mine. I believe he'll be interested in joining you. He knows the way in the water as well as any professional navigator. He's likely still working at the bar in Amsterdam.": "你还记得汤姆·布兰森吗？他父亲跟我是老朋友。你们可以结伴出海。他虽然年纪轻轻，但对海上航行的了解堪比职业航海家。他可能还在阿姆斯特丹的酒吧工作。",
 
 }

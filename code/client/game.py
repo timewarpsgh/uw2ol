@@ -297,3 +297,15 @@ class Game():
     def trans(self, msg):
         """translate"""
         return  self.translator.translate(msg)
+
+    def split(self, msg):
+        """add <br> to every 20 1chinese characters"""
+        if self.translator.to_langguage == 'EN':
+            return msg
+        else:
+            msg_length = len(msg)
+            lines = (msg_length // 20) + 1
+            new_str = ''
+            for i in range(lines):
+                new_str += msg[i*20:(i+1)*20] + '<br>'
+            return new_str

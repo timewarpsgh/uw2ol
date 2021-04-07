@@ -1053,6 +1053,8 @@ class MenuClickHandlerForCmds():
 
             image_x = figure_images[speaker][0]
             image_y = figure_images[speaker][1]
+            message = self.game.trans(message)
+            message = self.game.split(message)
             figure_image_speak(self.game, image_x, image_y, message)
 
         # perform action if any

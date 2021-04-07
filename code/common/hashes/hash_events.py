@@ -399,5 +399,8 @@ events_dict = {
 }
 
 if __name__ == '__main__':
-    a = events_dict[1]
-    print(a)
+    for i in range(1, 16):
+        ds = events_dict[i]['dialogues']
+        for speech in ds:
+            print(speech[1])
+
