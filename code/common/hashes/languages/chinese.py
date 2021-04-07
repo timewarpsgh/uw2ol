@@ -141,6 +141,7 @@ dic = {
         'Main Objective': '主要任务',
             "Go to": "前往",
         'Quest Log': '次要任务',
+            "I have no quest.": "还没有任务。",
             "On quest to investigate": "已接受任务去调查",
         'Abandon Quest': '放弃次要任务',
     'World Map': '世界地图',

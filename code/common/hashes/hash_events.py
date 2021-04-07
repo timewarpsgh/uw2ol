@@ -95,7 +95,7 @@ events_dict = {
             ['Garry', "I'm not as young as when you were my student. My legs are failing as are my eyes. "
                       "You guys got a ship? How I wish I could join you. Taught geography for my entire life... "
                       "Famarilar with every part of the map, yet have never been outside of this little town. "],
-            ['Tommy', "We fished and examed every stream in the town, remember?  "],
+            ['Tommy', "We fished and examed every stream in the town, remember? "],
             ['Garry', "Yes, we did. Anyway, I wish you all the best. "
                       "I look forward to seeing your discoveries via your reports. "
                       "Don't forget to report though."],
@@ -250,11 +250,11 @@ events_dict = {
                     "Even I myself eat apples daily."],
             ['Seller', "No, I can't. I have a family to raise, Miss."],
             ['Amy', "Your beard looks cute."],
-            ['Seller', "Don't flatter me. That dosen't work. "],
+            ['Seller', "Don't flatter me. That dosen't work."],
             ['Charlie', "I'll punch you to death if that dosen't work. "],
             ['Seller', "... Please... Don't... 3. I'll make it 3. "],
             ['Amy', "Thank you, Sir!"],
-            ['Charlie', "My pleasure. "],
+            ['Charlie', "My pleasure."],
             ['I', "You did right, Charlie. I was worried you might puch the miss."],
             ['Tommy', "The market place's closing soon. We'd better find a place for the night."],
         ],
@@ -272,20 +272,20 @@ events_dict = {
             'Lady': [13, 6],
         },
         'dialogues': [
-            ['Amy', "Do you have a smaller room? "],
+            ['Amy', "Do you have a smaller room?"],
             ['Lady', "I'm afraid this one's the smallest we have, miss."],
             ['Amy', "Can I have a lower price, Lady? I'll leave early tomorrow. "
-                    "And I'll leave the room a better place. "],
+                    "And I'll leave the room a better place."],
             ['Charlie', "Isn't that the miss we saw in the market?"],
             ['I', "Yup. That's her."],
             ['I', "Hey you! Are you not going back with your apples? "],
             ['Amy', "Oh, you guys. Thank you again for helping negotiate the price. "
                     "I had bad luck. My apples were gone, stolen by the wagon guy I hired " 
-                    "while I was not paying attention. "],
+                    "while I was not paying attention."],
             ['I', "That's unfortunate."],
             ['Charlie', "Oh... Poor you. I'll punch the guy to death if ever meet him."],
             ['Tommy', "You should be more careful. Things happen when you're on the road."],
-            ['I', "What's your plan? "],
+            ['I', "What's your plan?"],
             ['Amy', "I'll just stay here for the night, and revisit the market tomorrow. "
                     "I have some savings in the bank. "],
             ['I', "Strong girl."],
@@ -312,15 +312,15 @@ events_dict = {
         'dialogues': [
             ['I', "We are a working team now. But what should we do?"],
             ['Charlie', "If we had a bigger ship, I'd vote for doing some privateering. "
-                        "I need some exercise. "],
-            ['Tommy', "Amy, you are familiar with business. Any advice? "],
+                        "I need some exercise."],
+            ['Tommy', "Amy, you are familiar with business. Any advice?"],
             ['Amy', "Me? I only did some small business on land. "
                     "But I do sometimes hear people talking about profitable routes."],
             ['Amy', "Based on our current situation, "
                     "I'd recommend that we ship glass beads from Amsterdam to Mozambique in East Africa. "
-                    "They say glass beads are like sand in Amsterdam. "],
+                    "They say glass beads are like sand in Amsterdam."],
 
-            ['I', "Sounds like a good idea. "],
+            ['I', "Sounds like a good idea."],
             ['Amy', "Please make sure our ship's fully ready to trade though. "
                     "All space should be reserved for cargo, "
                     "and we want as few crew as possilbe so we last longer at sea. "
@@ -360,7 +360,7 @@ events_dict = {
         'dialogues': [
             ['Charlie', "Amy, are you OK?"],
             ['Amy', "... No, I'm not. This is insane. They are willing to pay more than 100 for glass beads. "
-                    "How much did we pay in Amsterdam? "],
+                    "How much did we pay in Amsterdam?"],
             ['I', "I forgot."],
             ['Tommy', "I'm ... not that sensitive to numbers you know."],
             ['Amy', "The sell price is more than 30 times the buy price."],

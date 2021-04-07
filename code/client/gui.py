@@ -927,7 +927,9 @@ class MenuClickHandlerForItems():
             building = self.game.my_role.main_quest_building
 
             t1 = self.game.trans("Go to")
-            msg = f"{t1} {port} {building}."
+            t2 = self.game.trans(port)
+            t3 = self.game.trans(building)
+            msg = f"{t1} {t2} {t3}."
             self.game.button_click_handler.i_speak(msg)
 
     def _quest_log(self):
@@ -939,6 +941,7 @@ class MenuClickHandlerForItems():
             i_speak(self.game, msg)
         else:
             msg = f"I have no quest."
+            msg = self.game.trans(msg)
             i_speak(self.game, msg)
 
     def _abandon_quest(self):
