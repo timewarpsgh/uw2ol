@@ -40,7 +40,8 @@ events_dict = {
                             "He's father is an old friend of mine. "
                             "I believe he'll be interested in joining you. "
                             "He knows the way in the water as well as any professional navigator. "
-                            "He's likely still working at the bar in Amsterdam."],
+                            "He's likely still working at the bar in Amsterdam. You two should help and take care of each other."],
+            ['the letter', "John, you have been a sweet boy. It's been an honor to be your father. Take care, John."]
         ],
         'figure_images': {
             'I': [1, 1],
@@ -323,7 +324,7 @@ events_dict = {
             ['Amy', "Please make sure our ship's fully ready to trade though. "
                     "All space should be reserved for cargo, "
                     "and we want as few crew as possilbe so we last longer at sea. "
-                    "We might encounter piates, but they most likely won't be interested in us."],
+                    "We might encounter pirates, but they most likely won't be interested in us."],
             ['Charlie', "+ + Oh my God. Amy is the best."],
         ],
     },
@@ -388,7 +389,7 @@ events_dict = {
             ['Amy', "Captain, I think we should start building a fleet. "
                     "If you want max profit, building a fleet of small ships costs less than having a large ship."],
             ['I', "That's true."],
-            ['Tommy', "I think we are rich enough to start exploring the world. We don't need a feet to explore. "
+            ['Tommy', "I think we are rich enough to start exploring the world. We don't need a fleet to explore. "
                       "That's going to slow up down. I wish I could report more discoveries before Mr. Garry "
                       "completely loses his eyesight."],
             ['I', "I understand, Tommy."],

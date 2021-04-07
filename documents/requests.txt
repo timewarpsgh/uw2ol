@@ -25,7 +25,7 @@ by function
             item descriptions OK
             village descriptions OK
 
-            event dialogues ON
+            event dialogues OK
 
 
 
