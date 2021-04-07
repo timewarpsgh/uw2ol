@@ -91,6 +91,7 @@ def user_defined_events(self, event):
         user_event_move(self, event)
     elif event.type == EVENT_HEART_BEAT:
         self.change_and_send('heart_beat', [])
+    # ui window close event
     elif event.type == pygame.USEREVENT:
         if event.user_type == UI_WINDOW_CLOSE:
             self.menu_stack.pop()
@@ -105,6 +106,9 @@ def user_defined_events(self, event):
                 # in building
                 elif len(self.menu_stack) == 0:
                     self.my_role.in_building_type = None
+            else:
+                self.active_input_boxes.clear()
+                pass
 
 
 def quit(self, *event):

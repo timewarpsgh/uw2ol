@@ -193,12 +193,21 @@ dic = {
 
     # sail
     'login': '登录',
+        'Login failed!': "登录失败！",
+        "Login successful! " \
+            "Please create a character. " \
+            "Don't use a number as your name.": "登录成功！请创建角色。",
     'register': '注册',
+        'Account exists!': '账户存在！',
+        'Register OK. Please Login.': "注册成功。请登录。",
     'create character': '创建角色',
+        'Character created! Please login again.': "角色创建成功！请重新登录。",
+        'Name used! Please choose another name.': "名字被使用了！请换个名字。",
+        "Must login first to create character.": "登录后才可以创建角色。",
 
-        'account': '账户',
-        'password': '密码',
-        'role_name': '角色名',
+    'account': '账户',
+    'password': '密码',
+    'role_name': '角色名',
 
     # target
     'View Fleet': '观察舰队',

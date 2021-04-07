@@ -39,32 +39,43 @@ def version_wrong(self, message_obj):
     reactor.callLater(2, handle_pygame_event.quit, self)
 
 def register_ok(self, message_obj):
-    self.login_state_text = 'Register OK. Please Login.'
-    print('register_ok')
+    msg = 'Register OK. Please Login.'
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 def account_exists(self, message_obj):
-    self.login_state_text = 'Account exists!'
-    print('account_exists')
+    msg = 'Account exists!'
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 # make character response
 def must_login_first(self, message_obj):
-    self.login_state_text = "Must login first to create character."
+    msg = "Must login first to create character."
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 def new_role_created(self, message_obj):
-    self.login_state_text = 'Character created! Please login again.'
+    msg = 'Character created! Please login again.'
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 def name_exists(self, message_obj):
-    self.login_state_text = 'Name used! Please choose another name.'
+    msg = 'Name used! Please choose another name.'
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 # login responses
 def login_failed(self, message_obj):
-    self.login_state_text = 'Login failed!'
-    print('account_exists')
+    msg = 'Login failed!'
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 def no_role_yet(self, message_obj):
-    self.login_state_text = "Login successful! " \
-                            "Please create a character. " \
-                            "Don't use a number as your name."
+    msg = "Login successful! " \
+            "Please create a character. " \
+            "Don't use a number as your name."
+    msg = self.trans(msg)
+    self.login_state_text = msg
 
 def your_role_data_and_others(self, message_obj):
     # my role

@@ -548,23 +548,19 @@ def on_create_character_got_result(self, is_ok):
 
 def on_register_got_result(self, is_ok):
     if is_ok:
-        print('register success!')
         self.send('register_ok')
     else:
-        print("account exists!")
         self.send('account_exists')
 
 def on_login_got_result(self, account):
     # ok
     if account:
-        print('login success!', account)
         self.account = account
         d = threads.deferToThread(self.factory.db.get_character_data, account)
         d.addCallback(self.on_get_character_data_got_result)
 
     # not ok
     else:
-        print("login failed!")
         self.send('login_failed')
 
 def on_get_character_data_got_result(self, role):

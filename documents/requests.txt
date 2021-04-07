@@ -30,8 +30,11 @@ by function
             minor translations OK
 
 
+            login instructions OK
 
-            input box LATER
+
+
+            input box ON
 
 
 

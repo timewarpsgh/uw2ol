@@ -48,7 +48,6 @@ class Database:
 
         # if exits
         if rows:
-            print("login success!" )
             id = rows[0][0]
             return account
         else:
@@ -79,20 +78,23 @@ class Database:
 
             # not exist
             else:
-                # set role name in DB
-                sql_update = "UPDATE accounts SET role = '{}' WHERE name = '{}'".\
-                    format(character_name,account)
-                print(sql_update)
-                self.cursor.execute(sql_update)
-                self.db.commit()
-
-                # developer mode
-                if c.DEVELOPER_MODE_ON:
-                    self._make_developer_mode_role(account, character_name)
+                if str(character_name).isdigit():
+                    return False
                 else:
-                    self._make_normal_role(account, character_name)
+                    # set role name in DB
+                    sql_update = "UPDATE accounts SET role = '{}' WHERE name = '{}'".\
+                        format(character_name,account)
+                    print(sql_update)
+                    self.cursor.execute(sql_update)
+                    self.db.commit()
 
-                return True
+                    # developer mode
+                    if c.DEVELOPER_MODE_ON:
+                        self._make_developer_mode_role(account, character_name)
+                    else:
+                        self._make_normal_role(account, character_name)
+
+                    return True
 
     def _make_developer_mode_role(self, account, character_name):
         x = y = c.PIXELS_COVERED_EACH_MOVE
