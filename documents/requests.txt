@@ -26,13 +26,11 @@ by function
             village descriptions OK
 
             event dialogues OK
-
             minor translations OK
-
-
             login instructions OK
 
 
+            chinese name and speech OK
 
             input box ON
 

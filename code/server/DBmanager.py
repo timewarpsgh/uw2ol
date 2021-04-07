@@ -176,8 +176,8 @@ class Database:
 if __name__ == '__main__':
     db = Database()
     # db.register('test2', 'a9901025')
-    id, account = db.login('test1', 'a9901025')
-    db.create_character(id, account, "biteyou12")
+    id, account = db.login('t21', 't21')
+    db.create_character(id, account, "你好")
     player = db.get_character_data(account)
     print(player.name)
     player.name = 'new_name'

@@ -26,6 +26,9 @@ run in another machine
         # set wait_timeout in ini.my
         wait_timeout=1814400
 
+        # chinese support
+        ALTER TABLE accounts CONVERT TO CHARACTER SET utf8;
+
 make exe
     # make spec file
     pyi-makespec -F run_client.pyw code/client/game.py code/common/protocol.py code/common/role.py code/common/constants.py
