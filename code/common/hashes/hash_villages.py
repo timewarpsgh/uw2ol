@@ -886,8 +886,7 @@ villages_dict = {
         'longitude': '111e',
         'description': "A giant snake that can grow over 33 feet long in the jungle. "
                        "After constricting and suffocating an animal, "
-                       "the python swallows its prey whole. "
-                       "And I tell you that this game is written in Python.",
+                       "the python swallows its prey whole. ",
         'image_x': 16,
         'image_y': 3,
     },

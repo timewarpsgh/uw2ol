@@ -23,7 +23,7 @@ by function
             item effects OK
             item names OK
             item descriptions OK
-            village descriptions ON
+            village descriptions OK
 
             event dialogues
 
