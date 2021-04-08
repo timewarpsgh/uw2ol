@@ -14,6 +14,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'code', 'client'))
 from protocol import MyProtocol
 from role import Role, Ship, Mate
 from game import Game
+from tk_window import TkWindow
 import constants as c
 
 from twisted.internet.task import LoopingCall
@@ -152,8 +153,31 @@ def main():
         sys.stdout = f
 
     # init game and schedule game loop
+    tk_window = TkWindow()
     game = Game()
-    tick = LoopingCall(game.update)
+    tk_window.game = game
+    game.text_entry = tk_window.text_entry
+    game.embed = tk_window.embed
+    game.root = tk_window.root
+
+    # bind return for entry
+    def send_speach(event):
+        msg = game.text_entry.get()
+        if msg:
+            game.change_and_send('speak', [msg])
+            game.text_entry.delete(0, "end")
+            game.embed.focus()
+            game.text_entry_active = False
+        else:
+            game.text_entry.focus()
+            game.text_entry_active = True
+    game.text_entry.bind_all('<Return>', send_speach)
+
+    # ticks for tk and game
+    def update_tk_and_game():
+        tk_window.update()
+        game.update()
+    tick = LoopingCall(update_tk_and_game)
     tick.start(1.0 / c.FPS)
 
     tick2 = LoopingCall(game.update_roles_positions)

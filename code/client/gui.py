@@ -37,9 +37,9 @@ def init_gui(self):
     self.button_click_handler = ButtonClickHandler(self)
 
     # text entry
-    self.text_entry = pygame_gui.elements.UITextEntryLine(
-        pygame.Rect((2, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
-        object_id='#main_text_entry')
+    # self.text_entry = pygame_gui.elements.UITextEntryLine(
+    #     pygame.Rect((2, c.WINDOW_HIGHT - 30), (140, -1)), self.ui_manager,
+    #     object_id='#main_text_entry')
 
     self.text_entry_active = False
     self.active_input_boxes = []

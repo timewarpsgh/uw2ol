@@ -13,6 +13,7 @@ import gui
 from pygame_gui._constants import UI_WINDOW_CLOSE
 from port_npc import Dog, OldMan, Agent, Man, Woman
 import port_npc
+import tkinter as tk
 
 EVENT_MOVE = pygame.USEREVENT + 1
 EVENT_HEART_BEAT = pygame.USEREVENT + 2
@@ -37,8 +38,16 @@ def handle_pygame_event(self, event):
 def key_down(self, event):
     # return (focus text entry)
     if event.key == pygame.K_RETURN:
-        self.text_entry.focus()
-        self.text_entry_active = True
+        msg = self.text_entry.get()
+        if msg:
+            self.change_and_send('speak', [msg])
+            self.text_entry.delete(0, "end")
+            self.embed.focus()
+            self.text_entry_active = False
+        else:
+            self.text_entry.focus()
+            self.text_entry_active = True
+
     # escape
     if event.key == pygame.K_ESCAPE:
         escape(self, event)

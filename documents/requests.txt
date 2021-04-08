@@ -34,7 +34,7 @@ by function
 
             escape bug OK
 
-            input box ON
+            input box OK
 
 
 
