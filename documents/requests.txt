@@ -32,6 +32,8 @@ by function
 
             chinese name and speech OK
 
+            escape bug OK
+
             input box ON
 
 

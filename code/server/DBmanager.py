@@ -174,13 +174,14 @@ class Database:
         self.db.commit()
 
 if __name__ == '__main__':
-    db = Database()
-    # db.register('test2', 'a9901025')
-    id, account = db.login('t21', 't21')
-    db.create_character(id, account, "你好")
-    player = db.get_character_data(account)
-    print(player.name)
-    player.name = 'new_name'
-
-    db.save_character_data(account, player)
+    pass
+    # db = Database()
+    # # db.register('test2', 'a9901025')
+    # id, account = db.login('t21', 't21')
+    # db.create_character(id, account, "你好")
+    # player = db.get_character_data(account)
+    # print(player.name)
+    # player.name = 'new_name'
+    #
+    # db.save_character_data(account, player)
 

@@ -94,21 +94,22 @@ def user_defined_events(self, event):
     # ui window close event
     elif event.type == pygame.USEREVENT:
         if event.user_type == UI_WINDOW_CLOSE:
-            self.menu_stack.pop()
-            self.selection_list_stack.pop()
-            print('event ui window close!')
-            print('stack length:', len(self.menu_stack))
+            if self.menu_stack:
+                self.menu_stack.pop()
+                self.selection_list_stack.pop()
+                print('event ui window close!')
+                print('stack length:', len(self.menu_stack))
 
-            if self.my_role:
-                # not in building
-                if self.my_role.in_building_type == None:
+                if self.my_role:
+                    # not in building
+                    if self.my_role.in_building_type == None:
+                        pass
+                    # in building
+                    elif len(self.menu_stack) == 0:
+                        self.my_role.in_building_type = None
+                else:
+                    self.active_input_boxes.clear()
                     pass
-                # in building
-                elif len(self.menu_stack) == 0:
-                    self.my_role.in_building_type = None
-            else:
-                self.active_input_boxes.clear()
-                pass
 
 
 def quit(self, *event):
