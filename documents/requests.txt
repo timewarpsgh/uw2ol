@@ -36,7 +36,8 @@ by function
 
             input box OK
 
-            no save bug ON
+            no save bug OK
+            give something to that guy ON
 
 
 
