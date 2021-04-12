@@ -175,8 +175,15 @@ def main():
 
     # ticks for tk and game
     def update_tk_and_game():
-        tk_window.update()
+        try:
+            tk_window.update()
+        except:
+            reactor.stop()
+            self.root.quit()
+            pygame.quit()
+            sys.exit()
         game.update()
+
     tick = LoopingCall(update_tk_and_game)
     tick.start(1.0 / c.FPS)
 

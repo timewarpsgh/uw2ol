@@ -36,6 +36,8 @@ by function
 
             input box OK
 
+            no save bug ON
+
 
 
     trade OK

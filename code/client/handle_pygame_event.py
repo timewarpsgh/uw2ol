@@ -126,6 +126,7 @@ def quit(self, *event):
     if self.my_role:
         if self.my_role.map.isdigit():
             reactor.stop()
+            self.root.quit()
             pygame.quit()
             sys.exit()
         else:
@@ -134,6 +135,7 @@ def quit(self, *event):
             print('Exit while in port please.')
     # when not in game
     else:
+        self.root.quit()
         pygame.quit()
         reactor.stop()
         sys.exit()
