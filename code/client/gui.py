@@ -2634,6 +2634,7 @@ class Inn:
                                       c.WINDOW_HIGHT - 50))
         except:
             msg = "Didn't see anything interesting."
+            msg = self.game.trans(msg)
             self.game.button_click_handler.i_speak(msg)
         else:
             sketch_rect = sketch.get_rect()

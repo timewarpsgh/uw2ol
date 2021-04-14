@@ -377,6 +377,7 @@ dic = {
         'Port Info': '港口情况',
             "This port is allied to": "本港的同盟国是",
         'Walk Around': '四处走走',
+            "Didn't see anything interesting.": '好像没看到啥嘛。',
 
         # palace
         'Meet Ruler': '召见国王',
@@ -1072,7 +1073,7 @@ dic = {
     "A sword with a wide, straight, single-edged blade. It's especially effective for striking." : '只有一边刀刃的阔剑',
     "A unique Chinese sword with a wide crescent-shaped blade. It's quite good for attacking, especially striking." : '中国制造，剑刃呈现出独特的新月形。',
     "A large two-handed sword from Scotland that may weigh up to 10 pounds. It's quite effective for striking." : '来自苏格兰的双手重剑，<br>可能有10磅重。',
-    "A unique Chinese sword with wide blade. It's quite effective for striking." : '中国知道的宽刃剑。',
+    "A unique Chinese sword with wide blade. It's quite effective for striking." : '中国制造的宽刃剑。',
     "A box full of shiny treasures." : '一个装满财宝的箱子',
     "A ring with a large diamond on it." : '一枚镶有巨大钻石的戒指',
 

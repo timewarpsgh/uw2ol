@@ -2629,8 +2629,9 @@ class Port:
 
     def get_available_items_ids_for_sale(self):
         id_list = hash_ports_meta_data[self.id]['itemShop']['regular']
-        secret_id_list = hash_ports_meta_data[self.id]['itemShop']['secret']
-        id_list.extend(secret_id_list)
+        if 'secret' in hash_ports_meta_data[self.id]['itemShop']:
+            secret_id_list = hash_ports_meta_data[self.id]['itemShop']['secret']
+            id_list.extend(secret_id_list)
         return id_list
 
 

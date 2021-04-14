@@ -37,7 +37,11 @@ by function
             input box OK
 
             no save bug OK
-            give something to that guy ON
+            give something to that guy OK
+
+            didn't see anything translate OK
+            item shop at argin OK
+
 
 
 
