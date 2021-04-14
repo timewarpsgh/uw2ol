@@ -219,8 +219,10 @@ dic = {
         "convoy": "护卫",
         "battle": "战舰",
         "fleet": "队 ",
-"from": "来自",
-"We are heading to": "我们正前往",
+        "from": "来自",
+        "We are heading to": "我们正前往",
+    'Gossip ': '交涉',
+
 
     # test(buildings)
         # all buildings

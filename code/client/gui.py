@@ -2720,7 +2720,7 @@ def target_clicked(self):
 
     # if npc
     if self.my_role.get_enemy_role().is_npc():
-        dict['Gossip'] = self.button_click_handler.menu_click_handler.target.gossip
+        dict['Gossip '] = self.button_click_handler.menu_click_handler.target.gossip
         dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
     # if player
     else:
