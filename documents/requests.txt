@@ -41,7 +41,7 @@ by function
 
             didn't see anything translate OK
             item shop at argin OK
-
+            can't afford OK
 
 
 

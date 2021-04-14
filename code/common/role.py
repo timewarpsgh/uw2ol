@@ -235,6 +235,10 @@ class Role:
     def get_map_id(self):
         return int(self.map)
 
+    def get_port(self):
+        port = Port(self.get_map_id())
+        return port
+
     def get_x_and_y_tile_position(self):
         x_tile_pos = int(self.x / c.PIXELS_COVERED_EACH_MOVE)
         y_tile_pos = int(self.y / c.PIXELS_COVERED_EACH_MOVE)
@@ -1479,15 +1483,22 @@ class Role:
         item_id = params[0]
         count = params[1]
 
-        now_port = Port(int(self.map))
+        now_port = self.get_port()
         if item_id in now_port.get_available_items_ids_for_sale():
             total_charge = Item(item_id).price * count
+            # can afford
             if self.gold >= total_charge:
                 if self.bag.add_multiple_items(item_id, count):
                     self.gold -= total_charge
                     if self.is_in_client_and_self():
+                        msg = "Thank you!"
+                        self.GAME.button_click_handler.building_speak(msg)
                         self.GAME.sounds['deal'].play()
-
+            # can't afford
+            else:
+                if self.is_in_client_and_self():
+                    msg = "You don't have enough gold."
+                    self.GAME.button_click_handler.building_speak(msg)
 
 class Ship:
     def __init__(self, name, type):

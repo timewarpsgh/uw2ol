@@ -407,6 +407,7 @@ class ButtonClickHandler():
                           text, self.game)
 
     def building_speak(self, msg):
+        msg = self.game.trans(msg)
         self.game.building_text = msg
 
     def mate_speak(self, mate, msg):
