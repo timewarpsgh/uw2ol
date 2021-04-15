@@ -27,6 +27,8 @@ from hashes.hash_bible_quotes import hash_bible_quotes
 from hashes.hash_cannons import hash_cannons
 from hashes import hash_villages
 
+from client_packet_received import _calc_longitude_and_latitude
+
 def test():
     print('testing')
 
@@ -414,6 +416,7 @@ class ButtonClickHandler():
         reactor.callLater(0.1, mate_speak, self.game, mate, msg)
 
     def i_speak(self, msg):
+        msg = self.game.trans(msg)
         mate = self.game.my_role.mates[0]
         reactor.callLater(0.1, mate_speak, self.game, mate, msg)
 
@@ -472,6 +475,7 @@ class ButtonClickHandler():
             'Enter Port (M)': test,
             'Go Ashore (G)': self.menu_click_handler.cmds.go_ashore,
             'Battle (B)': test,
+            'Measure Cooridinate': self.menu_click_handler.cmds.measure_coordinate,
         }
         self.make_menu(dict)
 
@@ -1114,6 +1118,28 @@ class MenuClickHandlerForCmds():
         else:
             self.game.button_click_handler. \
                 make_message_box("you don't have a target")
+
+    def measure_coordinate(self):
+        my_role = self.game.my_role
+        # at sea
+        if my_role.is_at_sea():
+            # calc longi and lat
+            x = my_role.x
+            y = my_role.y
+            x = int(x / c.PIXELS_COVERED_EACH_MOVE)
+            y = int(y / c.PIXELS_COVERED_EACH_MOVE)
+            longitude, latitude = _calc_longitude_and_latitude(x, y)
+
+            # speak
+            t1 = self.game.trans("Our current coordinate is")
+            msg = f"{t1} {longitude} {latitude}."
+            self.game.button_click_handler.i_speak(msg)
+
+        # not at sea
+        else:
+            msg = "Can only measure while at sea."
+            self.game.button_click_handler.i_speak(msg)
+
 
 class MenuClickHandlerForOptions():
     def __init__(self, game):

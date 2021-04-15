@@ -166,6 +166,11 @@ dic = {
         "The enemy fleet was defeated!": "敌方舰队被击败了！",
         "We tried our best.": "我们已经尽力了。",
         "Your fleet starved.": '您的舰队因补给不足，在海上永远消失了。',
+
+    'Measure Cooridinate': '测量经纬度',
+        "Can only measure while at sea.": '只能在海上测量',
+        "Our current coordinate is": "我们目前的位置是",
+
     # options
     'Language(L)': '语言(L)',
         'English': '英语',

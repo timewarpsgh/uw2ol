@@ -6,44 +6,16 @@ by function
         can buy star equipments OK
         website register instruction OK
 
-        chinese version ON
-            ports OK
-            trade goods OK
-            villages names OK
-            items names OK
+        chinese version OK
 
-            mates OK
-            maids OK
+        bugs ON
+            latitude and longitude OK
 
-            english language option OK
-            click on X OK
-            hot key to change language OK
+            npc images can't be mates ON
 
-
-            item effects OK
-            item names OK
-            item descriptions OK
-            village descriptions OK
-
-            event dialogues OK
-            minor translations OK
-            login instructions OK
-
-
-            chinese name and speech OK
-
-            escape bug OK
-
-            input box OK
-
-            no save bug OK
-            give something to that guy OK
-
-            didn't see anything translate OK
-            item shop at argin OK
-            can't afford OK
-
-            gossip with npc fleet OK
+            chat system
+                world
+                private
 
 
 
