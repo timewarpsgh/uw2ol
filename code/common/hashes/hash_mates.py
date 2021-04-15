@@ -201,8 +201,8 @@ hash_mates = {
     },
 
     11: {
-        'image_x': 16,
-        'image_y': 4,
+        'image_x': 7,
+        'image_y': 6,
         'name': 'Bernando Sanchez',
         'nation': 'Portugal',
         'lv': 57,
@@ -1003,8 +1003,8 @@ hash_mates = {
 }
 
 if __name__ == '__main__':
-    li = []
     for i in range(1, 51):
-        name = hash_mates[i]['name']
-        li.append(name)
-    print(li)
+        image_x = hash_mates[i]['image_x']
+        image_y = hash_mates[i]['image_y']
+        if image_x == 6 and image_y == 8:
+            print(i)

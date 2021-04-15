@@ -9,9 +9,9 @@ by function
         chinese version OK
 
         bugs ON
-            latitude and longitude OK
+            measure latitude and longitude OK
 
-            npc images can't be mates ON
+            npc images can't be mates OK
 
             chat system
                 world
