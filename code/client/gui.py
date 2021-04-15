@@ -1550,9 +1550,29 @@ class MenuClickHandlerForTarget():
         PanelWindow(pygame.Rect((59, 12), (350, 400)),
                     self.game.ui_manager, text, self.game, figure_surface)
 
+    def equipments(self):
+        target_role = self.game.my_role.get_enemy_role()
+        equipments_dict = target_role.body.container
+
+        dict = {}
+        for k in equipments_dict.keys():
+            item_id = equipments_dict[k]
+            k = self.game.translator.translate(k)
+            if item_id == None:
+                item_id = 'None'
+                item_text = self.game.trans(item_id)
+                dict[f'{k}: {item_text}'] = test
+            else:
+                item = Item(item_id)
+                item_text = self.game.trans(item.name)
+                dict[f'{k}: {item_text}'] = [self._item_name_clicked, item]
+
+        self.game.button_click_handler.make_menu(dict)
+
+    def _item_name_clicked(self, item):
+        show_one_item([self, item])
+
     def view_mates(self):
-
-
         pass
 
 class Harbor():
@@ -2764,7 +2784,7 @@ def target_clicked(self):
     # if player
     else:
         dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
-
+        dict['Equipments'] = self.button_click_handler.menu_click_handler.target.equipments
 
     self.button_click_handler.make_menu(dict)
 

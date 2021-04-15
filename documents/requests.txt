@@ -10,10 +10,10 @@ by function
 
         bugs ON
             measure latitude and longitude OK
-
             npc images can't be mates OK
-
             npc gossip distance OK
+
+            see target equipment OK
 
             chat system
                 world
