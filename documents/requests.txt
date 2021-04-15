@@ -13,6 +13,8 @@ by function
 
             npc images can't be mates OK
 
+            npc gossip distance OK
+
             chat system
                 world
                 private

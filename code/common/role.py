@@ -223,6 +223,14 @@ class Role:
         else:
             return False
 
+    def is_target_role_in_gossip_distance(self):
+        target_role = self.get_enemy_role()
+        dist = math.hypot(self.x - target_role.x, self.y - target_role.y)
+        if dist <= c.SHOOT_RANGE_IN_BATTLE * c.PIXELS_COVERED_EACH_MOVE:
+            return True
+        else:
+            return False
+
     def have_quest(self):
         if self.quest_discovery:
             return True

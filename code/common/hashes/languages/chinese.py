@@ -227,6 +227,7 @@ dic = {
         "from": "来自",
         "We are heading to": "我们正前往",
     'Gossip ': '交涉',
+        "Target too far away!": "目标太远了！",
 
 
     # test(buildings)

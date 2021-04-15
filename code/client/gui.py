@@ -1475,35 +1475,48 @@ class MenuClickHandlerForTarget():
 
     def gossip(self):
         if not self.game.my_role.get_enemy_role().name == self.game.my_role.name:
-            enemy_name = self.game.my_role.enemy_name
-            enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
-            target_mate = enemy_role.mates[0]
-            destination_port = None
-            if enemy_role.out_ward:
-                destination_port = Port((enemy_role.end_port_id - 1))
-            else:
-                destination_port = Port((enemy_role.start_port_id - 1))
-            fleet_type = enemy_role.get_npc_fleet_type()
 
-            t1 = self.game.trans("I'm")
-            t2 = self.game.trans("directing a")
-            t3 = self.game.trans("fleet")
-            t4 = self.game.trans("from")
-            t5 = self.game.trans("We are heading to")
-            t6 = self.game.trans(fleet_type)
-            t7 = self.game.trans(target_mate.nation)
-            t8 = self.game.trans(destination_port.name)
-            t9 = self.game.trans(target_mate.name)
-            message = f"{t1} {t9} {t2} {t6} {t3} <br>" \
-                      f"{t4} {t7}. {t5} {t8}."
-            mate_speak(self.game, target_mate, message)
+            # in distance
+            if self.game.my_role.is_target_role_in_gossip_distance():
+                # get info
+                enemy_name = self.game.my_role.enemy_name
+                enemy_role = self.game.my_role._get_other_role_by_name(enemy_name)
+                target_mate = enemy_role.mates[0]
+                destination_port = None
+                if enemy_role.out_ward:
+                    destination_port = Port((enemy_role.end_port_id - 1))
+                else:
+                    destination_port = Port((enemy_role.start_port_id - 1))
+                fleet_type = enemy_role.get_npc_fleet_type()
+
+                # speak
+                t1 = self.game.trans("I'm")
+                t2 = self.game.trans("directing a")
+                t3 = self.game.trans("fleet")
+                t4 = self.game.trans("from")
+                t5 = self.game.trans("We are heading to")
+                t6 = self.game.trans(fleet_type)
+                t7 = self.game.trans(target_mate.nation)
+                t8 = self.game.trans(destination_port.name)
+                t9 = self.game.trans(target_mate.name)
+                message = f"{t1} {t9} {t2} {t6} {t3} <br>" \
+                          f"{t4} {t7}. {t5} {t8}."
+                mate_speak(self.game, target_mate, message)
+            # not in distance
+            else:
+                msg = "Target too far away!"
+                self.game.button_click_handler.i_speak(msg)
 
     def captain_info(self):
         if not self.game.my_role.get_enemy_role().name == self.game.my_role.name:
-            enemy_role = self.game.my_role.get_enemy_role()
-            if enemy_role:
-                mate = enemy_role.mates[0]
-                self._show_captain(mate)
+            if self.game.my_role.is_target_role_in_gossip_distance():
+                enemy_role = self.game.my_role.get_enemy_role()
+                if enemy_role:
+                    mate = enemy_role.mates[0]
+                    self._show_captain(mate)
+            else:
+                msg = "Target too far away!"
+                self.game.button_click_handler.i_speak(msg)
 
     def _show_captain(self, mate):
         # dict
