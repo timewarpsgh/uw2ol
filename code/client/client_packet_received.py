@@ -378,6 +378,14 @@ def got_port(self, message_obj):
     msg = "Thank you for your investment! Your are the administrator of this port now!"
     self.button_click_handler.building_speak(msg)
 
+def you_won_port_owner(self, message_obj):
+    msg = "You defeated the administrator! You are in charge of this port now!"
+    self.button_click_handler.building_speak(msg)
+
+def you_have_not_won_port_owner(self, message_obj):
+    msg = "Oh? Have you defeated the administrator?"
+    self.button_click_handler.building_speak(msg)
+
 def revenue_amount(self, message_obj):
     revenue_amount = message_obj
     msg = f"Oh! I know you. You can collect {revenue_amount}."

@@ -18,12 +18,17 @@ by function
                             5X deposit or defeat the owner (add just won variable)
 
                             defeating owner gets his ports ON
-                                login -> just_won: None
-                                won -> just_won: someone's name
-                                invest ->
-                                    if just_won == port_owner:
+                                login -> loser_name: None OK
+
+                                won -> loser_name: someone's name   OK
+                                lose-> loser_name: None             OK
+
+
+                                invest -> OK
+                                    if loser_name == port_owner:
                                         port_owner = my_name
-                                lose-> just_won: None
+
+
 
 
 

@@ -151,6 +151,17 @@ def _change_port_owner(my_role, num_of_ingots):
     port_map.mode = 'easy'
     port_map.got_tax[port_map.owner] = 0
 
+def i_defeated_administrator(self, params):
+    my_role = self.my_role
+    loser_name = my_role.loser_name
+    port_map = my_role.get_port_map()
+    if port_map.owner == loser_name and port_map.owner:
+        num_of_ingots = port_map.deposit_ingots
+        _change_port_owner(my_role, num_of_ingots)
+        self.send('you_won_port_owner', '')
+    else:
+        self.send('you_have_not_won_port_owner', '')
+
 def check_revenue(self, params):
     my_role = self.my_role
     port_map = my_role.get_port_map()
@@ -388,7 +399,7 @@ def _try_to_fight_with_player(self, enemy_name):
     enemy_role.enemy_name = my_role.name
 
     # can fight
-    if enemy_role.ships and enemy_role.mates[0].lv >= c.DEFECT_LV:
+    if enemy_role.ships and enemy_role.mates[0].lv >= c.DEFECT_LV or c.DEVELOPER_MODE_ON:
         '''both enter battle map'''
         print('can go battle!')
 
@@ -669,16 +680,20 @@ def on_login_got_result(self, account):
 def on_get_character_data_got_result(self, role):
     # ok
     if role != False:
-        # store role here and in users
+        # store role in map
         self.my_role = role
         map_id = role.get_map_id()
         map = self.factory.aoi_manager.get_map_by_player(role)
         map.add_player_conn(self)
 
+        # init states
         self.my_role.price_index = map.price_index
         self.my_role.nation = map.nation
         self.my_role.port_economy = map.economy
         self.my_role.port_industry = map.industry
+
+        # just_won (name of the loser)
+        self.my_role.loser_name = None
 
         # add role to PlayerManager
         self.factory.player_manager.add_player(self)

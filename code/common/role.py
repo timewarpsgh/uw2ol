@@ -2841,6 +2841,13 @@ def _exit_battle_when_enemy_is_player(self):
     # sets
     my_role.map = 'sea'
     enemy_role.map = 'sea'
+        # loser_name
+    if my_role.ships:
+        my_role.loser_name = enemy_role.name
+        enemy_role.loser_name = None
+    elif enemy_role.ships:
+        my_role.loser_name = None
+        enemy_role.loser_name = my_role.name
 
     # change map states
     self.factory.aoi_manager.delete_battle_map_by_name(my_previous_map)

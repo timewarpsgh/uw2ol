@@ -1371,6 +1371,7 @@ class MenuClickHandlerForPort():
             'Price Index': self.market.price_index,
             'Investment State': self.market.investment_state,
             'Invest': self.market.invest,
+            'Defeat Administrator': self.market.defeat_administrator,
             'Manage': self.market.manage,
         }
         self.game.button_click_handler.make_menu(dict)
@@ -1874,8 +1875,14 @@ class Market():
         self.game.button_click_handler.make_input_boxes('invest', ['amount'])
 
 
+        print('loser: ',self.game.my_role.loser_name)
+
         # num_of_ingots = 1
         # self.game.connection.send('invest', [num_of_ingots])
+
+    def defeat_administrator(self):
+        self.game.connection.send('i_defeated_administrator', [])
+
 
     def manage(self):
         self.game.connection.send('check_revenue', [])
