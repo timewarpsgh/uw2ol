@@ -16,6 +16,18 @@ by function
                     hard OK
                         online
                             5X deposit or defeat the owner (add just won variable)
+
+                            defeating owner gets his ports ON
+                                login -> just_won: None
+                                won -> just_won: someone's name
+                                invest ->
+                                    if just_won == port_owner:
+                                        port_owner = my_name
+                                lose-> just_won: None
+
+
+
+
                         offline
                             3X deposit
             benefit OK
