@@ -85,7 +85,8 @@ def get_investment_state(self, params):
     my_role = self.my_role
     port_map = my_role.get_port_map()
 
-    self.send('port_investment_state', [port_map.owner, port_map.owner_nation, port_map.deposit_ingots])
+    self.send('port_investment_state', [port_map.owner, port_map.owner_nation,
+                                        port_map.deposit_ingots, port_map.mode])
 
 def invest(self, params):
     """buy port"""
@@ -98,7 +99,7 @@ def invest(self, params):
     # no owner
     if not port_map.owner:
         # can afford
-        if my_role.gold >= amount and num_of_ingots >= c.INVEST_MIN_INGOTS:
+        if my_role.gold >= amount and num_of_ingots >= c.INVEST_MIN_INGOTS or c.DEVELOPER_MODE_ON:
             my_role.gold -= amount
             _change_port_owner(my_role, num_of_ingots)
             self.send('got_port', num_of_ingots)
@@ -108,7 +109,13 @@ def invest(self, params):
     # has owner
     else:
         # can afford
-        if my_role.gold >= amount and num_of_ingots >= 2 * port_map.deposit_ingots:
+        overide_ratio = 2
+        if port_map.mode == 'easy':
+            overide_ratio = c.EASY_MODE_OVERIDE_RATIO
+        else:
+            overide_ratio = c.HARD_MODE_OVERIDE_RATIO
+
+        if my_role.gold >= amount and num_of_ingots >= overide_ratio * port_map.deposit_ingots:
             my_role.gold -= amount
             _change_port_owner(my_role, num_of_ingots)
             self.send('got_port', num_of_ingots)
@@ -121,6 +128,7 @@ def _change_port_owner(my_role, num_of_ingots):
     port_map.owner = my_role.name
     port_map.deposit_ingots = num_of_ingots
     port_map.owner_nation = my_role.mates[0].nation
+    port_map.mode = 'easy'
     port_map.got_tax[port_map.owner] = 0
 
 def check_revenue(self, params):
@@ -143,6 +151,18 @@ def collect_all_revenue(self, params):
         my_role.gold += revenue_amount
         port_map.got_tax[my_role.name] = 0
         self.send('got_revenue', revenue_amount)
+
+def set_port_mode(self, params):
+    mode = params[0]
+    my_role = self.my_role
+    if mode == 'easy':
+        port_map = my_role.get_port_map()
+        port_map.mode = 'easy'
+    elif mode == 'hard':
+        port_map = my_role.get_port_map()
+        port_map.mode = 'hard'
+
+    self.send('port_mode_change', mode)
 
 def grid_change(self, messgage_obj):
     new_grid_id = messgage_obj[0]

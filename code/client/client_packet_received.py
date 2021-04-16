@@ -333,13 +333,21 @@ def port_investment_state(self, message_obj):
     port_owner = message_obj[0]
     owner_nation = message_obj[1]
     deposit_ingots = message_obj[2]
+    mode = message_obj[3]
+
+    msg = ''
     if port_owner:
-        msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
-              f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than twice the deposit."
+        if mode == 'easy':
+            msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
+                  f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.EASY_MODE_OVERIDE_RATIO} times the deposit."
+        elif mode == 'hard':
+            msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
+                  f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.HARD_MODE_OVERIDE_RATIO} times the deposit or " \
+                  f"defeating the administrator in battle."
     else:
         msg = f"We haven't got any investment yet."
 
-    self.button_click_handler.building_speak(msg)
+    self.button_click_handler.make_message_box(msg)
 
 def got_port(self, message_obj):
     num_of_ingots = message_obj
@@ -354,11 +362,32 @@ def revenue_amount(self, message_obj):
 
     d = {
         'Collect All': [_collect_all, self],
+        'Set Mode': [_set_mode, self],
     }
     self.button_click_handler.make_menu(d)
 
 def _collect_all(self):
     self.connection.send('collect_all_revenue', '')
+
+def _set_mode(self):
+    """port mode: easy or hard. """
+
+    def set_easy_mode():
+        self.connection.send('set_port_mode', ['easy'])
+
+    def set_hard_mode():
+        self.connection.send('set_port_mode', ['hard'])
+
+    d = {
+        'Easy': set_easy_mode,
+        'Hard': set_hard_mode,
+    }
+    self.button_click_handler.make_menu(d)
+
+def port_mode_change(self, message_obj):
+    mode = message_obj
+    msg = f"Port mode switched to {mode}."
+    self.button_click_handler.building_speak(msg)
 
 def former_revenue_amount(self, message_obj):
     revenue_amount = message_obj

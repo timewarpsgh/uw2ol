@@ -13,7 +13,7 @@ by function
                 old
                     easy OK
                         2X deposit
-                    hard ON
+                    hard OK
                         online
                             5X deposit or win the owner
                         offline

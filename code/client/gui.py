@@ -1371,7 +1371,7 @@ class MenuClickHandlerForPort():
             'Price Index': self.market.price_index,
             'Investment State': self.market.investment_state,
             'Invest': self.market.invest,
-            'Revenue': self.market.revenue,
+            'Manage': self.market.manage,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1877,7 +1877,7 @@ class Market():
         # num_of_ingots = 1
         # self.game.connection.send('invest', [num_of_ingots])
 
-    def revenue(self):
+    def manage(self):
         self.game.connection.send('check_revenue', [])
 
 
