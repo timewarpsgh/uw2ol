@@ -81,6 +81,26 @@ def login(self, message_obj):
     d = threads.deferToThread(self.factory.db.login, account, password)
     d.addCallback(self.on_login_got_result)
 
+def get_investment_state(self, params):
+    my_role = self.my_role
+    port_map = my_role.get_port_map()
+
+    self.send('port_investment_state', [port_map.owner, port_map.owner_nation, port_map.deposit_ingots])
+
+def invest(self, params):
+    """buy port"""
+    num_of_ingots = params[0]
+
+    my_role = self.my_role
+    my_role.gold -= num_of_ingots * 10000
+
+    port_map = my_role.get_port_map()
+    port_map.owner = my_role.name
+    port_map.deposit_ingots = num_of_ingots
+    port_map.owner_nation = my_role.mates[0].nation
+
+    self.send('got_port', num_of_ingots)
+
 def grid_change(self, messgage_obj):
     new_grid_id = messgage_obj[0]
     direction = messgage_obj[1]

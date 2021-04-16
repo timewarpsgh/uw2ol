@@ -3,12 +3,28 @@ by function
     discover OK
     trade OK
 
+        buy port ON
+
+            buy
+                new
+                    >= 5 ingots
+                old
+                    easy
+                        2X deposit
+                    hard
+                        online
+                            5X deposit or win the owner
+                        offline
+                            3X deposit
+            benefit
+                20% market sales
+                20% dry dock sales
+
+
+
+
 
     fight OK
-
-
-
-
 
 by structure
     buttons on interface OK

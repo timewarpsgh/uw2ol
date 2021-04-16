@@ -270,9 +270,14 @@ dic = {
 
 
         'price index': '物价指数',
-        'The price index of this port is': '本港的物价指数是',
-        'Any cargo you buy or sell will be affected by this index.': "您购买或卖出任何商品的价格均"
+            'The price index of this port is': '本港的物价指数是',
+            'Any cargo you buy or sell will be affected by this index.': "您购买或卖出任何商品的价格均"
                                                                      "会受此指数影响。",
+
+        'Investment State': '投资情况',
+
+        'invest': '投资',
+            "Thank you for your investment! Your are the administrator of this port now!": "感谢您的投资！ 现在您是本港的总督了！",
 
         # bar
         'Recruit Crew': '招募船员',

@@ -247,6 +247,12 @@ class Role:
         port = Port(self.get_map_id())
         return port
 
+    def get_port_map(self):
+        """in server"""
+        map_id = self.get_map_id()
+        port_map = self.AOI_MANAGER.ports[map_id]
+        return port_map
+
     def get_x_and_y_tile_position(self):
         x_tile_pos = int(self.x / c.PIXELS_COVERED_EACH_MOVE)
         y_tile_pos = int(self.y / c.PIXELS_COVERED_EACH_MOVE)
@@ -1370,7 +1376,6 @@ class Role:
                     msg = f"{t1} {total_gold} {t2} {total_exp} {t3} {count} {t4}"
                     self.GAME.button_click_handler.i_speak(msg)
                     self.GAME.sounds['deal'].play()
-
 
 
     # harbor

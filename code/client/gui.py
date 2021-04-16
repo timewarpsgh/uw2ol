@@ -1369,6 +1369,8 @@ class MenuClickHandlerForPort():
             'Buy': self.market.buy,
             'Sell': self.market.sell,
             'Price Index': self.market.price_index,
+            'Investment State': self.market.investment_state,
+            'Invest': self.market.invest,
         }
         self.game.button_click_handler.make_menu(dict)
 
@@ -1860,6 +1862,13 @@ class Market():
 
 
         self.game.button_click_handler.building_speak(msg)
+
+    def investment_state(self):
+        self.game.connection.send('get_investment_state', [])
+
+    def invest(self):
+        num_of_ingots = 1
+        self.game.connection.send('invest', [num_of_ingots])
 
 class Bar():
     def __init__(self, game):

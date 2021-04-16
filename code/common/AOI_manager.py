@@ -273,6 +273,10 @@ class PortMap(Map):
         self.economy = None
         self.industry = None
 
+        self.owner = None
+        self.owner_nation = None
+        self.deposit_ingots = None
+
         self.map_id = map_id
 
     def set_allied_nation(self, nation):

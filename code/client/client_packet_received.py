@@ -328,3 +328,20 @@ def _show_allied_ports_for_one_economy_id(params):
                f"{t5}{d['industry']}<br>"
 
     self.button_click_handler.make_message_box(msg)
+
+def port_investment_state(self, message_obj):
+    port_owner = message_obj[0]
+    owner_nation = message_obj[1]
+    deposit_ingots = message_obj[2]
+    if port_owner:
+        msg = f"The administrator of this port is {port_owner} from {owner_nation}. The deposit is {deposit_ingots} ingots."
+    else:
+        msg = f"We haven't got any investment yet."
+
+    self.button_click_handler.building_speak(msg)
+    
+def got_port(self, message_obj):
+    num_of_ingots = message_obj
+    self.my_role.gold -= num_of_ingots * 10000
+    msg = "Thank you for your investment! Your are the administrator of this port now!"
+    self.button_click_handler.building_speak(msg)
