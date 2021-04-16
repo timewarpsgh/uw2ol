@@ -17,19 +17,19 @@ by function
                         online
                             5X deposit or defeat the owner (add just won variable)
 
-                            defeating owner gets his ports ON
+                            defeating owner gets his ports OK
                                 login -> loser_name: None OK
 
                                 won -> loser_name: someone's name   OK
                                 lose-> loser_name: None             OK
 
-
                                 invest -> OK
                                     if loser_name == port_owner:
                                         port_owner = my_name
 
+                            chinese OK
 
-
+                            update port states LATER
 
 
 

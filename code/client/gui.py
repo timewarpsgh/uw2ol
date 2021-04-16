@@ -1869,7 +1869,8 @@ class Market():
         self.game.connection.send('get_investment_state', [])
 
     def invest(self):
-        msg = f"How many gold ingots would you like to invest? The minimum is {c.INVEST_MIN_INGOTS}."
+        t1 = self.game.trans("How many gold ingots would you like to invest? The minimum is")
+        msg = f"{t1} {c.INVEST_MIN_INGOTS}."
         self.game.button_click_handler.building_speak(msg)
 
         self.game.button_click_handler.make_input_boxes('invest', ['amount'])

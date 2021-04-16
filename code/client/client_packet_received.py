@@ -343,10 +343,19 @@ def port_investment_state(self, message_obj):
     # owner exists
     if port_owner:
         # owner is online
+        t1 = self.trans("The administrator of this port is")
+        t2 = self.trans("from")
+        t3 = self.trans("The deposit is")
+        t4 = self.trans("ingots")
+        t5 = self.trans(owner_nation)
+        msg = f"{t1} {port_owner} {t2} {t5}. " \
+              f"{t3} {deposit_ingots} {t4}. "
+
         if owner_map:
             if mode == 'easy':
-                msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
-                      f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.EASY_MODE_OVERIDE_RATIO} times the deposit."
+                t1 = self.trans("You can overide the current administrator by investing more than")
+                t2 = self.trans("times the deposit")
+                msg += f"{t1} {c.EASY_MODE_OVERIDE_RATIO} {t2}."
             elif mode == 'hard':
                 # owner at sea
                 if owner_map == 'sea':
@@ -354,19 +363,25 @@ def port_investment_state(self, message_obj):
                     y = int(owner_y / c.PIXELS_COVERED_EACH_MOVE)
                     longitude, latitude = _calc_longitude_and_latitude(x, y)
 
-                    msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
-                          f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.HARD_MODE_OVERIDE_RATIO} times the deposit or " \
-                          f"defeating the administrator in battle. The administrator is now at {longitude} {latitude}."
+                    t1 = self.trans("You can overide the current administrator by investing more than")
+                    t2 = self.trans("times the deposit")
+                    t3 = self.trans("or defeating the administrator in battle. I heard the administrator is now at")
+                    msg += f"{t1} {c.HARD_MODE_OVERIDE_RATIO} {t2} {t3} " \
+                          f"{longitude} {latitude}."
                 # owner in port
                 elif owner_map.isdigit():
                     owner_map = hash_ports_meta_data[int(owner_map)+1]['name']
-                    msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
-                          f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.HARD_MODE_OVERIDE_RATIO} times the deposit or " \
-                          f"defeating the administrator in battle. The administrator is now at {owner_map}."
+                    t1 = self.trans("You can overide the current administrator by investing more than")
+                    t2 = self.trans("times the deposit")
+                    t3 = self.trans("or defeating the administrator in battle. I heard the administrator is now at")
+                    t4 = self.trans(owner_map)
+                    msg += f"{t1} {c.HARD_MODE_OVERIDE_RATIO} {t2} {t3} " \
+                          f"{t4}."
         # owner is offline
         else:
-            msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
-                  f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.EASY_MODE_OVERIDE_RATIO} times the deposit."
+            t1 = self.trans("You can overide the current administrator by investing more than")
+            t2 = self.trans("times the deposit")
+            msg += f"{t1} {c.EASY_MODE_OVERIDE_RATIO} {t2}."
     else:
         msg = f"We haven't got any investment yet."
 
@@ -388,7 +403,8 @@ def you_have_not_won_port_owner(self, message_obj):
 
 def revenue_amount(self, message_obj):
     revenue_amount = message_obj
-    msg = f"Oh! I know you. You can collect {revenue_amount}."
+    t1 = self.trans("Oh! I know you. You can collect")
+    msg = f"{t1} {revenue_amount}."
     self.button_click_handler.building_speak(msg)
 
     d = {
@@ -417,12 +433,15 @@ def _set_mode(self):
 
 def port_mode_change(self, message_obj):
     mode = message_obj
-    msg = f"Port mode switched to {mode}."
+    t1 = self.trans('Port mode switched to')
+    t2 = self.trans(mode)
+    msg = f"{t1} {t2}."
     self.button_click_handler.building_speak(msg)
 
 def former_revenue_amount(self, message_obj):
     revenue_amount = message_obj
-    msg = f"Oh! Our former sponsor. You can collect {revenue_amount}."
+    t1 = self.trans("Oh! Our former sponsor. You can collect")
+    msg = f"{t1} {revenue_amount}."
     self.button_click_handler.building_speak(msg)
 
     d = {

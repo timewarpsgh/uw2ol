@@ -268,16 +268,39 @@ dic = {
             "gold coins and": "金币和",
             "exp for": "经验值， 卖出",
 
-
         'price index': '物价指数',
             'The price index of this port is': '本港的物价指数是',
             'Any cargo you buy or sell will be affected by this index.': "您购买或卖出任何商品的价格均"
                                                                      "会受此指数影响。",
 
         'Investment State': '投资情况',
+            "We haven't got any investment yet.": "我们还没有获得任何投资。",
+            "The administrator of this port is": "本港的总督是",
+            "The deposit is": "<br>储备金是",
+            'ingots': '金块',
+            "You can overide the current administrator by investing more than": "您可以通过投资<br>来取代现在的总督，<br>需要至少",
+            "times the deposit": "倍的当前储备金",
+            "or defeating the administrator in battle. I heard the administrator is now at": "或者击败他。<br>我听说他现在的位置是",
 
         'invest': '投资',
             "Thank you for your investment! Your are the administrator of this port now!": "感谢您的投资！ 现在您是本港的总督了！",
+            "How many gold ingots would you like to invest? The minimum is": "您要对此港投资多少个金块呢？ 最少是",
+
+
+        'Defeat Administrator': '击败总督',
+            "Oh? Have you defeated the administrator?": "哦？您战胜了本港的总督？",
+            "You defeated the administrator! You are in charge of this port now!": "您击败了现任总督！真了不起！现在您说了算。",
+        'Manage': '管理',
+            "This is only for the administrator of this port.": "只有本港的总督才能使用。",
+
+                'collect all': '提取全部',
+                    "Oh! I know you. You can collect": "噢！我认得您。您可以提取",
+                    "Oh! Our former sponsor. You can collect": "哟！这不是我们的<br>前总督嘛？您可以提取",
+                    "You have collected all your revenue.": "您已经提取了所有收入。",
+                'set mode': '设置模式',
+                    'easy': '简单',
+                    'hard': '困难',
+                        'Port mode switched to': "港口模式切换为",
 
         # bar
         'Recruit Crew': '招募船员',
