@@ -1318,9 +1318,17 @@ class Role:
 
                 # can afford
                 if self.gold >= total_cost:
+                    # exchange
                     self.gold -= total_cost
                     ship.add_cargo(cargo_name, count)
 
+                    # in server
+                    if self.is_in_server():
+                        port_map = self.get_port_map()
+                        if port_map.owner:
+                            port_map.got_tax[port_map.owner] += int(total_cost * 0.2)
+
+                    # in client
                     if self.is_in_client_and_self():
                         self.GAME.sounds['deal'].play()
                         msg = "Thank you!"

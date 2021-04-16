@@ -5,8 +5,10 @@ by function
 
         buy port ON
 
+            check state OK
+
             buy
-                new
+                new OK
                     >= 5 ingots
                 old
                     easy
@@ -16,8 +18,8 @@ by function
                             5X deposit or win the owner
                         offline
                             3X deposit
-            benefit
-                20% market sales
+            benefit OK
+                20% market sales OK
                 20% dry dock sales
 
 

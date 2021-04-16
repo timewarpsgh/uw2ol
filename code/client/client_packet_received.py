@@ -339,9 +339,32 @@ def port_investment_state(self, message_obj):
         msg = f"We haven't got any investment yet."
 
     self.button_click_handler.building_speak(msg)
-    
+
 def got_port(self, message_obj):
     num_of_ingots = message_obj
     self.my_role.gold -= num_of_ingots * 10000
     msg = "Thank you for your investment! Your are the administrator of this port now!"
+    self.button_click_handler.building_speak(msg)
+
+def revenue_amount(self, message_obj):
+    revenue_amount = message_obj
+    msg = f"Oh! I know you. You can collect {revenue_amount}."
+    self.button_click_handler.building_speak(msg)
+
+    d = {
+        'Collect All': [_collect_all, self],
+    }
+    self.button_click_handler.make_menu(d)
+
+def _collect_all(self):
+    self.connection.send('collect_all_revenue', '')
+
+def got_revenue(self, message_obj):
+    revenue_amount = message_obj
+    self.my_role.gold += revenue_amount
+    msg = f"You have collected all your revenue."
+    self.button_click_handler.building_speak(msg)
+
+def not_your_port(self, message_obj):
+    msg = "This is only for the administrator of this port."
     self.button_click_handler.building_speak(msg)

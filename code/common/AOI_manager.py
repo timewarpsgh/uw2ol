@@ -276,6 +276,7 @@ class PortMap(Map):
         self.owner = None
         self.owner_nation = None
         self.deposit_ingots = None
+        self.got_tax = {}
 
         self.map_id = map_id
 
