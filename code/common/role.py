@@ -1104,6 +1104,9 @@ class Role:
                     self.ships.append(ship)
                     self.gold -= ship.price
 
+                    # tax to port owner
+                    self._give_tax_to_port_owner(ship.price)
+
                     # sound
                     if self.is_in_client_and_self():
                         self.GAME.sounds['deal'].play()
@@ -1130,15 +1133,21 @@ class Role:
 
     def repair_all(self, params):
         cost = self._calc_repair_all_cost()
+        # can afford
         if self.gold >= cost:
             self.gold -= cost
             for ship in self.ships:
                 ship.now_hp = ship.max_hp
 
+            # tax to port owner
+            self._give_tax_to_port_owner(cost)
+
+            # speak
             if self.is_in_client_and_self():
                 msg = "Thank you!"
                 msg = self.GAME.trans(msg)
                 self.GAME.button_click_handler.building_speak(msg)
+        # can't afford
         else:
             if self.is_in_client_and_self():
                 msg = "You can't afford to repair them."
@@ -1323,10 +1332,7 @@ class Role:
                     ship.add_cargo(cargo_name, count)
 
                     # in server
-                    if self.is_in_server():
-                        port_map = self.get_port_map()
-                        if port_map.owner:
-                            port_map.got_tax[port_map.owner] += int(total_cost * 0.2)
+                    self._give_tax_to_port_owner(total_cost)
 
                     # in client
                     if self.is_in_client_and_self():
@@ -1349,6 +1355,12 @@ class Role:
                 if self.is_in_client_and_self():
                     msg = "This ship dosen't have enough room."
                     self.GAME.button_click_handler.i_speak(msg)
+
+    def _give_tax_to_port_owner(self, total_cost):
+        if self.is_in_server():
+            port_map = self.get_port_map()
+            if port_map.owner:
+                port_map.got_tax[port_map.owner] += int(total_cost * 0.2)
 
     def sell_cargo(self, params):
         cargo_name = params[0]

@@ -20,7 +20,8 @@ by function
                             3X deposit
             benefit OK
                 20% market sales OK
-                20% dry dock sales ON
+                20% dry dock sales OK
+                20% ship repairs OK
 
 
 
