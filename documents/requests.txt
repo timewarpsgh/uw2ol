@@ -15,7 +15,7 @@ by function
                         2X deposit
                     hard OK
                         online
-                            5X deposit or win the owner
+                            5X deposit or defeat the owner (add just won variable)
                         offline
                             3X deposit
             benefit OK

@@ -85,8 +85,24 @@ def get_investment_state(self, params):
     my_role = self.my_role
     port_map = my_role.get_port_map()
 
-    self.send('port_investment_state', [port_map.owner, port_map.owner_nation,
-                                        port_map.deposit_ingots, port_map.mode])
+    # has owner
+    if port_map.owner:
+        # owner online
+        if self.factory.player_manager.get_player_conn_by_name(port_map.owner):
+            player_conn = self.factory.player_manager.get_player_conn_by_name(port_map.owner)
+            owner = player_conn.my_role
+            owner_map = owner.map
+            owner_x = owner.x
+            owner_y = owner.y
+            self.send('port_investment_state', [port_map.owner, port_map.owner_nation,
+                                                port_map.deposit_ingots, port_map.mode, owner_map, owner_x, owner_y])
+        # owner offline
+        else:
+            self.send('port_investment_state', [port_map.owner, port_map.owner_nation,
+                                                port_map.deposit_ingots, 'easy',None,None,None])
+    else:
+        self.send('port_investment_state', [port_map.owner, port_map.owner_nation,
+                                            port_map.deposit_ingots, 'easy',None,None,None])
 
 def invest(self, params):
     """buy port"""
@@ -110,10 +126,14 @@ def invest(self, params):
     else:
         # can afford
         overide_ratio = 2
-        if port_map.mode == 'easy':
-            overide_ratio = c.EASY_MODE_OVERIDE_RATIO
+
+        if self.factory.player_manager.get_player_conn_by_name(port_map.owner):
+            if port_map.mode == 'easy':
+                overide_ratio = c.EASY_MODE_OVERIDE_RATIO
+            else:
+                overide_ratio = c.HARD_MODE_OVERIDE_RATIO
         else:
-            overide_ratio = c.HARD_MODE_OVERIDE_RATIO
+            overide_ratio = c.EASY_MODE_OVERIDE_RATIO
 
         if my_role.gold >= amount and num_of_ingots >= overide_ratio * port_map.deposit_ingots:
             my_role.gold -= amount
@@ -659,6 +679,9 @@ def on_get_character_data_got_result(self, role):
         self.my_role.nation = map.nation
         self.my_role.port_economy = map.economy
         self.my_role.port_industry = map.industry
+
+        # add role to PlayerManager
+        self.factory.player_manager.add_player(self)
 
         # tell other clients nearby of new role
         nearby_players = map.get_nearby_players_by_player(role)

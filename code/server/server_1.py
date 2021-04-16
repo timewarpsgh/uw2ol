@@ -19,6 +19,7 @@ from hashes.hash_ports_meta_data import hash_ports_meta_data
 import server_packet_received
 from npc_manager import NpcManager
 from AOI_manager import AOIManager
+from player_manager import PlayerManager
 
 # import from client
 from map_maker import MapMaker
@@ -93,6 +94,7 @@ class Echo(Protocol):
         map = self.factory.aoi_manager.get_map_by_player(self.my_role)
         self.send_to_other_clients('logout', self.my_role.name)
         map.remove_player(self.my_role)
+        self.factory.player_manager.remove_player(self.my_role.name)
 
     def dataReceived(self, data):
         """combine data to get packet"""
@@ -187,6 +189,9 @@ class EchoFactory(Factory):
         self.aoi_manager = AOIManager()
         Role.AOI_MANAGER = self.aoi_manager
         Role.FACTORY = self
+
+        # players
+        self.player_manager = PlayerManager()
 
         # npcs
         self.npc_manager = NpcManager(self.aoi_manager)

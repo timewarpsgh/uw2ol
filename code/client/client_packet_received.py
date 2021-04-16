@@ -335,15 +335,38 @@ def port_investment_state(self, message_obj):
     deposit_ingots = message_obj[2]
     mode = message_obj[3]
 
+    owner_map = message_obj[4]
+    owner_x = message_obj[5]
+    owner_y = message_obj[6]
+
     msg = ''
+    # owner exists
     if port_owner:
-        if mode == 'easy':
+        # owner is online
+        if owner_map:
+            if mode == 'easy':
+                msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
+                      f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.EASY_MODE_OVERIDE_RATIO} times the deposit."
+            elif mode == 'hard':
+                # owner at sea
+                if owner_map == 'sea':
+                    x = int(owner_x / c.PIXELS_COVERED_EACH_MOVE)
+                    y = int(owner_y / c.PIXELS_COVERED_EACH_MOVE)
+                    longitude, latitude = _calc_longitude_and_latitude(x, y)
+
+                    msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
+                          f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.HARD_MODE_OVERIDE_RATIO} times the deposit or " \
+                          f"defeating the administrator in battle. The administrator is now at {longitude} {latitude}."
+                # owner in port
+                elif owner_map.isdigit():
+                    owner_map = hash_ports_meta_data[int(owner_map)+1]['name']
+                    msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
+                          f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.HARD_MODE_OVERIDE_RATIO} times the deposit or " \
+                          f"defeating the administrator in battle. The administrator is now at {owner_map}."
+        # owner is offline
+        else:
             msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
                   f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.EASY_MODE_OVERIDE_RATIO} times the deposit."
-        elif mode == 'hard':
-            msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
-                  f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than {c.HARD_MODE_OVERIDE_RATIO} times the deposit or " \
-                  f"defeating the administrator in battle."
     else:
         msg = f"We haven't got any investment yet."
 
