@@ -334,7 +334,8 @@ def port_investment_state(self, message_obj):
     owner_nation = message_obj[1]
     deposit_ingots = message_obj[2]
     if port_owner:
-        msg = f"The administrator of this port is {port_owner} from {owner_nation}. The deposit is {deposit_ingots} ingots."
+        msg = f"The administrator of this port is {port_owner} from {owner_nation}. " \
+              f"The deposit is {deposit_ingots} ingots. You can overide the current administrator by investing more than twice the deposit."
     else:
         msg = f"We haven't got any investment yet."
 
@@ -359,6 +360,16 @@ def revenue_amount(self, message_obj):
 def _collect_all(self):
     self.connection.send('collect_all_revenue', '')
 
+def former_revenue_amount(self, message_obj):
+    revenue_amount = message_obj
+    msg = f"Oh! Our former sponsor. You can collect {revenue_amount}."
+    self.button_click_handler.building_speak(msg)
+
+    d = {
+        'Collect All': [_collect_all, self],
+    }
+    self.button_click_handler.make_menu(d)
+
 def got_revenue(self, message_obj):
     revenue_amount = message_obj
     self.my_role.gold += revenue_amount
@@ -367,4 +378,8 @@ def got_revenue(self, message_obj):
 
 def not_your_port(self, message_obj):
     msg = "This is only for the administrator of this port."
+    self.button_click_handler.building_speak(msg)
+
+def cannot_afford(self, message_obj):
+    msg = "You don't have enough gold."
     self.button_click_handler.building_speak(msg)

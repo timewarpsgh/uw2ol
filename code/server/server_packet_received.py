@@ -92,15 +92,36 @@ def invest(self, params):
     num_of_ingots = params[0]
 
     my_role = self.my_role
-    my_role.gold -= num_of_ingots * 10000
+    amount = num_of_ingots * 10000
 
+    port_map = my_role.get_port_map()
+    # no owner
+    if not port_map.owner:
+        # can afford
+        if my_role.gold >= amount and num_of_ingots >= c.INVEST_MIN_INGOTS:
+            my_role.gold -= amount
+            _change_port_owner(my_role, num_of_ingots)
+            self.send('got_port', num_of_ingots)
+        # can't afford
+        else:
+            self.send('cannot_afford', '')
+    # has owner
+    else:
+        # can afford
+        if my_role.gold >= amount and num_of_ingots >= 2 * port_map.deposit_ingots:
+            my_role.gold -= amount
+            _change_port_owner(my_role, num_of_ingots)
+            self.send('got_port', num_of_ingots)
+        # can't afford
+        else:
+            self.send('cannot_afford', '')
+
+def _change_port_owner(my_role, num_of_ingots):
     port_map = my_role.get_port_map()
     port_map.owner = my_role.name
     port_map.deposit_ingots = num_of_ingots
     port_map.owner_nation = my_role.mates[0].nation
     port_map.got_tax[port_map.owner] = 0
-
-    self.send('got_port', num_of_ingots)
 
 def check_revenue(self, params):
     my_role = self.my_role
@@ -108,16 +129,19 @@ def check_revenue(self, params):
     if my_role.name == port_map.owner:
         revenue_amount = port_map.got_tax[port_map.owner]
         self.send('revenue_amount', revenue_amount)
+    elif my_role.name in port_map.got_tax:
+        revenue_amount = port_map.got_tax[my_role.name]
+        self.send('former_revenue_amount', revenue_amount)
     else:
         self.send("not_your_port", '')
 
 def collect_all_revenue(self, params):
     my_role = self.my_role
     port_map = my_role.get_port_map()
-    if my_role.name == port_map.owner:
-        revenue_amount = port_map.got_tax[port_map.owner]
+    if my_role.name in port_map.got_tax:
+        revenue_amount = port_map.got_tax[my_role.name]
         my_role.gold += revenue_amount
-        port_map.got_tax[port_map.owner] = 0
+        port_map.got_tax[my_role.name] = 0
         self.send('got_revenue', revenue_amount)
 
 def grid_change(self, messgage_obj):

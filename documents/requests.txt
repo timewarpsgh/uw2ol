@@ -7,20 +7,20 @@ by function
 
             check state OK
 
-            buy
+            buy ON
                 new OK
                     >= 5 ingots
                 old
-                    easy
+                    easy OK
                         2X deposit
-                    hard
+                    hard ON
                         online
                             5X deposit or win the owner
                         offline
                             3X deposit
             benefit OK
                 20% market sales OK
-                20% dry dock sales
+                20% dry dock sales ON
 
 
 

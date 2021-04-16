@@ -170,15 +170,21 @@ class Game():
 
         # when logged in
         if self.my_role:
-            try:
-                func = getattr(self.my_role, protocol_name)
-                func(params_list)
-            except:
-                msg = 'Invalid input!'
-                self.button_click_handler.make_message_box(msg)
-            else:
+            # methods not in role
+            if protocol_name == 'invest':
                 self.connection.send(protocol_name, params_list)
                 return True
+            # methods in role
+            else:
+                try:
+                    func = getattr(self.my_role, protocol_name)
+                    func(params_list)
+                except:
+                    msg = 'Invalid input!'
+                    self.button_click_handler.make_message_box(msg)
+                else:
+                    self.connection.send(protocol_name, params_list)
+                    return True
 
         # when not logged in
         else:
