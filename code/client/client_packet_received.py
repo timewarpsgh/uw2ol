@@ -34,8 +34,10 @@ def process_packet(self, pck_type, message_obj):
 
 # register responses
 def version_wrong(self, message_obj):
-    self.login_state_text = 'Please download the latest version! ' \
+    msg = 'Please download the latest version! ' \
                             'Exiting in 5 seconds.'
+    msg = self.trans(msg)
+    self.login_state_text = msg
     reactor.callLater(2, handle_pygame_event.quit, self)
 
 def register_ok(self, message_obj):
@@ -435,7 +437,8 @@ def port_mode_change(self, message_obj):
     mode = message_obj
     t1 = self.trans('Port mode switched to')
     t2 = self.trans(mode)
-    msg = f"{t1} {t2}."
+    t3 = self.trans("The investment state of this port has changed.")
+    msg = f"{t1} {t2}. {t3}"
     self.button_click_handler.building_speak(msg)
 
 def former_revenue_amount(self, message_obj):

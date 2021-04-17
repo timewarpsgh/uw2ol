@@ -199,6 +199,8 @@ dic = {
 
     # sail
     'login': '登录',
+        'Please download the latest version! ' \
+                            'Exiting in 5 seconds.': '请下载新版本客户端。5秒后退出。',
         'Login failed!': "登录失败！",
         "Login successful! " \
             "Please create a character. " \
@@ -295,12 +297,13 @@ dic = {
 
                 'collect all': '提取全部',
                     "Oh! I know you. You can collect": "噢！我认得您。您可以提取",
-                    "Oh! Our former sponsor. You can collect": "哟！这不是我们的<br>前总督嘛？您可以提取",
+                    "Oh! Our former sponsor. You can collect": "哟！这不是我们 前总督嘛？您可以提取",
                     "You have collected all your revenue.": "您已经提取了所有收入。",
                 'set mode': '设置模式',
                     'easy': '简单',
                     'hard': '困难',
                         'Port mode switched to': "港口模式切换为",
+                        "The investment state of this port has changed.": "本港的投资情况改变了。",
 
         # bar
         'Recruit Crew': '招募船员',

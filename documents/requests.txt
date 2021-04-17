@@ -29,6 +29,8 @@ by function
 
                             chinese OK
 
+                            release 0.8 OK
+
                             update port states LATER
 
 
