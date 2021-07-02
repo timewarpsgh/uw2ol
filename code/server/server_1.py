@@ -146,7 +146,7 @@ class Echo(Protocol):
         data = p.get_pck_has_head()
 
         # send packet
-        self.transport.write(data)
+        self.transport.write(bytes(data))
         print("transport just wrote:", protocol_name, content_obj)
 
     def send_to_other_clients(self, protocol_name, content_obj='na'):
