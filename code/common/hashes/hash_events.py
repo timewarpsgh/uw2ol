@@ -27,7 +27,7 @@ events_dict = {
                          " Here, take it and be strong."],
             ['I', "He? .... Thank you."],
             ['the letter', "Dear John, my son, when you are reading this letter," 
-                        "that means I've gone to the moon to meet your"
+                        " that means I've gone to the moon to meet your"
                         " mom. Poor kid. I will no longer be able to guide you nor protect you. "
                            "I will no longer kick you in an attempt to"
                         " get you right. You are on yourself now. I have not been a successful"
