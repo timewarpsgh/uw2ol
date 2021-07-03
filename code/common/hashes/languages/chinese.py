@@ -256,6 +256,7 @@ dic = {
         # market
         'buy': '买入',
             "You don't have enough gold.": "您钱不够吧。",
+            "This ship doesn't have enough room.": "这艘船没有足够的空间。",
             'Welcome! What can I do for you?': '欢迎！我能为您做点什么？',
             "Alright. Since you have a tax free permit, the price would be": '好吧。因为您有免税证，价格是',
             "Alright. As you don't have a tax free permit, a 20% tax is applied to the price.": '好吧。因为您没有免税证，'

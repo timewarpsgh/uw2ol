@@ -1353,7 +1353,7 @@ class Role:
             # inventory full
             else:
                 if self.is_in_client_and_self():
-                    msg = "This ship dosen't have enough room."
+                    msg = "This ship doesn't have enough room."
                     self.GAME.button_click_handler.i_speak(msg)
 
     def _give_tax_to_port_owner(self, total_cost):
