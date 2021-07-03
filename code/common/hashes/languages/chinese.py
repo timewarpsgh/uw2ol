@@ -859,7 +859,7 @@ dic = {
     'Prairie Dog' :  '草原犬鼠',
     'Bison' :  '野牛',
     'Passenger Pigeon' :  '信鸽',
-    'Totem Pole' :  '‘图腾柱',
+    'Totem Pole' :  '图腾柱',
     'Niagara Falls' :  '尼亚加拉瀑布',
     "Venus' Flytrap" :  '捕蝇草',
     'Great Auk' :  '大海雀',

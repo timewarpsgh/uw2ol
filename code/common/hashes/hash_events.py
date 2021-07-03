@@ -37,7 +37,7 @@ events_dict = {
                            "bank account might some day be able to fund"
                         " a ship. Now, it's yours. Use it wisely."],
             ['the letter', "Do you remember Tommy Branson? "
-                            "He's father is an old friend of mine. "
+                            "His father is an old friend of mine. "
                             "I believe he'll be interested in joining you. "
                             "He knows the way in the water as well as any professional navigator. "
                             "He's likely still working at the bar in Amsterdam. You two should help and take care of each other."],
