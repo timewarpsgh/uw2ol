@@ -13,3 +13,6 @@ build/client/PYZ-00.pyz
 build/client/PYZ-00.toc
 build/client/warn-client.txt
 build/client/xref-client.html
+
+
+dist/release
