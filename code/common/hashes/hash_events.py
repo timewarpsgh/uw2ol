@@ -27,7 +27,7 @@ events_dict = {
                          " Here, take it and be strong."],
             ['I', "He? .... Thank you."],
             ['the letter', "Dear John, my son, when you are reading this letter," 
-                        "that means I've gone to the moon to meet your"
+                        " that means I've gone to the moon to meet your"
                         " mom. Poor kid. I will no longer be able to guide you nor protect you. "
                            "I will no longer kick you in an attempt to"
                         " get you right. You are on yourself now. I have not been a successful"
@@ -37,7 +37,7 @@ events_dict = {
                            "bank account might some day be able to fund"
                         " a ship. Now, it's yours. Use it wisely."],
             ['the letter', "Do you remember Tommy Branson? "
-                            "He's father is an old friend of mine. "
+                            "His father is an old friend of mine. "
                             "I believe he'll be interested in joining you. "
                             "He knows the way in the water as well as any professional navigator. "
                             "He's likely still working at the bar in Amsterdam. You two should help and take care of each other."],
