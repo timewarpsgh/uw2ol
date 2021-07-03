@@ -149,6 +149,11 @@ dic = {
             "I have no quest.": "还没有任务。",
             "On quest to investigate": "已接受任务去调查",
         'Abandon Quest': '放弃次要任务',
+            'Quest abandoned.': '任务已放弃',
+            'I have no quest to abandon.': '我没有任务需要放弃。',
+            
+            
+
     'World Map': '世界地图',
     'Port Map': '港口地图',
 
@@ -160,6 +165,8 @@ dic = {
         'and': "和",
         'Got': "获得了",
         'exp': "经验值",
+        'Can''t find anything.': "什么也没有发现。",
+        
 
     'Battle (B)': '战斗 (B)',
         "Target too far!": '目标太远了！',
