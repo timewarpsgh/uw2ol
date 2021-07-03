@@ -822,7 +822,7 @@ dic = {
     'Koala' :  '考拉',
     'Ayers Rock' :  '艾尔斯岩',
     'Tasmanian Devil' :  '塔斯马尼亚小人',
-    'Frilled Lizard' :  '‘褶边蜥蜴',
+    'Frilled Lizard' :  '褶边蜥蜴',
     'Kangaroo' :  '袋鼠',
     'Popol Vuh' :  '波波乌',
     'Jade Mask' :  '玉制面具',
