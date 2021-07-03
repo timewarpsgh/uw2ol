@@ -120,7 +120,7 @@ class Echo(Protocol):
         data = p.get_pck_has_head()
 
         # send packet
-        self.transport.write(data)
+        self.transport.write(bytes(data))
         print("sending to server:", protocol_name, content_obj)
 
 

@@ -13,7 +13,7 @@ import constants as c
 
 class Database:
     def __init__(self):
-        self.db = pymysql.connect("127.0.0.1", "root", "dab9901025", "py_test")
+        self.db = pymysql.connect(host="127.0.0.1", user="root", password="dab9901025", database="py_test")
         self.cursor = self.db.cursor()
 
     # accounts table
