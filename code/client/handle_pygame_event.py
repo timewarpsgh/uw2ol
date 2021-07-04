@@ -215,13 +215,23 @@ def _not_in_battle_keys(self, event):
     # enter battle
     if event.key == ord('b'):
         if self.my_role.enemy_name:
+            # get my_role and enemy_role
             enemy_role = self.my_role._get_other_role_by_name(self.my_role.enemy_name)
             my_role = self.my_role
-            if abs(enemy_role.x - my_role.x) <= 50 and abs(enemy_role.y - my_role.y) <= 50:
+
+            # if escorted, set enemy to escort
+            if enemy_role.escorted_by:
+                escort_name = enemy_role.escorted_by
+                escort_role = self.my_role._get_other_role_by_name(escort_name)
+                if my_role.is_target_role_in_battle_distance(escort_role):
+                    enemy_role = escort_role
+
+            # try to fight with enemy
+            if my_role.is_target_role_in_battle_distance(enemy_role):
                 if enemy_role.mates[0].nation == my_role.mates[0].nation and not c.DEVELOPER_MODE_ON:
                     self.button_click_handler.i_speak("That fleet is from my own country.")
                 else:
-                    self.connection.send('try_to_fight_with', [self.my_role.enemy_name])
+                    self.connection.send('try_to_fight_with', [enemy_role.name])
             else:
                 msg = "Target too far!"
                 msg = self.trans(msg)

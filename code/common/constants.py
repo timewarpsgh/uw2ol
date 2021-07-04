@@ -1,5 +1,5 @@
 # settings
-DAEMON_MODE = True
+DAEMON_MODE = False
 SAVE_ON_CONNECTION_LOST = False
 SET_ONLINE_TO_TRUE_ON_LOGIN = False
 REMOTE_ON = False

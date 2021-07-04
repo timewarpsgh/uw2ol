@@ -73,6 +73,7 @@ class Role:
         self.person_frame = -1
         self.name = name
         self.enemy_name = None
+        self.escorted_by = None
         self.map = '29'
         self.prev_port_map_id = int(self.map)
         self.in_building_type = None
@@ -227,6 +228,12 @@ class Role:
         target_role = self.get_enemy_role()
         dist = math.hypot(self.x - target_role.x, self.y - target_role.y)
         if dist <= c.SHOOT_RANGE_IN_BATTLE * c.PIXELS_COVERED_EACH_MOVE:
+            return True
+        else:
+            return False
+
+    def is_target_role_in_battle_distance(self, target_role):
+        if abs(target_role.x - self.x) <= 50 and abs(target_role.y - self.y) <= 50:
             return True
         else:
             return False

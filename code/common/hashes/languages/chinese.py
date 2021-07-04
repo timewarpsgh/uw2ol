@@ -21,6 +21,7 @@ dic = {
     'options': '选项',
     'fight': '战斗',
     'sail': '启航',
+    'target': '目标',
     'test': '测试',
 
     # ships
@@ -238,6 +239,8 @@ dic = {
         "We are heading to": "我们正前往",
     'Gossip ': '交涉',
         "Target too far away!": "目标太远了！",
+    'Escort': '护卫',
+        'Escorting': '正在护卫',
 
 
     # test(buildings)

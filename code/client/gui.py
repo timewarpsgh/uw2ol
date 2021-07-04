@@ -1579,6 +1579,13 @@ class MenuClickHandlerForTarget():
     def view_mates(self):
         pass
 
+    def escort(self):
+        target_name = self.game.my_role.enemy_name
+        if target_name:
+            self.game.connection.send('escort', [target_name])
+            text = self.game.trans('Escorting')
+            self.game.button_click_handler.i_speak(f'{text} {target_name}')
+
 class Harbor():
     """menu options under building port"""
     def __init__(self, game):
@@ -2813,6 +2820,7 @@ def target_clicked(self):
     else:
         dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
         dict['Equipments'] = self.button_click_handler.menu_click_handler.target.equipments
+        dict['Escort'] = self.button_click_handler.menu_click_handler.target.escort
 
     self.button_click_handler.make_menu(dict)
 

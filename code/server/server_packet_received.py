@@ -377,6 +377,11 @@ def _change_map_to_port(self, target_map, message_obj):
     # store prev port map id
     self.my_role.prev_port_map_id = int(target_map)
 
+def escort(self, message_obj):
+    target_name = message_obj[0]
+    target_role = self.my_role._get_other_role_by_name(target_name)
+    target_role.escorted_by = self.my_role.name
+
 def try_to_fight_with(self, message_obj):
     """enter battle with someone"""
     enemy_name = message_obj[0]
