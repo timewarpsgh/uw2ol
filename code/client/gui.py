@@ -1672,6 +1672,8 @@ class Harbor():
             # music
             economy_id = hash_ports_meta_data[port_id + 1]['economyId']
             region_name = hash_ports_meta_data['markets'][economy_id]
+
+            print
                                  
             if region_name in ['East Africa','West Africa']:
                 pygame.mixer.music.load('../../assets/sounds/music/sea/African Sea.mp3')
@@ -1684,7 +1686,13 @@ class Harbor():
             elif region_name in ['Central America']:
                 pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')                
             elif region_name in ['South America']:
-                pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')                                
+                pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')
+            elif region_name in ['India']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/Indian Ocean.mp3')         
+            elif region_name in ['Southeast Asia']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/Southeast Asian Sea.ogg')
+            elif region_name in ['Far East']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/East Asia Sea.mp3')                
             else:
                 file_name = random.choice(['sea', 'sea_1'])
                 pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")

@@ -141,9 +141,9 @@ def roles_in_new_map(self, message_obj):
         self.reset_think_time_in_battle()
 
         # music
-        file_name = random.choice(['sea', 'sea_1'])
-        pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
-        pygame.mixer.music.play(-1)
+        # file_name = random.choice(['sea', 'sea_1'])
+        # pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
+        # pygame.mixer.music.play(-1)
 
         # if just lost from battle
         if not self.my_role.ships:
