@@ -100,8 +100,12 @@ def your_role_data_and_others(self, message_obj):
         self.other_roles[role.name] = role
     print(other_roles)
 
-    # music
-    pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+    # music    
+    port_name = hash_ports_meta_data[int(self.my_role.map) + 1]['name']    
+    if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venezia"]:
+        pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
+    else:
+        pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
     pygame.mixer.music.play()
 
 # someone logged in

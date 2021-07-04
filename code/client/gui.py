@@ -367,7 +367,7 @@ class ButtonClickHandler():
                             dict, self.game)
 
         # sound
-        self.game.sounds['wave'].play()
+        # self.game.sounds['wave'].play()
 
     def make_input_boxes(self, prtocol_name, params_list, values_list=[]):
         InputBoxWindow(pygame.Rect((59, 50), (350, 400)),
@@ -1004,11 +1004,16 @@ class MenuClickHandlerForCmds():
         self.game = game
 
     def enter_building(self):
+
+        if self.game.my_role.map == 'sea':            
+            return
+
         # get my now position in piddle
         x = int(self.game.my_role.x/c.PIXELS_COVERED_EACH_MOVE)
         y = int(self.game.my_role.y/c.PIXELS_COVERED_EACH_MOVE)
 
         # get building id to board positions dict
+        
         map_id = int(self.game.my_role.map)
 
         if map_id >= 100:
@@ -1043,6 +1048,12 @@ class MenuClickHandlerForCmds():
 
                 # welcome text
                 self.game.building_text = 'Welcome! What can I do for you?'
+
+                # play music
+                building = id_2_building_type[k]
+                if building in ["bar", "palace", "church"]:                        
+                    pygame.mixer.music.load('../../assets/sounds/music/building/' + building + '.mp3')    
+                    pygame.mixer.music.play()
 
                 # trigger event?
                 role = self.game.my_role
@@ -1642,6 +1653,7 @@ class Harbor():
             self.game.images['sea'] = self.game.map_maker.make_partial_world_map(port_tile_x, port_tile_y, time_of_day)
 
             # send
+            port_id = int(self.game.my_role.map)
             self.game.connection.send('change_map', ['sea'])
 
             # init timer at sea
@@ -1658,8 +1670,24 @@ class Harbor():
                 escape_twice(self.game)
 
             # music
-            file_name = random.choice(['sea', 'sea_1'])
-            pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
+            economy_id = hash_ports_meta_data[port_id + 1]['economyId']
+            region_name = hash_ports_meta_data['markets'][economy_id]
+                                 
+            if region_name in ['East Africa','West Africa']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/African Sea.mp3')
+            elif region_name in ['Middle East','Ottoman Empire']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/Mediterranean.mp3')
+            elif region_name == 'Northern Europe':
+                pygame.mixer.music.load('../../assets/sounds/music/sea/North Sea.mp3')
+            elif region_name in ['The Mediterranean', 'Iberia', 'North Africa']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/Mediterranean.mp3')
+            elif region_name in ['Central America']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')                
+            elif region_name in ['South America']:
+                pygame.mixer.music.load('../../assets/sounds/music/sea/American Sea.mp3')                                
+            else:
+                file_name = random.choice(['sea', 'sea_1'])
+                pygame.mixer.music.load(f"../../assets/sounds/music/{file_name}.ogg")
             pygame.mixer.music.play(-1)
 
     def __pass_one_day_at_sea(self, game):

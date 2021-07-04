@@ -136,7 +136,8 @@ class Game():
         load_all_sounds(self.sounds, f"../../assets/sounds/effect")
 
     def _play_music(self):
-        pygame.mixer.music.load('../../assets/sounds/music/login.ogg')
+        # pygame.mixer.music.load('../../assets/sounds/music/login.ogg')
+        pygame.mixer.music.load('../../assets/sounds/music/MAST IN THE MIST.mp3')
         pygame.mixer.music.play()
 
     def update(self):

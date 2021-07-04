@@ -392,6 +392,9 @@ class Role:
 
         # self.move_timer.stop()
 
+        # try enter_building()
+        self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
+
     def start_moving_out(self, params):
         """npc only"""
         end_port_id = params[0]
