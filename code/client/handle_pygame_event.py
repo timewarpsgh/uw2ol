@@ -284,6 +284,8 @@ def __change_map_to_port(self):
                     pygame.mixer.music.load('../../assets/sounds/music/port/Northern Europe Town.mp3')
                 elif region_name == 'The Mediterranean' or region_name == 'Iberia':
                     pygame.mixer.music.load('../../assets/sounds/music/port/Southern Europe Town.mp3')
+                elif region_name == 'Central America':
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Central America Town.mp3')    
                 elif region_name == 'South America':
                     pygame.mixer.music.load('../../assets/sounds/music/port/South America Town.mp3')
                 elif region_name in ['India']:
@@ -296,7 +298,7 @@ def __change_map_to_port(self):
                     pygame.mixer.music.load('../../assets/sounds/music/port/Japan Town.mp3')
                 elif port_id == 119:
                     pygame.mixer.music.load('../../assets/sounds/music/port/Oceania Town.mp3')
-                else:    
+                else:
                     pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
             pygame.mixer.music.play()
 
