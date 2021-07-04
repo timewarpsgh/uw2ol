@@ -35,7 +35,7 @@ def test():
 def init_gui(self):
     """argument self is game"""
     # ui_manager and handlers
-    self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT))
+    self.ui_manager = pygame_gui.UIManager((c.WINDOW_WIDTH, c.WINDOW_HIGHT), '../../assets/font_theme.json')
     self.button_click_handler = ButtonClickHandler(self)
 
     # text entry
@@ -1025,7 +1025,7 @@ class MenuClickHandlerForCmds():
                     3:self.game.button_click_handler.menu_click_handler.port.on_menu_click_dry_dock,
                     4:self.game.button_click_handler.menu_click_handler.port.on_menu_click_port,
                     5:self.game.button_click_handler.menu_click_handler.port.on_menu_click_inn,
-                    6: self.game.button_click_handler.menu_click_handler.port.on_menu_click_palace,
+                    6:self.game.button_click_handler.menu_click_handler.port.on_menu_click_palace,
                     7:self.game.button_click_handler.menu_click_handler.port.on_menu_click_job_house,
                     8:self.game.button_click_handler.menu_click_handler.port.on_menu_click_msc,
                     9:self.game.button_click_handler.menu_click_handler.port.on_menu_click_bank,

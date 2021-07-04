@@ -1,0 +1,20 @@
+{
+    "button":
+    {
+        "font":
+        {
+            "name": "MS Gothic",
+            "size": "16",
+            "regular_path":"../../assets/siyuanheiti.ttf"
+        }
+    },
+    "text_box":
+    {
+        "font":
+        {
+            "name": "MS Gothic",
+            "size": "15",
+            "regular_path":"../../assets/siyuanheiti.ttf"
+        }
+    }
+}
