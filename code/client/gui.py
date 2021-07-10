@@ -3110,7 +3110,7 @@ def _show_one_ship(params):
         'max_guns/guns': f'{ship.max_guns}/{ship.max_guns} {gun_name}',
         'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
         '3': '',
-        'affective_capacity': f'{ship.useful_capacity}',
+        'useful_capacity': f'{ship.useful_capacity}',
     }
 
     # if no target selected

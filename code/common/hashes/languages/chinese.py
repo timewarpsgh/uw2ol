@@ -70,7 +70,7 @@ dic = {
         'capacity': '载重',
         'max_guns/guns': '最大炮位数/当前炮位',
         'min_crew/crew/max_crew': '最少船员/当前船员/最大船员',
-        'affective_capacity': '有效载重',
+        'useful_capacity': '有效载重',
         'supplies': '补给',
         'F': '食物',
         'W': '淡水',
