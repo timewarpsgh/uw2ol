@@ -1,9 +1,6 @@
 by function
     basics
         speak to the world
-        enter port button ON
-
-
     discover 
 		gems
     trade
@@ -17,7 +14,8 @@ by function
 
 by structure
     buttons on interface 
-    buildings 
+    buildings
+        when in building, don't enter again or move ON
 
 
 
