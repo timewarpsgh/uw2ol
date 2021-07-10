@@ -1,8 +1,7 @@
 by function
     basics
-        ship info, one attribute to one value     ON
-        mate info, one attribute to one value     ON
 
+        right hud is distorted
         speak to the world
         winds and waves
         port npcs can speak
