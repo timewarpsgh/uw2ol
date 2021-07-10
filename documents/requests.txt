@@ -1,14 +1,17 @@
 by function
-    travel 
-		speak to the world
-	
+    basics
+        speak to the world
+
     discover 
 		gems
-    trade 
-
+    trade
 		mates recruited from bars have no wages atm
 		
     fight 
+        polish enter battle UI 
+
+
+
 
 by structure
     buttons on interface 
