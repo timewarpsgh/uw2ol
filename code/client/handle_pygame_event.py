@@ -208,7 +208,8 @@ def _not_in_battle_keys(self, event):
 
     # enter building
     if event.key == ord('f'):
-        self.button_click_handler.menu_click_handler.cmds.enter_building()
+        pass
+        # self.button_click_handler.menu_click_handler.cmds.enter_building()
 
     # go ashore
     if event.key == ord('g'):

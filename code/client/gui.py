@@ -474,7 +474,7 @@ class ButtonClickHandler():
 
     def cmds(self):
         dict = {
-            'Enter Building (F)': self.menu_click_handler.cmds.enter_building,
+            # 'Enter Building (F)': self.menu_click_handler.cmds.enter_building,
             'Enter Port (M)': self.menu_click_handler.cmds.enter_port,
             'Go Ashore (G)': self.menu_click_handler.cmds.go_ashore,
             'Battle (B)': self.menu_click_handler.cmds.battle,
@@ -1008,7 +1008,10 @@ class MenuClickHandlerForCmds():
 
     def enter_building(self):
 
+        # if at sea or already in building
         if self.game.my_role.map == 'sea':            
+            return
+        if self.game.my_role.in_building_type:
             return
 
         # get my now position in piddle
