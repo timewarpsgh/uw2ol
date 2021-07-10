@@ -68,7 +68,7 @@ dic = {
         'tacking/power/speed': '转向/推进/航速',
         'durability': '耐久',
         'capacity': '载重',
-        'max_guns/guns': '最大炮位数/当前炮位',
+        'guns/max_guns': '当前炮位/最大炮位数',
         'min_crew/crew/max_crew': '最少船员/当前船员/最大船员',
         'useful_capacity': '有效载重',
         'supplies': '补给',

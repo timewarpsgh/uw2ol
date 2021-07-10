@@ -3112,7 +3112,7 @@ def _show_one_ship(params):
         'durability': f'{ship.now_hp}/{ship.max_hp}',
         '2': '',
         'capacity': f'{ship.capacity}',
-        'max_guns/guns': f'{ship.max_guns}/{ship.max_guns} {gun_name}',
+        'guns/max_guns': f'{ship.max_guns}/{ship.max_guns} {gun_name}',
         'min_crew/crew/max_crew': f'{ship.min_crew}/{ship.crew}/{ship.max_crew}',
         '3': '',
         'useful_capacity': f'{ship.useful_capacity}',
