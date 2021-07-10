@@ -37,6 +37,9 @@ def handle_pygame_event(self, event):
 
 def key_down(self, event):
     # return (focus text entry)
+    if event.key > 256:
+        return
+
     if event.key == pygame.K_RETURN:
         msg = self.text_entry.get()
         if msg:
@@ -187,7 +190,6 @@ def _not_in_battle_keys(self, event):
 
     elif event.key == ord('e'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
-
     elif event.key == ord('q'):
         self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
     elif event.key == ord('z'):
@@ -277,7 +279,37 @@ def __change_map_to_port(self):
                 self.woman = None
 
             # music
-            pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+            port_name = hash_ports_meta_data[port_id + 1]['name']
+            economy_id = hash_ports_meta_data[port_id + 1]['economyId']
+            region_name = hash_ports_meta_data['markets'][economy_id]
+
+            if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venice"]:
+                pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
+            else:
+                if region_name in ['North Africa','East Africa','West Africa']:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/African Town.mp3')
+                elif region_name in ['Middle East','Ottoman Empire']:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Middle Eastern Town.mp3')
+                elif region_name == 'Northern Europe':
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Northern Europe Town.mp3')
+                elif region_name == 'The Mediterranean' or region_name == 'Iberia':
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Southern Europe Town.mp3')
+                elif region_name == 'Central America':
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Central America Town.mp3')    
+                elif region_name == 'South America':
+                    pygame.mixer.music.load('../../assets/sounds/music/port/South America Town.mp3')
+                elif region_name in ['India']:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Indian Town.mp3')
+                elif region_name in ['Southeast Asia']:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Southeast Asian Town.ogg')
+                elif port_id == 94 or port_id == 95 or port_id == 97:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/China Town.mp3')
+                elif port_id == 98 or port_id == 99:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Japan Town.mp3')
+                elif port_id == 119:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/Oceania Town.mp3')
+                else:
+                    pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
             pygame.mixer.music.play()
 
 def _in_battle_keys(self, event):
@@ -319,6 +351,8 @@ def start_moving_left(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
 
 def key_up(self, event):
+    if event.key > 256:
+        return
     if not self.text_entry_active:
         key = chr(event.key)
         # stop moving
