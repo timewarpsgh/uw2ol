@@ -386,9 +386,6 @@ class Role:
         self.direction = direction
         self.moving = True
 
-        # self.move_timer = task.LoopingCall(self.move, [direction])
-        # self.move_timer.start(0.15)
-
     def stop_move(self, params):
         x = params[0]
         y = params[1]
@@ -397,10 +394,9 @@ class Role:
         self.y = y
         self.moving = False
 
-        # self.move_timer.stop()
-
         # try enter_building()
-        self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
+        if self.is_in_client_and_self():
+            self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
 
     def start_moving_out(self, params):
         """npc only"""
