@@ -1,5 +1,8 @@
 by function
     basics
+        ship info, one attribute to one value     ON
+        mate info, one attribute to one value     ON
+
         speak to the world
         winds and waves
         port npcs can speak
@@ -14,6 +17,8 @@ by function
 		
     fight
         duals
+
+        bar girl info shouldn't be free
 
 
 
