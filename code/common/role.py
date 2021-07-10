@@ -218,6 +218,12 @@ class Role:
         else:
             return False
 
+    def is_in_building(self):
+        if self.in_building_type:
+            return True
+        else:
+            return False
+
     def is_npc(self):
         if str(self.name).isdigit():
             return True

@@ -179,23 +179,24 @@ def other_keys_down(self, event):
 
 def _not_in_battle_keys(self, event):
     # start move
-    if event.key == ord('d'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
-    elif event.key == ord('a'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
-    elif event.key == ord('w'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'up'])
-    elif event.key == ord('s'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
+    if not self.my_role.is_in_building():
+        if event.key == ord('d'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])
+        elif event.key == ord('a'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'left'])
+        elif event.key == ord('w'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'up'])
+        elif event.key == ord('s'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'down'])
 
-    elif event.key == ord('e'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
-    elif event.key == ord('q'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
-    elif event.key == ord('z'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'sw'])
-    elif event.key == ord('x'):
-        self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'se'])
+        elif event.key == ord('e'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'ne'])
+        elif event.key == ord('q'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'nw'])
+        elif event.key == ord('z'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'sw'])
+        elif event.key == ord('x'):
+            self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'se'])
 
     # change map to sea
     if event.key == ord('n'):

@@ -1011,7 +1011,7 @@ class MenuClickHandlerForCmds():
         # if at sea or already in building
         if self.game.my_role.map == 'sea':            
             return
-        if self.game.my_role.in_building_type:
+        if self.game.my_role.is_in_building():
             return
 
         # get my now position in piddle

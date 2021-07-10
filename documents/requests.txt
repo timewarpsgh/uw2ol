@@ -15,8 +15,8 @@ by function
 by structure
     buttons on interface 
     buildings
-        when in building, don't enter again or move ON
-
+        when in building, don't enter again OK
+        when in building, don't move ON
 
 
 
