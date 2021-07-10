@@ -204,7 +204,7 @@ def _not_in_battle_keys(self, event):
 
     # change map to port
     elif event.key == ord('m'):
-        __change_map_to_port(self)
+        self.button_click_handler.menu_click_handler.cmds.enter_port()
 
     # enter building
     if event.key == ord('f'):
@@ -225,71 +225,6 @@ def _not_in_battle_keys(self, event):
         else:
             self.button_click_handler.menu_click_handler.options._set_to_english()
 
-def __change_map_to_port(self):
-    if not self.my_role.map.isdigit():
-        port_id = get_nearby_port_index(self)
-        if port_id or port_id == 0:
-            self.connection.send('change_map', [str(port_id), self.days_spent_at_sea])
-            self.timer_at_sea.stop()
-
-            # make npcs
-            if port_id < 100:
-                self.time_of_day = random.choice(c.TIME_OF_DAY_OPTIONS)
-
-                if self.time_of_day == 'night':
-                    self.dog = None
-                    self.old_man = None
-                    self.agent = None
-
-                    self.man = None
-                    self.woman = None
-                else:
-                    port_npc.init_static_npcs(self, port_id)
-                    port_npc.init_dynamic_npcs(self, port_id)
-
-            # don't make
-            else:
-                self.dog = None
-                self.old_man = None
-                self.agent = None
-
-                self.man = None
-                self.woman = None
-
-            # music
-            port_name = hash_ports_meta_data[port_id + 1]['name']
-            economy_id = hash_ports_meta_data[port_id + 1]['economyId']
-            region_name = hash_ports_meta_data['markets'][economy_id]
-
-            if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venice"]:
-                pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
-            else:
-                if region_name in ['North Africa','East Africa','West Africa']:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/African Town.mp3')
-                elif region_name in ['Middle East','Ottoman Empire']:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Middle Eastern Town.mp3')
-                elif region_name == 'Northern Europe':
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Northern Europe Town.mp3')
-                elif region_name == 'The Mediterranean' or region_name == 'Iberia':
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Southern Europe Town.mp3')
-                elif region_name == 'Central America':
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Central America Town.mp3')    
-                elif region_name == 'South America':
-                    pygame.mixer.music.load('../../assets/sounds/music/port/South America Town.mp3')
-                elif region_name in ['India']:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Indian Town.mp3')
-                elif region_name in ['Southeast Asia']:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Southeast Asian Town.ogg')
-                elif port_id == 94 or port_id == 95 or port_id == 97:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/China Town.mp3')
-                elif port_id == 98 or port_id == 99:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Japan Town.mp3')
-                elif port_id == 119:
-                    pygame.mixer.music.load('../../assets/sounds/music/port/Oceania Town.mp3')
-                else:
-                    pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
-            pygame.mixer.music.play()
-
 def _in_battle_keys(self, event):
     if event.key == ord('b'):
         self.button_click_handler.menu_click_handler.battle.escape_battle()
@@ -301,20 +236,6 @@ def _in_battle_keys(self, event):
         self.change_and_send('set_all_ships_attack_method', [0])
     elif event.key == ord('i'):
         self.change_and_send('set_all_ships_attack_method', [1])
-
-def get_nearby_port_index(self):
-    # get x and y in tile position
-    x_tile = self.my_role.x / c.PIXELS_COVERED_EACH_MOVE
-    y_tile = self.my_role.y / c.PIXELS_COVERED_EACH_MOVE
-
-    # iterate each port
-    for i in range(1,131):
-        if abs(x_tile - hash_ports_meta_data[i]['x']) <= 2 \
-                and abs(y_tile - hash_ports_meta_data[i]['y']) <= 2:
-            port_id = i - 1
-            return port_id
-
-    return None
 
 def move_right_and_then_back(self):
     self.change_and_send('start_move', [self.my_role.x, self.my_role.y, 'right'])

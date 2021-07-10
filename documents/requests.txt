@@ -1,6 +1,8 @@
 by function
     basics
         speak to the world
+        enter port button ON
+
 
     discover 
 		gems
@@ -8,7 +10,7 @@ by function
 		mates recruited from bars have no wages atm
 		
     fight 
-        polish enter battle UI
+
 
 
 

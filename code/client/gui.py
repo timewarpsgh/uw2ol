@@ -13,6 +13,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import constants as c
 from role import Port, Mate, Ship, Discovery, Item, Gun
 
+from port_npc import Dog, OldMan, Agent, Man, Woman
+import port_npc
+
 from image_processor import load_image
 
 import handle_pygame_event
@@ -472,7 +475,7 @@ class ButtonClickHandler():
     def cmds(self):
         dict = {
             'Enter Building (F)': self.menu_click_handler.cmds.enter_building,
-            'Enter Port (M)': test,
+            'Enter Port (M)': self.menu_click_handler.cmds.enter_port,
             'Go Ashore (G)': self.menu_click_handler.cmds.go_ashore,
             'Battle (B)': self.menu_click_handler.cmds.battle,
             'Measure Cooridinate': self.menu_click_handler.cmds.measure_coordinate,
@@ -1094,7 +1097,86 @@ class MenuClickHandlerForCmds():
             self.game.change_and_send(protocol, params)
 
     def enter_port(self):
-        self.game.change_and_send('change_map', ['port'])
+
+        # def
+        def get_nearby_port_index(self):
+            # get x and y in tile position
+            x_tile = self.my_role.x / c.PIXELS_COVERED_EACH_MOVE
+            y_tile = self.my_role.y / c.PIXELS_COVERED_EACH_MOVE
+
+            # iterate each port
+            for i in range(1, 131):
+                if abs(x_tile - hash_ports_meta_data[i]['x']) <= 2 \
+                        and abs(y_tile - hash_ports_meta_data[i]['y']) <= 2:
+                    port_id = i - 1
+                    return port_id
+
+            return None
+
+        # main
+        if not self.game.my_role.map.isdigit():
+            port_id = get_nearby_port_index(self.game)
+            if port_id or port_id == 0:
+                self.game.connection.send('change_map', [str(port_id), self.game.days_spent_at_sea])
+                self.game.timer_at_sea.stop()
+
+                # make npcs
+                if port_id < 100:
+                    self.game.time_of_day = random.choice(c.TIME_OF_DAY_OPTIONS)
+
+                    if self.game.time_of_day == 'night':
+                        self.game.dog = None
+                        self.game.old_man = None
+                        self.game.agent = None
+
+                        self.game.man = None
+                        self.game.woman = None
+                    else:
+                        port_npc.init_static_npcs(self.game, port_id)
+                        port_npc.init_dynamic_npcs(self.game, port_id)
+
+                # don't make
+                else:
+                    self.game.dog = None
+                    self.game.old_man = None
+                    self.game.agent = None
+
+                    self.game.man = None
+                    self.game.woman = None
+
+                # music
+                port_name = hash_ports_meta_data[port_id + 1]['name']
+                economy_id = hash_ports_meta_data[port_id + 1]['economyId']
+                region_name = hash_ports_meta_data['markets'][economy_id]
+
+                if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venice"]:
+                    pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
+                else:
+                    if region_name in ['North Africa', 'East Africa', 'West Africa']:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/African Town.mp3')
+                    elif region_name in ['Middle East', 'Ottoman Empire']:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Middle Eastern Town.mp3')
+                    elif region_name == 'Northern Europe':
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Northern Europe Town.mp3')
+                    elif region_name == 'The Mediterranean' or region_name == 'Iberia':
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Southern Europe Town.mp3')
+                    elif region_name == 'Central America':
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Central America Town.mp3')
+                    elif region_name == 'South America':
+                        pygame.mixer.music.load('../../assets/sounds/music/port/South America Town.mp3')
+                    elif region_name in ['India']:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Indian Town.mp3')
+                    elif region_name in ['Southeast Asia']:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Southeast Asian Town.ogg')
+                    elif port_id == 94 or port_id == 95 or port_id == 97:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/China Town.mp3')
+                    elif port_id == 98 or port_id == 99:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Japan Town.mp3')
+                    elif port_id == 119:
+                        pygame.mixer.music.load('../../assets/sounds/music/port/Oceania Town.mp3')
+                    else:
+                        pygame.mixer.music.load('../../assets/sounds/music/port.ogg')
+                pygame.mixer.music.play()
 
     def go_ashore(self):
 
