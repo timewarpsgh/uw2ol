@@ -1,12 +1,20 @@
 by function
     basics
         speak to the world
+        winds and waves
+        port npcs can speak
+
+
     discover 
 		gems
     trade
+        buy and sell GUI ON -xiaodao
+
 		mates recruited from bars have no wages atm
 		
-    fight 
+    fight
+        duals
+
 
 
 
@@ -15,8 +23,6 @@ by function
 by structure
     buttons on interface 
     buildings
-        when in building, don't enter again OK
-        when in building, don't move ON
 
 
 
