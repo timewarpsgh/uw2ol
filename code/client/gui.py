@@ -474,7 +474,7 @@ class ButtonClickHandler():
             'Enter Building (F)': self.menu_click_handler.cmds.enter_building,
             'Enter Port (M)': test,
             'Go Ashore (G)': self.menu_click_handler.cmds.go_ashore,
-            'Battle (B)': test,
+            'Battle (B)': self.menu_click_handler.cmds.battle,
             'Measure Cooridinate': self.menu_click_handler.cmds.measure_coordinate,
         }
         self.make_menu(dict)
@@ -1123,12 +1123,36 @@ class MenuClickHandlerForCmds():
 
 
     def battle(self):
-        target_name = self.game.my_role.enemy_name
-        if target_name:
-            self.game.change_and_send('try_to_fight_with', [target_name])
+        # if have target
+        if self.game.my_role.enemy_name:
+            # get my_role and enemy_role
+            enemy_role = self.game.my_role._get_other_role_by_name(self.game.my_role.enemy_name)
+            my_role = self.game.my_role
+
+            # if escorted, set enemy to escort
+            if enemy_role.escorted_by:
+                escort_name = enemy_role.escorted_by
+                escort_role = self.game.my_role._get_other_role_by_name(escort_name)
+                if my_role.is_target_role_in_battle_distance(escort_role):
+                    enemy_role = escort_role
+
+            # try to fight with enemy
+            if my_role.is_target_role_in_battle_distance(enemy_role):
+                if enemy_role.mates[0].nation == my_role.mates[0].nation and not c.DEVELOPER_MODE_ON:
+                    self.game.button_click_handler.i_speak("That fleet is from my own country.")
+                else:
+                    self.game.connection.send('try_to_fight_with', [enemy_role.name])
+            else:
+                msg = "Target too far!"
+                msg = self.game.trans(msg)
+                self.game.button_click_handler. \
+                    make_message_box(msg)
+
+        # if no target
         else:
+            msg = "No target!"
             self.game.button_click_handler. \
-                make_message_box("you don't have a target")
+                make_message_box(msg)
 
     def measure_coordinate(self):
         my_role = self.game.my_role
@@ -1596,6 +1620,10 @@ class MenuClickHandlerForTarget():
             self.game.connection.send('escort', [target_name])
             text = self.game.trans('Escorting')
             self.game.button_click_handler.i_speak(f'{text} {target_name}')
+
+    def battle(self):
+        self.game.button_click_handler.menu_click_handler.cmds.battle()
+
 
 class Harbor():
     """menu options under building port"""
@@ -2842,22 +2870,25 @@ def escape_thrice(game):
     reactor.callLater(0.2, handle_pygame_event.escape, game, '')
 
 def target_clicked(self):
-    # self is game
+    """self is game"""
+
+    # both npc and player
     dict = {
         'View Fleet': self.button_click_handler.menu_click_handler.target.view_fleet,
         'View Ships': self.button_click_handler.menu_click_handler.target.view_ships,
+        'Captain Info': self.button_click_handler.menu_click_handler.target.captain_info,
+        'Enter Battle': self.button_click_handler.menu_click_handler.target.battle
     }
 
-    # if npc
+    # npc only
     if self.my_role.get_enemy_role().is_npc():
         dict['Gossip '] = self.button_click_handler.menu_click_handler.target.gossip
-        dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
     # if player
     else:
-        dict['Captain Info'] = self.button_click_handler.menu_click_handler.target.captain_info
         dict['Equipments'] = self.button_click_handler.menu_click_handler.target.equipments
         dict['Escort'] = self.button_click_handler.menu_click_handler.target.escort
 
+    # make menu
     self.button_click_handler.make_menu(dict)
 
 def figure_x_y_2_image(game, x=8, y=8):

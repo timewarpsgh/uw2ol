@@ -8,7 +8,7 @@ by function
 		mates recruited from bars have no wages atm
 		
     fight 
-        polish enter battle UI 
+        polish enter battle UI
 
 
 

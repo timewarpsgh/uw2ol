@@ -241,7 +241,8 @@ dic = {
         "Target too far away!": "目标太远了！",
     'Escort': '护卫',
         'Escorting': '正在护卫',
-
+    'Enter Battle': '进入战斗',
+        'No target!': '没有目标',
 
     # test(buildings)
         # all buildings
