@@ -1146,8 +1146,10 @@ class MenuClickHandlerForCmds():
 
                 # music
                 port_name = hash_ports_meta_data[port_id + 1]['name']
-                economy_id = hash_ports_meta_data[port_id + 1]['economyId']
-                region_name = hash_ports_meta_data['markets'][economy_id]
+                economy_id = hash_ports_meta_data[port_id + 1].get('economyId', None)
+                region_name = None
+                if economy_id:
+                    region_name = hash_ports_meta_data['markets'][economy_id]
 
                 if port_name in ["Lisbon", "Seville", "London", "Marseille", "Amsterdam", "Venice"]:
                     pygame.mixer.music.load('../../assets/sounds/music/port/' + port_name + '.mp3')
@@ -1787,11 +1789,11 @@ class Harbor():
                 escape_twice(self.game)
 
             # music
-            economy_id = hash_ports_meta_data[port_id + 1]['economyId']
-            region_name = hash_ports_meta_data['markets'][economy_id]
+            economy_id = hash_ports_meta_data[port_id + 1].get('economyId', None)
+            region_name = None
+            if economy_id:
+                region_name = hash_ports_meta_data['markets'][economy_id]
 
-            print
-                                 
             if region_name in ['East Africa','West Africa']:
                 pygame.mixer.music.load('../../assets/sounds/music/sea/African Sea.mp3')
             elif region_name in ['Middle East','Ottoman Empire']:
