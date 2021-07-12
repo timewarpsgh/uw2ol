@@ -1309,6 +1309,27 @@ class Role:
         price_index = self.price_index
         sell_price_modifier = (50 + (price_index - 100) + mate.intuition + mate.accounting * 10) / 100
         return sell_price_modifier
+    
+    def get_unit_cost_of_cargoes(self, cargo_name):
+        port = self.get_port()
+        unit_price = port.get_commodity_buy_price(cargo_name)
+        buy_price_modifier = self.get_buy_price_modifier()
+        unit_price = int(unit_price * buy_price_modifier)
+        
+        # has the right tax permit
+        right_tax_permit_id = nation_2_tax_permit_id[self.nation]
+        unit_cost = 0
+        if right_tax_permit_id in self.bag.get_all_items_dict() and \
+                self.nation == self.mates[0].nation:
+            unit_cost = unit_price
+            self.bag.remove_item(right_tax_permit_id)
+        else:
+            unit_cost = int(unit_price * 1.2)
+
+        return unit_cost
+
+    def get_total_cost_of_cargoes(self, cargo_name, count):        
+        return int(count * self.get_unit_cost_of_cargoes(cargo_name))        
 
     def buy_cargo(self, params):
         cargo_name = params[0]
@@ -1321,22 +1342,10 @@ class Role:
         if cargo_name in port.get_availbale_goods_dict():
             # if ship has space to add cargo
             ship = self.ships[to_which_ship]
-            if ship.can_add_cargo_or_supply(count):
+            if ship.can_add_cargo_or_supply(count):                
                 # get total_cost
-                unit_price = port.get_commodity_buy_price(cargo_name)
-                buy_price_modifier = self.get_buy_price_modifier()
-                unit_price = int(unit_price * buy_price_modifier)
-
-                    # has the right tax permit
-                right_tax_permit_id = nation_2_tax_permit_id[self.nation]
-                total_cost = 0
-                if right_tax_permit_id in self.bag.get_all_items_dict() and \
-                        self.nation == self.mates[0].nation:
-                    total_cost = count * unit_price
-                    self.bag.remove_item(right_tax_permit_id)
-                else:
-                    total_cost = int(count * unit_price * 1.2)
-
+                total_cost = self.get_total_cost_of_cargoes(cargo_name, count)
+                
                 # can afford
                 if self.gold >= total_cost:
                     # exchange
