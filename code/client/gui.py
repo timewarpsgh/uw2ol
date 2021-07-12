@@ -2005,7 +2005,7 @@ class Market():
             reactor.callLater(0.3, self.game.button_click_handler. \
                 make_input_boxes, 'sell_cargo',
                               ['cargo name', 'ship num', 'count'],
-                              [cargo_name, str(index)])
+                              [cargo_name, str(index), str(self.game.my_role.ships[index].cargoes[cargo_name])])
 
         dict = {
             'Sell': [sell, cargo_name]
