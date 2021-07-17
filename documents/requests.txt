@@ -1,7 +1,9 @@
 by function
     basics
-        speak to the world ON
-        winds and waves
+        speak to the world OK
+        private speak ON
+        winds and waves ON
+        show direction ON
         port npcs can speak
 
 

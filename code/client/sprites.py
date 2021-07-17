@@ -441,5 +441,40 @@ class ShipInBattle(pg.sprite.Sprite):
     def _draw(self):
         self.game.screen_surface.blit(self.image, self.rect)
 
+class WorldMessages(pg.sprite.Sprite):
+    """displays all world messages"""
+    def __init__(self, game, x=115 , y=200, max_count=c.MAX_WORLD_MSG_TO_DISPLAY):
+        # basics
+        pg.sprite.Sprite.__init__(self)
+        self.game = game
+
+        # images
+        self.images = [None] * max_count
+
+        # rects
+        self.rects = [None] * max_count
+
+        # x and y
+        self.x = x
+        self.y = y
+
+    def update(self):
+        self._change_state()
+        self._draw()
+
+    def _change_state(self):
+        for id, msg in enumerate(self.game.world_msgs):
+            self.images[id] = self.game.font.render(msg, True, c.YELLOW)
+            self.rects[id] = self.images[id].get_rect()
+            self.rects[id].x = self.x
+            self.rects[id].y = self.y + id * 15
+
+    def _draw(self):
+        for id, image in enumerate(self.images):
+            if image:
+                self.game.screen_surface.blit(image, self.rects[id])
+
+
+
 if __name__ == '__main__':
     pass

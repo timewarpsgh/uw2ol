@@ -164,7 +164,15 @@ def main():
     def send_speach(event):
         msg = game.text_entry.get()
         if msg:
-            game.change_and_send('speak', [msg])
+            # speak to nearby players
+            if msg.startswith('/w'):
+                print('speaking to world!')
+                msg = msg[2:]
+                game.connection.send('speak_to_world', [msg])
+            else:
+                game.change_and_send('speak', [msg])
+
+            # clear text_entry
             game.text_entry.delete(0, "end")
             game.embed.focus()
             game.text_entry_active = False

@@ -26,4 +26,5 @@ class PlayerManager:
         else:
             return None
 
-
+    def get_all_palyers_dict(self):
+        return self.players_dic

@@ -25,12 +25,12 @@ from gui import SelectionListWindow, ButtonClickHandler
 from hashes.look_up_tables import id_2_building_type, now_direct_2_alternative_directs
 from gui import mate_speak as m_speak
 from image_processor import load_image, load_all_images, load_all_sounds
-from sprites import Explosion, BattleMiniMap, BattleStates
+from sprites import Explosion, BattleMiniMap, BattleStates, WorldMessages
 from translator import Translator
 
 class Game():
     def __init__(self):
-        # pygame and gui
+        # init pygame, gui, and translator
         self._init_pygame()
         self.translator = Translator()
         gui.init_gui(self)
@@ -56,8 +56,11 @@ class Game():
         self.all_sprites = pygame.sprite.Group()
         self.mark_sprites = pygame.sprite.Group()
         self.battle_state_sprites = pygame.sprite.Group()
+
         self.battle_state_sprites.add(BattleMiniMap(self))
         self.battle_state_sprites.add(BattleStates(self))
+
+        self.all_sprites.add(WorldMessages(self))
 
     def _init_pygame(self):
         pygame.init()
@@ -85,6 +88,7 @@ class Game():
                                         c.SHIP_SIZE_IN_PIXEL,
                                         c.SHIP_SIZE_IN_PIXEL
                                         )
+        self.world_msgs = []
 
     def _init_maps(self):
         # maps

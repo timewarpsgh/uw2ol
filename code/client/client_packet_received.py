@@ -469,3 +469,13 @@ def not_your_port(self, message_obj):
 def cannot_afford(self, message_obj):
     msg = "You don't have enough gold."
     self.button_click_handler.building_speak(msg)
+
+def got_world_speak(self, message_obj):
+    player_name = message_obj[0]
+    msg = message_obj[1]
+
+    if len(self.world_msgs) < c.MAX_WORLD_MSG_TO_DISPLAY:
+        self.world_msgs.append(f"{player_name} said {msg}.")
+    else:
+        self.world_msgs.pop(0)
+        self.world_msgs.append(f"{player_name} said {msg}.")
