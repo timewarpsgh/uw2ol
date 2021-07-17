@@ -1,8 +1,6 @@
 by function
     basics
-
-        right hud is distorted
-        speak to the world
+        speak to the world ON
         winds and waves
         port npcs can speak
 
@@ -10,13 +8,10 @@ by function
     discover 
 		gems
     trade
-        buy and sell GUI ON -xiaodao
-
 		mates recruited from bars have no wages atm
 		
     fight
         duals
-
         bar girl info shouldn't be free
 
 
