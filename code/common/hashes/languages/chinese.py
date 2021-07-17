@@ -271,6 +271,7 @@ dic = {
             "I think": '我认为',
             "is a reasonable price for": '是比较合理的价格，对于',
             "You can still make good profits.": '您仍然可以赚不少吧',
+            'cargo name': '货品',
             'ship num': '船只编号',
             'thank you!': '感谢您!',
 

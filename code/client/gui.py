@@ -155,9 +155,9 @@ class InputBoxWindow(pygame_gui.elements.UIWindow):
             index = 0
             for value in values_list:
                 input_box_list[index].set_text(value)
-                input_box_list[index].kill()
-                text_box_list[index].kill()
-                index +=1
+                # input_box_list[index].kill()
+                # text_box_list[index].kill()
+                index += 1
 
         # get dict
         self.dict = {'OK':[protocol_name]}
@@ -349,12 +349,6 @@ class ButtonClickHandler():
 
     def escape_thrice(self):
         escape_thrice(self.game)
-
-    def escape_4_times(self):
-        handle_pygame_event.escape(game, '')
-        reactor.callLater(0.1, handle_pygame_event.escape, game, '')
-        reactor.callLater(0.2, handle_pygame_event.escape, game, '')
-        reactor.callLater(0.3, handle_pygame_event.escape, game, '')
 
     def escape_n_times(self, n):
         game = self.game
@@ -1938,17 +1932,23 @@ class Market():
         mate_speak(self.game, mate, msg)
 
         # buy button
-        def buy(cargo_name):
-            escape_twice(self.game)
+        def buy(param):
+            cargo_name = param[0]
+            ship_id = param[1]
+            escape_twice(self.game)            
+
+            ship = self.game.my_role.ships[ship_id]
+            max_count = ship.get_cargo_and_supply_capacity()
+
             reactor.callLater(0.3, self.game.button_click_handler. \
                 make_input_boxes, 'buy_cargo',
                               ['cargo name', 'count', 'ship num'],
-                              [cargo_name])
+                              [cargo_name, str(max_count), str(ship_id)])
 
-        dict = {
-            'Buy': [buy, cargo_name]
-        }
-
+        ships = self.game.my_role.ships
+        dict = {}
+        for index, ship in enumerate(ships):
+            dict[f"{index} {ship.name} {ship.useful_capacity-ship.get_cargo_and_supply_capacity()}/{ship.useful_capacity}"] = [buy, [cargo_name, index]]
         self.game.button_click_handler.make_menu(dict)
 
     def sell(self):
@@ -2005,7 +2005,7 @@ class Market():
             reactor.callLater(0.3, self.game.button_click_handler. \
                 make_input_boxes, 'sell_cargo',
                               ['cargo name', 'ship num', 'count'],
-                              [cargo_name, str(index)])
+                              [cargo_name, str(index), str(self.game.my_role.ships[index].cargoes[cargo_name])])
 
         dict = {
             'Sell': [sell, cargo_name]
