@@ -1,9 +1,12 @@
 by function
     basics
-        speak to the world OK
-        private speak ON
+        update documents OK
+
         winds and waves ON
         show direction ON
+
+        private speak ON
+
         port npcs can speak
 
 
