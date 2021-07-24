@@ -11,6 +11,8 @@ by function
 
             changes randomly, and sends to every client OK
 
+            wind direction display OK
+
             npc moves based on winds ON
 
 

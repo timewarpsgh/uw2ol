@@ -63,4 +63,4 @@ def save_pygame_img(img, file_name):
     pg.image.save(img, file_name)
 
 if __name__ == '__main__':
-    make_white_bg_transparent('left.png')
+    make_white_bg_transparent('direction.png')

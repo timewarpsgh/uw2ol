@@ -399,3 +399,14 @@ ship_direction_2_wind_or_wave_direction_effect = {
         'nw': 1,
     },
 }
+
+direction_2_symbol_angle = {
+    'e': 0,
+    'ne': 45,
+    'n': 90,
+    'nw': 135,
+    'w': 180,
+    'sw': 225,
+    's': 270,
+    'se': 315,
+}
