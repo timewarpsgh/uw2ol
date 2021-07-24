@@ -1,6 +1,6 @@
 by function
     basics
-        update documents OK
+        release ON
 
         winds and waves ON
         show direction ON
