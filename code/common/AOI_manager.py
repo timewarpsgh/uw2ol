@@ -289,7 +289,7 @@ class PortMap(Map):
         self.price_index = pi
 
 class WindWaveMgr:
-    """winds and waves (the same no matter where you are)"""
+    """manages winds and waves (the same no matter where you are)"""
 
     def __init__(self):
         self.wind_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
@@ -297,13 +297,18 @@ class WindWaveMgr:
         self.wave_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
         self.wave_direction = random.choice(c.EIGHT_DIRECTIONS)
 
-    def change(self):
+    def change(self, player_mgr):
         int = random.randint(0, 9)
         if int >= 7:
+            # change
             self.wind_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
             self.wind_direction = random.choice(c.EIGHT_DIRECTIONS)
             self.wave_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
             self.wave_direction = random.choice(c.EIGHT_DIRECTIONS)
+
+            # send WindWaveMgr to all players
+            for p_conn in player_mgr.get_all_palyers_dict().values():
+                p_conn.send('wind_wave_change', self)
 
 class SeaMap(Map):
     def __init__(self):

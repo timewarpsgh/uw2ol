@@ -479,3 +479,6 @@ def got_world_speak(self, message_obj):
     else:
         self.world_msgs.pop(0)
         self.world_msgs.append(f"{player_name} said {msg}.")
+
+def wind_wave_change(self, message_obj):
+    self.my_role.wind_wave_mgr = message_obj

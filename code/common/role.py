@@ -94,6 +94,7 @@ class Role:
         self.discoveries = {}
         self.bag = Bag(self)
         self.body = Body()
+        self.wind_wave_mgr = None
 
         # both role and mates[0] have these
         self.accountant = None

@@ -9,8 +9,8 @@ by function
 
             ships move based on winds and waves OK
 
-            changes randomly, and sends to every client ON
-            
+            changes randomly, and sends to every client OK
+
             npc moves based on winds ON
 
 
