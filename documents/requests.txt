@@ -1,11 +1,11 @@
 by function
     basics
-        release ON
-
         winds and waves ON
-        show direction ON
+        
 
-        private speak ON
+        show direction
+
+        private speak
 
         port npcs can speak
 
