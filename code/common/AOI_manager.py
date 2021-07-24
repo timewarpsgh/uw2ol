@@ -289,11 +289,30 @@ class PortMap(Map):
         self.price_index = pi
 
 
+
+class WindWaveMgr:
+    """winds and waves (the same no matter where you are)"""
+
+    def __init__(self):
+        self.wind_speed = random.randint(0, 9)
+        self.wind_direction = random.choice(c.EIGHT_DIRECTIONS)
+        self.wave_speed = random.randint(0, 9)
+        self.wave_direction = random.choice(c.EIGHT_DIRECTIONS)
+
+    def change(self):
+        int = random.randint(0, 9)
+        if int >= 7:
+            self.wind_speed = random.randint(0, 9)
+            self.wind_direction = random.choice(c.EIGHT_DIRECTIONS)
+            self.wave_speed = random.randint(0, 9)
+            self.wave_direction = random.choice(c.EIGHT_DIRECTIONS)
+
+
 class SeaMap(Map):
     def __init__(self):
         Map.__init__(self)
 
-        # fill empty fields
+        # grids
         self.x_tile_count = c.WORLD_MAP_COLUMNS
         self.y_tile_count = c.WORLD_MAP_ROWS
 
@@ -306,6 +325,11 @@ class SeaMap(Map):
         for i in range(0, self.total_num_of_grids):
             self.grids[i] = Grid()
 
+        # winds and waves
+        self.wind_wave_mgr = WindWaveMgr()
+
+    def get_wind_wave_mgr(self):
+        return self.wind_wave_mgr
 
 class BattleMap(Map):
     """different from sea or port. has only one grid"""

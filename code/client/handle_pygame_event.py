@@ -227,6 +227,9 @@ def _not_in_battle_keys(self, event):
         else:
             self.button_click_handler.menu_click_handler.options._set_to_english()
 
+    if event.key == ord('t'):
+        print(self.my_role.wind_wave_mgr.wind_speed)
+
 def _in_battle_keys(self, event):
     if event.key == ord('b'):
         self.button_click_handler.menu_click_handler.battle.escape_battle()

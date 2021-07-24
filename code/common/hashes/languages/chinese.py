@@ -645,6 +645,8 @@ dic = {
             'knots': '节',
             'Max Days': '可续航天数',
             'Days Spent': '已航行天数',
+            'Wind': '风情',
+            'Wave': '洋流',
 
         # hud in battle
         'Please Wait...': '请等待...',

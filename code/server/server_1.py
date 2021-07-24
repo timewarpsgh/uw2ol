@@ -203,6 +203,11 @@ class EchoFactory(Factory):
         looping_task = task.LoopingCall(self.npc_manager.update)
         looping_task.start(0.5)
 
+        # wind wave mgr update loop
+        wind_wave_mgr = self.aoi_manager.get_sea_map().get_wind_wave_mgr()
+        looping_task = task.LoopingCall(wind_wave_mgr.change)
+        looping_task.start(60)
+
         # db
         self.db = Database()
 

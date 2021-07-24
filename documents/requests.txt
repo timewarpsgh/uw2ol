@@ -1,7 +1,12 @@
 by function
     basics
         winds and waves ON
-        
+            stored on server
+
+            sends to client on connection
+
+            changes randomly, and sends to every client
+
 
         show direction
 

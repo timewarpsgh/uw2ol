@@ -177,9 +177,22 @@ def draw_hud(self):
 
         # at sea
     else:
+
+            # speed
         draw_text(self, self.translator.translate('Speed'), c.WINDOW_WIDTH - 100, 80)
         draw_text(self, str(self.my_role.speed) + ' ' +
                   self.translator.translate('knots'), c.WINDOW_WIDTH - 100, 100)
+
+            # winds and waves
+        draw_text(self, self.translator.translate('Wind'), c.WINDOW_WIDTH - 100, 200)
+        wind_text =  str(self.my_role.wind_wave_mgr.wind_speed) + '|' + \
+                     str(self.my_role.wind_wave_mgr.wind_direction)
+        draw_text(self, wind_text, c.WINDOW_WIDTH - 100, 220)
+
+        draw_text(self, self.translator.translate('Wave'), c.WINDOW_WIDTH - 100, 240)
+        wave_text = str(self.my_role.wind_wave_mgr.wave_speed) + '|' + \
+                     str(self.my_role.wind_wave_mgr.wave_direction)
+        draw_text(self, wave_text, c.WINDOW_WIDTH - 100, 260)
 
 def draw_text(self, text, x, y, color=c.BLACK):
     text_img = self.font.render(text, True, color)

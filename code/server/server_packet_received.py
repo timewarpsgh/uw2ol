@@ -703,6 +703,7 @@ def on_get_character_data_got_result(self, role):
         self.my_role.nation = map.nation
         self.my_role.port_economy = map.economy
         self.my_role.port_industry = map.industry
+        self.my_role.wind_wave_mgr = self.factory.aoi_manager.sea.wind_wave_mgr
 
         # just_won (name of the loser)
         self.my_role.loser_name = None
