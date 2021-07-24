@@ -42,6 +42,7 @@ make exe
 release
     set constants.py
     update server (cloud)
+    test client.py
     make exe
     update client (legend)
 
