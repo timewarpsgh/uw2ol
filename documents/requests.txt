@@ -1,11 +1,17 @@
 by function
     basics
         winds and waves ON
-            stored on server
 
-            sends to client on connection
 
-            changes randomly, and sends to every client
+            stored on server OK
+
+            sends to client on connection OK
+
+            ships move based on winds and waves OK
+
+            changes randomly, and sends to every client ON
+            
+            npc moves based on winds ON
 
 
         show direction
