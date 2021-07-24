@@ -27,7 +27,8 @@ from hashes.look_up_tables import nation_2_nation_id, nation_2_capital, lv_2_exp
 from hashes.look_up_tables import capital_map_id_2_nation, nation_2_tax_permit_id
 from hashes.look_up_tables import now_direction_to_next_left_move, now_direction_to_next_right_move
 from hashes.look_up_tables import ship_direction_2_vector, ship_direction_2_next_pos_delta, \
-    direct_2_dx_and_dy, direct_2_sea_move_collision_tiles
+    direct_2_dx_and_dy, direct_2_sea_move_collision_tiles, ship_direction_2_wind_direction, \
+    ship_direction_2_wind_or_wave_direction_effect
 from hashes.hash_cannons import hash_cannons
 
 
@@ -68,6 +69,7 @@ class Role:
         self.direction = 'up'
         self.moving = False
         self.speed = 20
+        self.fleet_speed = 20
         self.speed_counter = 0
         self.speed_counter_max = int(200 / self.speed)
         self.person_frame = -1
@@ -306,6 +308,7 @@ class Role:
     def set_speed(self, params):
         speed = params[0]
         self.speed = int(speed)
+        self.speed_counter = 0
         self.speed_counter_max = int(200/self.speed)
 
     def get_fleet_speed(self, params):
@@ -333,10 +336,13 @@ class Role:
                 item = Item(item_id)
                 fleet_speed += item.effects
 
+            # set and return
+            self.fleet_speed = fleet_speed
             return fleet_speed
 
         # no ship
         else:
+            self.fleet_speed = fleet_speed
             return 1
 
     def _get_total_crew(self):
@@ -384,6 +390,11 @@ class Role:
         y = params[1]
         direction = params[2]
 
+        # if at sea,
+        if self.is_at_sea():
+            # change speed based on winds and waves
+            self._change_speed_based_on_winds_and_waves(direction)
+
         # hard reset position
         self.x = x
         self.y = y
@@ -391,6 +402,26 @@ class Role:
         # repeat move
         self.direction = direction
         self.moving = True
+
+    def _change_speed_based_on_winds_and_waves(self, direction):
+        # get delta speed
+        delta_speed = 0
+        ship_direct = ship_direction_2_wind_direction[direction]
+        d = ship_direction_2_wind_or_wave_direction_effect
+
+            # get wind delta_speed
+        wind_effect = d[ship_direct][self.wind_wave_mgr.wind_direction]
+        wind_delta_speed = wind_effect * self.wind_wave_mgr.wind_speed
+
+            # get wave delta_speed
+        wave_effect = d[ship_direct][self.wind_wave_mgr.wave_direction]
+        wave_delta_speed = wave_effect * self.wind_wave_mgr.wave_speed
+
+        delta_speed += wind_delta_speed + wave_delta_speed
+
+        # set real speed
+        speed = self.fleet_speed + delta_speed
+        self.set_speed([speed])
 
     def stop_move(self, params):
         x = params[0]

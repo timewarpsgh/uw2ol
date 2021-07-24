@@ -288,25 +288,22 @@ class PortMap(Map):
     def set_price_index(self, pi):
         self.price_index = pi
 
-
-
 class WindWaveMgr:
     """winds and waves (the same no matter where you are)"""
 
     def __init__(self):
-        self.wind_speed = random.randint(0, 9)
+        self.wind_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
         self.wind_direction = random.choice(c.EIGHT_DIRECTIONS)
-        self.wave_speed = random.randint(0, 9)
+        self.wave_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
         self.wave_direction = random.choice(c.EIGHT_DIRECTIONS)
 
     def change(self):
         int = random.randint(0, 9)
         if int >= 7:
-            self.wind_speed = random.randint(0, 9)
+            self.wind_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
             self.wind_direction = random.choice(c.EIGHT_DIRECTIONS)
-            self.wave_speed = random.randint(0, 9)
+            self.wave_speed = random.randint(0, c.MAX_WIND_OR_WAVE)
             self.wave_direction = random.choice(c.EIGHT_DIRECTIONS)
-
 
 class SeaMap(Map):
     def __init__(self):

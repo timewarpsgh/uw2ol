@@ -41,6 +41,7 @@ NATION_COUNT = 6
 NPC_COUNT = 36
 
 EIGHT_DIRECTIONS = ['n', 'ne', 'e', 'se', 's', 'sw', 'w', 'nw']
+MAX_WIND_OR_WAVE = 5
 TIME_OF_DAY_OPTIONS = ['dawn', 'day', 'dusk', 'night']
 PORT_COUNT = 130
 
