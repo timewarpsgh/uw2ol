@@ -1,4 +1,7 @@
 by function
+
+	move to linux ON
+
     basics
         winds and waves ON
 
@@ -12,6 +15,8 @@ by function
             changes randomly, and sends to every client OK
 
             wind direction display OK
+
+            show move direction ON
 
             npc moves based on winds ON
 
