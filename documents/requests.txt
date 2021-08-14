@@ -1,54 +1,47 @@
-urgent
+bugs
 	
-	after defeated by enemy fleet, clicking on fleet results in crash OK
+new features
+    by function
+
+        basics
+            winds and waves ON
 
 
-by function
+                stored on server OK
 
-    basics
-        winds and waves ON
+                sends to client on connection OK
 
+                ships move based on winds and waves OK
 
-            stored on server OK
+                changes randomly, and sends to every client OK
 
-            sends to client on connection OK
+                wind direction display OK
 
-            ships move based on winds and waves OK
+                show move direction ON
 
-            changes randomly, and sends to every client OK
-
-            wind direction display OK
-
-            show move direction ON
-
-            npc moves based on winds ON
+                npc moves based on winds ON
 
 
-        show direction
+            show direction
 
-        private speak
+            private speak
 
-        port npcs can speak
+            port npcs can speak
+   
+        discover
+            gems
+        trade
+            mates recruited from bars have no wages atm
 
+        fight
+            duals
+            bar girl info shouldn't be free
 
-    discover 
-		gems
-    trade
-		mates recruited from bars have no wages atm
-		
-    fight
-        duals
-        bar girl info shouldn't be free
+    by structure
+        buttons on interface
+        buildings
 
-
-
-
-
-
-by structure
-    buttons on interface 
-    buildings
-
+refactors
 
 
 
