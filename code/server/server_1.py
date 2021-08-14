@@ -1,6 +1,4 @@
-from twisted.internet.protocol import Protocol, Factory
-from twisted.internet import reactor, threads, defer, task
-from twisted.internet.task import LoopingCall
+import time
 
 # add relative directory to python_path
 import sys, os
@@ -9,6 +7,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 # add relative directory to python_path
 import sys, os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'client'))
+
+from twisted.internet.protocol import Protocol, Factory
+from twisted.internet import reactor, threads, defer, task
+from twisted.internet.task import LoopingCall
 
 # import from common(dir)
 from protocol import MyProtocol
@@ -117,7 +119,6 @@ class Echo(Protocol):
 
             # 截取封包
             pck = self.dataBuffer[c.HEADER_SIZE:c.HEADER_SIZE + length_pck]
-            print('got packet')
 
             # 把封包交给处理函数
             self._pck_received(pck)
@@ -136,6 +137,11 @@ class Echo(Protocol):
 
         # process packet_type and message_object
         server_packet_received.process_packet(self, pck_type, message_obj)
+
+        # print time
+        cur_time = time.time()
+        readable_cur_time = time.ctime(cur_time)
+        print('!!!! got packet time: ', readable_cur_time)
 
     def send(self, protocol_name, content_obj='na'):
         """send packet to server"""

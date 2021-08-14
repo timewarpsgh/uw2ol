@@ -92,7 +92,6 @@ class Echo(Protocol):
 
             # get pck
             pck = self.dataBuffer[c.HEADER_SIZE:c.HEADER_SIZE + length_pck]
-            print('got packet')
 
             # pass pck to pck_handler
             self._pck_received(pck)

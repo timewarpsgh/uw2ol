@@ -2024,12 +2024,7 @@ class Ship:
         if ship.now_hp < 0:
             ship.now_hp = 0
 
-        print("target now hp", ship.now_hp)
-
         my_hps = [s.now_hp for s in self.ROLE.ships]
-
-        print(f"{self.ROLE.name} ships hps:", my_hps)
-
 
         # ret
         result = ship.now_hp <= 0

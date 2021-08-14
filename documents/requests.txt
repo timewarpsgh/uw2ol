@@ -1,8 +1,7 @@
 urgent
 	
 	after defeated by enemy fleet, clicking on fleet results in crash ON
-    add timestamp to server log ON
-	
+
 
 by function
 
