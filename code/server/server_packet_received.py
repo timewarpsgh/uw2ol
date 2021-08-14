@@ -662,6 +662,19 @@ def speak_to_world(self, message_obj):
     for player_conn in all_players_dict.values():
         player_conn.send('got_world_speak', [self.my_role.name, msg])
 
+def speak_to_some_one(self, message_obj):
+    role_name = message_obj[0]
+    msg = message_obj[1]
+
+    all_players_dict = self.factory.player_manager.get_all_palyers_dict()
+
+    if role_name in all_players_dict:
+        all_players_dict[role_name].send('got_msg_from_some_one', [self.my_role.name, msg])
+        self.send('sent_msg_to_some_one', [role_name, msg])
+    else:
+        self.send('send_msg_failed', [role_name, msg])
+
+
 ####################### call backs ###########################
 def on_create_character_got_result(self, is_ok):
     if is_ok:

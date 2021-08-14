@@ -474,11 +474,36 @@ def got_world_speak(self, message_obj):
     player_name = message_obj[0]
     msg = message_obj[1]
 
+    txt_to_display = f"{player_name} said {msg}."
+    _show_txt_in_chat_window(self, txt_to_display)
+
+def got_msg_from_some_one(self, message_obj):
+    role_name = message_obj[0]
+    msg = message_obj[1]
+
+    txt_to_display = f"{role_name} whispered to you: {msg}."
+    _show_txt_in_chat_window(self, txt_to_display)
+
+def sent_msg_to_some_one(self, message_obj):
+    role_name = message_obj[0]
+    msg = message_obj[1]
+
+    txt_to_display = f"sent msg to {role_name}: {msg}."
+    _show_txt_in_chat_window(self, txt_to_display)
+
+def send_msg_failed(self, message_obj):
+    role_name = message_obj[0]
+    msg = message_obj[1]
+
+    txt_to_display = f"failed sending msg to {role_name} {msg}."
+    _show_txt_in_chat_window(self, txt_to_display)
+
+def _show_txt_in_chat_window(self, txt):
     if len(self.world_msgs) < c.MAX_WORLD_MSG_TO_DISPLAY:
-        self.world_msgs.append(f"{player_name} said {msg}.")
+        self.world_msgs.append(txt)
     else:
         self.world_msgs.pop(0)
-        self.world_msgs.append(f"{player_name} said {msg}.")
+        self.world_msgs.append(txt)
 
 def wind_wave_change(self, message_obj):
     self.my_role.wind_wave_mgr = message_obj

@@ -1,6 +1,5 @@
-import time
+li = ['ni', 'hao', 'ma']
 
-cur_time = time.time()
-a = time.ctime(cur_time)
 
-print(a)
+content = ' '.join(li)
+print(content)

@@ -163,11 +163,21 @@ def main():
     def send_speach(event):
         msg = game.text_entry.get()
         if msg:
-            # speak to nearby players
+            # speak to world
             if msg.startswith('/w'):
                 print('speaking to world!')
                 msg = msg[2:]
                 game.connection.send('speak_to_world', [msg])
+
+            # speak to someone
+            elif msg.startswith('/p'):
+                print('speaking to someone!')
+                li = msg.split(' ')
+                role_name = li[1]
+                content = ' '.join(li[2:])
+                game.connection.send('speak_to_some_one', [role_name, content])
+
+            # speak to nearby players
             else:
                 game.change_and_send('speak', [msg])
 
