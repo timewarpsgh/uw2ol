@@ -1,6 +1,9 @@
-by function
+bugs
+	
+	after defeated by enemy fleet, clicking on fleet results in crash ON
+    
 
-	move to linux ON
+by function
 
     basics
         winds and waves ON

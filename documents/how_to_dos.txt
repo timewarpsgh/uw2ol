@@ -23,8 +23,8 @@ run in another machine
 
         # init db and table
 
-        # set wait_timeout in ini.my
-        wait_timeout=1814400
+        # set wait_timeout in mysql
+        set wait_timeout=1814400;
 
         # chinese support
         ALTER TABLE accounts CONVERT TO CHARACTER SET utf8;
