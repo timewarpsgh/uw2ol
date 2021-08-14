@@ -8,6 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
 import constants as c
 from hashes.hash_ports_meta_data import hash_ports_meta_data
 from hashes.look_up_tables import direction_2_symbol_angle
+from hashes.look_up_tables import ship_direction_2_wind_direction
 
 
 from sprites import Explosion
@@ -182,8 +183,16 @@ def draw_hud(self):
 
             # speed
         draw_text(self, self.translator.translate('Speed'), c.WINDOW_WIDTH - 100, 80)
-        draw_text(self, str(self.my_role.speed) + ' ' +
+        speed = 0
+        if self.my_role.moving:
+            speed = self.my_role.speed
+        draw_text(self, str(speed) + ' ' +
                   self.translator.translate('knots'), c.WINDOW_WIDTH - 100, 100)
+
+        my_ship_direction = ship_direction_2_wind_direction[self.my_role.direction]
+        speed_angle = direction_2_symbol_angle[my_ship_direction]
+        rotated_image = pygame.transform.rotate(self.images['direction'], speed_angle)
+        self.screen_surface.blit(rotated_image, (c.WINDOW_WIDTH - 100 + 40, 100))
 
             # winds
         draw_text(self, self.translator.translate('Wind'), c.WINDOW_WIDTH - 100, 200)

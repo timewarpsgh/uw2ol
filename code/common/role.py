@@ -422,6 +422,8 @@ class Role:
 
         # set real speed
         speed = self.fleet_speed + delta_speed
+        if speed <= 0:
+            speed = 1
         self.set_speed([speed])
 
     def stop_move(self, params):

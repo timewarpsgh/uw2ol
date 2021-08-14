@@ -17,7 +17,7 @@ new features
 
                 wind direction display OK
 
-                show move direction ON
+                show move direction OK
 
                 npc moves based on winds ON
 
@@ -27,7 +27,7 @@ new features
             private speak
 
             port npcs can speak
-   
+
         discover
             gems
         trade
