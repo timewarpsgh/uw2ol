@@ -343,8 +343,8 @@ class Role:
 
         # no ship
         else:
-            self.fleet_speed = fleet_speed
-            return 1
+            self.fleet_speed = 1
+            return self.fleet_speed
 
     def _get_total_crew(self):
         total_crew = 0
