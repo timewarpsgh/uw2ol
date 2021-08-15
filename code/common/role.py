@@ -254,6 +254,13 @@ class Role:
         else:
             return False
 
+    def is_target_same_position(self, target):
+        if target.x - self.x == 0 and \
+                target.y - self.y == 0:
+            return True
+        else:
+            return False
+
     def have_quest(self):
         if self.quest_discovery:
             return True
@@ -441,18 +448,40 @@ class Role:
         self.y = y
         self.moving = False
 
-        # try enter_building()
+        # self client only
         if self.is_in_client_and_self():
+            self._try_to_enter_building()
+            self._try_to_get_port_npc_msg()
+
+    def _try_to_enter_building(self):
+        if self.is_in_port():
             self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
 
-        # port npc speak?
-        if self.is_in_client_and_self():
-            if self.GAME.man and self.is_target_nearby(self.GAME.man):
-                msg = 'Hello!'
-                self.GAME.button_click_handler.make_message_box(msg)
-            elif self.GAME.woman and self.is_target_nearby(self.GAME.woman):
-                msg = 'Hey!'
-                self.GAME.button_click_handler.make_message_box(msg)
+    def _try_to_get_port_npc_msg(self):
+        if self.is_in_port() and self.GAME.time_of_day != 'night':
+
+            # dynamic npcs
+            if self.is_target_nearby(self.GAME.man):
+                port_id = random.randint(1,130)
+                port = Port(port_id)
+                t1 = self.GAME.trans('Have you been to')
+                t2 = self.GAME.trans(port.name)
+                msg = f'{t1} {t2}?'
+                self.GAME.button_click_handler.make_message_box(msg, size='small')
+            elif self.is_target_nearby(self.GAME.woman):
+                msg = 'Do you like this place? ... How about me?'
+                self.GAME.button_click_handler.make_message_box(msg, size='small')
+
+            # static npcs
+            if self.is_target_same_position(self.GAME.dog):
+                msg = 'Wang!Wang!'
+                self.GAME.button_click_handler.make_message_box(msg, size='small')
+            elif self.is_target_same_position(self.GAME.old_man):
+                msg = 'Cherish your time kid. I was like you many years ago.'
+                self.GAME.button_click_handler.make_message_box(msg, size='small')
+            elif self.is_target_same_position(self.GAME.agent):
+                msg = 'Here! We have everything you can imagine!'
+                self.GAME.button_click_handler.make_message_box(msg, size='small')
 
     def start_moving_out(self, params):
         """npc only"""

@@ -12,6 +12,7 @@ dic = {
         # items descriptions
         # villages
         # events
+        # port npc msgs
 
     # buttons (entrance for all ui)
     'ships': '船只',
@@ -1394,6 +1395,16 @@ dic = {
     "That's true.": "有道理。",
     "I think we are rich enough to start exploring the world. We don't need a fleet to explore. That's going to slow up down. I wish I could report more discoveries before Mr. Garry completely loses his eyesight.": "我认为我们有了足够的积累，可以开始探索世界了。我们不需要一只舰队去探索,那会使我们慢下来。我希望能在加里先生完全失明之前报告更多的发现。",
     "I understand, Tommy.": "我理解，汤米。",
+
+    # port npc msgs
+        # static npcs
+    'Wang!Wang!': '汪汪！',
+    'Cherish your time kid. I was like you many years ago.': '珍惜时间，孩子。多年前我也跟你一样。',
+    'Here! We have everything you can imagine!': '来呀！我们这儿啥都有。',
+
+        # dynamic npcs
+    'Have you been to': '你有没有去过',
+    'Do you like this place? ... How about me?': '喜欢这个地方吗？... 那我呢？',
 
 
 }

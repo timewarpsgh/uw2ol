@@ -390,7 +390,7 @@ class ButtonClickHandler():
 
         print(len(self.game.buttons.keys()))
 
-    def make_message_box(self, text):
+    def make_message_box(self, text, size='big'):
         do = False
         if self.game.my_role:
             if self.game.my_role.is_in_client_and_self():
@@ -400,8 +400,14 @@ class ButtonClickHandler():
 
         if do:
             text = self.game.translator.translate(text)
+            right_point_y = 0
+            if size == 'big':
+                right_point_y = 350
+            elif size == 'small':
+                right_point_y = 100
+
             MessageWindow(pygame.Rect((200, 50),
-                                      (350, 350)),
+                                      (350, right_point_y)),
                           self.ui_manager,
                           text, self.game)
 
