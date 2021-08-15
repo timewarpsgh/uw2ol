@@ -247,6 +247,13 @@ class Role:
         else:
             return False
 
+    def is_target_nearby(self, target):
+        if abs(target.x - self.x) <= c.PIXELS_COVERED_EACH_MOVE and \
+                abs(target.y - self.y) <= c.PIXELS_COVERED_EACH_MOVE:
+            return True
+        else:
+            return False
+
     def have_quest(self):
         if self.quest_discovery:
             return True
@@ -437,6 +444,15 @@ class Role:
         # try enter_building()
         if self.is_in_client_and_self():
             self.GAME.button_click_handler.menu_click_handler.cmds.enter_building()
+
+        # port npc speak?
+        if self.is_in_client_and_self():
+            if self.GAME.man and self.is_target_nearby(self.GAME.man):
+                msg = 'Hello!'
+                self.GAME.button_click_handler.make_message_box(msg)
+            elif self.GAME.woman and self.is_target_nearby(self.GAME.woman):
+                msg = 'Hey!'
+                self.GAME.button_click_handler.make_message_box(msg)
 
     def start_moving_out(self, params):
         """npc only"""

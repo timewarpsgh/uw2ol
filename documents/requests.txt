@@ -4,10 +4,7 @@ new features
     by function
 
         basics
-
-            private speak OK
-
-            port npcs can speak
+            port npcs can speak ON
 
         discover
             gems
