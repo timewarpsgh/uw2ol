@@ -216,8 +216,14 @@ class Woman(DynamicNpc):
 def init_dynamic_npcs(game, port_id):
     game.man = Man(game, port_id)
     game.man.start_looping_random_move()
+
+    game.man_1 = Man(game, port_id)
+    game.man_1.start_looping_random_move()
+
     game.woman = Woman(game, port_id)
     game.woman.start_looping_random_move()
+    game.woman_1 = Woman(game, port_id)
+    game.woman_1.start_looping_random_move()
 
 if __name__ == '__main__':
     pass

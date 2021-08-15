@@ -231,6 +231,11 @@ def draw_in_port(self):
     if self.woman:
         self.woman.draw()
 
+    if self.man_1:
+        self.man_1.draw()
+    if self.woman_1:
+        self.woman_1.draw()
+
     # draw my role
 
         # image

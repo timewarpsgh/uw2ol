@@ -1133,7 +1133,9 @@ class MenuClickHandlerForCmds():
                         self.game.agent = None
 
                         self.game.man = None
+                        self.game.man_1 = None
                         self.game.woman = None
+                        self.game.woman_1 = None
                     else:
                         port_npc.init_static_npcs(self.game, port_id)
                         port_npc.init_dynamic_npcs(self.game, port_id)
