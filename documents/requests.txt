@@ -4,7 +4,8 @@ new features
     by function
 
         basics
-            port npcs can speak ON
+            port npcs can speak OK
+            npc speaks differently in each port ON
 
         discover
             gems
