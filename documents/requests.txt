@@ -4,6 +4,8 @@ new features
     by function
 
         basics
+            release
+
             port npcs can speak OK
             more dynamic npcs OK
             npc speaks differently in each port ON
